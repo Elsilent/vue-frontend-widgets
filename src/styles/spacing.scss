@@ -1,0 +1,91 @@
+@use 'sass:math';
+
+$logo-size: 35px;
+$padding-size-menu-normal: 12px;
+$padding-size-menu-large: $padding-size-menu-normal * 1.25;
+$padding-size-menu-large-2: $padding-size-menu-normal * 3;
+$padding-size-menu-large-3: $padding-size-menu-normal * 4.5;
+$padding-size-menu-small: math.div($padding-size-menu-normal * 2, 3);
+$padding-size-menu-small-2: math.div($padding-size-menu-normal, 2);
+$padding-size-menu-small-3: math.div($padding-size-menu-normal, 3);
+$padding-size-normal: 14px;
+$padding-size-large: $padding-size-normal * 1.5;
+$padding-size-large-2: $padding-size-normal * 2;
+$padding-size-large-3: $padding-size-normal * 2.2;
+$padding-size-small: $padding-size-normal * 0.85;
+$padding-size-small-2: $padding-size-normal * 0.65;
+$padding-size-small-3: $padding-size-normal * 0.25;
+$side-menu-width: 260px;
+
+@mixin spacing($rule, $direction, $amount, $property: margin, $additional-properties: ()) {
+  &+#{$rule} {
+    #{$property}-#{$direction}: $amount;
+
+    @each $property-name,
+    $property-value in $additional-properties {
+      #{$property-name}: $property-value;
+    }
+  }
+}
+
+@mixin spacing-left($rule, $amount, $property: margin, $additional-properties: ()) {
+  @include spacing($rule, left, $amount, $property, $additional-properties);
+}
+
+@mixin no-spacing-left($rule, $property: margin, $additional-properties: ()) {
+  @include spacing-left($rule, 0, $property, $additional-properties);
+}
+
+@mixin spacing-top($rule, $amount, $property: margin, $additional-properties: ()) {
+  @include spacing($rule, top, $amount, $property, $additional-properties);
+}
+
+@mixin no-spacing-top($rule, $property: margin, $additional-properties: ()) {
+  @include spacing-top($rule, 0, $property, $additional-properties);
+}
+
+@mixin reasonable-spacing($parent-rule,
+  $child-rule,
+  $vertical-amount,
+  $horizontal-amount: $vertical-amount,
+  $property: margin,
+  $additional-properties: (),
+) {
+  #{$parent-rule} {
+    @include spacing-top($child-rule, $vertical-amount, $property, $additional-properties);
+
+    .align:not(.column)>& {
+      @include no-spacing-top($child-rule, $property, $additional-properties);
+      @include spacing-left($child-rule, $horizontal-amount, $property, $additional-properties);
+    }
+
+    .grid>& {
+      @include no-spacing-top($child-rule, $property, $additional-properties);
+    }
+  }
+}
+
+@mixin default-spacing {
+  @include reasonable-spacing('*', '.align:not(.spacing-small)', $padding-size-large-2);
+  @include reasonable-spacing('*', '.card', $padding-size-large-2);
+  @include reasonable-spacing('*', '.header', $padding-size-large-3);
+  @include reasonable-spacing('*', '.info', $padding-size-large);
+  @include reasonable-spacing('.icon', '.info', $padding-size-small-3);
+  @include reasonable-spacing('.info', '*', $padding-size-small-2);
+  @include reasonable-spacing('.info', '.align', $padding-size-small-2);
+  @include reasonable-spacing('*', '.kpi-distrubution-table', $padding-size-large);
+  @include reasonable-spacing('*', '*', $padding-size-normal);
+  @include reasonable-spacing('*', '.no-spacing', 0);
+
+  .flex-max {
+    flex: 1;
+  }
+
+  .full-height {
+    width: 100%;
+  }
+
+  .full-width {
+    width: 100%;
+  }
+}

@@ -1,0 +1,239 @@
+<script lang="ts" setup>
+import { computed, ref, toRefs, watch } from 'vue';
+import Align from '../../../components/container/Align.vue';
+import Avatar from '../../../components/image/Avatar.vue';
+import Button from '../../../components/interaction/Button.vue';
+import PopoverMenu from '../../../components/interaction/PopoverMenu.vue';
+import type { MenuItem as PopoverMenuItem } from '../../../components/interaction/PopoverMenu.vue';
+import type { IconBackend } from '../../../utils/enum/icon_backend';
+import type { Mood } from '../../../utils/enum/mood';
+import type { Theme } from '../../../utils/enum/theme';
+import UndefinedThemeError from '../../../utils/error/undefined_theme';
+import match from '../../../utils/match';
+
+export type AvatarInfo =
+  | { icon: string; iconBackend?: IconBackend }
+  | { label: string }
+  | { source: string };
+
+export interface Locale {
+  code: string;
+  icon: string;
+}
+
+export interface MenuItem extends PopoverMenuItem {
+  handler: () => void;
+  label: string;
+}
+
+const props = defineProps<{
+  avatar?: AvatarInfo;
+  locale: string;
+  locales: Locale[];
+  menuItems: Record<string, MenuItem>;
+  setLocale: (locale: string) => void;
+  setTheme: (theme: Theme) => void;
+  theme: Theme;
+}>();
+
+const { avatar, locale, locales, menuItems, setLocale, setTheme, theme } = toRefs(props);
+
+const avatarIcon = computed(() =>
+  avatar && avatar.value && 'icon' in avatar.value ? avatar.value.icon : undefined,
+);
+const avatarIconBackend = computed(() =>
+  avatar && avatar.value && 'iconBackend' in avatar.value ? avatar.value.iconBackend : undefined,
+);
+const avatarLabel = computed(() =>
+  avatar && avatar.value && 'label' in avatar.value ? avatar.value.label : undefined,
+);
+const avatarSource = computed(() =>
+  avatar && avatar.value && 'source' in avatar.value ? avatar.value.source : undefined,
+);
+
+const localeMenuItems = computed(() =>
+  locales.value.reduce((menuItems, locale) => {
+    menuItems[locale.code] = {
+      icon: locale.icon,
+      iconBackend: 'flag-icons',
+    };
+
+    return menuItems;
+  }, {} as Record<string, PopoverMenuItem>),
+);
+
+const localeIcon = computed(
+  () =>
+    locales.value
+      .reduce(
+        (matcher, locale) => matcher.when(locale.code, () => locale.icon),
+        match<string, string>(locale.value),
+      )
+      .or(() => locales.value[0].code).done,
+);
+
+const themeIcon = computed(
+  () =>
+    match<Theme, string>(theme.value)
+      .when('dark', () => 'moon')
+      .when('light', () => 'sun')
+      .or((theme) => {
+        throw new UndefinedThemeError(theme);
+      }).done,
+);
+
+const themeMood = computed(
+  () =>
+    match<Theme, Mood>(theme.value)
+      .when('dark', () => 'accent')
+      .when('light', () => 'important')
+      .or((theme) => {
+        throw new UndefinedThemeError(theme);
+      }).done,
+);
+
+const toggleTheme = () => {
+  const newTheme = match<Theme, Theme>(theme.value)
+    .when('dark', () => 'light')
+    .when('light', () => 'dark')
+    .or((theme) => {
+      throw new UndefinedThemeError(theme);
+    }).done!;
+
+  setTheme.value(newTheme);
+};
+
+const updateLocale = (locale: string) => {
+  setLocale.value(locale);
+
+  whenBlurred();
+};
+
+const expanded = ref(false);
+const localeMenuVisible = ref(false);
+
+const accountContainer = ref<HTMLElement | null>(null);
+
+watch(expanded, (expanded) => {
+  if (expanded) {
+    accountContainer.value?.focus();
+  }
+});
+
+const whenBlurred = () => {
+  expanded.value = false;
+  localeMenuVisible.value = false;
+};
+
+const whenMenuItemClicked = (code: string) => {
+  console.log(code, menuItems.value);
+  menuItems.value[code].handler();
+
+  whenBlurred();
+};
+</script>
+
+<template lang="pug">
+.account-container(
+  ref='accountContainer'
+  @blur='() => whenBlurred()',
+  tabindex='-1',
+)
+  Align.account(:class='{ expanded }', vertical='center')
+    Button.locale-button(
+      @click='() => localeMenuVisible = !localeMenuVisible',
+      @mousedown.stop="() => {}",
+      :icon='localeIcon',
+      iconBackend='flag-icons-square',
+      mood='neutral',
+      outline,
+      size='large-3',
+      shape='round',
+    )
+    Button.theme-button(
+      @click='() => toggleTheme()',
+      :icon='themeIcon',
+      :mood='themeMood',
+      outline,
+      size='large-2',
+      shape='round',
+    )
+    Avatar(
+      @click='() => expanded = !expanded',
+      :icon='avatarIcon',
+      :iconBackend='avatarIconBackend',
+      :label='avatarLabel',
+      :source='avatarSource',
+    )
+  PopoverMenu.account-menu(
+    @select='(code) => whenMenuItemClicked(code)',
+    :items='menuItems',
+    :visible='expanded',
+  )
+  PopoverMenu.locale-menu(
+    @select='() => localeMenuVisible = false',
+    @select:en="() => updateLocale('en')",
+    @select:ru="() => updateLocale('ru')",
+    :items='localeMenuItems',
+    :visible='localeMenuVisible',
+  )
+</template>
+
+<style lang="scss" scoped>
+@import '../../../styles/colors.scss';
+@import '../../../styles/radius.scss';
+@import '../../../styles/spacing.scss';
+@import '../../../styles/transition.scss';
+
+@include default-spacing;
+
+.account-container {
+  height: 100%;
+  position: relative;
+
+  > .account {
+    height: 100%;
+    padding: 0 $padding-size-large-2;
+    transition-duration: $transition-duration-normal;
+    transition-property: background-color;
+
+    &.expanded {
+      @include apply-color(background-color, background-elevated-2);
+    }
+
+    &:not(.expanded) {
+      > .locale-button,
+      > .theme-button {
+        opacity: 0;
+        pointer-events: none;
+      }
+    }
+
+    > .locale-button {
+      &:deep(.icon) {
+        border-radius: $border-radius-round;
+      }
+    }
+
+    > .avatar {
+      cursor: pointer;
+    }
+  }
+
+  > .account-menu {
+    border-bottom-right-radius: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    left: 0;
+    top: 100%;
+    right: 0;
+  }
+
+  > .locale-menu {
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    left: $padding-size-large;
+    top: 100%;
+  }
+}
+</style>

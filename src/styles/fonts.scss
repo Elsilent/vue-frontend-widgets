@@ -1,0 +1,31 @@
+@import '@fontsource/open-sans/400.css';
+@import '@fontsource/open-sans/500.css';
+@import '@fontsource/open-sans/600.css';
+@import '@fontsource/open-sans/700.css';
+
+@font-face {
+  font-family: 'Magistral Book';
+  src: url('https://db.onlinewebfonts.com/t/90ca58f744f7cb5ecf0d8d2ace2a6a86.eot');
+  src: url('https://db.onlinewebfonts.com/t/90ca58f744f7cb5ecf0d8d2ace2a6a86.eot?#iefix') format('embedded-opentype'),
+       url('https://db.onlinewebfonts.com/t/90ca58f744f7cb5ecf0d8d2ace2a6a86.woff2') format('woff2'),
+       url('https://db.onlinewebfonts.com/t/90ca58f744f7cb5ecf0d8d2ace2a6a86.woff') format('woff'),
+       url('https://db.onlinewebfonts.com/t/90ca58f744f7cb5ecf0d8d2ace2a6a86.ttf') format('truetype'),
+       url('https://db.onlinewebfonts.com/t/90ca58f744f7cb5ecf0d8d2ace2a6a86.svg#MagistralW01-Book') format('svg');
+}
+
+$-font-family-fallback: Helvetica, Arial, sans-serif;
+$-font-magistral-book: 'Magistral Book';
+$-font-open-sans: 'Open Sans';
+
+$font-family-brand-text: $-font-magistral-book, $-font-family-fallback;
+$font-family-normal: $-font-open-sans, $-font-family-fallback;
+
+$font-size-normal: 14px;
+$font-size-large: $font-size-normal * 1.1;
+$font-size-large-2: $font-size-normal * 1.15;
+$font-size-large-3: $font-size-normal * 1.5;
+$font-size-large-4: $font-size-normal * 1.875;
+$font-size-large-5: $font-size-normal * 2;
+$font-size-large-6: $font-size-normal * 3;
+$font-size-small: $font-size-normal * 0.9;
+$font-size-small-2: $font-size-normal * 0.75;
