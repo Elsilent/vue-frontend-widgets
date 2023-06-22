@@ -1,1 +1,1 @@
-export type Mood = 'accent' | 'important' | 'important-alt' | 'negative' | 'neutral' | 'positive';
+export type Mood = 'accent' | 'important' | 'important-alt' | 'inactive' | 'negative' | 'neutral' | 'positive';

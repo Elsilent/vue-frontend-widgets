@@ -61,7 +61,7 @@ Align(:inline='!noInline', column)
 
 .input {
   @include apply-color(background-color, background-elevated-3);
-  @include apply-color(border-color, border-normal);
+  @include apply-color(border-color, border-inactive);
   @include apply-color(color, text-normal);
 
   border-radius: $border-radius-normal;
@@ -80,7 +80,7 @@ Align(:inline='!noInline', column)
   }
 
   &::placeholder {
-    @include apply-color(color, border-normal);
+    @include apply-color(color, border-inactive);
   }
 }
 </style>

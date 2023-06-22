@@ -13,6 +13,10 @@
     @include apply-color(background-color, background-important-alt, $rule-postfix: $rule-postfix);
   }
 
+  &.mood-background-inactive {
+    @include apply-color(background-color, background-inactive, $rule-postfix: $rule-postfix);
+  }
+
   &.mood-background-negative {
     @include apply-color(background-color, background-negative, $rule-postfix: $rule-postfix);
   }
@@ -37,6 +41,10 @@
     @include apply-color(border-color, border-important-alt, $rule-postfix: $rule-postfix);
   }
 
+  &.mood-border-inactive {
+    @include apply-color(border-color, border-inactive, $rule-postfix: $rule-postfix);
+  }
+
   &.mood-border-negative {
     @include apply-color(border-color, border-negative, $rule-postfix: $rule-postfix);
   }
@@ -59,6 +67,10 @@
 
   &.mood-text-important-alt {
     @include apply-color(color, text-important-alt, $rule-postfix: $rule-postfix);
+  }
+
+  &.mood-text-inactive {
+    @include apply-color(color, text-normal, $rule-postfix: $rule-postfix);
   }
 
   &.mood-text-negative {
