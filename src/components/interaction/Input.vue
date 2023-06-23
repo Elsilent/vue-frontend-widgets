@@ -5,6 +5,7 @@ import Info from '../label/Info.vue';
 
 const props = withDefaults(
   defineProps<{
+    disabled?: boolean,
     label?: string;
     modelValue?: string;
     noInline?: boolean;
@@ -12,13 +13,21 @@ const props = withDefaults(
     placeholder?: string;
   }>(),
   {
+    disabled: false,
     modelValue: '',
     noInline: false,
     password: false,
   },
 );
 
-const { modelValue, noInline, password } = toRefs(props);
+const {
+  disabled,
+  label,
+  modelValue,
+  noInline,
+  password,
+  placeholder,
+} = toRefs(props);
 
 const emit = defineEmits<{
   (event: 'submit'): void;
@@ -44,6 +53,7 @@ Align(:inline='!noInline', column)
   input.input(
     @keydown="(event) => whenKeyDown(event)",
     @input="(event) => whenUpdated(event)",
+    :disabled='disabled',
     :placeholder='placeholder',
     :type='inputType',
     :value='modelValue',
@@ -73,10 +83,17 @@ Align(:inline='!noInline', column)
   outline: none;
   padding: $padding-size-small-2 $padding-size-normal;
   transition-duration: $transition-duration-normal;
-  transition-property: background-color, border-color, color;
+  transition-property: background-color, border-color, color, opacity;
 
-  &:focus {
-    @include apply-color(border-color, background-important-alt);
+  &:disabled {
+    cursor: default;
+    opacity: 0.5;
+  }
+
+  &:not(:disabled) {
+    &:focus {
+      @include apply-color(border-color, background-important-alt);
+    }
   }
 
   &::placeholder {
