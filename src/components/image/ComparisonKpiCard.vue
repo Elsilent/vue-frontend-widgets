@@ -6,6 +6,8 @@ import Info from '../label/Info.vue';
 import Icon from './Icon.vue';
 import format from '../../utils/format';
 import type { Mood } from '../../utils/enum/mood';
+import { difference as getDifference } from '../../utils/difference';
+import Separator from '../marker/Separator.vue';
 
 const props = withDefaults(
   defineProps<{
@@ -22,25 +24,61 @@ const props = withDefaults(
 
 const { comparisonValue, inversed, value } = toRefs(props);
 
-const difference = computed(() => (value.value - comparisonValue.value) / comparisonValue.value);
+const difference = computed(() => getDifference(value.value, comparisonValue.value));
 
 const icon = computed(() => {
-  if (difference.value >= 0.01) {
-    return 'up-arrow-alt';
-  } else if (difference.value <= -0.01) {
-    return 'down-arrow-alt';
+  const equalIcon = 'minus';
+  const greaterIcon = 'down-arrow-alt';
+  const lessIcon = 'up-arrow-alt';
+
+  switch (difference.value) {
+    case 'equal':
+      return equalIcon;
+    case 'greater-full':
+      return greaterIcon;
+    case 'less-full':
+      return lessIcon;
+  }
+  if ('less' in difference.value) {
+    return lessIcon;
   } else {
-    return 'minus';
+    return greaterIcon;
+  }
+});
+
+const differenceLabel = computed<number>(() => {
+  switch (difference.value) {
+    case 'equal':
+      return 0;
+    case 'greater-full':
+      return 1;
+    case 'less-full':
+      return -1;
+  }
+  if ('less' in difference.value) {
+    return difference.value.less;
+  } else {
+    return difference.value.greater;
   }
 });
 
 const mood = computed((): Mood => {
-  if (difference.value >= 0.01 !== inversed.value) {
-    return 'positive';
-  } else if (difference.value <= -0.01 !== inversed.value) {
-    return 'important';
+  const equalMood: Mood = 'neutral';
+  const greaterMood: Mood = inversed.value ? 'negative' : 'positive';
+  const lessMood: Mood = inversed.value ? 'positive' : 'negative';
+
+  switch (difference.value) {
+    case 'equal':
+      return equalMood;
+    case 'greater-full':
+      return greaterMood;
+    case 'less-full':
+      return lessMood;
+  }
+  if ('less' in difference.value) {
+    return lessMood;
   } else {
-    return 'neutral';
+    return greaterMood;
   }
 });
 </script>
@@ -57,7 +95,11 @@ Card.flex-max
         :value='icon',
         size='large-5',
       )
-      Info.flex-max(:mood='mood', size='large-2') {{ format.proportion(difference) }}
+      Info(
+        :mood='mood',
+        size='large-2'
+      ) {{ format.proportion(differenceLabel) }}
+      Separator
       Info {{ formatter(comparisonValue) }}
 </template>
 
