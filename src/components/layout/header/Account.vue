@@ -9,6 +9,7 @@ import type { IconBackend } from '../../../utils/enum/icon_backend';
 import type { Mood } from '../../../utils/enum/mood';
 import type { Theme } from '../../../utils/enum/theme';
 import UndefinedThemeError from '../../../utils/error/undefined_theme';
+import type { LabeledCurrency } from '../../../utils/interface/currency';
 import match from '../../../utils/match';
 
 export type AvatarInfo =
@@ -26,17 +27,22 @@ export interface MenuItem extends PopoverMenuItem {
   label: string;
 }
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   avatar?: AvatarInfo;
+  currency: string;
+  currencies: LabeledCurrency[];
   locale: string;
   locales: Locale[];
   menuItems: Record<string, MenuItem>;
   setLocale: (locale: string) => void;
   setTheme: (theme: Theme) => void;
   theme: Theme;
-}>();
+  topExpanded?: boolean;
+}>(), {
+  topExpanded: false,
+});
 
-const { avatar, locale, locales, menuItems, setLocale, setTheme, theme } = toRefs(props);
+const { avatar, currencies, currency, locale, locales, menuItems, setLocale, setTheme, theme } = toRefs(props);
 
 const avatarIcon = computed(() =>
   avatar && avatar.value && 'icon' in avatar.value ? avatar.value.icon : undefined,
@@ -50,6 +56,18 @@ const avatarLabel = computed(() =>
 const avatarSource = computed(() =>
   avatar && avatar.value && 'source' in avatar.value ? avatar.value.source : undefined,
 );
+
+const currencyMenuItems = computed(() =>
+  currencies.value.reduce((menuItems, currency) => {
+    menuItems[currency.code] = {
+      label: currency.label,
+    };
+
+    return menuItems;
+  }, {} as Record<string, PopoverMenuItem>),
+);
+
+const currentCurrency = computed(() => currencies.value.find(({ code }) => currency.value === code)!);
 
 const localeMenuItems = computed(() =>
   locales.value.reduce((menuItems, locale) => {
@@ -110,9 +128,22 @@ const updateLocale = (locale: string) => {
 };
 
 const expanded = ref(false);
+const currencyMenuVisible = ref(false);
 const localeMenuVisible = ref(false);
 
 const accountContainer = ref<HTMLElement | null>(null);
+
+watch(currencyMenuVisible, (currencyMenuVisible) => {
+  if (currencyMenuVisible) {
+    accountContainer.value?.focus();
+  }
+});
+
+watch(localeMenuVisible, (localeMenuVisible) => {
+  if (localeMenuVisible) {
+    accountContainer.value?.focus();
+  }
+});
 
 watch(expanded, (expanded) => {
   if (expanded) {
@@ -120,13 +151,29 @@ watch(expanded, (expanded) => {
   }
 });
 
-const whenBlurred = () => {
+const emit = defineEmits<{
+  (event: 'update:currency', currency: string): void,
+}>();
+
+const setCurrency = (currency: string) => {
   expanded.value = false;
-  localeMenuVisible.value = false;
+
+  emit('update:currency', currency);
+};
+
+const whenBlurred = (event?: FocusEvent) => {
+  if (!event || !accountContainer.value?.contains(event.relatedTarget as Node)) {
+    expanded.value = false;
+    currencyMenuVisible.value = false;
+    localeMenuVisible.value = false;
+
+    return;
+  }
+
+  accountContainer.value?.focus();
 };
 
 const whenMenuItemClicked = (code: string) => {
-  console.log(code, menuItems.value);
   menuItems.value[code].handler();
 
   whenBlurred();
@@ -139,17 +186,40 @@ const whenMenuItemClicked = (code: string) => {
   @blur='() => whenBlurred()',
   tabindex='-1',
 )
-  Align.account(:class='{ expanded }', vertical='center')
-    Button.locale-button(
-      @click='() => localeMenuVisible = !localeMenuVisible',
-      @mousedown.stop="() => {}",
-      :icon='localeIcon',
-      iconBackend='flag-icons-square',
-      mood='neutral',
-      outline,
-      size='large-3',
-      shape='round',
-    )
+  Align.account(:class='{ expanded: expanded || topExpanded }', vertical='center')
+    Align.menu-container
+      Button.currency-button(
+        @click='() => currencyMenuVisible = !currencyMenuVisible',
+        @mousedown.stop="() => {}",
+        :label="currentCurrency.symbol",
+        mood='neutral',
+        outline,
+        size='large-3',
+        shape='round',
+      )
+      PopoverMenu.currency-menu.no-spacing(
+        @select='(currency) => setCurrency(currency)',
+        :items='currencyMenuItems',
+        :visible='currencyMenuVisible',
+      )
+    Align.menu-container.spacing-small
+      Button.locale-button(
+        @click='() => localeMenuVisible = !localeMenuVisible',
+        @mousedown.stop="() => {}",
+        :icon='localeIcon',
+        iconBackend='flag-icons-square',
+        mood='neutral',
+        outline,
+        size='large-3',
+        shape='round',
+      )
+      PopoverMenu.locale-menu.no-spacing(
+        @select='() => localeMenuVisible = false',
+        @select:en="() => updateLocale('en')",
+        @select:ru="() => updateLocale('ru')",
+        :items='localeMenuItems',
+        :visible='localeMenuVisible',
+      )
     Button.theme-button(
       @click='() => toggleTheme()',
       :icon='themeIcon',
@@ -169,13 +239,6 @@ const whenMenuItemClicked = (code: string) => {
     @select='(code) => whenMenuItemClicked(code)',
     :items='menuItems',
     :visible='expanded',
-  )
-  PopoverMenu.locale-menu(
-    @select='() => localeMenuVisible = false',
-    @select:en="() => updateLocale('en')",
-    @select:ru="() => updateLocale('ru')",
-    :items='localeMenuItems',
-    :visible='localeMenuVisible',
   )
 </template>
 
@@ -202,16 +265,28 @@ const whenMenuItemClicked = (code: string) => {
     }
 
     &:not(.expanded) {
-      > .locale-button,
-      > .theme-button {
-        opacity: 0;
-        pointer-events: none;
+      > .menu-container {
+        > .currency-button,
+        > .locale-button,
+        > .theme-button {
+          opacity: 0;
+          pointer-events: none;
+        }
       }
     }
 
-    > .locale-button {
-      &:deep(.icon) {
-        border-radius: $border-radius-round;
+    > .menu-container {
+      > .currency-menu,
+      > .locale-menu {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        top: 100%;
+      }
+
+      > .locale-button {
+        &:deep(.icon) {
+          border-radius: $border-radius-round;
+        }
       }
     }
 
@@ -227,13 +302,6 @@ const whenMenuItemClicked = (code: string) => {
     left: 0;
     top: 100%;
     right: 0;
-  }
-
-  > .locale-menu {
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-    left: $padding-size-large;
-    top: 100%;
   }
 }
 </style>

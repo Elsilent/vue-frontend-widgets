@@ -4,18 +4,20 @@ import Card from '../container/Card.vue';
 import Align from '../container/Align.vue';
 import Info from '../label/Info.vue';
 import Icon from './Icon.vue';
+import Loader from './Loader.vue';
+import Separator from '../marker/Separator.vue';
 import format from '../../utils/format';
 import type { Mood } from '../../utils/enum/mood';
 import { difference as getDifference } from '../../utils/difference';
-import Separator from '../marker/Separator.vue';
+import type { Difference } from '../../utils/difference';
 
 const props = withDefaults(
   defineProps<{
-    comparisonValue: number;
+    comparisonValue?: number;
     formatter: (value: number) => string;
     inversed?: boolean;
     label: string;
-    value: number;
+    value?: number;
   }>(),
   {
     inversed: false,
@@ -24,12 +26,24 @@ const props = withDefaults(
 
 const { comparisonValue, inversed, value } = toRefs(props);
 
-const difference = computed(() => getDifference(value.value, comparisonValue.value));
+const loading = computed(() =>
+  value === undefined ||
+  value.value === undefined ||
+  comparisonValue === undefined ||
+  comparisonValue.value === undefined);
+
+const difference = computed<Difference>(() => {
+  if (loading.value) {
+    return 'equal';
+  }
+
+  return getDifference(value!.value!, comparisonValue!.value!);
+});
 
 const icon = computed(() => {
   const equalIcon = 'minus';
-  const greaterIcon = 'down-arrow-alt';
-  const lessIcon = 'up-arrow-alt';
+  const greaterIcon = 'up-arrow-alt';
+  const lessIcon = 'down-arrow-alt';
 
   switch (difference.value) {
     case 'equal':
@@ -81,14 +95,18 @@ const mood = computed((): Mood => {
     return greaterMood;
   }
 });
+
+const classes = computed(() => ({
+  loading: loading.value,
+}));
 </script>
 
 <template lang="pug">
-Card.flex-max
+Card.kpi-card(:class='classes')
   Align(column)
     Align(vertical='center')
       Info.flex-max(size='large-2') {{ label }}
-      Info(size='large-3') {{ formatter(value) }}
+      Info(size='large-3') {{ value === undefined ? '&nbsp;' : formatter(value) }}
     Align.spacing-small(vertical='center')
       Icon(
         :mood='mood',
@@ -100,11 +118,56 @@ Card.flex-max
         size='large-2'
       ) {{ format.proportion(differenceLabel) }}
       Separator
-      Info {{ formatter(comparisonValue) }}
+      Info {{ comparisonValue === undefined ? '&nbsp;' : formatter(comparisonValue) }}
+  Align.loader-container.no-spacing(
+    v-if='value === undefined || comparisonValue === undefined',
+    horizontal='center',
+    vertical='center',
+  )
+    Loader
 </template>
 
 <style lang="scss" scoped>
+@import '../../styles/colors.scss';
+@import '../../styles/radius.scss';
 @import '../../styles/spacing.scss';
+@import '../../styles/transition.scss';
 
 @include default-spacing;
+
+.kpi-card {
+  position: relative;
+
+  &::after {
+    background-color: transparent;
+    border-radius: $border-radius-normal;
+    bottom: 0;
+    content: '';
+    left: 0;
+    pointer-events: none;
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition-duration: $transition-duration-normal;
+    transition-property: background-color;
+    z-index: 1;
+  }
+
+  &.loading {
+    &::after {
+      @include apply-color(background-color, background-elevated-3);
+
+      pointer-events: all;
+    }
+  }
+
+  > .loader-container {
+    bottom: 0;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 2;
+  }
+}
 </style>

@@ -26,7 +26,9 @@ export default {
       format += `.${'0'.repeat(fractionSize)}`;
     }
 
-    return numeral(value).format(prefix ? `${symbol} ${format}` : `${format} ${symbol}`);
+    const formattedValue = numeral(value).format(format);
+
+    return prefix ? `${symbol} ${formattedValue}` : `${formattedValue} ${symbol}`;
   },
   proportion: (value: number) => numeral(value).format('0,0.00%'),
 };

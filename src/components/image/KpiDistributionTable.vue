@@ -137,7 +137,7 @@ const style = computed(() => ({
     }
 
     &:not(.header-cell) {
-      @include apply-color(border-top-color, background-lowered-3);
+      @include apply-color(border-top-color, border-inactive);
 
       border-top-style: solid;
       border-top-width: 1px;

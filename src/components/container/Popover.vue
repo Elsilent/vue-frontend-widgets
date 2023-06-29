@@ -21,6 +21,7 @@ Card.no-spacing.popover(:class='{ visible }')
   pointer-events: none;
   position: absolute;
   transition-property: background-color, opacity;
+  z-index: 1000;
 
   &.visible {
     opacity: 1;

@@ -7,4 +7,5 @@ export type Size =
   | 'large-5'
   | 'large-6'
   | 'small'
-  | 'small-2';
+  | 'small-2'
+  | 'small-3';

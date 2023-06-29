@@ -35,10 +35,19 @@ const classes = computed(() => ({
   [`mood-border-${mood.value}`]: true,
   [`shape-${shape.value}`]: true,
 }));
+
+const whenClicked = (event: Event) => {
+  if (disabled.value) {
+    event.stopImmediatePropagation();
+  }
+};
 </script>
 
 <template lang="pug">
-.button(:class='classes')
+.button(
+  @click='(event) => whenClicked(event)',
+  :class='classes',
+)
   Icon(
     v-if='icon',
     :backend='iconBackend',
@@ -71,6 +80,13 @@ const classes = computed(() => ({
   justify-content: center;
   transition-duration: $transition-duration-normal;
   transition-property: background-color, border-color, opacity;
+
+  &.mood-background-inactive {
+    > .icon,
+    > .info {
+      @include apply-color(color, text-normal);
+    }
+  }
 
   &.shape-normal {
     border-radius: $border-radius-normal;
@@ -164,7 +180,9 @@ const classes = computed(() => ({
       }
 
       > .icon {
-        @include apply-color(color, white);
+        &::not(.mood-background-inactive) {
+          @include apply-color(color, white);
+        }
       }
 
       > .info {

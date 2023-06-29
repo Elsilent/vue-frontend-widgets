@@ -1,35 +1,30 @@
 <script lang="ts" setup>
 import { computed, toRefs } from 'vue';
-import Align from '../container/Align.vue';
-import Info from '../label/Info.vue';
 
 const props = withDefaults(
   defineProps<{
     disabled?: boolean,
-    label?: string;
     modelValue?: string;
-    noInline?: boolean;
     password?: boolean,
     placeholder?: string;
   }>(),
   {
     disabled: false,
     modelValue: '',
-    noInline: false,
     password: false,
   },
 );
 
 const {
   disabled,
-  label,
   modelValue,
-  noInline,
   password,
   placeholder,
 } = toRefs(props);
 
 const emit = defineEmits<{
+  (event: 'blur', focusEvent: FocusEvent): void;
+  (event: 'focus', focusEvent: FocusEvent): void;
   (event: 'submit'): void;
   (event: 'update:modelValue', value: string): void;
 }>();
@@ -48,16 +43,16 @@ const whenUpdated = (event: Event) => {
 </script>
 
 <template lang="pug">
-Align(:inline='!noInline', column)
-  Info(v-if='label') {{ label }}
-  input.input(
-    @keydown="(event) => whenKeyDown(event)",
-    @input="(event) => whenUpdated(event)",
-    :disabled='disabled',
-    :placeholder='placeholder',
-    :type='inputType',
-    :value='modelValue',
-  )
+input.input(
+  @blur="(event) => emit('blur', event)",
+  @focus="(event) => emit('focus', event)",
+  @keydown="(event) => whenKeyDown(event)",
+  @input="(event) => whenUpdated(event)",
+  :disabled='disabled',
+  :placeholder='placeholder',
+  :type='inputType',
+  :value='modelValue',
+)
 </template>
 
 <style lang="scss" scoped>

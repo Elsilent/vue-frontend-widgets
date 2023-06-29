@@ -67,16 +67,20 @@ $side-menu-width: 260px;
 }
 
 @mixin default-spacing {
-  @include reasonable-spacing('*', '.align:not(.spacing-small)', $padding-size-large-2);
-  @include reasonable-spacing('*', '.card', $padding-size-large-2);
-  @include reasonable-spacing('*', '.header', $padding-size-large-3);
-  @include reasonable-spacing('*', '.info', $padding-size-large);
-  @include reasonable-spacing('.icon', '.info', $padding-size-small-3);
-  @include reasonable-spacing('.info:not(.spacing-regular)', '*', $padding-size-small-2);
-  @include reasonable-spacing('.info:not(.spacing-regular)', '.align', $padding-size-small-2);
-  @include reasonable-spacing('*', '.kpi-distrubution-table', $padding-size-large);
-  @include reasonable-spacing('*', '*', $padding-size-normal);
+  @include reasonable-spacing('*', '.align:not(.no-spacing):not(.spacing-small)', $padding-size-large-2);
+  @include reasonable-spacing('*', '.grid:not(.no-spacing):not(.spacing-small)', $padding-size-large-2);
+  @include reasonable-spacing('*', '.card:not(.no-spacing)', $padding-size-large-2);
+  @include reasonable-spacing('*', '.header:not(.no-spacing)', $padding-size-large-3);
+  @include reasonable-spacing('*', '.info:not(.no-spacing)', $padding-size-large);
+  @include reasonable-spacing('.dot', '.info:not(.no-spacing)', $padding-size-small-3);
+  @include reasonable-spacing('.icon', '.info:not(.no-spacing)', $padding-size-small-3);
+  @include reasonable-spacing('.info:not(.spacing-regular)', ':not(.no-spacing)', $padding-size-small-2);
+  @include reasonable-spacing('.info:not(.spacing-regular)', '.align:not(.no-spacing)', $padding-size-small-2);
+  @include reasonable-spacing('*', '.kpi-distrubution-table:not(.no-spacing)', $padding-size-large);
+  @include reasonable-spacing('*', ':not(.no-spacing):not(.spacing-small)', $padding-size-normal);
+  @include reasonable-spacing('*', ':not(.no-spacing).spacing-small', $padding-size-small);
   @include reasonable-spacing('*', '.no-spacing', 0);
+  @include reasonable-spacing('.grid > *', '.no-spacing', 0);
 
   .flex-max {
     flex: 1;

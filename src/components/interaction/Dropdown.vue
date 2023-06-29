@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import type { Size } from '../../utils/enum/size';
+import match from '../../utils/match';
 import { computed, ref, toRefs } from 'vue';
 import Align from '../container/Align.vue';
 import Icon from '../image/Icon.vue';
@@ -9,15 +11,27 @@ const props = withDefaults(
     items: Record<string | number | symbol, string>;
     modelValue?: string | number | symbol;
     noInline?: boolean;
+    size?: 'small' | 'normal',
   }>(),
   {
     noInline: false,
+    size: 'normal',
   },
 );
 
-const { items, modelValue } = toRefs(props);
+const { items, modelValue, size } = toRefs(props);
 
 const active = ref(false);
+
+const classes = computed(() => ({
+  active: active.value,
+  [`size-${size.value}`]: true,
+}));
+
+const iconSize = computed(() => match<'normal'|'small', Size>(size.value)
+  .when('small', () => 'small-3')
+  .when('normal', () => 'small-2')
+  .done!);
 
 const selectionOffset = computed(() => {
   if (!modelValue?.value || modelValue.value === undefined) {
@@ -51,18 +65,18 @@ Align(
   .dropdown(
     @blur='() => active = false',
     @click='() => active = !active',
-    :class='{ active }',
+    :class='classes',
     :style='style',
     tabindex='-1',
   )
     Align.item.current(vertical='center')
       Info.flex-max {{ modelValue === undefined ? '&nbsp;' : items[modelValue] }}
       Icon(
+        :size='iconSize',
         backend='boxicons-solid',
-        size='small-2',
         value='down-arrow',
       )
-    Align.dropdown-menu(column)
+    Align.dropdown-menu.no-spacing(column)
       Info.item.no-spacing(
         v-for='(item, itemCode) in items',
         :class='{ current: modelValue === itemCode }',
@@ -81,11 +95,9 @@ Align(
 
 @include default-spacing;
 
-$-item-height: $font-size-normal * 1.5 + $padding-size-small-2 * 2 - 2;
-
 .dropdown {
   @include apply-color(background-color, background-elevated-3);
-  @include apply-color(border-color, background-lowered-3);
+  @include apply-color(border-color, border-inactive);
 
   border-radius: $border-radius-normal;
   border-style: solid;
@@ -100,60 +112,8 @@ $-item-height: $font-size-normal * 1.5 + $padding-size-small-2 * 2 - 2;
   transition-property: background-color, border-color;
   user-select: none;
 
-  > .dropdown-menu {
-    @include apply-color(background-color, background-elevated-3);
-    @include apply-color(border-color, background-lowered-3);
-
-    border-bottom-left-radius: $border-radius-normal;
-    border-bottom-right-radius: $border-radius-normal;
-    border-style: solid;
-    border-top-style: none;
-    border-width: 1px;
-    height: $-item-height;
-    left: -1px;
-    margin-top: -1px;
-    opacity: 0;
-    overflow: hidden;
-    padding-top: 1px;
-    pointer-events: none;
-    position: absolute;
-    top: $-item-height;
-    transition-duration: $transition-duration-fast;
-    transition-property: height, top, opacity;
-    width: 100%;
-
-    > .item {
-      transition-duration: $transition-duration-fast-2;
-
-      &:hover {
-        @include apply-color(background-color, background-accent);
-        @include apply-color(color, white);
-      }
-
-      &.current {
-        &:not(:hover) {
-          @include apply-color(background-color, background-lowered);
-        }
-      }
-    }
-  }
-
-  .item {
-    padding: $padding-size-small-2 $padding-size-normal;
-    transition-property: background-color, color;
-
-    &.current {
-      > .icon {
-        padding-top: 1px;
-        transition-duration: $transition-duration-fast;
-        transition-property: transform;
-      }
-    }
-  }
-
   &.active {
     > .dropdown-menu {
-      height: calc(var(--item-count) * $-item-height);
       pointer-events: initial;
       top: 100%;
       opacity: 1;
@@ -164,6 +124,93 @@ $-item-height: $font-size-normal * 1.5 + $padding-size-small-2 * 2 - 2;
         > .icon {
           transform: rotateZ(180deg);
         }
+      }
+    }
+  }
+
+  &.size-normal {
+    $-item-height: $font-size-normal * 1.5 + $padding-size-small-2 * 2 - 2;
+
+    &.active {
+      > .dropdown-menu {
+        height: calc(var(--item-count) * $-item-height);
+      }
+    }
+
+    > .dropdown-menu {
+      height: $-item-height;
+      top: $-item-height;
+    }
+
+    .item {
+      padding: $padding-size-small-2 $padding-size-normal;
+    }
+  }
+
+  &.size-small {
+    $-item-height: $font-size-normal * 1.5 + $padding-size-small-3 * 2 - 2;
+
+    &.active {
+      > .dropdown-menu {
+        height: calc(var(--item-count) * $-item-height);
+      }
+    }
+
+    > .dropdown-menu {
+      height: $-item-height;
+      top: $-item-height;
+    }
+
+    .item {
+      padding: $padding-size-small-3 $padding-size-small-2;
+    }
+  }
+
+  > .dropdown-menu {
+    @include apply-color(background-color, background-elevated-3);
+    @include apply-color(border-color, border-inactive);
+
+    border-bottom-left-radius: $border-radius-normal;
+    border-bottom-right-radius: $border-radius-normal;
+    border-style: solid;
+    border-top-style: none;
+    border-width: 1px;
+    left: -1px;
+    margin-top: -1px;
+    opacity: 0;
+    overflow: hidden;
+    padding-top: 1px;
+    pointer-events: none;
+    position: absolute;
+    transition-duration: $transition-duration-fast;
+    transition-property: height, top, opacity;
+    width: 100%;
+    z-index: 100;
+
+    > .item {
+      transition-duration: $transition-duration-fast-2;
+
+      &:hover {
+        @include apply-color(background-color, background-lowered);
+      }
+
+      &.current {
+        &:not(:hover) {
+          @include apply-color(background-color, background-accent);
+          @include apply-color(color, white);
+        }
+      }
+    }
+  }
+
+  .item {
+    transition-property: background-color, color;
+
+    &.current {
+      > .icon {
+        padding-top: 1px;
+        transition-duration: $transition-duration-fast;
+        transition-property: transform;
       }
     }
   }

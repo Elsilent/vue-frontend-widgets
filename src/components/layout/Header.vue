@@ -2,11 +2,18 @@
 import Align from '../container/Align.vue';
 import Info from '../../components/label/Info.vue';
 import Separator from '../../components/marker/Separator.vue';
+
+const scrollToStart = () => {
+  document.documentElement.scrollTo({
+    left: 0,
+    top: 0,
+  });
+};
 </script>
 
 <template lang="pug">
 Align.header(vertical='center')
-  .title
+  .title(@click='() => scrollToStart()')
     Info(size='large-2')
       slot(name='title')
   Separator
@@ -34,6 +41,7 @@ Align.header(vertical='center')
   > .title {
     @include apply-color(background-color, background-elevated-2);
 
+    cursor: pointer;
     transition-duration: $transition-duration-normal;
     transition-property: background-color;
     width: min-content;
