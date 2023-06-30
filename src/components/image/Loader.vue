@@ -42,10 +42,8 @@
 
     @for $-index from 1 through 5 {
       &:nth-child(#{$-index}) {
-        // indexes: 1 and 5 = no delay
-        // indexes: 2 and 4 = half delay
-        // index 3 = full delay
-        $-delay: math.div(-math.abs(3 - $-index), 3) * $transition-duration-slow-2;
+        $-normalized-index: math.abs(3 - $-index);
+        $-delay: math.div(-$-normalized-index, 3) * $transition-duration-slow-2;
 
         animation-delay: $-delay;
       }
