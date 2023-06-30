@@ -25,6 +25,10 @@ Align(horizontal='center')
 Before creating a pull request please always run `yarn lint --fix`
 to keep the code style consistent and run `yarn build` to check for errors.
 
+> Don't solely rely on the linter built in your IDE. It might mark some of the things
+> which could be improved but doesn't mark or fix all of them resulting in the reduction
+> of code quality.
+
 Try to preserve the same structure of components with putting new components
 to the group where other components serve a similar purpose.
 
