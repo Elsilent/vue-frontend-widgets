@@ -886,6 +886,8 @@ $-mood-colors: (
         }
 
         > .chart-bar {
+          transition-duration: $transition-duration-normal;
+          transition-property: background-color;
           width: 100%;
 
           &:nth-child(2) {
