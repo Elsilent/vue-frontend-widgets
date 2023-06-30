@@ -3,9 +3,9 @@ import { computed, toRefs } from 'vue';
 
 const props = withDefaults(
   defineProps<{
-    disabled?: boolean,
+    disabled?: boolean;
     modelValue?: string;
-    password?: boolean,
+    password?: boolean;
     placeholder?: string;
   }>(),
   {
@@ -15,12 +15,7 @@ const props = withDefaults(
   },
 );
 
-const {
-  disabled,
-  modelValue,
-  password,
-  placeholder,
-} = toRefs(props);
+const { disabled, modelValue, password, placeholder } = toRefs(props);
 
 const emit = defineEmits<{
   (event: 'blur', focusEvent: FocusEvent): void;
@@ -29,7 +24,7 @@ const emit = defineEmits<{
   (event: 'update:modelValue', value: string): void;
 }>();
 
-const inputType = computed(() => password.value ? 'password' : undefined);
+const inputType = computed(() => (password.value ? 'password' : undefined));
 
 const whenKeyDown = (event: KeyboardEvent) => {
   if (event.key === 'Enter') {

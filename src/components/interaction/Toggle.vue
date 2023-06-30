@@ -2,19 +2,20 @@
 import type { Mood } from '../../utils/enum/mood';
 import { computed, toRefs } from 'vue';
 
-const props = withDefaults(defineProps<{
-  mood?: Mood,
-  modelValue: boolean,
-}>(), {
-  mood: 'positive',
-});
+const props = withDefaults(
+  defineProps<{
+    mood?: Mood;
+    modelValue: boolean;
+  }>(),
+  {
+    mood: 'positive',
+  },
+);
 
 const { modelValue, mood } = toRefs(props);
 
 const toggleClasses = computed(() => {
-  const toggleMood: Mood = modelValue.value
-    ? mood.value
-    : 'inactive';
+  const toggleMood: Mood = modelValue.value ? mood.value : 'inactive';
   return {
     active: modelValue.value,
     [`mood-background-${toggleMood}`]: true,
@@ -23,7 +24,7 @@ const toggleClasses = computed(() => {
 });
 
 const emit = defineEmits<{
-  (event: 'update:modelValue', value: boolean): void,
+  (event: 'update:modelValue', value: boolean): void;
 }>();
 </script>
 
@@ -61,7 +62,9 @@ const emit = defineEmits<{
 
   &.active {
     &::after {
-      transform: translateX(calc($padding-size-large-2 * 2 - $padding-size-small-4 * 2 - $padding-size-normal - 2px));
+      transform: translateX(
+        calc($padding-size-large-2 * 2 - $padding-size-small-4 * 2 - $padding-size-normal - 2px)
+      );
     }
   }
 

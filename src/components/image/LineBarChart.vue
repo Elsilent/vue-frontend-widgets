@@ -10,32 +10,32 @@ interface Point {
 
 export type Style = 'bar' | 'line';
 
-const supportedMoodAttributes = [
-  'dashed',
-  'opaque',
-];
+const supportedMoodAttributes = ['dashed', 'opaque'];
 
-const props = withDefaults(defineProps<{
-  activeLines?: (number|string|symbol)[],
-  axis?: number,
-  formatters: Record<number|string|symbol, (value: number) => string>,
-  minHeight?: boolean,
-  moods: Record<number|string|symbol, Mood>,
-  noXAxisLabels?: boolean,
-  normalize?: boolean,
-  showSecondaryYAxis?: boolean,
-  smoothing?: number,
-  styles: Record<number|string|symbol, Style>,
-  values: Record<number|string|symbol, Record<number|string|symbol, number>>,
-  yAxisTitles?: string[],
-}>(), {
-  axis: 4,
-  minHeight: false,
-  noXAxisLabels: false,
-  normalize: false,
-  showSecondaryYAxis: false,
-  smoothing: 0.15,
-});
+const props = withDefaults(
+  defineProps<{
+    activeLines?: (number | string | symbol)[];
+    axis?: number;
+    formatters: Record<number | string | symbol, (value: number) => string>;
+    minHeight?: boolean;
+    moods: Record<number | string | symbol, Mood>;
+    noXAxisLabels?: boolean;
+    normalize?: boolean;
+    showSecondaryYAxis?: boolean;
+    smoothing?: number;
+    styles: Record<number | string | symbol, Style>;
+    values: Record<number | string | symbol, Record<number | string | symbol, number>>;
+    yAxisTitles?: string[];
+  }>(),
+  {
+    axis: 4,
+    minHeight: false,
+    noXAxisLabels: false,
+    normalize: false,
+    showSecondaryYAxis: false,
+    smoothing: 0.15,
+  },
+);
 
 const {
   activeLines,
@@ -53,9 +53,7 @@ const {
 } = toRefs(props);
 
 const axisLabels = computed(() => {
-  const axisCount = yAxisLabels?.value
-    ? yAxisLabels.value.length
-    : valueKeys.value.length;
+  const axisCount = yAxisLabels?.value ? yAxisLabels.value.length : valueKeys.value.length;
 
   const axisValues: Record<Style, number[][]> = {
     bar: new Array(axisCount).fill(0).map(() => []),
@@ -70,11 +68,12 @@ const axisLabels = computed(() => {
   for (let index = 0; index < lineCount.value; index++) {
     const style = styles.value[valueKeys.value[index]];
 
-    axisValues[style][index % axisCount]
-      .push(...styleValueStrategies[style](Object.values(values.value[valueKeys.value[index]])));
+    axisValues[style][index % axisCount].push(
+      ...styleValueStrategies[style](Object.values(values.value[valueKeys.value[index]])),
+    );
   }
 
-  const axisLabels: Record<Style, Record<number|string|symbol, number[]>> = {
+  const axisLabels: Record<Style, Record<number | string | symbol, number[]>> = {
     bar: {},
     line: {},
   };
@@ -84,34 +83,34 @@ const axisLabels = computed(() => {
   for (const style of labelStyles) {
     axisLabels[style] = valueKeys.value
       .filter((key) => styles.value[key] === style)
-      .reduce(
-        (axisLabels, key, index) => {
-          const values = axisValues[style][index % axisCount];
-          const min = Math.min(...values, 0);
-          const max = Math.max(...values);
-          const scope = max - min;
-          const minVisibleScale = Math.pow(10, Math.floor(Math.abs(scope)).toString().length - 1);
-          const scale = Math.ceil(scope / minVisibleScale / (axis.value - 1)) * minVisibleScale;
+      .reduce((axisLabels, key, index) => {
+        const values = axisValues[style][index % axisCount];
+        const min = Math.min(...values, 0);
+        const max = Math.max(...values);
+        const scope = max - min;
+        const minVisibleScale = Math.pow(10, Math.floor(Math.abs(scope)).toString().length - 1);
+        const scale = Math.ceil(scope / minVisibleScale / (axis.value - 1)) * minVisibleScale;
 
-          const labels = [min];
+        const labels = [min];
 
-          for (let i = 1; i < axis.value; i++) {
-            labels.push(labels[labels.length - 1] + scale);
-          }
+        for (let i = 1; i < axis.value; i++) {
+          labels.push(labels[labels.length - 1] + scale);
+        }
 
-          axisLabels[key] = labels.reverse();
+        axisLabels[key] = labels.reverse();
 
-          return axisLabels;
-        },
-        {} as Record<number|string|symbol, number[]>,
-      );
+        return axisLabels;
+      }, {} as Record<number | string | symbol, number[]>);
   }
 
   return axisLabels;
 });
 
 const barValues = computed(() => {
-  const invertedValues: Record<number|string|symbol, Record<number|string|symbol, number>> = {};
+  const invertedValues: Record<
+    number | string | symbol,
+    Record<number | string | symbol, number>
+  > = {};
 
   for (const [key, row] of Object.entries(values.value)) {
     if (styles.value[key] === 'bar') {
@@ -148,7 +147,10 @@ const maxAxisLabels = computed(() => {
         continue;
       }
 
-      if (!(maxKey in axisLabels.value[style]) || axisLabels.value[style][valueKeys.value[i]][0] > axisLabels.value[style][maxKey][0]) {
+      if (
+        !(maxKey in axisLabels.value[style]) ||
+        axisLabels.value[style][valueKeys.value[i]][0] > axisLabels.value[style][maxKey][0]
+      ) {
         maxKey = valueKeys.value[i];
       }
     }
@@ -163,13 +165,16 @@ const totalValueCount = computed(() => {
   return Math.max(...Object.values(values.value).map((v) => Object.values(v).length));
 });
 
-const valueKeys = computed<(number|symbol|string)[]>(() => Object.keys(values.value));
+const valueKeys = computed<(number | symbol | string)[]>(() => Object.keys(values.value));
 
-const yAxisLabels = computed(() => yAxisTitles?.value
-  ? Object.values(yAxisTitles.value)
-  : undefined);
+const yAxisLabels = computed(() =>
+  yAxisTitles?.value ? Object.values(yAxisTitles.value) : undefined,
+);
 
-const chartPath = (values: Record<number|string|symbol, number>, lineLabel: number|string|symbol) => {
+const chartPath = (
+  values: Record<number | string | symbol, number>,
+  lineLabel: number | string | symbol,
+) => {
   if (values.length === 0) {
     return '';
   }
@@ -204,13 +209,15 @@ const chartPath = (values: Record<number|string|symbol, number>, lineLabel: numb
       left: currentPoint.left + Math.cos(angle) * length,
       top: currentPoint.top + Math.sin(angle) * length,
     };
-  }
+  };
 
   points.slice(1).forEach((point, index) => {
     const startControlPoint = controlPoint(points[index], points[index - 1], point, false);
     const endControlPoint = controlPoint(point, points[index], points[index + 2], true);
 
-    path.push(`C ${startControlPoint.left},${startControlPoint.top} ${endControlPoint.left},${endControlPoint.top} ${point.left},${point.top}`);
+    path.push(
+      `C ${startControlPoint.left},${startControlPoint.top} ${endControlPoint.left},${endControlPoint.top} ${point.left},${point.top}`,
+    );
   });
 
   return path.join(' ');
@@ -226,10 +233,10 @@ const linesStyle = computed(() => {
   return {
     left: barOffset,
     right: barOffset,
-  }
+  };
 });
 
-const hovers = ref<(number|string|symbol)[]>([]);
+const hovers = ref<(number | string | symbol)[]>([]);
 
 const valueHeight = (index: number) => {
   for (const [lineLabel, labelValues] of Object.entries(values.value)) {
@@ -245,11 +252,13 @@ const valueHeight = (index: number) => {
   return Math.min(
     ...Object.entries(values.value)
       .filter(([lineLabel]) => styles.value[lineLabel] !== 'bar')
-      .map(([lineLabel, labelValues]) => getPointTopPosition(Object.values(labelValues)[index], lineLabel)),
+      .map(([lineLabel, labelValues]) =>
+        getPointTopPosition(Object.values(labelValues)[index], lineLabel),
+      ),
   );
 };
 
-const getMoodClasses = (key: number|string|symbol, attributes?: string[]) => {
+const getMoodClasses = (key: number | string | symbol, attributes?: string[]) => {
   const mood = moods.value[key];
 
   const moodAttributes = attributes ?? supportedMoodAttributes;
@@ -265,15 +274,14 @@ const getMoodClasses = (key: number|string|symbol, attributes?: string[]) => {
       [`mood-${components.mood}`]: true,
     },
   );
-}
+};
 
 const getMoodComponents = (mood: Mood) => {
+  let hasAttributes = false;
   let normalMood = mood;
   const attributes: string[] = [];
 
-  while (true) {
-    let hasAttributes = false;
-
+  do {
     for (const attribute of supportedMoodAttributes) {
       if (normalMood.endsWith(`-${attribute}`)) {
         attributes.push(attribute);
@@ -281,11 +289,7 @@ const getMoodComponents = (mood: Mood) => {
         hasAttributes = true;
       }
     }
-
-    if (!hasAttributes) {
-      break;
-    }
-  }
+  } while (!hasAttributes);
 
   return {
     attributes,
@@ -293,13 +297,13 @@ const getMoodComponents = (mood: Mood) => {
   };
 };
 
-const getPointLeftPosition = (key: number|symbol|string) => {
+const getPointLeftPosition = (key: number | symbol | string) => {
   const index = Object.keys(Object.values(values.value)[0]).indexOf(key as string);
 
-  return totalValueCount.value === 1 ? 50 : (index * 100 / (totalValueCount.value - 1))
+  return totalValueCount.value === 1 ? 50 : (index * 100) / (totalValueCount.value - 1);
 };
 
-const getPointTopPosition = (value: number, lineLabel: number|string|symbol) => {
+const getPointTopPosition = (value: number, lineLabel: number | string | symbol) => {
   const style = styles.value[lineLabel];
 
   const [minValue, maxValue] = (() => {
@@ -310,15 +314,18 @@ const getPointTopPosition = (value: number, lineLabel: number|string|symbol) => 
       ];
     } else {
       return [
-        Math.min(...Object.values(axisLabels.value[style]).map((labels) => labels[labels.length - 1])),
+        Math.min(
+          ...Object.values(axisLabels.value[style]).map((labels) => labels[labels.length - 1]),
+        ),
         Math.max(...Object.values(axisLabels.value[style]).map((labels) => labels[0])),
       ];
     }
   })();
 
-  const position = maxValue - minValue <= 0.01
-    ? 100
-    : Math.min(100, Math.max(0, (maxValue - value) * 100 / (maxValue - minValue)));
+  const position =
+    maxValue - minValue <= 0.01
+      ? 100
+      : Math.min(100, Math.max(0, ((maxValue - value) * 100) / (maxValue - minValue)));
 
   switch (style) {
     case 'bar':
@@ -327,9 +334,9 @@ const getPointTopPosition = (value: number, lineLabel: number|string|symbol) => 
     default:
       return position;
   }
-}
+};
 
-const setHover = (key: number|string|symbol, hover: boolean) => {
+const setHover = (key: number | string | symbol, hover: boolean) => {
   if (hover) {
     hovers.value.push(key);
   } else {
@@ -480,13 +487,7 @@ const setHover = (key: number|string|symbol, hover: boolean) => {
 @import '../../styles/shadows.scss';
 @import '../../styles/transition.scss';
 
-$-mood-colors: (
-  important,
-  important-alt,
-  negative,
-  neutral,
-  positive,
-);
+$-mood-colors: (important, important-alt, negative, neutral, positive);
 
 .line-chart {
   display: flex;
@@ -669,12 +670,12 @@ $-mood-colors: (
               white-space: nowrap;
 
               &.has-label::before {
-                  border-radius: 10px;
-                  content: '';
-                  display: block;
-                  height: 10px;
-                  margin-right: 0.5rem;
-                  width: 10px;
+                border-radius: 10px;
+                content: '';
+                display: block;
+                height: 10px;
+                margin-right: 0.5rem;
+                width: 10px;
               }
 
               @each $-mood in $-mood-colors {
@@ -682,7 +683,11 @@ $-mood-colors: (
                   &.dashed {
                     &::before {
                       @include apply-color(background-color, background-elevated-3);
-                      @include apply-color(box-shadow, border-#{$-mood}, $value-prefix: inset 0 0 0 0.075rem);
+                      @include apply-color(
+                        box-shadow,
+                        border-#{$-mood},
+                        $value-prefix: inset 0 0 0 0.075rem
+                      );
                     }
                   }
 
@@ -827,7 +832,11 @@ $-mood-colors: (
                   &.dashed {
                     &::before {
                       @include apply-color(background-color, background-elevated-3);
-                      @include apply-color(box-shadow, border-#{$-mood}, $value-prefix: inset 0 0 0 0.075rem);
+                      @include apply-color(
+                        box-shadow,
+                        border-#{$-mood},
+                        $value-prefix: inset 0 0 0 0.075rem
+                      );
 
                       transition-duration: $transition-duration-normal;
                       transition-property: background-color, box-shadow;
@@ -922,7 +931,8 @@ $-mood-colors: (
         position: absolute;
         width: 8px;
         transition-duration: $transition-duration-normal;
-        transition-property: background-color, border-color, box-shadow, height, margin-left, margin-top, width;
+        transition-property: background-color, border-color, box-shadow, height, margin-left,
+          margin-top, width;
 
         @each $-mood in $-mood-colors {
           &.mood-#{$-mood} {
@@ -951,7 +961,11 @@ $-mood-colors: (
               }
 
               &:not(.opaque) {
-                @include apply-color(box-shadow, background-hover-#{$-mood}, $value-prefix: 0 0 2px);
+                @include apply-color(
+                  box-shadow,
+                  background-hover-#{$-mood},
+                  $value-prefix: 0 0 2px
+                );
               }
             }
           }

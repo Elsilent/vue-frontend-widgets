@@ -9,34 +9,38 @@ import { dateFormat, normalizeRange } from '../../utils/date';
 import match from '../../utils/match';
 import type { Mood } from '../../utils/enum/mood';
 
-export type CalendarMode = 'end'|'start';
+export type CalendarMode = 'end' | 'start';
 
-const props = withDefaults(defineProps<{
-  minDate?: string,
-  mode: CalendarMode,
-  monthLabels: string[],
-  range: [string, string],
-  yearMonth: string,
-}>(), {
-  minDate: '2020-01-01',
-});
+const props = withDefaults(
+  defineProps<{
+    minDate?: string;
+    mode: CalendarMode;
+    monthLabels: string[];
+    range: [string, string];
+    yearMonth: string;
+  }>(),
+  {
+    minDate: '2020-01-01',
+  },
+);
 
 const now = DateTime.now();
 const maxYear = now.year;
 
 const { minDate, mode, monthLabels, range, yearMonth } = toRefs(props);
 
-const currentMonthIndex = computed(() => DateTime.fromFormat(yearMonth.value, dateFormat.yearMonth).month - 1);
+const currentMonthIndex = computed(
+  () => DateTime.fromFormat(yearMonth.value, dateFormat.yearMonth).month - 1,
+);
 const currentYear = computed(() => DateTime.fromFormat(yearMonth.value, dateFormat.yearMonth).year);
 
-const monthItems = computed(() => monthLabels.value.reduce(
-  (monthItems, month, index) => {
+const monthItems = computed(() =>
+  monthLabels.value.reduce((monthItems, month, index) => {
     monthItems[index] = month;
 
     return monthItems;
-  },
-  {} as Record<number, string>,
-));
+  }, {} as Record<number, string>),
+);
 
 const rangeEnd = computed(() => DateTime.fromFormat(range.value[1], dateFormat.yearMonthDay));
 const rangeStart = computed(() => DateTime.fromFormat(range.value[0], dateFormat.yearMonthDay));
@@ -44,27 +48,28 @@ const rangeStart = computed(() => DateTime.fromFormat(range.value[0], dateFormat
 const yearItems = computed(() => {
   const minYear = DateTime.fromFormat(minDate.value, dateFormat.yearMonthDay).year;
 
-  return new Array(maxYear - minYear + 1).fill(0).reduce(
-    (yearItems, _, index) => {
-      const year = minYear + index;
+  return new Array(maxYear - minYear + 1).fill(0).reduce((yearItems, _, index) => {
+    const year = minYear + index;
 
-      yearItems[year] = year.toString();
+    yearItems[year] = year.toString();
 
-      return yearItems;
-    },
-    {} as Record<number, string>,
-  );
+    return yearItems;
+  }, {} as Record<number, string>);
 });
 
-const yearMonthStart = computed(() => DateTime.fromFormat(yearMonth.value, dateFormat.yearMonth).startOf('month'));
+const yearMonthStart = computed(() =>
+  DateTime.fromFormat(yearMonth.value, dateFormat.yearMonth).startOf('month'),
+);
 
 const calendarStart = computed(() => {
   const yearMonthWeekStart = yearMonthStart.value.startOf('week');
 
   if (yearMonthStart.value.hasSame(yearMonthWeekStart, 'day')) {
-    return yearMonthStart.value.minus(Duration.fromObject({
-      weeks: 1,
-    }));
+    return yearMonthStart.value.minus(
+      Duration.fromObject({
+        weeks: 1,
+      }),
+    );
   } else {
     return yearMonthWeekStart;
   }
@@ -73,15 +78,17 @@ const calendarStart = computed(() => {
 // 7 days with 6 rows
 const visibleDaysInCalendar = 7 * 6;
 
-const calendarGridDayNumbers = computed(() =>  new Array(visibleDaysInCalendar)
-  .fill(0)
-  .map((_, index) => calendarStart.value.plus({
-    days: index,
-  })));
+const calendarGridDayNumbers = computed(() =>
+  new Array(visibleDaysInCalendar).fill(0).map((_, index) =>
+    calendarStart.value.plus({
+      days: index,
+    }),
+  ),
+);
 
 const emit = defineEmits<{
-  (event: 'update:range', value: [string, string]): void,
-  (event: 'update:yearMonth', value: string): void,
+  (event: 'update:range', value: [string, string]): void;
+  (event: 'update:yearMonth', value: string): void;
 }>();
 
 const belongsToCurrentMonth = (date: DateTime) => date.hasSame(yearMonthStart.value, 'month');
@@ -105,43 +112,44 @@ const dayMood = (day: DateTime): Mood => {
   return 'neutral';
 };
 const hasNextMonth = computed(() => yearMonthStart.value.endOf('month') < now);
-const hasPreviousMonth = computed(() => DateTime.fromFormat(minDate.value, dateFormat.yearMonthDay).startOf('month') < yearMonthStart.value);
+const hasPreviousMonth = computed(
+  () =>
+    DateTime.fromFormat(minDate.value, dateFormat.yearMonthDay).startOf('month') <
+    yearMonthStart.value,
+);
 const nextMonth = () => {
   const month = yearMonthStart.value.month;
 
-  updateMonth(
-    month < 12 ? month : 0,
-    month < 12 ? undefined : yearMonthStart.value.year + 1,
-  );
+  updateMonth(month < 12 ? month : 0, month < 12 ? undefined : yearMonthStart.value.year + 1);
 };
 const previousMonth = () => {
   const month = yearMonthStart.value.month - 2;
 
-  updateMonth(
-    month >= 0 ? month : 11,
-    month >= 0 ? undefined : yearMonthStart.value.year - 1,
-  );
+  updateMonth(month >= 0 ? month : 11, month >= 0 ? undefined : yearMonthStart.value.year - 1);
 };
-const updateMonth = (monthIndex: number|string|symbol, year?: number) => {
-  const newYearMonth = yearMonthStart.value.set({
-    year,
-    month: parseInt(monthIndex as string) + 1,
-  }).toFormat(dateFormat.yearMonth);
+const updateMonth = (monthIndex: number | string | symbol, year?: number) => {
+  const newYearMonth = yearMonthStart.value
+    .set({
+      year,
+      month: parseInt(monthIndex as string) + 1,
+    })
+    .toFormat(dateFormat.yearMonth);
 
   emit('update:yearMonth', newYearMonth);
 };
 const updateRange = (day: DateTime) => {
-  const newRange = match<'end'|'start', [string, string]>(mode.value)
+  const newRange = match<'end' | 'start', [string, string]>(mode.value)
     .when('end', () => [range.value[0], day.toFormat(dateFormat.yearMonthDay)])
-    .when('start', () => [day.toFormat(dateFormat.yearMonthDay), range.value[1]])
-    .done!;
+    .when('start', () => [day.toFormat(dateFormat.yearMonthDay), range.value[1]]).done!;
 
   emit('update:range', normalizeRange(newRange));
 };
-const updateYear = (year: number|string|symbol) => {
-  const newYearMonth = yearMonthStart.value.set({
-    year: parseInt(year as string),
-  }).toFormat(dateFormat.yearMonth);
+const updateYear = (year: number | string | symbol) => {
+  const newYearMonth = yearMonthStart.value
+    .set({
+      year: parseInt(year as string),
+    })
+    .toFormat(dateFormat.yearMonth);
 
   emit('update:yearMonth', newYearMonth);
 };

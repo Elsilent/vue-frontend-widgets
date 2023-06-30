@@ -27,22 +27,26 @@ export interface MenuItem extends PopoverMenuItem {
   label: string;
 }
 
-const props = withDefaults(defineProps<{
-  avatar?: AvatarInfo;
-  currency: string;
-  currencies: LabeledCurrency[];
-  locale: string;
-  locales: Locale[];
-  menuItems: Record<string, MenuItem>;
-  setLocale: (locale: string) => void;
-  setTheme: (theme: Theme) => void;
-  theme: Theme;
-  topExpanded?: boolean;
-}>(), {
-  topExpanded: false,
-});
+const props = withDefaults(
+  defineProps<{
+    avatar?: AvatarInfo;
+    currency: string;
+    currencies: LabeledCurrency[];
+    locale: string;
+    locales: Locale[];
+    menuItems: Record<string, MenuItem>;
+    setLocale: (locale: string) => void;
+    setTheme: (theme: Theme) => void;
+    theme: Theme;
+    topExpanded?: boolean;
+  }>(),
+  {
+    topExpanded: false,
+  },
+);
 
-const { avatar, currencies, currency, locale, locales, menuItems, setLocale, setTheme, theme } = toRefs(props);
+const { avatar, currencies, currency, locale, locales, menuItems, setLocale, setTheme, theme } =
+  toRefs(props);
 
 const avatarIcon = computed(() =>
   avatar && avatar.value && 'icon' in avatar.value ? avatar.value.icon : undefined,
@@ -67,7 +71,9 @@ const currencyMenuItems = computed(() =>
   }, {} as Record<string, PopoverMenuItem>),
 );
 
-const currentCurrency = computed(() => currencies.value.find(({ code }) => currency.value === code)!);
+const currentCurrency = computed(
+  () => currencies.value.find(({ code }) => currency.value === code)!,
+);
 
 const localeMenuItems = computed(() =>
   locales.value.reduce((menuItems, locale) => {
@@ -152,7 +158,7 @@ watch(expanded, (expanded) => {
 });
 
 const emit = defineEmits<{
-  (event: 'update:currency', currency: string): void,
+  (event: 'update:currency', currency: string): void;
 }>();
 
 const setCurrency = (currency: string) => {

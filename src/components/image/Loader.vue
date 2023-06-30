@@ -45,7 +45,7 @@
         // indexes: 1 and 5 = no delay
         // indexes: 2 and 4 = half delay
         // index 3 = full delay
-        $-delay: math.div(- math.abs(3 - $-index), 3) * $transition-duration-slow-2;
+        $-delay: math.div(-math.abs(3 - $-index), 3) * $transition-duration-slow-2;
 
         animation-delay: $-delay;
       }

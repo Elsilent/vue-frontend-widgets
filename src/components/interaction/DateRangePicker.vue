@@ -9,43 +9,42 @@ import Info from '../label/Info.vue';
 import Input from './Input.vue';
 import Popover from '../container/Popover.vue';
 import type { DateRangePreset } from '../../utils/date';
-import { dateFormat, rangeFromPreset, rangeToDisplayFormat, tryRangeFromDisplayFormat } from '../../utils/date';
+import {
+  dateFormat,
+  rangeFromPreset,
+  rangeToDisplayFormat,
+  tryRangeFromDisplayFormat,
+} from '../../utils/date';
 
 const props = withDefaults(
   defineProps<{
-    dateRangePresets: Record<string, DateRangePreset>,
+    dateRangePresets: Record<string, DateRangePreset>;
     disabled?: boolean;
-    modelValue: [string, string],
+    modelValue: [string, string];
     monthLabels: string[];
-    translator: (code: string) => string,
+    translator: (code: string) => string;
   }>(),
   {
     disabled: false,
   },
 );
 
-const {
-  dateRangePresets,
-  disabled,
-  modelValue,
-} = toRefs(props);
+const { dateRangePresets, disabled, modelValue } = toRefs(props);
 
 const active = ref(false);
-const dateRangePicker = ref<typeof Align|null>();
-const dateRangePickerInput = ref<typeof Input|null>();
+const dateRangePicker = ref<typeof Align | null>();
+const dateRangePickerInput = ref<typeof Input | null>();
 
 const getRangeMonths = (range: [string, string]) => {
   const dateFrom = DateTime.fromFormat(range[0], dateFormat.yearMonthDay);
   const dateTo = DateTime.fromFormat(range[1], dateFormat.yearMonthDay);
   const monthFrom = dateFrom.toFormat(dateFormat.yearMonth);
-  const monthTo = dateFrom.hasSame(dateTo, 'month') && dateTo.endOf('month') < DateTime.now()
-    ? dateTo.plus({ month: 1 }).toFormat(dateFormat.yearMonth)
-    : dateTo.toFormat(dateFormat.yearMonth);
+  const monthTo =
+    dateFrom.hasSame(dateTo, 'month') && dateTo.endOf('month') < DateTime.now()
+      ? dateTo.plus({ month: 1 }).toFormat(dateFormat.yearMonth)
+      : dateTo.toFormat(dateFormat.yearMonth);
 
-  return [
-    monthFrom,
-    monthTo,
-  ];
+  return [monthFrom, monthTo];
 };
 
 const getTextValue = () => rangeToDisplayFormat(modelValue.value);
@@ -72,7 +71,7 @@ const activate = () => {
 };
 
 const emit = defineEmits<{
-  (event: 'update:modelValue', dateRange: [string, string]): void,
+  (event: 'update:modelValue', dateRange: [string, string]): void;
 }>();
 
 const isPresetActive = (preset: DateRangePreset) => {

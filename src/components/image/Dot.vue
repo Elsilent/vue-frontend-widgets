@@ -2,17 +2,20 @@
 import type { Mood } from '../../utils/enum/mood';
 import { computed, toRefs } from 'vue';
 
-const props = withDefaults(defineProps<{
-  mood?: Mood,
-}>(), {
-  mood: 'accent',
-});
+const props = withDefaults(
+  defineProps<{
+    mood?: Mood;
+  }>(),
+  {
+    mood: 'accent',
+  },
+);
 
 const { mood } = toRefs(props);
 
 const classes = computed(() => ({
   [`mood-background-${mood.value}`]: true,
-}))
+}));
 </script>
 
 <template lang="pug">

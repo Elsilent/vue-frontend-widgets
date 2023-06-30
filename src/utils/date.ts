@@ -5,9 +5,9 @@ export interface DatePreset {
 }
 
 export interface DateRangePreset {
-  dateFrom: DatePreset,
-  dateTo: DatePreset,
-  label: string,
+  dateFrom: DatePreset;
+  dateTo: DatePreset;
+  label: string;
 }
 
 export const rangeFromPreset = (preset: DateRangePreset): [string, string] => {
@@ -25,10 +25,7 @@ export const rangeFromPreset = (preset: DateRangePreset): [string, string] => {
     dateTo = now;
   }
 
-  return [
-    dateFrom.toFormat(dateFormat.yearMonthDay),
-    dateTo.toFormat(dateFormat.yearMonthDay),
-  ];
+  return [dateFrom.toFormat(dateFormat.yearMonthDay), dateTo.toFormat(dateFormat.yearMonthDay)];
 };
 
 export const dateFormat = {
@@ -37,8 +34,8 @@ export const dateFormat = {
   yearMonthDayDisplay: 'dd/LL/yyyy',
 };
 
-export const dateToDisplayFormat = (date: string) => DateTime.fromFormat(date, dateFormat.yearMonthDay)
-  .toFormat(dateFormat.yearMonthDayDisplay);
+export const dateToDisplayFormat = (date: string) =>
+  DateTime.fromFormat(date, dateFormat.yearMonthDay).toFormat(dateFormat.yearMonthDayDisplay);
 
 export const normalizeRange = (range: [string, string]): [string, string] => {
   const dateFrom = DateTime.fromFormat(range[0], dateFormat.yearMonthDay);
@@ -78,7 +75,7 @@ export const rangeToDisplayFormat = (range: [string, string]) => {
   return `${dateFrom} - ${dateTo}`;
 };
 
-export const tryRangeFromDisplayFormat = (displayRange: string): [string, string]|undefined => {
+export const tryRangeFromDisplayFormat = (displayRange: string): [string, string] | undefined => {
   const range = displayRange.split('-').map((date) => date.trim());
 
   if (range.length !== 2) {
@@ -101,10 +98,7 @@ export const tryRangeFromDisplayFormat = (displayRange: string): [string, string
       return undefined;
     }
 
-    return [
-      dateFrom.toFormat(dateFormat.yearMonthDay),
-      dateTo.toFormat(dateFormat.yearMonthDay),
-    ];
+    return [dateFrom.toFormat(dateFormat.yearMonthDay), dateTo.toFormat(dateFormat.yearMonthDay)];
   } catch {
     return undefined;
   }

@@ -26,11 +26,13 @@ const props = withDefaults(
 
 const { comparisonValue, inversed, value } = toRefs(props);
 
-const loading = computed(() =>
-  value === undefined ||
-  value.value === undefined ||
-  comparisonValue === undefined ||
-  comparisonValue.value === undefined);
+const loading = computed(
+  () =>
+    value === undefined ||
+    value.value === undefined ||
+    comparisonValue === undefined ||
+    comparisonValue.value === undefined,
+);
 
 const difference = computed<Difference>(() => {
   if (loading.value) {

@@ -23,8 +23,8 @@ const { disabled, items, modelValue } = toRefs(props);
 
 const active = ref(false);
 
-const multiSelectContainer = ref<typeof Align|null>(null);
-const newValueInput = ref<HTMLInputElement|null>(null);
+const multiSelectContainer = ref<typeof Align | null>(null);
+const newValueInput = ref<HTMLInputElement | null>(null);
 const newValueFilter = ref<string>('');
 
 const allItemsSelected = computed(() => {
@@ -39,18 +39,15 @@ const allItemsTitle = computed(() => Object.values(items.value).sort(sort).join(
 const dropdownItems = computed(() => {
   const filteredItems = newValueFilter.value
     ? Object.entries(items.value)
-      .filter(([, item]) => item.toLowerCase().includes(newValueFilter.value.toLowerCase()))
-      .map(([itemCode]) => itemCode)
+        .filter(([, item]) => item.toLowerCase().includes(newValueFilter.value.toLowerCase()))
+        .map(([itemCode]) => itemCode)
     : Object.keys(items.value);
 
-  return filteredItems.sort(sort).reduce(
-    (dropdownItems, itemCode) => {
-      dropdownItems[itemCode] = items.value[itemCode];
+  return filteredItems.sort(sort).reduce((dropdownItems, itemCode) => {
+    dropdownItems[itemCode] = items.value[itemCode];
 
-      return dropdownItems;
-    },
-    {} as Record<string|number|symbol, string>,
-  );
+    return dropdownItems;
+  }, {} as Record<string | number | symbol, string>);
 });
 
 const selectionOffset = computed(() => {
@@ -66,7 +63,7 @@ const selectedItems = computed(() => {
     return [];
   }
 
-  return modelValue.value.sort(sort);
+  return [...modelValue.value].sort(sort);
 });
 
 const style = computed(() => ({
@@ -206,7 +203,8 @@ $-item-height: $font-size-normal * 1.5 + $padding-size-small-2 * 2 - 2;
 
     > .current-values {
       gap: $padding-size-small-2;
-      padding: ($padding-size-small-2 - $padding-size-small-3 - 1px) ($padding-size-normal - $padding-size-small-2);
+      padding: ($padding-size-small-2 - $padding-size-small-3 - 1px)
+        ($padding-size-normal - $padding-size-small-2);
 
       > .current-value {
         @include apply-color(background-color, background-accent);

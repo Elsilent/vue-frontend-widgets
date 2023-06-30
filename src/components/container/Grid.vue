@@ -2,9 +2,9 @@
 import { computed, toRefs } from 'vue';
 
 const props = defineProps<{
-  mobileColumns?: number,
-  tabletColumns?: number,
-  columns: number,
+  mobileColumns?: number;
+  tabletColumns?: number;
+  columns: number;
 }>();
 
 const { mobileColumns, tabletColumns, columns } = toRefs(props);

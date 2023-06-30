@@ -11,7 +11,7 @@ const props = withDefaults(
     items: Record<string | number | symbol, string>;
     modelValue?: string | number | symbol;
     noInline?: boolean;
-    size?: 'small' | 'normal',
+    size?: 'small' | 'normal';
   }>(),
   {
     noInline: false,
@@ -28,10 +28,12 @@ const classes = computed(() => ({
   [`size-${size.value}`]: true,
 }));
 
-const iconSize = computed(() => match<'normal'|'small', Size>(size.value)
-  .when('small', () => 'small-3')
-  .when('normal', () => 'small-2')
-  .done!);
+const iconSize = computed(
+  () =>
+    match<'normal' | 'small', Size>(size.value)
+      .when('small', () => 'small-3')
+      .when('normal', () => 'small-2').done!,
+);
 
 const selectionOffset = computed(() => {
   if (!modelValue?.value || modelValue.value === undefined) {

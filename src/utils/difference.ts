@@ -1,5 +1,5 @@
-export type Difference
-  = 'equal'
+export type Difference =
+  | 'equal'
   | 'less-full'
   | 'greater-full'
   | { less: number }
