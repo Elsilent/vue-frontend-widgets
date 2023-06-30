@@ -19,7 +19,7 @@ const props = withDefaults(
   }>(),
   {
     disabled: false,
-    mood: 'important-alt',
+    mood: 'accent',
     outline: false,
     size: 'normal',
     shape: 'normal',
@@ -139,6 +139,11 @@ const whenClicked = (event: Event) => {
           @include apply-color(border-color, border-active-neutral);
         }
 
+        &-neutral-alt {
+          @include apply-color(background-color, background-active-neutral-alt);
+          @include apply-color(border-color, border-active-neutral-alt);
+        }
+
         &-positive {
           @include apply-color(background-color, background-active-positive);
           @include apply-color(border-color, border-active-positive);
@@ -171,6 +176,11 @@ const whenClicked = (event: Event) => {
         &-neutral {
           @include apply-color(background-color, background-hover-neutral);
           @include apply-color(border-color, border-hover-neutral);
+        }
+
+        &-neutral-alt {
+          @include apply-color(background-color, background-hover-neutral-alt);
+          @include apply-color(border-color, border-hover-neutral-alt);
         }
 
         &-positive {

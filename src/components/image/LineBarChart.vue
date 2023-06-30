@@ -62,9 +62,16 @@ const axisLabels = computed(() => {
     line: new Array(axisCount).fill(0).map(() => []),
   };
 
+  const styleValueStrategies: Record<Style, (values: number[]) => number[]> = {
+    bar: (values) => [values.reduce((a, b) => a + b, 0)],
+    line: (values) => values,
+  };
+
   for (let index = 0; index < lineCount.value; index++) {
-    axisValues[styles.value[valueKeys.value[index]]][index % axisCount]
-      .push(...Object.values(values.value[valueKeys.value[index]]));
+    const style = styles.value[valueKeys.value[index]];
+
+    axisValues[style][index % axisCount]
+      .push(...styleValueStrategies[style](Object.values(values.value[valueKeys.value[index]])));
   }
 
   const axisLabels: Record<Style, Record<number|string|symbol, number[]>> = {
@@ -730,7 +737,6 @@ $-mood-colors: (
     > .chart-popovers {
       display: flex;
       height: 100%;
-      justify-content: center;
       pointer-events: none;
       position: absolute;
 

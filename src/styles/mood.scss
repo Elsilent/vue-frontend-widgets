@@ -25,6 +25,10 @@
     @include apply-color(background-color, background-neutral, $rule-postfix: $rule-postfix);
   }
 
+  &.mood-background-neutral-alt {
+    @include apply-color(background-color, background-neutral-alt, $rule-postfix: $rule-postfix);
+  }
+
   &.mood-background-positive {
     @include apply-color(background-color, background-positive, $rule-postfix: $rule-postfix);
   }
@@ -53,6 +57,10 @@
     @include apply-color(border-color, border-neutral, $rule-postfix: $rule-postfix);
   }
 
+  &.mood-border-neutral-alt {
+    @include apply-color(border-color, border-neutral-alt, $rule-postfix: $rule-postfix);
+  }
+
   &.mood-border-positive {
     @include apply-color(border-color, border-positive, $rule-postfix: $rule-postfix);
   }
@@ -79,6 +87,10 @@
 
   &.mood-text-neutral {
     @include apply-color(color, text-neutral, $rule-postfix: $rule-postfix);
+  }
+
+  &.mood-text-neutral-alt {
+    @include apply-color(color, text-neutral-alt, $rule-postfix: $rule-postfix);
   }
 
   &.mood-text-positive {

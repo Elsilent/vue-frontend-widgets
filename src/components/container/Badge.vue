@@ -11,7 +11,7 @@ const props = withDefaults(
     size?: Size;
   }>(),
   {
-    mood: 'important-alt',
+    mood: 'accent',
     outline: false,
     size: 'normal',
   },
