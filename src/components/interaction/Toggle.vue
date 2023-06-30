@@ -24,13 +24,27 @@ const toggleClasses = computed(() => {
 });
 
 const emit = defineEmits<{
+  (event: 'checked'): void;
+  (event: 'unchecked'): void;
   (event: 'update:modelValue', value: boolean): void;
 }>();
+
+const whenClicked = () => {
+  const newValue = !modelValue.value;
+
+  if (newValue) {
+    emit('checked');
+  } else {
+    emit('unchecked');
+  }
+
+  emit('update:modelValue', newValue);
+};
 </script>
 
 <template lang="pug">
 .toggle(
-  @click="() => emit('update:modelValue', !modelValue)",
+  @click="() => whenClicked()",
   :class='toggleClasses',
 )
 </template>
