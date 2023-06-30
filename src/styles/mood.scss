@@ -14,7 +14,7 @@
   }
 
   &.mood-background-inactive {
-    @include apply-color(background-color, background-elevated, $rule-postfix: $rule-postfix);
+    @include apply-color(background-color, background-lowered, $rule-postfix: $rule-postfix);
   }
 
   &.mood-background-negative {
