@@ -289,7 +289,7 @@ const getMoodComponents = (mood: Mood) => {
         hasAttributes = true;
       }
     }
-  } while (!hasAttributes);
+  } while (hasAttributes);
 
   return {
     attributes,
