@@ -15,8 +15,8 @@ const classes = computed(() => ({
 }));
 
 const style = computed(() => ({
-  '--mobile-columns': mobileColumns?.value ?? 0,
-  '--tablet-columns': tabletColumns?.value ?? 0,
+  '--mobile-columns': mobileColumns?.value ?? tabletColumns?.value ?? columns.value,
+  '--tablet-columns': tabletColumns?.value ?? mobileColumns?.value ?? columns.value,
   '--columns': columns.value,
 }));
 </script>
