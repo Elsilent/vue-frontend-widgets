@@ -53,11 +53,9 @@ const {
 } = toRefs(props);
 
 const axisLabels = computed(() => {
-  const axisCount = yAxisLabels?.value ? yAxisLabels.value.length : valueKeys.value.length;
-
-  const axisValues: Record<Style, number[][]> = {
-    bar: new Array(axisCount).fill(0).map(() => []),
-    line: new Array(axisCount).fill(0).map(() => []),
+  const axisValues: Record<Style, number[]> = {
+    bar: [],
+    line: [],
   };
 
   const styleValueStrategies: Record<Style, (values: number[]) => number[]> = {
@@ -68,7 +66,7 @@ const axisLabels = computed(() => {
   for (let index = 0; index < lineCount.value; index++) {
     const style = styles.value[valueKeys.value[index]];
 
-    axisValues[style][index % axisCount].push(
+    axisValues[style].push(
       ...styleValueStrategies[style](Object.values(values.value[valueKeys.value[index]])),
     );
   }
@@ -83,8 +81,8 @@ const axisLabels = computed(() => {
   for (const style of labelStyles) {
     axisLabels[style] = valueKeys.value
       .filter((key) => styles.value[key] === style)
-      .reduce((axisLabels, key, index) => {
-        const values = axisValues[style][index % axisCount];
+      .reduce((axisLabels, key) => {
+        const values = axisValues[style];
         const min = Math.min(...values, 0);
         const max = Math.max(...values);
         const scope = max - min;

@@ -43,8 +43,7 @@ const props = withDefaults(
   },
 );
 
-const { avatar, currencies, currency, locale, locales, menuItems, theme } =
-  toRefs(props);
+const { avatar, currencies, currency, locale, locales, menuItems, theme } = toRefs(props);
 
 const avatarIcon = computed(() =>
   avatar && avatar.value && 'icon' in avatar.value ? avatar.value.icon : undefined,
