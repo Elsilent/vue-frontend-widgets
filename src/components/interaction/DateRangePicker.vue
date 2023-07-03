@@ -184,6 +184,7 @@ Align.date-range-picker(
 @import '../../styles/transition.scss';
 
 .date-range-picker {
+  outline: none;
   position: relative;
 
   > .button {
@@ -195,7 +196,7 @@ Align.date-range-picker(
   > .input {
     border-bottom-right-radius: 0;
     border-top-right-radius: 0;
-    width: 12rem;
+    width: 14rem;
   }
 
   > .date-range-picker-body.popover {

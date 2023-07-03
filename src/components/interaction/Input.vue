@@ -67,6 +67,7 @@ input.input(
   border-radius: $border-radius-normal;
   border-style: solid;
   border-width: 1px;
+  box-sizing: border-box;
   display: inline-block;
   font-family: $font-family-normal;
   font-size: $font-size-normal;

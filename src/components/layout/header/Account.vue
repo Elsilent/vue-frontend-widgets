@@ -35,8 +35,6 @@ const props = withDefaults(
     locale: string;
     locales: Locale[];
     menuItems: Record<string, MenuItem>;
-    setLocale: (locale: string) => void;
-    setTheme: (theme: Theme) => void;
     theme: Theme;
     topExpanded?: boolean;
   }>(),
@@ -45,7 +43,7 @@ const props = withDefaults(
   },
 );
 
-const { avatar, currencies, currency, locale, locales, menuItems, setLocale, setTheme, theme } =
+const { avatar, currencies, currency, locale, locales, menuItems, theme } =
   toRefs(props);
 
 const avatarIcon = computed(() =>
@@ -124,11 +122,11 @@ const toggleTheme = () => {
       throw new UndefinedThemeError(theme);
     }).done!;
 
-  setTheme.value(newTheme);
+  setTheme(newTheme);
 };
 
 const updateLocale = (locale: string) => {
-  setLocale.value(locale);
+  setLocale(locale);
 
   whenBlurred();
 };
@@ -159,12 +157,27 @@ watch(expanded, (expanded) => {
 
 const emit = defineEmits<{
   (event: 'update:currency', currency: string): void;
+  (event: 'update:locale', locale: string): void;
+  (event: 'update:theme', theme: Theme): void;
 }>();
 
 const setCurrency = (currency: string) => {
   expanded.value = false;
+  whenBlurred();
 
   emit('update:currency', currency);
+};
+
+const setLocale = (locale: string) => {
+  expanded.value = false;
+
+  emit('update:locale', locale);
+};
+
+const setTheme = (theme: Theme) => {
+  expanded.value = false;
+
+  emit('update:theme', theme);
 };
 
 const whenBlurred = (event?: FocusEvent) => {
@@ -258,6 +271,7 @@ const whenMenuItemClicked = (code: string) => {
 
 .account-container {
   height: 100%;
+  outline: none;
   position: relative;
 
   > .account {
