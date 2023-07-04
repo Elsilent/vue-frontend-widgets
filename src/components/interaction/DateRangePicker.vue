@@ -3,7 +3,7 @@ import { DateTime } from 'luxon';
 import { ref, toRefs, watch } from 'vue';
 import Align from '../container/Align.vue';
 import Button from './Button.vue';
-import type { CalendarMode } from './Calendar.vue';
+import type { CalendarMode } from '../../utils/type/component/interaction/calendar';
 import Calendar from './Calendar.vue';
 import Info from '../label/Info.vue';
 import Input from './Input.vue';

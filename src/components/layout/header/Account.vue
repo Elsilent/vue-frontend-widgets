@@ -4,28 +4,14 @@ import Align from '../../../components/container/Align.vue';
 import Avatar from '../../../components/image/Avatar.vue';
 import Button from '../../../components/interaction/Button.vue';
 import PopoverMenu from '../../../components/interaction/PopoverMenu.vue';
-import type { MenuItem as PopoverMenuItem } from '../../../components/interaction/PopoverMenu.vue';
-import type { IconBackend } from '../../../utils/enum/icon_backend';
 import type { Mood } from '../../../utils/enum/mood';
 import type { Theme } from '../../../utils/enum/theme';
 import UndefinedThemeError from '../../../utils/error/undefined_theme';
 import type { LabeledCurrency } from '../../../utils/interface/currency';
 import match from '../../../utils/match';
-
-export type AvatarInfo =
-  | { icon: string; iconBackend?: IconBackend }
-  | { label: string }
-  | { source: string };
-
-export interface Locale {
-  code: string;
-  icon: string;
-}
-
-export interface MenuItem extends PopoverMenuItem {
-  handler: () => void;
-  label: string;
-}
+import type { AvatarInfo } from '../../../utils/type/component/layout/header/account';
+import type { Locale, MenuItem } from '../../../utils/interface/component/layout/header/account';
+import type { MenuItem as PopoverMenuItem } from '../../../utils/interface/menu';
 
 const props = withDefaults(
   defineProps<{

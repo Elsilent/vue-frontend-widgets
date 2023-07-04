@@ -7,15 +7,13 @@ import type { Size } from '../../../utils/enum/size';
 import { computed, toRefs } from 'vue';
 import match from '../../../utils/match';
 
-export type ItemLevel = 1 | 2 | 3;
-
 const props = withDefaults(
   defineProps<{
     active?: boolean;
     icon?: string;
     iconBackend?: IconBackend;
     label: string;
-    level?: ItemLevel;
+    level?: number;
     withSublevel?: boolean;
   }>(),
   {
@@ -29,7 +27,7 @@ const { active, icon, iconBackend, label, level, withSublevel } = toRefs(props);
 
 const itemIconSize = computed(
   () =>
-    match<ItemLevel, Size>(level.value)
+    match<number, Size>(level.value)
       .when(1, () => 'large-3')
       .whenAny([2, 3], () => 'large')
       .or((level) => {
@@ -41,7 +39,7 @@ const itemElevation = computed(() => (active.value ? 'elevated-2' : 'elevated'))
 
 const itemLabelSize = computed(
   () =>
-    match<ItemLevel, Size>(level.value)
+    match<number, Size>(level.value)
       .when(1, () => 'large')
       .whenAny([2, 3], () => 'normal')
       .or((level) => {

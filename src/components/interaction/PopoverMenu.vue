@@ -3,13 +3,7 @@ import { toRefs } from 'vue';
 import Icon from '../image/Icon.vue';
 import Info from '../label/Info.vue';
 import Popover from '../container/Popover.vue';
-import type { IconBackend } from '../../utils/enum/icon_backend';
-
-export interface MenuItem {
-  icon?: string;
-  iconBackend?: IconBackend;
-  label?: string;
-}
+import type { MenuItem } from '../../utils/interface/menu';
 
 const props = defineProps<{
   items: Record<string, MenuItem>;

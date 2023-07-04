@@ -1,14 +1,13 @@
 <script lang="ts" setup>
 import { computed, ref, toRefs } from 'vue';
 import type { Mood } from '../../utils/enum/mood';
+import type { Style } from '../../utils/type/component/image/line_bar_chart';
 import Info from '../label/Info.vue';
 
 interface Point {
   left: number;
   top: number;
 }
-
-export type Style = 'bar' | 'line';
 
 const supportedMoodAttributes = ['dashed', 'opaque'];
 

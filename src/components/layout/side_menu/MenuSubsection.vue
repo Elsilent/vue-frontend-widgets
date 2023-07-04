@@ -4,7 +4,7 @@ import type { Router } from 'vue-router';
 import Info from '../../../components/label/Info.vue';
 import type { IconBackend } from '../../../utils/enum/icon_backend';
 import type { MenuItem as MenuItemType, MenuSection } from '../../../utils/menu';
-import MenuItem, { type ItemLevel } from './MenuItem.vue';
+import MenuItem from './MenuItem.vue';
 
 type SectionLevel = 0 | 1 | 2;
 
@@ -38,7 +38,7 @@ const active = computed(() => {
   });
 });
 
-const nextItemLevel = computed(() => (level.value + 1) as ItemLevel);
+const nextItemLevel = computed(() => level.value + 1);
 const nextSectionLevel = computed(() => (level.value + 1) as SectionLevel);
 </script>
 

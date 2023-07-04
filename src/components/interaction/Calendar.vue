@@ -8,8 +8,7 @@ import Grid from '../container/Grid.vue';
 import { dateFormat, normalizeRange } from '../../utils/date';
 import match from '../../utils/match';
 import type { Mood } from '../../utils/enum/mood';
-
-export type CalendarMode = 'end' | 'start';
+import type { CalendarMode } from '../../utils/type/component/interaction/calendar';
 
 const props = withDefaults(
   defineProps<{
