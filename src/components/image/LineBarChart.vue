@@ -51,24 +51,48 @@ const {
   yAxisTitles,
 } = toRefs(props);
 
+const lineLabels = computed(() => Object.values(values.value).map((line) => Object.keys(line)));
+
 const axisLabels = computed(() => {
   const axisValues: Record<Style, number[]> = {
     bar: [],
     line: [],
   };
 
-  const styleValueStrategies: Record<Style, (values: number[]) => number[]> = {
-    bar: (values) => [values.reduce((a, b) => a + b, 0)],
-    line: (values) => values,
-  };
+  const barAxisValues: Record<number|string|symbol, number> = {};
 
   for (let index = 0; index < lineCount.value; index++) {
-    const style = styles.value[valueKeys.value[index]];
+    switch (styles.value[valueKeys.value[index]]) {
+      case 'bar':
+        for (const lineLabel of lineLabels.value[index]) {
+          if (!(lineLabel in barAxisValues)) {
+            barAxisValues[lineLabel] = 0;
+          }
 
-    axisValues[style].push(
-      ...styleValueStrategies[style](Object.values(values.value[valueKeys.value[index]])),
+          barAxisValues[lineLabel] += values.value[valueKeys.value[index]][lineLabel];
+        }
+        break;
+      case 'line':
+        axisValues.line.push(
+          ...Object.values(values.value[valueKeys.value[index]]),
+        );
+        break;
+    }
+  }
+
+  axisValues.bar = Object.values(barAxisValues);
+
+  for (let index = 0; index < lineCount.value; index++) {
+    if (styles.value[valueKeys.value[index]] !== 'line') {
+      continue;
+    }
+
+    axisValues.line.push(
+      ...Object.values(values.value[valueKeys.value[index]]),
     );
   }
+
+  console.log(values.value, axisValues.bar);
 
   const axisLabels: Record<Style, Record<number | string | symbol, number[]>> = {
     bar: {},
@@ -85,8 +109,9 @@ const axisLabels = computed(() => {
         const min = Math.min(...values, 0);
         const max = Math.max(...values);
         const scope = max - min;
-        const minVisibleScale = Math.pow(10, Math.floor(Math.abs(scope)).toString().length - 1);
-        const scale = Math.ceil(scope / minVisibleScale / (axis.value - 1)) * minVisibleScale;
+        const scaleCoef = Math.pow(10, Math.ceil(Math.abs(scope)).toString().length - 2);
+        const firstAxisRawValue = scope / (axis.value - 1);
+        const scale = Math.ceil(firstAxisRawValue / scaleCoef) * scaleCoef;
 
         const labels = [min];
 
@@ -125,8 +150,6 @@ const barValues = computed(() => {
 });
 
 const lineCount = computed(() => Object.keys(values.value).length);
-
-const lineLabels = computed(() => Object.values(values.value).map((line) => Object.keys(line)));
 
 const maxAxisLabels = computed(() => {
   const labelStyles: Style[] = ['bar', 'line'];

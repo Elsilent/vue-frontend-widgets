@@ -259,7 +259,7 @@ Align.calendar(column)
 
         &:not(.this-month) {
           &:deep(.info) {
-            @include apply-color(color, background-inactive);
+            @include apply-color(color, background-lowered-3);
           }
         }
 
