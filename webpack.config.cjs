@@ -2,8 +2,7 @@ const path = require('path');
 
 const { VueLoaderPlugin } = require('vue-loader');
 
-const makeVueEntry = (name) => ({
-    entry: `./src/components/${name}.js`,
+const makeEntry = (name, config) => ({
     mode: 'production',
     module: {
         rules: [
@@ -52,7 +51,20 @@ const makeVueEntry = (name) => ({
     plugins: [
         new VueLoaderPlugin(),
     ],
+    ...config,
 });
+
+const makeUtilEntry = (name) => makeEntry(name, {
+    entry: `./src/utils/${name}.js`,
+});
+
+const makeVueEntry = (name) => makeEntry(name, {
+    entry: `./src/components/${name}.js`,
+});
+
+const utilEntries = [
+    'numeral',
+];
 
 const vueEntries = [
     'container',
@@ -62,4 +74,7 @@ const vueEntries = [
     'view',
 ];
 
-module.exports = vueEntries.map((entry) => makeVueEntry(entry));
+module.exports = [
+    ...utilEntries.map((entry) => makeUtilEntry(entry)),
+    ...vueEntries.map((entry) => makeVueEntry(entry)),
+];

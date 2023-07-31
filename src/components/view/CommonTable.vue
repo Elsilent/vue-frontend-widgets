@@ -218,7 +218,7 @@
 
 <script>
 import axios from 'axios';
-import numeral from 'numeral';
+import numeral from '../../utils/numeral';
 import { cloneObject } from '../../utils/clone';
 import CellHint from './CellHint.vue';
 import ColumnHint from './ColumnHint.vue';

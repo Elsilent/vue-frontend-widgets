@@ -31,7 +31,7 @@
 
 <script>
 import axios from 'axios';
-import numeral from 'numeral';
+import numeral from '../../utils/numeral';
 import Header from '../label/Header.vue';
 import Info from '../label/Info.vue';
 import LoaderLineScale from '../image/LoaderLineScale.vue';
