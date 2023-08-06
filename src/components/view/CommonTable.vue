@@ -621,12 +621,16 @@ export default {
             return formattedValue + ' ' + this.clientCurrencySymbol;
           }
         case 'money_capped':
-          if (this.clientCurrencyDecimal === 0 && rawValue > 0 && rawValue < 1) {
-            if (this.clientCurrencySymbolPrefix) {
-              return '< ' + this.clientCurrencySymbol + ' 1';
-            } else {
-              return '< 1 ' + this.clientCurrencySymbol;
-            }
+          const willBeRoundedToZero = (parseFloat(rawValue.toFixed(this.clientCurrencyDecimal)) == 0);
+
+          if (rawValue > 0 && rawValue < 1 && willBeRoundedToZero) {
+            const formattedValue = (this.clientCurrencyDecimal === 0) ?
+                1 :
+                parseFloat('0.' + '0'.repeat(this.clientCurrencyDecimal - 1) + '1');
+
+            return this.clientCurrencySymbolPrefix ?
+                `< ${this.clientCurrencySymbol} ${formattedValue}` :
+                `< ${formattedValue} ${this.clientCurrencySymbol}`;
           } else {
             return this.formatValue(value, 'money', format);
           }
