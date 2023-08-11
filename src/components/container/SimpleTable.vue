@@ -1015,13 +1015,13 @@ export default {
 
         &.ordered-by {
           &.order-direction-asc {
-            &::before {
+            &::after {
               opacity: 0.5;
             }
           }
 
           &.order-direction-desc {
-            &::after {
+            &::before {
               opacity: 0.5;
             }
           }
