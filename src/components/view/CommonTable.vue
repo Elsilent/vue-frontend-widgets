@@ -1037,6 +1037,8 @@ export default {
      * Updates order by
      */
     async updateOrderBy(orderBy, save = true, fetchRows = true) {
+      // Always set to first page when changing ordering
+      await this.setPageNumber(0);
       if (fetchRows) {
         await this.setRows(undefined, undefined, orderBy);
       }
