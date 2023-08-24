@@ -42,9 +42,9 @@
       )
         | {{ column.label }}
         ColumnHint(
-          v-if="!isGhost && columnHasTooltip(columnKey)",
-          :description="getColumnTooltipContent(columnKey)",
-          :title="getColumnTooltipTitle(columnKey)",
+          v-if="!isGhost && columnHasTooltip(column)",
+          :description="getColumnTooltipContent(column)",
+          :title="getColumnTooltipTitle(column)",
           :visible="columnHintsVisible[columnKey]",
         )
     template(
@@ -407,8 +407,8 @@ export default {
     /**
      * Checks if column has a tooltip
      */
-    columnHasTooltip(columnKey) {
-      return this.getColumnTooltipTitle(columnKey) && this.getColumnTooltipContent(columnKey);
+    columnHasTooltip(column) {
+      return column.tooltipTitle && column.tooltipContent;
     },
     /**
      * Translates subcolumn label
@@ -509,20 +509,14 @@ export default {
     /**
      * Tries to retrieve column tooltip title
      */
-    getColumnTooltipTitle(columnKey) {
-      return this.strictTranslate(`tooltip.${columnKey}.title`);
+    getColumnTooltipTitle(column) {
+      return column.tooltipTitle;
     },
     /**
      * Tries to retrieve column tooltip contents
      */
-    getColumnTooltipContent(columnKey) {
-      if (this.clientShowCancel) {
-        return this.columns[columnKey].tooltip
-          ?? this.strictTranslate(`tooltip.${columnKey}.showCancel`)
-          ?? this.strictTranslate(`tooltip.${columnKey}.text`);
-      }
-
-      return this.columns[columnKey].tooltip ?? this.strictTranslate(`tooltip.${columnKey}.text`);
+    getColumnTooltipContent(column) {
+      return column.tooltipContent;
     },
     /**
      * Gets the index of a column in the list of currently expanded columns
