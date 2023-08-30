@@ -92,8 +92,6 @@ const axisLabels = computed(() => {
     );
   }
 
-  console.log(values.value, axisValues.bar);
-
   const axisLabels: Record<Style, Record<number | string | symbol, number[]>> = {
     bar: {},
     line: {},
