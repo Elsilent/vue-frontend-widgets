@@ -505,7 +505,15 @@ const setHover = (key: number | string | symbol, hover: boolean) => {
 @import '../../styles/shadows.scss';
 @import '../../styles/transition.scss';
 
-$-mood-colors: (important, important-alt, negative, neutral, positive);
+$-mood-colors: (
+  accent,
+  important,
+  important-alt,
+  negative,
+  neutral,
+  neutral-alt,
+  positive,
+);
 
 .line-chart {
   display: flex;
