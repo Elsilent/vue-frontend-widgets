@@ -249,6 +249,15 @@ export default {
     Table,
     TrendChart,
   },
+  watch: {
+    request: {
+      deep: true,
+      handler() {
+        // Reload page on the request change
+        this.setPageNumber(0);
+      }
+    }
+  },
   computed: {
     /**
      * Retrieves the list of columns in current column (may differ from columns prop in drag mode)
