@@ -914,7 +914,7 @@ $-mood-colors: (
         flex-direction: column;
         flex: 1;
         height: 100%;
-        padding: 0 2rem;
+        padding: 0 1%;
 
         > .separator {
           flex-grow: 1;
