@@ -8,65 +8,64 @@
       :pageNumber="pageNumber",
       :rowCount="rowCount",
     )
-  Table(
-    v-if='orderBy',
-    ref="table",
-    @addColoredMetric="(columnKey) => addColoredMetric(columnKey)",
-    @move:column="({ from, to }) => onColumnMove(from, to)",
-    @removeColoredMetric="(columnKey) => removeColoredMetric(columnKey)",
-    @update:orderBy="(newOrderBy) => updateOrderBy(newOrderBy)",
-    :cellClasses="cellClasses"
-    :colorMetrics="colorMetrics",
-    :coloredMetrics="coloredMetrics",
-    :columns="currentColumns",
-    :comparisonColumns="comparisonColumns",
-    :detailsRows="detailsRows",
-    :dragColumns="dragColumns",
-    :fixedColumnNumber="fixedColumnNumber",
-    :inversedKpis="inversedKpis",
-    :key="tableKey",
-    :orderBy="orderBy",
-    :primaryColumn="primaryColumn",
-    :rows="visibleRows",
-    :showRowNumber="showRowNumber",
-    :showTotal="!!totalRow",
-    :showTopTotal="showTopTotal",
+  .table-container(
+    @mouseover="() => showActionButtons()",
+    @mouseout="() => hideActionButtons()",
   )
-    template(
-      v-for="(column, columnKey) in currentColumns",
-      #[`column(${columnKey})`]="{ isGhost }",
-    )
-      .d-flex.align-items-center(
-        @mouseover="() => setColumnHintVisible(columnKey, true)",
-        @mouseout="() => setColumnHintVisible(columnKey, false)",
+    .action-buttons(:class="{ active: displayActionButtons }")
+      button.btn.btn-small.btn-success(
+        v-if="showInlineFilters",
+        @click="() => toggleInlineFilters()",
       )
-        | {{ column.label }}
-        ColumnHint(
-          v-if="!isGhost && columnHasTooltip(column)",
-          :description="getColumnTooltipContent(column)",
-          :title="getColumnTooltipTitle(column)",
-          :visible="columnHintsVisible[columnKey]",
+        .las(:class="displayInlineFilters ? 'la-trash' : 'la-filter'")
+    Table(
+      v-if='orderBy',
+      ref="table",
+      @addColoredMetric="(columnKey) => addColoredMetric(columnKey)",
+      @move:column="({ from, to }) => onColumnMove(from, to)",
+      @removeColoredMetric="(columnKey) => removeColoredMetric(columnKey)",
+      @update:orderBy="(newOrderBy) => updateOrderBy(newOrderBy)",
+      :additionalHeaders="additionalHeaders",
+      :cellClasses="cellClasses"
+      :colorMetrics="colorMetrics",
+      :coloredMetrics="coloredMetrics",
+      :columns="currentColumns",
+      :comparisonColumns="comparisonColumns",
+      :detailsRows="detailsRows",
+      :dragColumns="dragColumns",
+      :fixedColumnNumber="fixedColumnNumber",
+      :inversedKpis="inversedKpis",
+      :key="tableKey",
+      :orderBy="orderBy",
+      :primaryColumn="primaryColumn",
+      :rows="visibleRows",
+      :showRowNumber="showRowNumber",
+      :showTotal="!!totalRow",
+      :showTopTotal="showTopTotal",
+    )
+      template(
+        v-for="(column, columnKey) in currentColumns",
+        #[`column(${columnKey})`]="{ isGhost }",
+      )
+        .d-flex.align-items-center(
+          @mouseover="() => setColumnHintVisible(columnKey, true)",
+          @mouseout="() => setColumnHintVisible(columnKey, false)",
         )
-    template(
-      v-for="{ comparisonKey, key } in valueColumns",
-      #[`column(${key})`],
-    )
-      span.ws-pre {{ comparisonColumn(comparisonKey) }}
-    template(
-      v-for="(column, columnKey) in currentColumns",
-      #[`row(${columnKey})`]=`{
-        index,
-        name,
-        reloadRow,
-        row,
-        spanIndex,
-        subindex,
-        value,
-        reloadTable: simpleReloadTable,
-      }`,
-    )
-      slot(
-        v-bind=`{
+          | {{ column.label }}
+          ColumnHint(
+            v-if="!isGhost && columnHasTooltip(column)",
+            :description="getColumnTooltipContent(column)",
+            :title="getColumnTooltipTitle(column)",
+            :visible="columnHintsVisible[columnKey]",
+          )
+      template(
+        v-for="{ comparisonKey, key } in valueColumns",
+        #[`column(${key})`],
+      )
+        span.ws-pre {{ comparisonColumn(comparisonKey) }}
+      template(
+        v-for="(column, columnKey) in currentColumns",
+        #[`row(${columnKey})`]=`{
           index,
           name,
           reloadRow,
@@ -74,71 +73,87 @@
           spanIndex,
           subindex,
           value,
-          reloadTable: (forceFetch) => reloadTable(simpleReloadTable, forceFetch),
+          reloadTable: simpleReloadTable,
         }`,
-        :name="`row(${columnKey})`",
       )
-        TrendChart(
-          v-if="subindex === undefined && trendUrl && columnKey === 'trend'"
-          :class="getValueClass(columnKey, value, row.rowInfo.detailable)",
-          :formatter="(value) => formatValue(value, 'int')",
-          :url="getRowTrendUrl(row)",
+        slot(
+          v-bind=`{
+            index,
+            name,
+            reloadRow,
+            row,
+            spanIndex,
+            subindex,
+            value,
+            reloadTable: (forceFetch) => reloadTable(simpleReloadTable, forceFetch),
+          }`,
+          :name="`row(${columnKey})`",
         )
-        template(v-else-if="row.rowInfo.detailable && columnKey === detailsColumn")
-          span(
-            v-if="isColumnLinkable(row, columnKey) && row.rowInfo.detailable",
-            class='ws-pre'
+          TrendChart(
+            v-if="subindex === undefined && trendUrl && columnKey === 'trend'"
+            :class="getValueClass(columnKey, value, row.rowInfo.detailable)",
+            :formatter="(value) => formatValue(value, 'int')",
+            :url="getRowTrendUrl(row)",
+          )
+          template(v-else-if="row.rowInfo.detailable && columnKey === detailsColumn")
+            span.ws-pre(
+              v-if="isColumnLinkable(row, columnKey) && row.rowInfo.detailable",
+              :class="getValueClass(columnKey, value, row.rowInfo.detailable)",
+            )
+              a.column-link(:href='getColumnLinkUrl(columnLinks[columnKey], row)')
+                | {{ shortenValue(formatValue(value, column.type), columnKey) }}
+            template(v-else) {{ formatValue(value, column.type) }}
+          span.ws-pre(
+            v-else-if="isColumnLinkable(row, columnKey) && row.rowInfo.detailable",
             :class="getValueClass(columnKey, value, row.rowInfo.detailable)",
           )
             a.column-link(:href='getColumnLinkUrl(columnLinks[columnKey], row)')
               | {{ shortenValue(formatValue(value, column.type), columnKey) }}
-          template(v-else) {{ formatValue(value, column.type) }}
-        span(
-          v-else-if="isColumnLinkable(row, columnKey) && row.rowInfo.detailable",
-          class='ws-pre',
-          :class="getValueClass(columnKey, value, row.rowInfo.detailable)",
-        )
-          a.column-link(:href='getColumnLinkUrl(columnLinks[columnKey], row)')
-            | {{ shortenValue(formatValue(value, column.type), columnKey) }}
-        CellHint(
-          v-else-if="subindex === undefined && value >= 0.01 && columnKey in columnDetails",
-          :format="columnDetails[columnKey].format",
-          :label="shortenValue(formatValue(value, column.type), columnKey)",
-          :title="columnDetails[columnKey].title",
-          :url="getColumnDetailsUrl(columnKey, row)",
-        )
-        span(
-          v-else,
-          :class="getValueClass(columnKey, value, row.rowInfo.detailable)",
-        ) {{ shortenValue(formatValue(value, column.type), columnKey) }}
-        i.flex-grow-1.expand-column.fa(
-          v-if='canShorten(columnKey, value)',
-          @click='() => toggleExpandColumn(columnKey)',
-          :class="expandedColumns.includes(columnKey) ? 'fa-compress-alt' : 'fa-expand-alt'",
-        )
-        DetailsSelector(
-          v-if="row.rowInfo.detailable && columnKey === detailsColumn",
-          @hideDetails="() => onHideDetails(row)",
-          @showDetails="(kind) => onShowDetails(kind, row)",
-          :class="{ 'flex-grow-1 text-right': !canShorten(columnKey, value) }",
-          :kinds="detailsKinds",
-          :open="detailsRows[row[primaryColumn]] !== undefined",
-        )
-    template(
-      v-for="{ column, columnKey, format, key, type } in valueColumns",
-      #[`row(${key})`]=`{
-        index,
-        name,
-        reloadRow,
-        row,
-        spanIndex,
-        subindex,
-        value,
-        reloadTable: simpleReloadTable,
-      }`,
-    )
-      slot(
-        v-bind=`{
+          CellHint(
+            v-else-if="subindex === undefined && value >= 0.01 && columnKey in columnDetails",
+            :format="columnDetails[columnKey].format",
+            :label="shortenValue(formatValue(value, column.type), columnKey)",
+            :title="columnDetails[columnKey].title",
+            :url="getColumnDetailsUrl(columnKey, row)",
+          )
+          span(
+            v-else,
+            :class="getValueClass(columnKey, value, row.rowInfo.detailable)",
+          ) {{ shortenValue(formatValue(value, column.type), columnKey) }}
+          i.flex-grow-1.expand-column.fa(
+            v-if='canShorten(columnKey, value)',
+            @click='() => toggleExpandColumn(columnKey)',
+            :class="expandedColumns.includes(columnKey) ? 'fa-compress-alt' : 'fa-expand-alt'",
+          )
+          DetailsSelector(
+            v-if="row.rowInfo.detailable && columnKey === detailsColumn",
+            @hideDetails="() => onHideDetails(row)",
+            @showDetails="(kind) => onShowDetails(kind, row)",
+            :class="{ 'flex-grow-1 text-right': !canShorten(columnKey, value) }",
+            :kinds="detailsKinds",
+            :open="detailsRows[row[primaryColumn]] !== undefined",
+          )
+      template(
+        v-for="(_, columnKey) in currentColumns",
+        #[`additionalHeader(inline_filters)(${columnKey})`],
+      )
+        .d-flex.inline-filter(v-if="hasInlineFilters(columnKey)")
+          Dropdown.inline-filter-dropdown(
+            @change="(operator) => setInlineFilter(columnKey, { operator })",
+            :id="`additional_header_${columnKey}`",
+            :items="getInlineFilterOperatorItems(columnKey)",
+            :value="getInlineFilterCurrentOperatorItem(columnKey)",
+          )
+            template(#item="{ item }") {{ item }}
+          Input.flex-grow-1.inline-filter-input(
+            @blur="(event) => onInlineFilterBlur(event, columnKey)",
+            @keyup="(event) => onInlineFilterKeyUp(event, columnKey)"
+            :modelValue="getInlineFilterCurrentValue(columnKey)",
+            :type="getInlineFilterValueType(columnKey)",
+          )
+      template(
+        v-for="{ column, columnKey, format, key, type } in valueColumns",
+        #[`row(${key})`]=`{
           index,
           name,
           reloadRow,
@@ -146,73 +161,85 @@
           spanIndex,
           subindex,
           value,
-          reloadTable: (forceFetch) => reloadTable(simpleReloadTable, forceFetch),
+          reloadTable: simpleReloadTable,
         }`,
-        :name="`row(${key})`",
       )
-        TrendChart(
-          v-if="subindex === undefined && trendUrl && columnKey === 'trend'",
-          :formatter="(value) => formatValue(value, 'int')",
-          :url="getRowTrendUrl(row, spanIndex)",
+        slot(
+          v-bind=`{
+            index,
+            name,
+            reloadRow,
+            row,
+            spanIndex,
+            subindex,
+            value,
+            reloadTable: (forceFetch) => reloadTable(simpleReloadTable, forceFetch),
+          }`,
+          :name="`row(${key})`",
         )
-        span(
-          v-else-if="format === 'difference'",
-          :class="differenceClass(value, columnKey)",
-        ) {{ shortenValue(formatValue(value, type || currentColumns[columnKey].type, format), columnKey) }}
-        template(v-else-if="columnKey !== 'trend'")
-          | {{ shortenValue(formatValue(value, type || currentColumns[columnKey].type, format), columnKey) }}
-        CellHint(
-          v-else-if="subindex === undefined && value >= 0.01 && columnKey in columnDetails",
-          :format="columnDetails[columnKey].format",
-          :label="shortenValue(formatValue(value, type || currentColumns[columnKey].type, format), columnKey)",
-          :title="columnDetails[columnKey].title",
-          :url="getColumnDetailsUrl(columnKey, row)",
-        )
-        template(v-else-if="columnKey !== 'trend'")
-          | {{ shortenValue(formatValue(value, type || currentColumns[columnKey].type, format), columnKey) }}
-        i.expand-column.fa(
-          v-if='canShorten(columnKey, value)',
-          @click='() => toggleExpandColumn(columnKey)',
-          :class="expandedColumns.includes(columnKey) ? 'fa-compress-alt' : 'fa-expand-alt'",
-        )
-    template(
-      v-if="!!totalRow",
-      v-for="(column, columnKey) in currentColumns",
-      #[`total(${columnKey})`]="values",
-    )
-      slot(
-        v-bind="{ ...values, row: totalRow, value: totalRow ? [columnKey] : undefined }",
-        :name="`total(${columnKey})`"
+          TrendChart(
+            v-if="subindex === undefined && trendUrl && columnKey === 'trend'",
+            :formatter="(value) => formatValue(value, 'int')",
+            :url="getRowTrendUrl(row, spanIndex)",
+          )
+          span(
+            v-else-if="format === 'difference'",
+            :class="differenceClass(value, columnKey)",
+          ) {{ shortenValue(formatValue(value, type || currentColumns[columnKey].type, format), columnKey) }}
+          template(v-else-if="columnKey !== 'trend'")
+            | {{ shortenValue(formatValue(value, type || currentColumns[columnKey].type, format), columnKey) }}
+          CellHint(
+            v-else-if="subindex === undefined && value >= 0.01 && columnKey in columnDetails",
+            :format="columnDetails[columnKey].format",
+            :label="shortenValue(formatValue(value, type || currentColumns[columnKey].type, format), columnKey)",
+            :title="columnDetails[columnKey].title",
+            :url="getColumnDetailsUrl(columnKey, row)",
+          )
+          template(v-else-if="columnKey !== 'trend'")
+            | {{ shortenValue(formatValue(value, type || currentColumns[columnKey].type, format), columnKey) }}
+          i.expand-column.fa(
+            v-if='canShorten(columnKey, value)',
+            @click='() => toggleExpandColumn(columnKey)',
+            :class="expandedColumns.includes(columnKey) ? 'fa-compress-alt' : 'fa-expand-alt'",
+          )
+      template(
+        v-if="!!totalRow",
+        v-for="(column, columnKey) in currentColumns",
+        #[`total(${columnKey})`]="values",
       )
-        template(v-if="columnKey === totalColumnKey") {{ $t('common.label.totalNumber', { total: rowCount ? rowCount : allRows.length }) }}
-        CellHint(
-          v-else-if="totalRow[columnKey] >= 0.01 && columnKey in columnDetails",
-          :format="columnDetails[columnKey].format",
-          :label="formatValue(totalRow[columnKey], column.type)",
-          :title="columnDetails[columnKey].title",
-          :url="getColumnDetailsTotalUrl(columnDetails[columnKey].base_url)",
+        slot(
+          v-bind="{ ...values, row: totalRow, value: totalRow ? [columnKey] : undefined }",
+          :name="`total(${columnKey})`"
         )
-        template(v-else-if="column.type !== 'string'") {{ formatValue(totalRow[columnKey], column.type) }}
-    template(
-      v-for="{ column, columnKey, comparisonKey, format, key } in valueColumns",
-      #[`total(${key})`]="values",
-    )
-      slot(
-        v-bind="{ ...values, row: totalRow, value: totalRow ? [columnKey] : undefined }",
-        :name="`total(${key})`",
+          template(v-if="columnKey === totalColumnKey") {{ $t('common.label.totalNumber', { total: rowCount ? rowCount : allRows.length }) }}
+          CellHint(
+            v-else-if="totalRow[columnKey] >= 0.01 && columnKey in columnDetails",
+            :format="columnDetails[columnKey].format",
+            :label="formatValue(totalRow[columnKey], column.type)",
+            :title="columnDetails[columnKey].title",
+            :url="getColumnDetailsTotalUrl(columnDetails[columnKey].base_url)",
+          )
+          template(v-else-if="column.type !== 'string'") {{ formatValue(totalRow[columnKey], column.type) }}
+      template(
+        v-for="{ column, columnKey, comparisonKey, format, key } in valueColumns",
+        #[`total(${key})`]="values",
       )
-        span(
-          v-if="format === 'difference'",
-          :class="differenceClass(totalComparisonValue(columnKey, comparisonKey), columnKey)",
-        ) {{ formattedTotalComparisonValue(columnKey, comparisonKey, format) }}
-        CellHint(
-          v-else-if="totalRow[columnKey] >= 0.01 && columnKey in columnDetails",
-          :format="columnDetails[columnKey].format",
-          :label="shortenValue(formatValue(totalRow[columnKey], type || currentColumns[columnKey].type, format), columnKey)",
-          :title="columnDetails[columnKey].title",
-          :url="columnDetails[columnKey].base_url",
+        slot(
+          v-bind="{ ...values, row: totalRow, value: totalRow ? [columnKey] : undefined }",
+          :name="`total(${key})`",
         )
-        template(v-else-if="columnKey !== 'trend'") {{ formattedTotalComparisonValue(columnKey, comparisonKey, format) }}
+          span(
+            v-if="format === 'difference'",
+            :class="differenceClass(totalComparisonValue(columnKey, comparisonKey), columnKey)",
+          ) {{ formattedTotalComparisonValue(columnKey, comparisonKey, format) }}
+          CellHint(
+            v-else-if="totalRow[columnKey] >= 0.01 && columnKey in columnDetails",
+            :format="columnDetails[columnKey].format",
+            :label="shortenValue(formatValue(totalRow[columnKey], type || currentColumns[columnKey].type, format), columnKey)",
+            :title="columnDetails[columnKey].title",
+            :url="columnDetails[columnKey].base_url",
+          )
+          template(v-else-if="columnKey !== 'trend'") {{ formattedTotalComparisonValue(columnKey, comparisonKey, format) }}
   .loading-overlay(:class="{ visible: loading }")
     LoaderLineScale
 </template>
@@ -224,6 +251,8 @@ import { cloneObject } from '../../utils/clone';
 import CellHint from './CellHint.vue';
 import ColumnHint from './ColumnHint.vue';
 import DetailsSelector from './DetailsSelector.vue';
+import Dropdown from '../interaction/Dropdown.vue';
+import Input from '../interaction/Input.vue';
 import LoaderLineScale from '../image/LoaderLineScale.vue';
 import Pagination from './Pagination.vue';
 import Table from '../container/Table.vue';
@@ -245,21 +274,25 @@ export default {
     CellHint,
     ColumnHint,
     DetailsSelector,
+    Dropdown,
+    Input,
     LoaderLineScale,
     Pagination,
     Table,
     TrendChart,
   },
-  watch: {
-    request: {
-      deep: true,
-      handler() {
-        // Reload page on the request change
-        this.setPageNumber(0);
-      }
-    }
-  },
   computed: {
+    additionalHeaders() {
+      const additionalHeaders = {};
+
+      if (this.displayInlineFilters) {
+        additionalHeaders.inline_filters = {
+          icon: 'filter',
+        };
+      }
+
+      return additionalHeaders;
+    },
     /**
      * Retrieves the list of columns in current column (may differ from columns prop in drag mode)
      */
@@ -373,8 +406,11 @@ export default {
       columnHintsVisible: {},
       currentColumnKeys: [],
       detailsRows: {},
+      displayActionButtons: false,
+      displayInlineFilters: false,
       expandedColumns: [],
       fetchedAllRows: false,
+      inlineFilters: this.makeInlineFilters(),
       loading: true,
       orderBy: undefined,
       pageNumber: 0,
@@ -479,11 +515,11 @@ export default {
     /**
      * Returns the URL with "total" parameter.
      */
-    getColumnDetailsTotalUrl(base_url) {
-        const url = new URL(base_url);
-        url.searchParams.set('total', 'true');
+    getColumnDetailsTotalUrl(baseUrl) {
+      const url = new URL(baseUrl);
+      url.searchParams.set('total', 'true');
 
-        return url.toString();
+      return url.toString();
     },
     /**
      * Formats total value based on subcolumn
@@ -541,6 +577,38 @@ export default {
       }
 
       return this.expandedColumns.indexOf(columnKey);
+    },
+    getInlineFilterCurrentOperatorItem(columnKey) {
+      if (!(columnKey in this.inlineFilters)) {
+        return undefined;
+      }
+
+      return this.inlineFilters[columnKey].operator;
+    },
+    getInlineFilterCurrentValue(columnKey) {
+      if (!(columnKey in this.inlineFilters)) {
+        return undefined;
+      }
+
+      return this.inlineFilters[columnKey].value;
+    },
+    getInlineFilterOperators(columnKey) {
+      return this.inlineFilterOperators[columnKey] ?? undefined;
+    },
+    getInlineFilterOperatorItems(columnKey) {
+      const operators = this.getInlineFilterOperators(columnKey);
+
+      return Object.entries(operators)
+        .reduce((operators, [operatorKey, operator]) => {
+          operators[operatorKey] = operator.label;
+
+          return operators;
+        }, {});
+    },
+    getInlineFilterValueType(columnKey) {
+      return this.columns[columnKey].type === 'string'
+        ? 'text'
+        : 'number';
     },
     /**
      * Numeric data can come as strings or nulls from backend.
@@ -654,6 +722,12 @@ export default {
           return rawValue;
       }
     },
+    hasInlineFilters(columnKey) {
+      return columnKey in this.inlineFilterOperators;
+    },
+    hideActionButtons() {
+      this.displayActionButtons = false;
+    },
     isColumnLinkable(row, columnKey) {
       if (!this.columnLinks) {
         return false;
@@ -667,6 +741,22 @@ export default {
         }
       }
       return true;
+    },
+    makeInlineFilters() {
+      const inlineFilters = {};
+
+      for (const [columnKey, column] of Object.entries(this.columns)) {
+        if (!(columnKey in this.inlineFilterOperators)) {
+          continue;
+        }
+
+        inlineFilters[columnKey] = {
+          operator: Object.keys(this.inlineFilterOperators[columnKey])[0],
+          value: undefined,
+        };
+      }
+
+      return inlineFilters;
     },
     onColumnMove(from, to) {
       const [column] = this.currentColumnKeys.splice(from, 1);
@@ -745,6 +835,16 @@ export default {
         this.$refs['table'].$el.scrollTo(scroll);
       });
     },
+    onInlineFilterBlur(event, columnKey) {
+      const value = event.target.value;
+
+      this.setInlineFilter(columnKey, { value });
+    },
+    onInlineFilterKeyUp(event, columnKey) {
+      if (event.key === 'Enter') {
+        event.target.blur();
+      }
+    },
     /**
      * Shows detailed rows
      */
@@ -779,6 +879,24 @@ export default {
       await this.setOrderByFromLocalStorage(fetchRows)
         || await this.setOrderByFromDataTables(fetchRows)
         || await this.setOrderByFromDefault(fetchRows);
+    },
+    setInlineFilter(columnKey, { operator, value }) {
+      if (!operator) {
+        operator = Object.keys(this.getInlineFilterOperators(columnKey))[0];
+      }
+      if (!operator) {
+        // Inline filters are deactivated for the column
+        return;
+      }
+
+      this.$set(this.inlineFilters, columnKey, {
+        ...this.inlineFilters[columnKey],
+        operator,
+        value,
+      });
+
+      // Filter the rows and reset the pagination
+      this.setPageNumber(0);
     },
     /**
      * Tries to retrieve ordering information
@@ -945,6 +1063,7 @@ export default {
       const url = new URL(this.request.url, window.location.origin);
       const params = {
         ...(this.request.params ?? {}),
+        filter: this.inlineFilters,
         page_number: pageNumber,
         page_size: pageSize,
         order: orderBy[0],
@@ -993,13 +1112,31 @@ export default {
      */
     setRowsFromStatic() {
       if (this.rows) {
-        this.allRows = Object.values(this.rows);
+        let rows = Object.values(this.rows);
+
+        for (const [columnKey, filter] of Object.entries(this.inlineFilters)) {
+          if (!filter.value) {
+            continue;
+          }
+
+          rows = rows.filter((row) =>
+            this.inlineFilterOperators[columnKey][filter.operator].callback(
+              row[columnKey],
+              filter.value,
+            )
+          );
+        }
+
+        this.allRows = rows;
         this.rowCount = this.allRows.length;
 
         return true;
       }
 
       return false;
+    },
+    showActionButtons() {
+      this.displayActionButtons = true;
     },
     /**
      * Tries to translate a key, returns undefined on fail
@@ -1030,6 +1167,9 @@ export default {
       } else {
         this.expandedColumns.push(columnKey);
       }
+    },
+    toggleInlineFilters() {
+      this.displayInlineFilters = !this.displayInlineFilters;
     },
     /**
      * Gets total value for a subcolumn
@@ -1212,6 +1352,20 @@ export default {
       default: 1,
     },
     /**
+     * Mapping between a column type and its operators.
+     *
+     * Format of the operator description:
+     *
+     * {
+     *   label: String,
+     *   callback: <T>(rowValue: T, filterValue: T) => boolean,
+     * }
+     */
+    inlineFilterOperators: {
+      type: Object,
+      default: {},
+    },
+    /**
      * Provides the list of negative KPIs. This list is used for coloring metrics
      */
     inversedKpis: {
@@ -1256,6 +1410,17 @@ export default {
     shortenColumns: {
       type: Array,
       required: false,
+    },
+    /**
+     * Enables the display of the inline filters
+     *
+     * When data is static the filters are provided directly in the table.
+     * When data is fetched the filters are passed to the backend
+     * in the format of inline_filter[columnKey]=value
+     */
+    showInlineFilters: {
+      type: Boolean,
+      default: false,
     },
     /**
      * Enables the display of row number
@@ -1310,11 +1475,49 @@ export default {
       required: false,
     },
   },
+  watch: {
+    columns() {
+      this.inlineFilters = this.makeInlineFilters();
+    },
+    request: {
+      deep: true,
+      handler() {
+        // Reload page on the request change
+        this.setPageNumber(0);
+      }
+    }
+  },
 }
 </script>
 
 <style lang="scss" scoped>
 @import '../../styles/colors.scss';
+
+.table-container {
+  position: relative;
+}
+
+.action-buttons {
+  position: absolute;
+  left: 0;
+  opacity: 0;
+  pointer-events: none;
+  top: 0;
+  transition: opacity 0.3s;
+  transform: translateX(-100%);
+
+  &.active {
+    opacity: 1;
+    pointer-events: all;
+
+    transition-duration: 0.1s;
+  }
+
+  > button {
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
+  }
+}
 
 .common-table {
   position: relative;
@@ -1344,6 +1547,38 @@ export default {
   color: $color-active;
   cursor: pointer;
   margin-left: 0.5rem;
+}
+
+.inline-filter {
+  &::v-deep .inline-filter-dropdown  + .select2 {
+    min-width: 100px;
+
+    .select2-selection.select2-selection--single {
+      border-bottom-right-radius: 0;
+      border-top-right-radius: 0;
+      height: 30px !important;
+      position: relative;
+
+      .select2-selection__rendered {
+        line-height: initial;
+      }
+
+      .select2-selection__arrow {
+        right: 4px !important;
+        top: 1px !important;
+      }
+    }
+  }
+
+  .inline-filter-input {
+    border-bottom-left-radius: 0;
+    border-color: #d9d9d9;
+    border-left-width: 0;
+    border-top-left-radius: 0;
+    height: 30px;
+    min-width: 50px;
+    padding: 0 0.25rem;
+  }
 }
 
 .loading-overlay {

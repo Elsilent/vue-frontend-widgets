@@ -7,7 +7,9 @@ select.dropdown(
 )
   option.dropdown-item(
     v-for="(item, itemIndex) in items",
-    :key="itemIndex",
+    :key="`${itemIndex}-${value}`",
+    :data-index="itemIndex",
+    :selected="value === getItemValue(itemIndex)",
   )
     slot(name="item", :item="item")
 </template>
@@ -23,6 +25,11 @@ export default {
     };
   },
   methods: {
+    getItemValue(itemIndex) {
+      return Array.isArray(this.items)
+        ? this.items[itemIndex]
+        : itemIndex;
+    },
     initSelect2() {
       const options = {
         tags: this.tags,
@@ -46,8 +53,12 @@ export default {
 
       $select2
         .on('change', () => {
-          this.$emit('input', $(this.$refs.select2).val());
-          this.$emit('change', $(this.$refs.select2).val());
+          const index = $(this.$refs.select2).children(':selected').data('index');
+
+          const value = this.getItemValue(index);
+
+          this.$emit('input', value);
+          this.$emit('change', value);
         });
 
       if (!$select2) {
@@ -100,9 +111,6 @@ export default {
     },
   },
   watch: {
-    items() {
-      this.select2Object.trigger('change');
-    },
     options: {
       deep: true,
       handler() {
@@ -110,7 +118,7 @@ export default {
       },
     },
     value() {
-      this.select2Object.val(this.value).trigger('change');
+      $(this.$refs.select2).val(this.value);
     },
   },
 };

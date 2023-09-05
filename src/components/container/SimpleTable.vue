@@ -39,6 +39,15 @@
         :style="getColumnGhostStyle(columnKey)",
       )
         slot(:name="`column(${columnKey})`", :isGhost="true")
+  template(v-for='(additionalHeaderInfo, additionalHeader) in additionalHeaders')
+    .cell.column.cell-additional-header.row-number(v-if='showRowNumber')
+      i.las(:class="[`la-${additionalHeaderInfo.icon}`]")
+    template(v-for="columnKey in visibleColumnKeys")
+      .cell.column.cell-additional-header(
+        :class="[`cell-additional-header-${columnKey}`]",
+        :key="`additional-header-${additionalHeader}-${columnKey}`",
+      )
+        slot(:name="`additionalHeader(${additionalHeader})(${columnKey})`")
   template(v-if='showTopTotal && showTotal')
     .cell.total(v-if="showRowNumber")
     template(v-for="columnKey in visibleColumnKeys")
@@ -773,6 +782,18 @@ export default {
     this.updateColumnSizingInfo();
   },
   props: {
+    /**
+     * List of additional header rows to show.
+     * E.g.: {
+     *   inline_filters: {
+     *     icon: 'filter-alt',
+     *   }
+     * }
+     */
+    additionalHeaders: {
+      type: Object,
+      default: () => {},
+    },
     /**
      * Additional cell classes with className as a key
      * E.g.: { 'align-left': true, 'height-100': true }
