@@ -74,8 +74,20 @@ watch(rows, () => {
   metricDistribution.value = getMetricDistribution();
 });
 
+const metricsAlignment = computed(() => Object.values(metrics.value)
+  .map((metric) => {
+    switch (metric.align) {
+      case 'left':
+        return 'min-content 1fr';
+      case 'center':
+      default:
+        return 'max-content 1fr';
+    }
+  })
+  .join(' '));
+
 const style = computed(() => ({
-  '--columns': 1 + Object.keys(metrics.value).length * 2,
+  '--alignment': `max-content ${metricsAlignment.value}`,
 }));
 </script>
 
@@ -100,10 +112,14 @@ const style = computed(() => ({
       slot(name='cell(dimension)', :value='dimension')
         Info {{ dimension }}
     template(v-for='(metric, metricCode) in metrics')
-      Align.cell(horizontal='center', vertical='center')
+      Align.cell(
+        :horizontal="metric.align ?? 'center'",
+        vertical='center',
+      )
         Info {{ metric.formatter(row[metricCode]) }}
       Align.cell(
         :class="{ 'row-last': metricCode === lastMetricCode }",
+        horizontal='center',
         vertical='center',
       )
         ProgressBar(
@@ -123,10 +139,11 @@ const style = computed(() => ({
 
 .kpi-distribution-table {
   display: grid;
-  grid-template-columns: repeat(var(--columns), 1fr);
+  grid-template-columns: var(--alignment);
 
   > .cell {
     padding: $padding-size-small-2;
+    white-space: nowrap;
 
     &.row-first {
       padding-left: $padding-size-large;
