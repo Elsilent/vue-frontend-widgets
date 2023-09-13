@@ -50,7 +50,8 @@
     template(
       v-for="{ comparisonKey, key } in valueColumns",
       #[`column(${key})`],
-    ) {{ comparisonColumn(comparisonKey) }}
+    )
+      span(class='ws-pre') {{ comparisonColumn(comparisonKey) }}
     template(
       v-for="(column, columnKey) in currentColumns",
       #[`row(${columnKey})`]=`{
