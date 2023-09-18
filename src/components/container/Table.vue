@@ -11,6 +11,7 @@
       @addColoredMetric="(columnKey) => $emit('addColoredMetric', columnKey)",
       @removeColoredMetric="(columnKey) => $emit('removeColoredMetric', columnKey)",
       @update:orderBy="(orderBy) => $emit('update:orderBy', orderBy)",
+      :additionalHeaders="additionalHeaders",
       :cellClasses="cellClasses"
       :colorMetrics="colorMetrics",
       :coloredMetrics="coloredMetrics",
@@ -28,6 +29,11 @@
       :showTopTotal="showTopTotal",
       :showTotal="showTotal",
     )
+      template(
+        v-for="[additionalHeader, columnKey] in getAdditionalHeaderColumns('fixed')",
+        #[`additionalHeader(${additionalHeader})(${columnKey})`],
+      )
+        slot(:name="`additionalHeader(${additionalHeader})(${columnKey})`")
       template(v-for="(_, columnKey) in fixedColumns", #[`column(${columnKey})`]="{isGhost}")
         slot(:name="`column(${columnKey})`", :isGhost="isGhost ? isGhost : false")
       template(v-for="(_, columnKey) in fixedColumns", #[`row(${columnKey})`]="values")
@@ -46,6 +52,7 @@
       @move:column="({ from, to }) => $emit('move:column', { from: from + fixedColumnNumber, to: to + fixedColumnNumber })",
       @removeColoredMetric="(columnKey) => $emit('removeColoredMetric', columnKey)",
       @update:orderBy="(orderBy) => $emit('update:orderBy', orderBy)",
+      :additionalHeaders="additionalHeaders",
       :cellClasses="cellClasses",
       :colorMetrics="colorMetrics",
       :coloredMetrics="coloredMetrics",
@@ -65,6 +72,11 @@
       :noDataMessage="$t('common.label.noData')",
       :style="tableStyle"
     )
+      template(
+        v-for="[additionalHeader, columnKey] in getAdditionalHeaderColumns('scrollable')",
+        #[`additionalHeader(${additionalHeader})(${columnKey})`],
+      )
+        slot(:name="`additionalHeader(${additionalHeader})(${columnKey})`")
       template(v-for="(_, columnKey) in scrollableColumns", #[`column(${columnKey})`]="{isGhost}")
         slot(:name="`column(${columnKey})`", :isGhost="isGhost ? isGhost : false")
       template(v-for="(_, columnKey) in scrollableColumns", #[`row(${columnKey})`]="values")
@@ -207,6 +219,43 @@ export default {
   },
   methods: {
     /**
+     * Retrieves all possible pairs of additional headers and column keys
+     *
+     * @param {'fixed'|'scrollable'} columnKeysFilter
+     */
+    getAdditionalHeaderColumns(columnKeysFilter) {
+      const columns = (() => {
+        switch (columnKeysFilter) {
+          case 'fixed':
+            return this.fixedColumns;
+          case 'scrollable':
+            return this.scrollableColumns;
+        }
+      })();
+
+      const columnKeys = Object.keys(columns);
+      const additionalHeaders = Object.keys(this.additionalHeaders);
+
+      const additionalHeaderColumns = new Array(columnKeys.length * additionalHeaders.length);
+
+      for (
+        let additionalHeaderIndex = 0;
+        additionalHeaderIndex < additionalHeaders.length;
+        additionalHeaderIndex++
+      ) {
+        for (let columnIndex = 0; columnIndex < columnKeys.length; columnIndex++) {
+          const index = additionalHeaderIndex * additionalHeaders.length + columnIndex;
+
+          additionalHeaderColumns[index] = [
+            additionalHeaders[additionalHeaderIndex],
+            columnKeys[columnIndex],
+          ];
+        }
+      }
+
+      return additionalHeaderColumns;
+    },
+    /**
      * Updates table size. Used on init and on resize
      */
     updateTableSize() {
@@ -286,6 +335,18 @@ export default {
     }
   },
   props: {
+    /**
+     * List of additional header rows to show.
+     * E.g.: {
+     *   inline_filters: {
+     *     icon: 'filter-alt',
+     *   }
+     * }
+     */
+    additionalHeaders: {
+      type: Object,
+      default: () => {},
+    },
     /**
      * Additional cell classes with className as a key
      * E.g.: { 'align-left': true, 'height-100': true }
