@@ -10,7 +10,6 @@ const props = defineProps<{
 const { value } = toRefs(props);
 
 const style = computed(() => ({
-  '--gradient-width': `${value.value ? 100 / value.value : 0}%`,
   '--width': `${value.value * 100}%`,
 }));
 </script>
@@ -44,7 +43,7 @@ const style = computed(() => ({
     background-blend-mode: color-burn, normal;
     background-image: linear-gradient(to right, rgba(black, 30%), transparent);
     background-position: center left;
-    background-size: var(--gradient-width);
+    background-size: 100%;
     bottom: 0;
     content: '';
     left: 0;

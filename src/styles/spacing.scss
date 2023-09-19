@@ -68,6 +68,7 @@ $side-menu-width: 260px;
 
 @mixin default-spacing {
   @include reasonable-spacing('*', '.align:not(.no-spacing):not(.spacing-small)', $padding-size-large-2);
+  @include reasonable-spacing('*', '.align:not(.no-spacing).spacing-small', $padding-size-large);
   @include reasonable-spacing('*', '.grid:not(.no-spacing):not(.spacing-small)', $padding-size-large-2);
   @include reasonable-spacing('*', '.card:not(.no-spacing)', $padding-size-large-2);
   @include reasonable-spacing('*', '.header:not(.no-spacing)', $padding-size-large-3);

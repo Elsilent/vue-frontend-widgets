@@ -12,6 +12,7 @@ const props = defineProps<{
   metrics: Record<
     string,
     {
+      align?: 'left' | 'center' | 'right';
       formatter: (value: number) => string;
       label: string;
       mood: Mood;

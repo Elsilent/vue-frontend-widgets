@@ -949,13 +949,13 @@ $-mood-colors: (
       > .chart-point {
         @include apply-color(background-color, white);
 
-        border: 3px solid;
+        border: 2px solid;
         border-radius: 16px;
-        height: 8px;
-        margin-left: -8px;
-        margin-top: -8px;
+        height: 4px;
+        margin-left: -4px;
+        margin-top: -4px;
         position: absolute;
-        width: 8px;
+        width: 4px;
         transition-duration: $transition-duration-normal;
         transition-property: background-color, border-color, box-shadow, height, margin-left,
           margin-top, width;
@@ -975,10 +975,10 @@ $-mood-colors: (
         }
 
         &.visible {
-          margin-left: -10px;
-          margin-top: -10px;
-          width: 12px;
-          height: 12px;
+          margin-left: -8px;
+          margin-top: -8px;
+          width: 8px;
+          height: 8px;
 
           @each $-mood in $-mood-colors {
             &.mood-#{$-mood} {

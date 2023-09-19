@@ -80,8 +80,8 @@ const differenceLabel = computed<number>(() => {
 
 const mood = computed((): Mood => {
   const equalMood: Mood = 'neutral';
-  const greaterMood: Mood = inversed.value ? 'negative' : 'positive';
-  const lessMood: Mood = inversed.value ? 'positive' : 'negative';
+  const greaterMood: Mood = inversed.value ? 'important' : 'positive';
+  const lessMood: Mood = inversed.value ? 'positive' : 'important';
 
   switch (difference.value) {
     case 'equal':
@@ -107,17 +107,15 @@ const classes = computed(() => ({
 Card.kpi-card(:class='classes')
   Align(column)
     Align(vertical='center')
-      Info.flex-max(size='large-2') {{ label }}
-      Info(size='large-3') {{ value === undefined ? '&nbsp;' : formatter(value) }}
+      Info.flex-max(size='large-3') {{ label }}
+      Info(important, size='large-3') {{ value === undefined ? '&nbsp;' : formatter(value) }}
     Align.spacing-small(vertical='center')
       Icon(
         :mood='mood',
         :value='icon',
-        size='large-5',
       )
       Info(
         :mood='mood',
-        size='large-2'
       ) {{ format.proportion(differenceLabel) }}
       Separator
       Info {{ comparisonValue === undefined ? '&nbsp;' : formatter(comparisonValue) }}

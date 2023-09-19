@@ -16,8 +16,8 @@ import type { MenuItem as PopoverMenuItem } from '../../../utils/interface/menu'
 const props = withDefaults(
   defineProps<{
     avatar?: AvatarInfo;
-    currency: string;
-    currencies: LabeledCurrency[];
+    currency?: string;
+    currencies?: LabeledCurrency[];
     locale: string;
     locales: Locale[];
     menuItems: Record<string, MenuItem>;
@@ -45,17 +45,19 @@ const avatarSource = computed(() =>
 );
 
 const currencyMenuItems = computed(() =>
-  currencies.value.reduce((menuItems, currency) => {
+  currencies?.value?.reduce((menuItems, currency) => {
     menuItems[currency.code] = {
       label: currency.label,
     };
 
     return menuItems;
-  }, {} as Record<string, PopoverMenuItem>),
+  }, {} as Record<string, PopoverMenuItem>) ?? {},
 );
 
 const currentCurrency = computed(
-  () => currencies.value.find(({ code }) => currency.value === code)!,
+  () => currency && currency.value
+    ? currencies?.value?.find(({ code }) => currency!.value === code)
+    : undefined,
 );
 
 const localeMenuItems = computed(() =>
@@ -195,7 +197,8 @@ const whenMenuItemClicked = (code: string) => {
       Button.currency-button(
         @click='() => currencyMenuVisible = !currencyMenuVisible',
         @mousedown.stop="() => {}",
-        :label="currentCurrency.symbol",
+        :disabled="!currencies || !currency",
+        :label="currentCurrency?.symbol",
         mood='neutral',
         outline,
         size='large-3',
