@@ -8,11 +8,8 @@
       :pageNumber="pageNumber",
       :rowCount="rowCount",
     )
-  .table-container(
-    @mouseover="() => showActionButtons()",
-    @mouseout="() => hideActionButtons()",
-  )
-    .action-buttons(:class="{ active: displayActionButtons }")
+  .table-container
+    .action-buttons
       button.btn.btn-small.btn-success(
         v-if="showInlineFilters",
         @click="() => toggleInlineFilters()",
@@ -725,9 +722,6 @@ export default {
     hasInlineFilters(columnKey) {
       return columnKey in this.inlineFilterOperators;
     },
-    hideActionButtons() {
-      this.displayActionButtons = false;
-    },
     isColumnLinkable(row, columnKey) {
       if (!this.columnLinks) {
         return false;
@@ -1135,9 +1129,6 @@ export default {
 
       return false;
     },
-    showActionButtons() {
-      this.displayActionButtons = true;
-    },
     /**
      * Tries to translate a key, returns undefined on fail
      */
@@ -1363,7 +1354,7 @@ export default {
      */
     inlineFilterOperators: {
       type: Object,
-      default: {},
+      default: () => {},
     },
     /**
      * Provides the list of negative KPIs. This list is used for coloring metrics
@@ -1495,6 +1486,14 @@ export default {
 
 .table-container {
   position: relative;
+
+  &:hover {
+    > .action-buttons {
+      opacity: 1;
+      pointer-events: all;
+      transition-duration: 0.1s;
+    }
+  }
 }
 
 .action-buttons {
@@ -1505,13 +1504,6 @@ export default {
   top: 0;
   transition: opacity 0.3s;
   transform: translateX(-100%);
-
-  &.active {
-    opacity: 1;
-    pointer-events: all;
-
-    transition-duration: 0.1s;
-  }
 
   > button {
     border-bottom-right-radius: 0;
