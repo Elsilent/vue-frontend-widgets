@@ -1354,7 +1354,7 @@ export default {
      */
     inlineFilterOperators: {
       type: Object,
-      default: () => {},
+      default: () => ({}),
     },
     /**
      * Provides the list of negative KPIs. This list is used for coloring metrics
