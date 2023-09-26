@@ -35,6 +35,9 @@ export default {
       selectorVisible: false,
     };
   },
+  destroyed() {
+    window.removeEventListener('mouseup', this.onSelectorBlur);
+  },
   methods: {
     onSelectorBlur(event) {
       if (this.$el.contains(event.target) || this.$refs.selectorContents.contains(event.target)) {

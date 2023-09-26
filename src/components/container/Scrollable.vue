@@ -46,19 +46,6 @@ export default {
     leftRatio() {
       return this.scrollLeft / (this.contentWidth - this.containerWidth);
     },
-    relativeElement() {
-      if (this.relativeTo) {
-        const relativeTo = this.relativeTo();
-
-        if ('$el' in relativeTo) {
-          return relativeTo.$el;
-        } else if (relativeTo instanceof HTMLElement) {
-          return relativeTo;
-        }
-      }
-
-      return this.$refs.content;
-    },
     thumbWidth() {
       return `max(56px, (100% - 14px) * ${
         this.containerWidth / this.contentWidth
@@ -117,19 +104,43 @@ export default {
       this.active = true;
       this.forceActiveMode = forceActiveMode;
 
+      const relativeElement = this.getRelativeElement();
+
       switch (forceActiveMode) {
         case 'horizontal':
           this.forceActiveInitialPositionLeft = event.clientX;
-          this.forceActiveInitialScrollLeft = this.relativeElement.scrollLeft;
+          this.forceActiveInitialScrollLeft = relativeElement.scrollLeft;
           break;
         case 'vertical':
           this.forceActiveInitialPositionTop = event.clientY;
-          this.forceActiveInitialScrollTop = this.relativeElement.scrollTop;
+          this.forceActiveInitialScrollTop = relativeElement.scrollTop;
           break;
       }
 
       window.addEventListener('mousemove', this.whenScrolledManually);
       window.addEventListener('mouseup', this.unforceActive);
+    },
+    getRelativeElement() {
+      if (this.relativeTo) {
+        const relativeTo = this.relativeTo();
+
+        if ('$el' in relativeTo) {
+          return relativeTo.$el;
+        } else if (relativeTo instanceof HTMLElement) {
+          return relativeTo;
+        }
+      }
+
+      return this.$refs.content;
+    },
+    scrollTo(position) {
+      const relativeElement = this.getRelativeElement();
+
+      if (!relativeElement) {
+        return;
+      }
+
+      relativeElement.scrollTo(position);
     },
     setContainerHeightWith(element) {
       if (this.containerHeight === element.clientHeight) {
@@ -160,14 +171,14 @@ export default {
       this.contentWidth = element.scrollWidth;
     },
     setManualScrollLeftWith(x) {
-      this.relativeElement.scrollTo({
+      this.scrollTo({
         left:
           this.forceActiveInitialScrollLeft +
           (x * this.contentWidth) / (this.containerWidth - this.scrollWidthDelta),
       });
     },
     setManualScrollTopWith(y) {
-      this.relativeElement.scrollTo({
+      this.scrollTo({
         top:
           this.forceActiveInitialScrollTop +
           (y * this.contentHeight) / (this.containerHeight - this.scrollHeightDelta),
@@ -175,9 +186,19 @@ export default {
     },
     setScrollLeftWith(element) {
       this.scrollLeft = element.scrollLeft;
+
+      this.$emit('update:scrollPosition', {
+        left: this.scrollLeft,
+        top: this.scrollTop,
+      });
     },
     setScrollTopWith(element) {
       this.scrollTop = element.scrollTop;
+
+      this.$emit('update:scrollPosition', {
+        left: this.scrollLeft,
+        top: this.scrollTop,
+      });
     },
     startTouchTimeout() {
       this.whenResized();
@@ -202,11 +223,27 @@ export default {
       window.removeEventListener('mousemove', this.whenScrolledManually);
       window.removeEventListener('mouseup', this.unforceActive);
     },
+    updateObservers() {
+      const relativeElement = this.getRelativeElement();
+
+      this.mutationObserver.disconnect();
+      this.resizeObserver.disconnect();
+
+      this.mutationObserver.observe(relativeElement, {
+        childList: true,
+        subtree: true,
+      });
+      this.resizeObserver.observe(relativeElement);
+
+      this.scrollTo(this.scrollPosition);
+    },
     whenResized() {
-      this.setContainerHeightWith(this.relativeElement);
-      this.setContainerWidthWith(this.relativeElement);
-      this.setContentHeightWith(this.relativeElement);
-      this.setContentWidthWith(this.relativeElement);
+      const relativeElement = this.getRelativeElement();
+
+      this.setContainerHeightWith(relativeElement);
+      this.setContainerWidthWith(relativeElement);
+      this.setContentHeightWith(relativeElement);
+      this.setContentWidthWith(relativeElement);
     },
     whenScrolled(event) {
       this.setScrollLeftWith(event.target);
@@ -238,15 +275,7 @@ export default {
     this.mutationObserver = new MutationObserver(() => this.whenResized());
     this.resizeObserver = new ResizeObserver(() => this.whenResized());
 
-    this.$nextTick(() => {
-      this.mutationObserver.observe(this.relativeElement, {
-        childList: true,
-        subtree: true,
-      });
-      this.resizeObserver.observe(this.relativeElement);
-
-      this.whenResized();
-    });
+    this.updateObservers();
   },
   props: {
     mode: {
@@ -256,6 +285,10 @@ export default {
     relativeTo: {
       type: Function,
       required: false,
+    },
+    scrollPosition: {
+      type: Object,
+      default: () => ({ left: 0, top: 0 }),
     },
     scrollHeightDelta: {
       type: Number,
@@ -268,6 +301,23 @@ export default {
     static: {
       type: Boolean,
       default: false,
+    },
+  },
+  watch: {
+    relativeTo() {
+      this.updateObservers();
+    },
+    scrollPosition: {
+      deep: true,
+      immediate: true,
+      handler(position) {
+        this.scrollLeft = position.left;
+        this.scrollTop = position.top;
+
+        this.$nextTick(() => {
+          this.scrollTo(position);
+        });
+      },
     },
   },
 }

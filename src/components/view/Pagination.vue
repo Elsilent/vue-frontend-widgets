@@ -1,23 +1,25 @@
 <template lang="pug">
 .pagination
-  .page(
-    v-if="pageNumber > 0"
-    @click="() => $emit('update:pageNumber', 0)",
-  ) 1
-  .page-separator(v-if="pageNumber > 3") …
-  .page(
-    v-for="pageIndex in visiblePageIndexes",
-    @click="() => $emit('update:pageNumber', pageIndex)",
-    :class="{ current: pageIndex === pageNumber }",
-    :key="pageIndex",
-  ) {{ pageIndex + 1 }}
-  .page-separator(v-if='pageNumber < pageCount - 4') …
-  .page(
-    v-if="pageNumber < pageCount - 1",
-    @click="() => $emit('update:pageNumber', pageCount - 1)",
-  ) {{ pageCount }}
-  .page-size-label {{ $t('common.label.show') }}
+  template(v-if="rowCount > currentPageSize")
+    .page(
+      v-if="pageNumber > 0"
+      @click="() => $emit('update:pageNumber', 0)",
+    ) 1
+    .page-separator(v-if="pageNumber > pageRadius") …
+    .page(
+      v-for="pageIndex in visiblePageIndexes",
+      @click="() => $emit('update:pageNumber', pageIndex)",
+      :class="{ current: pageIndex === pageNumber }",
+      :key="pageIndex",
+    ) {{ pageIndex + 1 }}
+    .page-separator(v-if='pageNumber < pageCount - pageRadius - 1') …
+    .page(
+      v-if="pageNumber < pageCount - 1",
+      @click="() => $emit('update:pageNumber', pageCount - 1)",
+    ) {{ pageCount }}
+    .page-size-label {{ $t('common.label.show') }}
   Dropdown.page-size-selector(
+    v-if="rowCount > minPageSize",
     @change="(value) => updatePageSize(value)",
     :id="id",
     :items="pageSizes",
@@ -34,28 +36,27 @@ export default {
     Dropdown,
   },
   computed: {
+    minPageSize() {
+      return Math.min(...this.pageSizes);
+    },
     pageCount() {
       return Math.ceil(this.rowCount / this.currentPageSize);
     },
     visiblePageIndexes() {
       const visiblePageIndexes = [];
 
-      if (this.pageNumber > 2) {
-        visiblePageIndexes.push(this.pageNumber - 2);
-      }
-
-      if (this.pageNumber > 1) {
-        visiblePageIndexes.push(this.pageNumber - 1);
+      for (let i = this.pageRadius - 1; i > 0; i++) {
+        if (this.pageNumber > i) {
+          visiblePageIndexes.push(this.pageNumber - i);
+        }
       }
 
       visiblePageIndexes.push(this.pageNumber);
 
-      if (this.pageNumber < this.pageCount - 2) {
-        visiblePageIndexes.push(this.pageNumber + 1);
-      }
-
-      if (this.pageNumber < this.pageCount - 3) {
-        visiblePageIndexes.push(this.pageNumber + 2);
+      for (let i = 1; i < this.pageRadius; i++) {
+        if (this.pageNumber < this.pageCount - i - 1) {
+          visiblePageIndexes.push(this.pageNumber + i);
+        }
       }
 
       return visiblePageIndexes;
@@ -82,6 +83,17 @@ export default {
     pageNumber: {
       type: Number,
       required: true,
+    },
+    /**
+     * Max amount of pages on left and right to the current page including current page
+     *
+     * Example of display for pageRadius = 3 with currentPageSize = 5:
+     * 
+     * 1 .. 3 4 5 6 7 .. <nth>
+     */
+    pageRadius: {
+      type: Number,
+      default: 3,
     },
     pageSizes: {
       type: Array,
