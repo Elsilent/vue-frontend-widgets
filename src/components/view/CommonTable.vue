@@ -39,7 +39,7 @@
       :rows="visibleRows",
       :scrollPosition="scrollPosition",
       :showRowNumber="showRowNumber",
-      :showTotal="!!totalRow",
+      :showTotal="showTotal",
       :showTopTotal="showTopTotal",
     )
       template(
@@ -136,7 +136,10 @@
         v-for="(_, columnKey) in currentColumns",
         #[`additionalHeader(inline_filters)(${columnKey})`],
       )
-        .d-flex.inline-filter(v-if="hasInlineFilters(columnKey)")
+        .d-flex.inline-filter(
+          v-if="hasInlineFilters(columnKey)",
+          :class="getInlineFilterOperatorClasses(columnKey)",
+        )
           Dropdown.inline-filter-dropdown(
             @change="(operator) => setInlineFilter(columnKey, { operator })",
             :id="`additional_header_${columnKey}`",
@@ -359,6 +362,16 @@ export default {
      */
     pageSizeKey() {
       return `Table_PageSize_${location.pathname}`;
+    },
+    showTotal() {
+      if (!this.totalRow) {
+        return false;
+      }
+
+      const hasInlineFilters = Object.values(this.inlineFilters)
+        .some(({ value }) => value);
+
+      return !hasInlineFilters;
     },
     /**
      * Retrieves column information used to render rows
@@ -594,6 +607,29 @@ export default {
     },
     getInlineFilterOperators(columnKey) {
       return this.inlineFilterOperators[columnKey] ?? undefined;
+    },
+    getInlineFilterOperatorClasses(columnKey) {
+      const operators = this.getInlineFilterOperators(columnKey);
+
+      if (!operators) {
+        return undefined;
+      }
+
+      const sizes = ['small', 'normal'];
+
+      let maxSizeIndex = 0;
+
+      for (const operatorInfo of Object.values(operators)) {
+        const sizeIndex = sizes.indexOf(operatorInfo.size ?? 'normal');
+
+        if (sizeIndex > maxSizeIndex) {
+          maxSizeIndex = sizeIndex;
+        }
+      }
+
+      return {
+        [`size-${sizes[maxSizeIndex]}`]: true,
+      };
     },
     getInlineFilterOperatorItems(columnKey) {
       const operators = this.getInlineFilterOperators(columnKey);
@@ -1171,6 +1207,12 @@ export default {
     },
     toggleInlineFilters() {
       this.displayInlineFilters = !this.displayInlineFilters;
+
+      if (!this.displayInlineFilters) {
+        this.inlineFilters = this.makeInlineFilters();
+
+        this.setPageNumber(0);
+      }
     },
     /**
      * Gets total value for a subcolumn
@@ -1364,6 +1406,7 @@ export default {
      * {
      *   label: String,
      *   callback: <T>(rowValue: T, filterValue: T) => boolean,
+     *   size?: 'small' | 'normal',
      * }
      */
     inlineFilterOperators: {
@@ -1556,9 +1599,14 @@ export default {
 }
 
 .inline-filter {
-  &::v-deep .inline-filter-dropdown  + .select2 {
+  &.size-small::v-deep .inline-filter-dropdown  + .select2 {
+    min-width: 50px;
+  }
+  &.size-normal::v-deep .inline-filter-dropdown  + .select2 {
     min-width: 100px;
+  }
 
+  &::v-deep .inline-filter-dropdown  + .select2 {
     .select2-selection.select2-selection--single {
       border-bottom-right-radius: 0;
       border-top-right-radius: 0;
@@ -1582,7 +1630,7 @@ export default {
     border-left-width: 0;
     border-top-left-radius: 0;
     height: 30px;
-    min-width: 50px;
+    min-width: 80px;
     padding: 0 0.25rem;
   }
 }

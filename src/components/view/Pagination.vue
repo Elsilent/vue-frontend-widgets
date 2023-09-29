@@ -45,7 +45,7 @@ export default {
     visiblePageIndexes() {
       const visiblePageIndexes = [];
 
-      for (let i = this.pageRadius - 1; i > 0; i++) {
+      for (let i = this.pageRadius - 1; i > 0; i--) {
         if (this.pageNumber > i) {
           visiblePageIndexes.push(this.pageNumber - i);
         }
