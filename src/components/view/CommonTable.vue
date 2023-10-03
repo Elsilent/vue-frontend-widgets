@@ -22,6 +22,7 @@
       @move:column="({ from, to }) => onColumnMove(from, to)",
       @removeColoredMetric="(columnKey) => removeColoredMetric(columnKey)",
       @update:orderBy="(newOrderBy) => updateOrderBy(newOrderBy)",
+      @update:scrollPosition="(scrollPosition) => updateScrollPosition(scrollPosition)",
       :additionalHeaders="additionalHeaders",
       :cellClasses="cellClasses"
       :colorMetrics="colorMetrics",
@@ -36,6 +37,7 @@
       :orderBy="orderBy",
       :primaryColumn="primaryColumn",
       :rows="visibleRows",
+      :scrollPosition="scrollPosition",
       :showRowNumber="showRowNumber",
       :showTotal="showTotal",
       :showTopTotal="showTopTotal",
@@ -426,6 +428,7 @@ export default {
       pageNumber: 0,
       pageSize: 20,
       rowCount: 0,
+      scrollPosition: { left: 0, top: 0 },
       shortenThreshold: 50,
       tableKey: '',
       totalRow: undefined,
@@ -1068,9 +1071,16 @@ export default {
 
       this.loading = true;
 
+      const scrollPosition = {
+        left: window.scrollX,
+        top: window.scrollY,
+      };
+
       if (!this.setRowsFromStatic()) {
         await this.setRowsFromRequest(pageNumber, pageSize, orderBy);
       }
+
+      window.scrollTo(scrollPosition);
 
       this.loading = false;
     },
@@ -1226,7 +1236,11 @@ export default {
       if (save) {
         localStorage.setItem(this.orderByKey, JSON.stringify(orderBy));
       }
-    }
+    },
+    updateScrollPosition({ left, top }) {
+      this.$set(this.scrollPosition, 'left', left);
+      this.$set(this.scrollPosition, 'top', top);
+    },
   },
   mounted() {
     this.currentColumnKeys = Object.keys(this.columns);

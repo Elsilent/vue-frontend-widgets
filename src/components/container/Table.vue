@@ -1,7 +1,9 @@
 <template lang="pug">
 .table-container(ref='tableContainer')
   Scrollable(
+    @update:scrollPosition="(scrollPosition) => $emit('update:scrollPosition', scrollPosition)",
     :scrollHeightDelta="(headerHeights ? headerHeights.total : 0) + totalHeight - 40",
+    :scrollPosition="scrollPosition",
     :scrollWidthDelta="fixedWidth",
     :style="tableStyle",
     mode="both-top",
@@ -454,6 +456,14 @@ export default {
     rows: {
       type: [Array, Object],
       required: true,
+    },
+    /**
+     * Position of the scrollable table. If not provided any change
+     * to table contents will reset the scroll position to { left: 0, top: 0 }
+     */
+    scrollPosition: {
+      type: Object,
+      default: () => ({ left: 0, top: 0 }),
     },
     /**
      * Enables the display of row number
