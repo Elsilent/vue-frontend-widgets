@@ -150,6 +150,7 @@
           Input.flex-grow-1.inline-filter-input(
             @blur="(event) => onInlineFilterBlur(event, columnKey)",
             @keyup="(event) => onInlineFilterKeyUp(event, columnKey)"
+            @mouseup="(event) => onInlineFilterBlur(event, columnKey)",
             :modelValue="getInlineFilterCurrentValue(columnKey)",
             :type="getInlineFilterValueType(columnKey)",
           )
@@ -917,10 +918,23 @@ export default {
     },
     setInlineFilter(columnKey, { operator, value }) {
       if (!operator) {
+        operator = this.inlineFilters[columnKey].operator;
+      }
+      if (!operator) {
         operator = Object.keys(this.getInlineFilterOperators(columnKey))[0];
       }
       if (!operator) {
         // Inline filters are deactivated for the column
+        return;
+      }
+      if (!value) {
+        value = this.inlineFilters[columnKey].value;
+      }
+
+      if (
+        this.inlineFilters[columnKey].operator === operator &&
+        this.inlineFilters[columnKey].value === value
+      ) {
         return;
       }
 
