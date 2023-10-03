@@ -732,9 +732,11 @@ export default {
           const willBeRoundedToZero = (parseFloat(rawValue.toFixed(this.clientCurrencyDecimal)) == 0);
 
           if (rawValue > 0 && rawValue < 1 && willBeRoundedToZero) {
+            const zeroes = '0'.repeat(this.clientCurrencyDecimal - 1);
+
             const formattedValue = (this.clientCurrencyDecimal === 0) ?
                 1 :
-                parseFloat('0.' + '0'.repeat(this.clientCurrencyDecimal - 1) + '1');
+                numeral(parseFloat(`0.${zeroes}1`)).format(`0,0.${zeroes + 1}`);
 
             return this.clientCurrencySymbolPrefix ?
                 `< ${this.clientCurrencySymbol} ${formattedValue}` :
