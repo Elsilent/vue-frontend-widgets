@@ -730,14 +730,18 @@ export default {
             return formattedValue + ' ' + this.clientCurrencySymbol;
           }
         case 'money_capped':
-          const willBeRoundedToZero = (parseFloat(rawValue.toFixed(this.clientCurrencyDecimal)) == 0);
+          const willBeRoundedToZero = parseFloat(rawValue.toFixed(this.clientCurrencyDecimal)) === 0;
 
           if (rawValue > 0 && rawValue < 1 && willBeRoundedToZero) {
-            const zeroes = '0'.repeat(this.clientCurrencyDecimal - 1);
+            const formattedValue = (() => {
+              if (this.clientCurrencyDecimal === 0) {
+                  return 1;
+              }
 
-            const formattedValue = (this.clientCurrencyDecimal === 0) ?
-                1 :
-                numeral(parseFloat(`0.${zeroes}1`)).format(`0,0.${zeroes + 1}`);
+              const zeroes = '0'.repeat(this.clientCurrencyDecimal - 1);
+
+              return numeral(parseFloat(`0.${zeroes}1`)).format(`0,0.${zeroes + 1}`);
+            })();
 
             return this.clientCurrencySymbolPrefix ?
                 `< ${this.clientCurrencySymbol} ${formattedValue}` :
