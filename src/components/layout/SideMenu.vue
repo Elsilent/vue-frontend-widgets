@@ -7,6 +7,7 @@ import MenuSubsection from './side_menu/MenuSubsection.vue';
 import type { Menu } from '../../utils/menu';
 
 const props = defineProps<{
+  brandText: string;
   menu: Menu;
   router: Router;
   translator: (code: string) => string;
@@ -19,7 +20,7 @@ const { router } = toRefs(props);
 .side-menu
   .brand(@click="router.push({ name: 'default' })")
     Logo
-    BrandText(elevation='elevated-3', size='large-4') TrackAd Hub
+    BrandText(elevation='elevated-3', size='large-4') {{ brandText }}
   .items
     template(v-for="(section, code) in menu")
       MenuSubsection(
