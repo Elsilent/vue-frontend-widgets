@@ -8,7 +8,7 @@
   :key="`table-${tableKey}-${orderedRowValues.length}`",
   :style="tableStyle",
 )
-  .cell.column.column-main(
+  .cell.column.column-main.row-number(
     v-if="showRowNumber",
     :style="maxRowspan > 1 ? { 'grid-row-end': `span ${maxRowspan}` } : undefined",
   ) #
@@ -21,6 +21,7 @@
       :class="getColumnClassList(columnKey)",
       :key="`column-${columnKey}`",
       :style="getColumnStyle(columnKey)",
+      :data-column="columnKey",
     )
       slot(:name="`column(${columnKey})`")
       .toggle-colored(
@@ -37,6 +38,7 @@
         :class="getColumnClassList(columnKey)",
         :key="`column-ghost-${columnKey}`",
         :style="getColumnGhostStyle(columnKey)",
+        :data-column="columnKey",
       )
         slot(:name="`column(${columnKey})`", :isGhost="true")
   template(v-for='(additionalHeaderInfo, additionalHeader) in additionalHeaders')
@@ -46,24 +48,29 @@
       .cell.column.cell-additional-header(
         :class="[`cell-additional-header-${columnKey}`]",
         :key="`additional-header-${additionalHeader}-${columnKey}`",
+        :data-additionalHeader="additionalHeader",
+        :data-column="columnKey",
       )
         slot(:name="`additionalHeader(${additionalHeader})(${columnKey})`")
   template(v-if='showTopTotal && showTotal')
-    .cell.total(v-if="showRowNumber")
+    .cell.total.top-total.row-number(v-if="showRowNumber")
     template(v-for="columnKey in visibleColumnKeys")
       template(v-if="columns[columnKey].visible")
         template(v-if="!!comparisonColumnKeys && (columns[columnKey].colspan || 1) !== 1")
-          .cell.total(
+          .cell.total.top-total(
             v-for="index in columns[columnKey].colspan",
             :key="`top-total-${getOrderByKey(columnKey, index - 1)}`",
+            :data-column="columnKey",
+            :data-subcolumn-index="index - 1",
           )
             slot(
               :name="`total(${getOrderByKey(columnKey, index - 1)})`",
               :values="orderedRowValues.map((row) => row[columnKey])",
             )
         template(v-else)
-          .cell.total(
+          .cell.total.top-total(
             :key="`top-total-${columnKey}`",
+            :data-column="columnKey",
           )
             slot(
               :name="`total(${columnKey})`",
@@ -78,11 +85,13 @@
         v-for="index in columns[columnKey].colspan",
         @click.stop="() => onColumnClick(columnKey, index - 1)",
         :class="getColumnClassList(columnKey, index - 1)",
+        :data-column="columnKey",
+        :data-subcolumn-index="index - 1",
         :key="`column-${getOrderByKey(columnKey, index - 1)}`",
       )
         slot(:name="`column(${getOrderByKey(columnKey, index - 1)})`")
   template(v-for="(row, rowIndex) in orderedRowValues")
-    .cell(
+    .cell.row-number(
       v-if="showRowNumber",
       :class="{ even: rowIndex % 2 === 0 }",
       :key="`row-${rowIndex}-${row._row_key}`",
@@ -92,6 +101,8 @@
         .cell(
           :class="getCellClasses(row, rowIndex, columnKey)",
           :key="`row-${rowIndex}-${row._row_key}-column-${columnKey}`",
+          :data-column="columnKey",
+          :data-primary-key="row[primaryColumn]",
         )
           slot(
             :index="rowIndex",
@@ -106,6 +117,9 @@
         .cell(
           :class="getCellClasses(row, rowIndex, columnKey, index - 1)",
           :key="`row-${rowIndex}-${row._row_key}-column-${columnKey}-span-${index}`",
+          :data-column="columnKey",
+          :data-primary-key="row[primaryColumn]",
+          :data-subcolumn-index="index - 1",
         )
           slot(
             :index="rowIndex",
@@ -120,19 +134,21 @@
               : undefined`,
           )
   template(v-if="orderedRowValues.length === 0 && showNoDataMessage")
-    .cell.odd(
+    .cell.odd.no-data(
       key="row-no-data",
       :style="{ 'grid-column': `1 / span ${columnCountDisplayed}` }"
       v-html="noDataMessage"
     )
   template(v-if='showTotal')
-    .cell.total(v-if="showRowNumber") #
+    .cell.total.row-number(v-if="showRowNumber") #
     template(v-for="columnKey in visibleColumnKeys")
       template(v-if="columns[columnKey].visible")
         template(v-if="!!comparisonColumnKeys && (columns[columnKey].colspan || 1) !== 1")
           .cell.total(
             v-for="index in columns[columnKey].colspan",
             :key="`total-${getOrderByKey(columnKey, index - 1)}`",
+            :data-column="columnKey",
+            :data-subcolumn-index="index - 1",
           )
             slot(
               :name="`total(${getOrderByKey(columnKey, index - 1)})`",
@@ -141,6 +157,7 @@
         template(v-else)
           .cell.total(
             :key="`total-${columnKey}`",
+            :data-column="columnKey",
           )
             slot(
               :name="`total(${columnKey})`",
