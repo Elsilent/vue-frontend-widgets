@@ -530,14 +530,13 @@ export default {
      * Returns the URL with "total" parameter.
      */
     getColumnDetailsTotalUrl(column) {
-      let url;
-
       if (column.total_url) {
-        url = new URL(column.total_url);
-      } else {
-        url = new URL(column.base_url);
-        url.searchParams.set('total', 'true');
+        return (new URL(column.total_url)).toString();
       }
+
+      const url = new URL(column.base_url);
+
+      url.searchParams.set('total', 'true');
 
       return url.toString();
     },
