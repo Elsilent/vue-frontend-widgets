@@ -220,7 +220,7 @@
             :format="columnDetails[columnKey].format",
             :label="formatValue(totalRow[columnKey], column.type)",
             :title="columnDetails[columnKey].title",
-            :url="getColumnDetailsTotalUrl(columnDetails[columnKey].base_url)",
+            :url="getColumnDetailsTotalUrl(columnDetails[columnKey])",
           )
           template(v-else-if="column.type !== 'string'") {{ formatValue(totalRow[columnKey], column.type) }}
       template(
@@ -529,11 +529,15 @@ export default {
     /**
      * Returns the URL with "total" parameter.
      */
-    getColumnDetailsTotalUrl(baseUrl) {
-      const url = new URL(baseUrl);
-      url.searchParams.set('total', 'true');
+    getColumnDetailsTotalUrl(column) {
+      let url;
 
-      return url.toString();
+      if (column.total_url) {
+        url = new URL(column.total_url);
+      } else {
+        url = new URL(column.base_url);
+        url.searchParams.set('total', 'true');
+      }
     },
     /**
      * Formats total value based on subcolumn
