@@ -664,7 +664,9 @@ export default {
         case 'money_capped':
         case 'percent':
         case 'time':
-          return parseFloat(value ?? 0);
+          const rawValue = parseFloat(value ?? 0);
+
+          return Math.abs(rawValue) < 0.001 ? 0 : rawValue;
         default:
           return value;
       }
@@ -762,6 +764,7 @@ export default {
               percent = `+${percent}`;
             }
           }
+          console.log(rawValue, percent);
 
           return percent;
         case 'time':
