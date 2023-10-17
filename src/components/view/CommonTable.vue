@@ -538,6 +538,8 @@ export default {
         url = new URL(column.base_url);
         url.searchParams.set('total', 'true');
       }
+
+      return url.toString();
     },
     /**
      * Formats total value based on subcolumn
