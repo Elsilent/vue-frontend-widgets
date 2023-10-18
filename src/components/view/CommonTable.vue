@@ -764,7 +764,6 @@ export default {
               percent = `+${percent}`;
             }
           }
-          console.log(rawValue, percent);
 
           return percent;
         case 'time':
