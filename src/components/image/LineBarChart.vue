@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, ref, toRefs } from 'vue';
+import { computed, onMounted, onUnmounted, ref, toRefs, watch } from 'vue';
 import type { Mood } from '../../utils/enum/mood';
 import type { Style } from '../../utils/type/component/image/line_bar_chart';
 import Info from '../label/Info.vue';
@@ -254,6 +254,55 @@ const linesStyle = computed(() => {
   };
 });
 
+const xAxisLabelsHeight = ref<number|undefined>();
+
+const xAxisLabelGroup = ref<HTMLElement[]>([]);
+
+const chartContents = ref<HTMLElement|undefined>();
+
+const xAxisLabelRotate = ref<number>(0);
+
+const updateXAxisLabelsStyle = () => {
+  if (!chartContents.value) {
+    return;
+  }
+
+  const maxWidth = Math.max(...xAxisLabelGroup.value.map((el) => el.clientWidth));
+  const maxHeight = Math.max(...xAxisLabelGroup.value.map((el) => el.clientHeight));
+
+  if (chartContents.value.clientWidth > totalValueCount.value * maxWidth) {
+    xAxisLabelRotate.value = 0;
+  } else if (chartContents.value.clientWidth < totalValueCount.value * maxHeight) {
+    xAxisLabelRotate.value = 90;
+  } else {
+    // Treat full label width as a hypot, chart width as one of the sides
+    const hypot = totalValueCount.value * maxWidth;
+    xAxisLabelRotate.value = Math.cos(chartContents.value.clientWidth / hypot) * 180 / Math.PI;
+  }
+
+  const rotateRad = xAxisLabelRotate.value * Math.PI / 180;
+
+  xAxisLabelsHeight.value = maxWidth * Math.sin(rotateRad) + maxHeight * Math.cos(rotateRad);
+};
+
+const lineChartStyle = computed(() => ({
+  'margin-bottom': xAxisLabelsHeight.value === undefined ? undefined : `${xAxisLabelsHeight.value}px`,
+}));
+
+const xAxisLabelsStyle = computed(() => {
+  const barCount = Object.keys(barValues.value).length;
+
+  const barSize = 100 / barCount;
+
+  const barOffset = `${barSize / 2}%`;
+
+  return {
+    height: xAxisLabelsHeight.value === undefined ? undefined : `${xAxisLabelsHeight.value}px`,
+    'margin-left': barOffset,
+    'margin-right': barOffset,
+  };
+});
+
 const hovers = ref<(number | string | symbol)[]>([]);
 
 const valueHeight = (index: number) => {
@@ -365,10 +414,43 @@ const setHover = (key: number | string | symbol, hover: boolean) => {
     }
   }
 };
+
+watch(
+  values,
+  () => {
+    updateXAxisLabelsStyle();
+  },
+);
+
+const resizeObserver = new ResizeObserver(() => {
+  updateXAxisLabelsStyle();
+});
+
+watch(
+  chartContents,
+  () => {
+    resizeObserver.disconnect();
+
+    if (chartContents.value) {
+      resizeObserver.observe(chartContents.value);
+    }
+  },
+);
+
+onMounted(() => {
+  updateXAxisLabelsStyle();
+});
+
+onUnmounted(() => {
+  resizeObserver.disconnect();
+});
 </script>
 
 <template lang="pug">
-.line-chart.no-spacing(:class="{ 'min-height': minHeight }")
+.line-chart.no-spacing(
+  :class="{ 'min-height': minHeight }",
+  :style="lineChartStyle",
+)
   .y-axis-title-container(v-if="yAxisLabels")
     Info.y-axis-title.no-spacing(
       important,
@@ -382,35 +464,11 @@ const setHover = (key: number | string | symbol, hover: boolean) => {
     Info.axis-label(
       v-for="label in maxAxisLabels[styles[valueKeys[0]]]",
     ) {{ formatters[valueKeys[0]](label) }}
-  .chart-contents.no-spacing
+  .chart-contents.no-spacing(ref="chartContents")
     .chart-grid.no-spacing
       .axis-line.no-spacing(
         v-for="_ in axisLabels[styles[valueKeys[0]]][valueKeys[0]].slice(1)"
       )
-      .x-axis-labels.no-spacing(
-        v-if="!noXAxisLabels",
-        :style='linesStyle',
-      )
-        .x-axis-label-group-container.no-spacing(
-          v-for="(key, index) in lineLabels[0]",
-          :class="{ visible: hovers.includes(key) }",
-          :style="{ left: `${getPointLeftPosition(key)}%` }",
-        )
-          .x-axis-label-group.no-spacing
-            slot(name="xAxis", :valueKey="key")
-              template(v-for="lineIndex in lineCount")
-                Info.x-axis-label.no-spacing(
-                  v-if="!activeLines || activeLines.includes(valueKeys[lineIndex - 1])",
-                  :class="{ ...getMoodClasses(valueKeys[lineIndex - 1]), 'has-label': index <= lineLabels[lineIndex - 1].length }",
-                  important,
-                  size="small",
-                )
-                  slot(
-                    name="xAxisLabel",
-                    :index="index",
-                    :lineIndex="lineIndex - 1",
-                    :valueKey="key",
-                  )
     .chart-bars.no-spacing
       template(v-for="(values, index) in barValues")
         .chart-bar-container.no-spacing(
@@ -484,6 +542,33 @@ const setHover = (key: number | string | symbol, hover: boolean) => {
         @mouseover="setHover(key, true)",
         @mouseout="setHover(key, false)",
       )
+    .x-axis-labels.no-spacing(
+      v-if="!noXAxisLabels",
+      :style='xAxisLabelsStyle',
+    )
+      .x-axis-label-group-container.no-spacing(
+        v-for="(key, index) in lineLabels[0]",
+        :class="{ active: hovers.includes(key) }",
+        :style="{ left: `${getPointLeftPosition(key)}%` }",
+      )
+        .x-axis-label-group.no-spacing(
+          :ref='(element) => { if (element) xAxisLabelGroup[index] = element; }',
+          :style="{ transform: `rotate(-${xAxisLabelRotate}deg) translateX(-${xAxisLabelRotate * 50 / 90}%)` }",
+        )
+          slot(name="xAxis", :valueKey="key")
+            template(v-for="lineIndex in lineCount")
+              Info.x-axis-label.no-spacing(
+                v-if="!activeLines || activeLines.includes(valueKeys[lineIndex - 1])",
+                :class="{ ...getMoodClasses(valueKeys[lineIndex - 1]), 'has-label': index <= lineLabels[lineIndex - 1].length }",
+                important,
+                size="small",
+              )
+                slot(
+                  name="xAxisLabel",
+                  :index="index",
+                  :lineIndex="lineIndex - 1",
+                  :valueKey="key",
+                )
   template(v-if="showSecondaryYAxis")
     .y-axis-labels.no-spacing(v-if="normalize")
       Info.axis-label(
@@ -612,7 +697,6 @@ $-mood-colors: (
       flex-direction: column;
       height: 100%;
       left: 0;
-      position: absolute;
       right: 0;
       text-align: right;
       top: 0;
@@ -632,106 +716,6 @@ $-mood-colors: (
           transition-duration: $transition-duration-normal;
           transition-property: background-color;
           width: 100%;
-        }
-      }
-
-      > .x-axis-labels {
-        bottom: -1rem;
-        display: flex;
-        pointer-events: none;
-        position: absolute;
-        left: 0;
-        right: 0;
-
-        > .x-axis-label-group-container {
-          flex: 1;
-          opacity: 0;
-          position: absolute;
-          transform: translateY(-5px);
-          transition-duration: $transition-duration-fast;
-          transition-property: opacity, transform;
-          z-index: 1000;
-
-          &:first-child(:not(:last-child)),
-          &:last-child(:not(:first-child)) {
-            flex: 0.5;
-          }
-
-          &.visible {
-            opacity: 1;
-            transform: none;
-          }
-
-          > .x-axis-label-group {
-            @include apply-color(background-color, background-normal);
-            @include apply-shadow(card);
-
-            align-items: center;
-            border-radius: 0.5rem;
-            display: flex;
-            flex-direction: column;
-            left: -50%;
-            margin-left: -2px;
-            padding: 0.5rem;
-            position: relative;
-            transition-duration: $transition-duration-normal;
-            transition-property: background-color, box-shadow;
-
-            &::before {
-              @include apply-color(border-bottom-color, background-normal);
-
-              border: 0.5rem solid transparent;
-              content: '';
-              position: absolute;
-              transition-duration: $transition-duration-normal;
-              transition-property: border-bottom-color;
-              bottom: 100%;
-            }
-
-            > .x-axis-label {
-              @include apply-color(color, background-neutral);
-
-              align-items: center;
-              display: flex;
-              white-space: nowrap;
-
-              &.has-label::before {
-                border-radius: 10px;
-                content: '';
-                display: block;
-                height: 10px;
-                margin-right: 0.5rem;
-                width: 10px;
-              }
-
-              @each $-mood in $-mood-colors {
-                &.mood-#{$-mood} {
-                  &.dashed {
-                    &::before {
-                      @include apply-color(background-color, background-elevated-3);
-                      @include apply-color(
-                        box-shadow,
-                        border-#{$-mood},
-                        $value-prefix: inset 0 0 0 0.075rem
-                      );
-                    }
-                  }
-
-                  &:not(.dashed) {
-                    &::before {
-                      @include apply-color(background-color, background-#{$-mood});
-                    }
-                  }
-
-                  &.opaque {
-                    &::before {
-                      @include apply-color(background-color, background-hover-#{$-mood});
-                    }
-                  }
-                }
-              }
-            }
-          }
         }
       }
     }
@@ -770,6 +754,7 @@ $-mood-colors: (
       height: 100%;
       pointer-events: none;
       position: absolute;
+      top: 0;
 
       > .chart-popover-separator {
         flex: 1;
@@ -951,14 +936,15 @@ $-mood-colors: (
 
         border: 2px solid;
         border-radius: 16px;
-        height: 4px;
-        margin-left: -4px;
-        margin-top: -4px;
+        height: 8px;
+        margin-left: -7px;
+        margin-top: -7px;
         position: absolute;
-        width: 4px;
+        width: 8px;
+        transform: scale(60%);
         transition-duration: $transition-duration-normal;
         transition-property: background-color, border-color, box-shadow, height, margin-left,
-          margin-top, width;
+          margin-top, transform, width;
 
         @each $-mood in $-mood-colors {
           &.mood-#{$-mood} {
@@ -975,10 +961,7 @@ $-mood-colors: (
         }
 
         &.visible {
-          margin-left: -8px;
-          margin-top: -8px;
-          width: 8px;
-          height: 8px;
+          transform: scale(100%);
 
           @each $-mood in $-mood-colors {
             &.mood-#{$-mood} {
@@ -1009,6 +992,89 @@ $-mood-colors: (
 
       > .chart-hover-section {
         flex: 1;
+      }
+    }
+
+    > .x-axis-labels {
+      display: flex;
+      position: relative;
+
+      > .x-axis-label-group-container {
+        flex: 1;
+        margin-top: 0.125rem;
+        position: absolute;
+        transition-duration: $transition-duration-fast;
+        z-index: 1000;
+
+        &:first-child(:not(:last-child)),
+        &:last-child(:not(:first-child)) {
+          flex: 0.5;
+        }
+
+        &.active {
+          > .x-axis-label-group {
+            @include apply-color(background-color, background-lowered);
+            @include apply-shadow(card);
+          }
+        }
+
+        > .x-axis-label-group {
+          align-items: center;
+          border-radius: 0.5rem;
+          display: flex;
+          flex-direction: column;
+          left: -50%;
+          margin-left: -2px;
+          padding: 0.25rem 0.5rem;
+          position: relative;
+          transition-duration: $transition-duration-normal;
+          transition-property: background-color, box-shadow;
+
+          > .x-axis-label {
+            @include apply-color(color, background-neutral);
+
+            align-items: center;
+            display: flex;
+            font-size: 0.875rem;
+            white-space: nowrap;
+
+            &.has-label::before {
+              border-radius: 10px;
+              content: '';
+              display: block;
+              height: 10px;
+              margin-right: 0.5rem;
+              width: 10px;
+            }
+
+            @each $-mood in $-mood-colors {
+              &.mood-#{$-mood} {
+                &.dashed {
+                  &::before {
+                    @include apply-color(background-color, background-elevated-3);
+                    @include apply-color(
+                      box-shadow,
+                      border-#{$-mood},
+                      $value-prefix: inset 0 0 0 0.075rem
+                    );
+                  }
+                }
+
+                &:not(.dashed) {
+                  &::before {
+                    @include apply-color(background-color, background-#{$-mood});
+                  }
+                }
+
+                &.opaque {
+                  &::before {
+                    @include apply-color(background-color, background-hover-#{$-mood});
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     }
   }
