@@ -1,5 +1,8 @@
 <template lang="pug">
-.line-chart(:class="{ 'min-height': minHeight }")
+.line-chart(
+  :class="{ 'min-height': minHeight }",
+  :style="lineChartStyle",
+)
   Info.y-axis-title(
     v-if="yAxisLabels",
     important,
@@ -15,31 +18,13 @@
       v-for="(label, index) in maxAxisLabels",
       :key="`y-axis-label-${index}`",
     ) {{ formatValue(label, valueKeys[0]) }}
-  .chart-contents
+  .chart-contents(ref="chartContents")
     .chart-grid
       .axis-line(
         v-for="(_, index) in axisLabels[valueKeys[0]].slice(1)"
         :key="`axis-line-${index}`",
       )
-      .x-axis-labels(v-if="!noXAxisLabels")
-        .x-axis-label-group-container(
-          v-for="index in totalValueCount",
-          :key="`x-axis-label-group-${index}`",
-          :class="{ visible: hovers.includes(index - 1) }",
-          :style="{ left: `${getPointLeftPosition(index - 1)}%` }",
-        )
-          .x-axis-label-group
-            template(v-for="lineIndex in lineCount")
-              Info.x-axis-label(
-                v-if="!activeLines || activeLines.includes(valueKeys[lineIndex - 1])",
-                :class="{ ...getMoodClasses(moods[valueKeys[lineIndex - 1]]), 'has-label': index <= lineLabels[lineIndex - 1].length }",
-                :key="`line-${lineIndex}`",
-                important,
-                noMood,
-                size="small",
-              )
-                slot(name="x-axis-label", :index="index - 1", :lineIndex="lineIndex - 1")
-    .chart-popovers
+    .chart-popovers(:style="linesStyle")
       template(v-for="index in totalValueCount")
         .chart-popover-separator(
           v-if="index > 1",
@@ -59,7 +44,7 @@
               .values
                 template(v-for="(singleLineLabels, lineIndex) in lineLabels")
                   Info(
-                    v-if="activeLines && activeLines.includes(valueKeys[lineIndex]) && index <= singleLineLabels.length",
+                    v-if="!activeLines || activeLines.includes(valueKeys[lineIndex]) && index <= singleLineLabels.length",
                     :key="`popover-value-${lineIndex}`",
                     :class="getMoodClasses(moods[valueKeys[lineIndex]])",
                     important,
@@ -70,7 +55,7 @@
                 :index='index - 1',
                 :values='valueKeys.map((key) => Object.values(values[key])[index])',
               )
-    .chart-lines
+    .chart-lines(:style="linesStyle")
       svg(
         v-for="(line, lineLabel) in values",
         :class="getMoodClasses(moods[lineLabel], [])",
@@ -88,7 +73,7 @@
           stroke-width="2px",
           vector-effect="non-scaling-stroke",
         )
-    .chart-points
+    .chart-points(:style="linesStyle")
       template(v-for="(lineValues, lineLabel) in values")
         template(v-if='!activeLines || activeLines.includes(lineLabel)')
           template(
@@ -106,6 +91,31 @@
         @mouseover="setHover(index - 1, true)",
         @mouseout="setHover(index - 1, false)",
       )
+    .x-axis-labels(
+      v-if="!noXAxisLabels",
+      :style="xAxisLabelsStyle",
+    )
+      .x-axis-label-group-container(
+        v-for="index in totalValueCount",
+        :key="`x-axis-label-group-${index}`",
+        :class="{ visible: hovers.includes(index - 1) }",
+        :style="{ left: `${getPointLeftPosition(index - 1)}%` }",
+      )
+        .x-axis-label-group(
+          ref="xAxisLabelGroup",
+          :style="{ transform: `rotate(-${xAxisLabelRotate}deg) translateX(-${xAxisLabelRotate * 50 / 90}%)` }",
+        )
+          slot(name="xAxis", :valueKey="index - 1")
+            template(v-for="lineIndex in lineCount")
+              Info.x-axis-label(
+                v-if="!activeLines || activeLines.includes(valueKeys[lineIndex - 1])",
+                :class="{ ...getMoodClasses(moods[valueKeys[lineIndex - 1]]), 'has-label': index <= lineLabels[lineIndex - 1].length }",
+                :key="`line-${lineIndex}`",
+                important,
+                noMood,
+                size="small",
+              )
+                slot(name="xAxisLabel", :index="index - 1", :lineIndex="lineIndex - 1")
   .y-axis-labels(v-if="showSecondaryYAxis")
     .axis-label(
       v-for="(label, index) in axisLabels[valueKeys[1]]",
@@ -169,8 +179,27 @@ export default {
     lineCount() {
       return Object.keys(this.values).length;
     },
+    lineChartStyle() {
+      return {
+        'margin-bottom': this.xAxisLabelsHeight === undefined
+          ? undefined
+          : `${this.xAxisLabelsHeight}px`,
+      };
+    },
     lineLabels() {
       return Object.values(this.values).map((line) => Object.keys(line));
+    },
+    linesStyle() {
+      const sectionCount = this.totalValueCount;
+
+      const sectionSize = 100 / sectionCount;
+
+      const sectionOffset = `${sectionSize / 2}%`;
+
+      return {
+        left: sectionOffset,
+        right: sectionOffset,
+      };
     },
     maxAxisLabels() {
       let maxKey = this.valueKeys[0];
@@ -188,6 +217,19 @@ export default {
     },
     valueKeys() {
       return Object.keys(this.values);
+    },
+    xAxisLabelsStyle() {
+      const sectionCount = this.totalValueCount;
+      const sectionSize = 100 / sectionCount;
+      const sectionOffset = `${sectionSize / 2}%`;
+
+      return {
+        height: this.xAxisLabelsHeight === undefined
+          ? undefined
+          : `${this.xAxisLabelsHeight}px`,
+        'margin-left': sectionOffset,
+        'margin-right': sectionOffset,
+      };
     },
     yAxisLabels() {
       return this.yAxisTitles
@@ -251,6 +293,11 @@ export default {
         return path.join(' ');
       },
       hovers: [],
+      resizeObserver: new ResizeObserver(() => {
+        this.updateXAxisLabelsStyle();
+      }),
+      xAxisLabelRotate: 0,
+      xAxisLabelsHeight: undefined,
       valueHeight: (index) => {
         for (const [lineLabel, labelValues] of Object.entries(this.values)) {
           if (Object.keys(labelValues).length <= index) {
@@ -264,6 +311,9 @@ export default {
         );
       },
     };
+  },
+  destroyed() {
+    this.resizeObserver.disconnect();
   },
   methods: {
     formatValue(value, lineLabel) {
@@ -361,7 +411,43 @@ export default {
           this.hovers.splice(hoverIndex, 1);
         }
       }
-    }
+    },
+    updateXAxisLabelsStyle() {
+      if (!this.$refs.chartContents || !this.$refs.xAxisLabelGroup) {
+        return;
+      }
+
+      const maxWidth = Math.max(...this.$refs.xAxisLabelGroup.map((el) => el.clientWidth));
+      const maxHeight = Math.max(...this.$refs.xAxisLabelGroup.map((el) => el.clientHeight));
+
+      if (this.$refs.chartContents.clientWidth > this.totalValueCount * maxWidth) {
+        this.xAxisLabelRotate = 0;
+      } else if (this.$refs.chartContents.clientWidth < this.totalValueCount * maxHeight) {
+        this.xAxisLabelRotate = 90;
+      } else {
+        // Treat full label width as a hypot, chart width as one of the sides
+        const hypot = this.totalValueCount * maxWidth;
+        this.xAxisLabelRotate = Math.cos(this.$refs.chartContents.clientWidth / hypot) * 180 / Math.PI;
+      }
+
+      const rotateRad = this.xAxisLabelRotate * Math.PI / 180;
+
+      this.xAxisLabelsHeight = maxWidth * Math.sin(rotateRad) + maxHeight * Math.cos(rotateRad);
+    },
+  },
+  mounted() {
+    this.updateXAxisLabelsStyle();
+
+    this.$watch(
+      () => this.$refs.chartContents,
+      () => {
+        this.resizeObserver.disconnect();
+
+        if (this.$refs.chartContents) {
+          this.resizeObserver.observe(this.$refs.chartContents);
+        }
+      },
+    );
   },
   props: {
     activeLines: {
@@ -408,6 +494,11 @@ export default {
       type: Array,
       required: false,
     }
+  },
+  watch: {
+    values() {
+      this.updateXAxisLabelsStyle();
+    },
   },
 }
 </script>
@@ -509,7 +600,6 @@ $-mood-colors: (
       flex-direction: column;
       height: 100%;
       left: 0;
-      position: absolute;
       right: 0;
       text-align: right;
       top: 0;
@@ -527,103 +617,13 @@ $-mood-colors: (
           width: 100%;
         }
       }
-
-      > .x-axis-labels {
-        bottom: -1rem;
-        display: flex;
-        pointer-events: none;
-        position: absolute;
-        left: 0;
-        right: 0;
-
-        > .x-axis-label-group-container {
-          flex: 1;
-          opacity: 0;
-          position: absolute;
-          transform: translateY(-5px);
-          transition: transform 0.1s, opacity 0.2s;
-          z-index: 1000;
-
-          &:first-child(:not(:last-child)),
-          &:last-child(:not(:first-child)) {
-            flex: 0.5;
-          }
-
-          &.visible {
-            opacity: 1;
-            transform: none;
-          }
-
-          > .x-axis-label-group {
-            align-items: center;
-            background: #eaecf0;
-            border-radius: 0.5rem;
-            display: flex;
-            box-shadow: 0 1px 15px 1px rgba(#3e396b, 0.07);
-            flex-direction: column;
-            left: -50%;
-            margin-left: -2px;
-            padding: 0.5rem;
-            position: relative;
-
-            &::before {
-              border: 0.5rem solid transparent;
-              border-bottom-color: #eaecf0;
-              content: '';
-              position: absolute;
-              bottom: 100%;
-            }
-
-            > .x-axis-label {
-              align-items: center;
-              color: $color-neutral;
-              display: flex;
-              white-space: nowrap;
-
-              &.has-label::before {
-                  border-radius: 10px;
-                  content: '';
-                  display: block;
-                  height: 10px;
-                  margin-right: 0.5rem;
-                  width: 10px;
-              }
-
-              @each $-mood, $-color in $-mood-colors {
-                &.mood-#{$-mood} {
-                  &.dashed {
-                    &::before {
-                      background: white;
-                      box-shadow: inset 0 0 0 0.075rem $-color;
-                    }
-                  }
-
-                  &:not(.dashed) {
-                    &::before {
-                      background: $-color;
-                    }
-                  }
-
-                  &.opaque {
-                    &::before {
-                      background: mix($-color, white, 60%);
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
     }
 
     > .chart-lines {
       bottom: 0;
-      left: 0;
       padding-left: 1rem;
       pointer-events: none;
       position: absolute;
-      right: 0;
       top: 0;
 
       > svg {
@@ -651,10 +651,9 @@ $-mood-colors: (
     > .chart-popovers {
       display: flex;
       height: 100%;
-      justify-content: center;
       pointer-events: none;
-      position: relative;
-      width: 100%;
+      position: absolute;
+      top: 0;
 
       > .chart-popover-separator {
         flex: 1;
@@ -764,24 +763,23 @@ $-mood-colors: (
 
     > .chart-points {
       height: 100%;
-      left: 0;
       margin-bottom: 2rem;
-      padding-left: 1rem;
       pointer-events: none;
       position: absolute;
       top: 0;
-      width: 100%;
 
       > .chart-point {
         background: white;
-        border: 3px solid;
+        border: 2px solid;
         border-radius: 16px;
-        height: 12px;
+        box-sizing: content-box;
+        height: 8px;
         margin-left: -7px;
         margin-top: -7px;
         position: absolute;
-        width: 12px;
-        transition: box-shadow 0.2s, height 0.1s, margin-left 0.1s, margin-top 0.1s, width 0.1s;
+        width: 8px;
+        transform: scale(60%);
+        transition: box-shadow 0.2s, height 0.1s, margin-left 0.1s, margin-top 0.1s, transform 0.1s, width 0.1s;
 
         @each $-mood, $-color in $-mood-colors {
           &.mood-#{$-mood} {
@@ -798,10 +796,7 @@ $-mood-colors: (
         }
 
         &.visible {
-          margin-left: -9px;
-          margin-top: -9px;
-          width: 16px;
-          height: 16px;
+          transform: scale(100%);
 
           @each $-mood, $-color in $-mood-colors {
             &.mood-#{$-mood} {
@@ -832,6 +827,81 @@ $-mood-colors: (
         &:first-child:not(:last-child),
         &:last-child:not(:first-child) {
           flex: 0.5;
+        }
+      }
+    }
+
+    > .x-axis-labels {
+      display: flex;
+      position: relative;
+
+      > .x-axis-label-group-container {
+        flex: 1;
+        margin-top: 0.125rem;
+        position: absolute;
+        z-index: 1000;
+
+        &:first-child(:not(:last-child)),
+        &:last-child(:not(:first-child)) {
+          flex: 0.5;
+        }
+
+        &.active {
+          > .xaxis-label-group {
+            background: #eaecf0;
+            box-shadow: 0 1px 15px 1px rgba(#3e396b, 0.07);
+          }
+        }
+
+        > .x-axis-label-group {
+          align-items: center;
+          border-radius: 0.5rem;
+          display: flex;
+          flex-direction: column;
+          left: -50%;
+          margin-left: -2px;
+          padding: 0.25rem 0.5rem;
+          position: relative;
+          transition: background-color 0.3s, box-shadow 0.3s;
+
+          > .x-axis-label {
+            align-items: center;
+            color: $color-neutral;
+            display: flex;
+            white-space: nowrap;
+
+            &.has-label::before {
+              border-radius: 10px;
+              content: '';
+              display: block;
+              height: 10px;
+              margin-right: 0.5rem;
+              width: 10px;
+            }
+
+            @each $-mood, $-color in $-mood-colors {
+              &.mood-#{$-mood} {
+                &.dashed {
+                  &::before {
+                    background: white;
+                    box-shadow: inset 0 0 0 0.075rem $-color;
+                  }
+                }
+
+                &:not(.dashed) {
+                  &::before {
+                    background: $-color;
+                  }
+                }
+
+                &.opaque {
+                  &::before {
+                    background: mix($-color, white, 60%);
+                  }
+                }
+              }
+            }
+          }
         }
       }
     }
