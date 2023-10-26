@@ -157,6 +157,7 @@ const setCurrency = (currency: string) => {
 
 const setLocale = (locale: string) => {
   expanded.value = false;
+  localeMenuVisible.value = false;
 
   emit('update:locale', locale);
 };
@@ -221,9 +222,7 @@ const whenMenuItemClicked = (code: string) => {
         shape='round',
       )
       PopoverMenu.locale-menu.no-spacing(
-        @select='() => localeMenuVisible = false',
-        @select:en="() => updateLocale('en')",
-        @select:ru="() => updateLocale('ru')",
+        @select='(locale) => updateLocale(locale)',
         :items='localeMenuItems',
         :visible='localeMenuVisible',
       )
