@@ -15,6 +15,7 @@ const props = withDefaults(
   defineProps<{
     activeLines?: (number | string | symbol)[];
     axis?: number;
+    barSumValues?: Record<number | string | symbol, number>;
     formatters: Record<number | string | symbol, (value: number) => string>;
     minHeight?: boolean;
     moods: Record<number | string | symbol, Mood>;
@@ -39,6 +40,7 @@ const props = withDefaults(
 const {
   activeLines,
   axis,
+  barSumValues,
   formatters,
   minHeight,
   moods,
@@ -124,6 +126,16 @@ const axisLabels = computed(() => {
   }
 
   return axisLabels;
+});
+
+const barFormatter = computed(() => {
+  for (const [key, formatter] of Object.entries(formatters.value)) {
+    if (styles.value[key] === 'bar') {
+      return formatter;
+    }
+  }
+
+  return undefined;
 });
 
 const barValues = computed(() => {
@@ -370,8 +382,10 @@ const getPointLeftPosition = (key: number | symbol | string) => {
   return totalValueCount.value === 1 ? 50 : (index * 100) / (totalValueCount.value - 1);
 };
 
-const getPointTopPosition = (value: number, lineLabel: number | string | symbol) => {
-  const style = styles.value[lineLabel];
+const getPointTopPosition = (value: number, lineLabel: number | string | symbol, style?: 'bar'|'line') => {
+  if (!style) {
+    style = styles.value[lineLabel];
+  }
 
   const [minValue, maxValue] = (() => {
     if (normalize.value) {
@@ -470,17 +484,26 @@ onUnmounted(() => {
         v-for="_ in axisLabels[styles[valueKeys[0]]][valueKeys[0]].slice(1)"
       )
     .chart-bars.no-spacing
-      template(v-for="(values, index) in barValues")
-        .chart-bar-container.no-spacing(
-          :style="{ left: `${getPointLeftPosition(index)}%`}",
-        )
-          .separator
-          template(v-for="(value, lineLabel) in values")
-            .chart-bar.no-spacing(
-              v-if='getPointTopPosition(value, lineLabel) > 0',
-              :class="{ ...getMoodClasses(lineLabel) }",
-              :style="{ height: `${getPointTopPosition(value, lineLabel)}%` }",
-            )
+      .chart-bar-container.no-spacing(
+        v-for="(values, index) in barValues",
+        :style="{ left: `${getPointLeftPosition(index)}%`}",
+      )
+        .separator
+        template(v-for="(value, lineLabel) in values")
+          .chart-bar.no-spacing(
+            v-if='getPointTopPosition(value, lineLabel) > 0',
+            :class="{ ...getMoodClasses(lineLabel) }",
+            :style="{ height: `${getPointTopPosition(value, lineLabel)}%` }",
+          )
+    .chart-bar-sums.no-spacing(
+      v-if="barSumValues",
+      :style="linesStyle",
+    )
+      .chart-bar-sum.no-spacing(
+        v-for="(value, lineLabel) in barSumValues",
+        :style="{ left: `${getPointLeftPosition(lineLabel)}%`, bottom: `${getPointTopPosition(value, lineLabel, 'bar')}%` }",
+      )
+        Info {{ barFormatter(value) }}
     .chart-popovers.no-spacing(:style='linesStyle')
       template(v-for="(key, index) in lineLabels[0]")
         .chart-popover-separator.no-spacing(
@@ -920,6 +943,30 @@ $-mood-colors: (
               @include apply-color(background-color, background-#{$-mood});
             }
           }
+        }
+      }
+    }
+
+    > .chart-bar-sums {
+      display: flex;
+      height: 100%;
+      left: 0;
+      position: absolute;
+      top: 0;
+
+      > .chart-bar-sum {
+        flex: 1;
+        position: absolute;
+        transform: translateX(-50%);
+
+        &:first-child(:not(:last-child)),
+        &:last-child(:not(:first-child)) {
+          flex: 0.5;
+        }
+
+        > .info {
+          font-size: 0.875rem;
+          white-space: nowrap;
         }
       }
     }
