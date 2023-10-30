@@ -42,6 +42,7 @@ $-themes: (
     border-neutral: #4a4c5a,
     border-neutral-alt: #5d15a0,
     border-positive: #1e8460,
+    border-table: #4a4c5a,
     border-active-accent: #3b4194,
     border-active-important: #b55b1f,
     border-active-important-alt: #0e77b8,
@@ -59,6 +60,7 @@ $-themes: (
     border-hover-neutral-alt: #5d15a0,
     border-hover-positive: #1e8460,
     shadow-normal: rgba(black, 10%),
+    text-contrast: white,
     text-normal: #a7abbd,
     text-elevated: #dcdcdc,
     text-elevated-2: #f6f6f6,
@@ -114,6 +116,7 @@ $-themes: (
     border-neutral: #545766,
     border-neutral-alt: #7e29ce,
     border-positive: #20a576,
+    border-table: #e4e5ea,
     border-active-accent: #232fde,
     border-active-important: #fc6300,
     border-active-important-alt: #0b75b9,
@@ -131,6 +134,7 @@ $-themes: (
     border-hover-neutral-alt: #7e29ce,
     border-hover-positive: #24bb85,
     shadow-normal: rgba(black, 10%),
+    text-contrast: black,
     text-normal: #6b6f82,
     text-elevated: #dcdcdc,
     text-elevated-2: #f6f6f6,
@@ -151,6 +155,7 @@ $-themes: (
   $property,
   $color,
   $value-prefix: null,
+  $value-postfix: null,
   $rule-postfix: '',
 ) {
   @each $-theme, $-colors in $-themes {
@@ -158,7 +163,7 @@ $-themes: (
       $-value: map.get($-colors, $color);
 
       @if $value-prefix {
-        $-value: $value-prefix $-value;
+        $-value: $value-prefix $-value $value-postfix;
       }
 
       #{$property}: $-value;
