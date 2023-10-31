@@ -496,7 +496,7 @@ onUnmounted(() => {
             :style="{ height: `${getPointTopPosition(value, lineLabel)}%` }",
           )
     .chart-bar-sums.no-spacing(
-      v-if="barSumValues",
+      v-if="barSumValues && barFormatter",
       :style="linesStyle",
     )
       .chart-bar-sum.no-spacing(
@@ -575,7 +575,7 @@ onUnmounted(() => {
         :style="{ left: `${getPointLeftPosition(key)}%` }",
       )
         .x-axis-label-group.no-spacing(
-          :ref='(element) => { if (element) xAxisLabelGroup[index] = element; }',
+          :ref='(element) => { if (element) xAxisLabelGroup[index] = element as HTMLElement; }',
           :style="{ transform: `rotate(-${xAxisLabelRotate}deg) translateX(-${xAxisLabelRotate * 50 / 90}%)` }",
         )
           slot(name="xAxis", :valueKey="key")
