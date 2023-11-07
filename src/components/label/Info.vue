@@ -6,6 +6,7 @@ import { computed, toRefs } from 'vue';
 
 const props = withDefaults(
   defineProps<{
+    contrast?: boolean;
     elevation?: Elevation;
     important?: boolean;
     mood?: Mood | 'white';
@@ -18,9 +19,10 @@ const props = withDefaults(
   },
 );
 
-const { elevation, important, mood, size } = toRefs(props);
+const { contrast, elevation, important, mood, size } = toRefs(props);
 
 const classes = computed(() => ({
+  contrast: contrast.value,
   important: important.value,
   [`elevation-${elevation.value}`]: !mood?.value,
   [`mood-text-${mood?.value}`]: mood?.value,
@@ -47,6 +49,10 @@ const classes = computed(() => ({
   font-family: $font-family-normal;
   transition-duration: $transition-duration-normal;
   transition-property: color;
+
+  &.contrast {
+    @include apply-color(color, text-contrast);
+  }
 
   &.important {
     font-weight: 600;
