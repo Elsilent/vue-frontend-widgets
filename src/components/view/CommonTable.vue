@@ -1263,6 +1263,8 @@ export default {
       if (save) {
         localStorage.setItem(this.orderByKey, JSON.stringify(orderBy));
       }
+
+      this.$emit('update:orderBy', orderBy);
     },
     updateScrollPosition({ left, top }) {
       this.$set(this.scrollPosition, 'left', left);
