@@ -23,7 +23,7 @@
     "luxon": "^3.3.0",
     "numeral": "^2.0.6",
     "vue": "^3.3.4",
-    "vue-router": "^4.2.2"
+    "vue-router": "^4.2.5"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.2.0",
