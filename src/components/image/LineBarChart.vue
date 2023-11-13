@@ -1,5 +1,13 @@
 <script lang="ts" setup>
-import { computed, onMounted, onUnmounted, ref, toRefs, watch } from 'vue';
+import {
+  computed,
+  onMounted,
+  onUnmounted,
+  ref,
+  toRefs,
+  watch,
+  type ComponentPublicInstance,
+} from 'vue';
 import type { Mood } from '../../utils/enum/mood';
 import type { Style } from '../../utils/type/component/image/line_bar_chart';
 import Info from '../label/Info.vue';
@@ -269,6 +277,12 @@ const linesStyle = computed(() => {
 const xAxisLabelsHeight = ref<number|undefined>();
 
 const xAxisLabelGroup = ref<HTMLElement[]>([]);
+
+const setXAxisLabelGroup = (index: number, element: Element | ComponentPublicInstance | null) => {
+  if (element) {
+    xAxisLabelGroup.value[index] = element as HTMLElement;
+  }
+};
 
 const chartContents = ref<HTMLElement|undefined>();
 
@@ -575,7 +589,7 @@ onUnmounted(() => {
         :style="{ left: `${getPointLeftPosition(key)}%` }",
       )
         .x-axis-label-group.no-spacing(
-          :ref='(element) => { if (element) xAxisLabelGroup[index] = element as HTMLElement; }',
+          :ref='(element) => setXAxisLabelGroup(index, element)',
           :style="{ transform: `rotate(-${xAxisLabelRotate}deg) translateX(-${xAxisLabelRotate * 50 / 90}%)` }",
         )
           slot(name="xAxis", :valueKey="key")
