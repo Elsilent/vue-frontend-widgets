@@ -1,6 +1,10 @@
 <script lang="ts" setup>
 import { computed, nextTick, onUnmounted, ref, toRefs } from 'vue';
-import { type Column, type ColumnType } from '../../utils/type/component/container/table';
+import type {
+  Column,
+  ColumnType,
+  ComparisonColumn,
+} from '../../utils/type/component/container/table';
 import Scrollable from './Scrollable.vue';
 import SimpleTable from './SimpleTable.vue';
 
@@ -15,15 +19,8 @@ const props = withDefaults(
     colorMetrics?: boolean;
     coloredMetrics?: string[];
     columns: Record<string, Column>;
-    comparisonColumns?: Record<
-      string,
-      {
-        label: string;
-        format?: 'difference';
-        type: ColumnType;
-      }
-    >;
-    detailsRows: Record<string, any[]>;
+    comparisonColumns?: Record<string, ComparisonColumn>;
+    detailsRows: Record<string, Record<string, any>>;
     dragColumns?: boolean;
     fixedColumnNumber?: number;
     inversedKpis?: string[];
@@ -32,8 +29,8 @@ const props = withDefaults(
      */
     noDataMessage?: string;
     orderBy: [string[], boolean];
-    primaryColumn?: number | string;
-    rows: Record<string, any[]>;
+    primaryColumn?: string;
+    rows: Record<string, any>[] | Record<string, Record<string, any>>;
     scrollPosition?: { left: number; top: number };
     showRowNumber?: boolean;
     showTopTotal?: boolean;

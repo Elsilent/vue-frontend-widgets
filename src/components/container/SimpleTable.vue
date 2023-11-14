@@ -44,9 +44,9 @@ const props = withDefaults(
      *
      * Example:
      * - Primary column: id
-     * - detailsRows: { 3: [...], 4: [...] }
+     * - detailsRows: { 3: { ... }, 4: { ... } }
      */
-    detailsRows: Record<string, any[]>;
+    detailsRows: Record<string, Record<string, any>>;
     /**
      * Allows to drag columns inside the table.
      * If enabled will emit 'dragged' event when column is moved to a new place
@@ -73,7 +73,7 @@ const props = withDefaults(
     /**
      * Primary column which is used for detailed rows
      */
-    primaryColumn?: number | string;
+    primaryColumn?: string;
     /**
      * List of rows to display.
      *
@@ -287,14 +287,16 @@ const orderedRowValues = computed<Record<string, any>[]>(
 
         if (detailsRows.value[row[primaryColumn.value]]) {
           rows.push(
-            ...detailsRows.value[row[primaryColumn.value]].map((detailRow, subindex) => ({
-              ...detailRow,
-              rowInfo: {
-                index,
-                subindex,
-                detailable: false,
-              },
-            })),
+            ...Object.entries(detailsRows.value[row[primaryColumn.value]]).map(
+              ([subindex, detailRow]) => ({
+                ...detailRow,
+                rowInfo: {
+                  index,
+                  subindex,
+                  detailable: false,
+                },
+              }),
+            ),
           );
         }
 
@@ -522,14 +524,10 @@ const getColumnStyle = (columnKey: string) => {
  * For comparison-like pages we need to convert two values,
  * the column and the subcolumn to a single string
  */
-const getSubcolumnKey = (subcolumnIndex?: number) => {
-  if (subcolumnIndex === undefined) {
-    return undefined;
-  }
-
+const getSubcolumnKey = (subcolumnIndex: number) => {
   return comparisonColumnKeys && comparisonColumnKeys.value
     ? comparisonColumnKeys.value[subcolumnIndex]
-    : subcolumnIndex;
+    : undefined;
 };
 
 /**
@@ -799,21 +797,21 @@ defineSlots<{
   colorizeLabel: (props: { enabled: boolean }) => any;
   column: (props: { columnKey: string; isGhost: boolean }) => any;
   additionalHeader: (props: { additionalHeader: string; columnKey: string }) => any;
-  topTotal: (props: { columnKey: string; subcolumnKey?: number | string; values: any[] }) => any;
+  topTotal: (props: { columnKey: string; subcolumnKey?: string; values: any[] }) => any;
   topTotalRowNumber: (props: any) => any;
-  secondaryColumn: (props: { columnKey: string; subcolumnKey?: number | string }) => any;
+  secondaryColumn: (props: { columnKey: string; subcolumnKey: string }) => any;
   rowNumber: (props: { value: number | string }) => any;
   row: (props: {
     columnKey: string;
     index: number;
     row: Record<string, any>;
     spanIndex?: number | string;
-    subcolumnKey?: number | string;
+    subcolumnKey?: string;
     subindex: number;
     value: any;
   }) => any;
   totalRowNumber: (props: any) => any;
-  total: (props: { columnKey: string; subcolumnKey?: number | string; values: any[] }) => any;
+  total: (props: { columnKey: string; subcolumnKey?: string; values: any[] }) => any;
 }>();
 </script>
 
@@ -917,7 +915,7 @@ defineSlots<{
         slot(
           name="secondaryColumn",
           :columnKey="columnKey",
-          :subcolumnKey="getSubcolumnKey(index - 1)",
+          :subcolumnKey="getSubcolumnKey(index - 1)!",
         )
   template(v-for="(row, rowIndex) in orderedRowValues")
     .cell.row-number(

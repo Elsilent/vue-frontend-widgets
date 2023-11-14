@@ -18,10 +18,12 @@ const props = withDefaults(
 const { disabled, modelValue, password, placeholder } = toRefs(props);
 
 const emit = defineEmits<{
-  (event: 'blur', focusEvent: FocusEvent): void;
-  (event: 'focus', focusEvent: FocusEvent): void;
-  (event: 'submit'): void;
-  (event: 'update:modelValue', value: string): void;
+  (e: 'blur', event: FocusEvent): void;
+  (e: 'focus', event: FocusEvent): void;
+  (e: 'keydown', event: KeyboardEvent): void;
+  (e: 'keyup', event: KeyboardEvent): void;
+  (e: 'submit'): void;
+  (e: 'update:modelValue', value: string): void;
 }>();
 
 const inputType = computed(() => (password.value ? 'password' : undefined));
@@ -30,6 +32,12 @@ const whenKeyDown = (event: KeyboardEvent) => {
   if (event.key === 'Enter') {
     emit('submit');
   }
+
+  emit('keydown', event);
+};
+
+const whenKeyUp = (event: KeyboardEvent) => {
+  emit('keyup', event);
 };
 
 const whenUpdated = (event: Event) => {
@@ -42,6 +50,7 @@ input.input(
   @blur="(event) => emit('blur', event)",
   @focus="(event) => emit('focus', event)",
   @keydown="(event) => whenKeyDown(event)",
+  @keyup="(event) => whenKeyUp(event)",
   @input="(event) => whenUpdated(event)",
   :disabled='disabled',
   :placeholder='placeholder',
