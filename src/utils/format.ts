@@ -19,11 +19,11 @@ numeral.locale('fr');
 export default {
   float: (value: number) => numeral(value).format('0,0.00'),
   integer: (value: number) => numeral(value).format('0,0'),
-  money: (value: number, symbol: string, fractionSize: number, prefix: boolean) => {
+  money: (value: number, symbol: string, decimal: number, prefix: boolean) => {
     let format = '0,0';
 
-    if (fractionSize > 0) {
-      format += `.${'0'.repeat(fractionSize)}`;
+    if (decimal > 0) {
+      format += `.${'0'.repeat(decimal)}`;
     }
 
     const formattedValue = numeral(value).format(format);

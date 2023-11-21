@@ -1,6 +1,6 @@
 export interface Currency {
   code: string;
-  fractionSize: number;
+  decimal: number;
   prefix: boolean;
   symbol: string;
 }
