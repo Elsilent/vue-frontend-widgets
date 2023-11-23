@@ -967,6 +967,7 @@ export default {
     },
     rows() {
       this.reloadTable();
+      this.updateColumnSizingInfo();
     },
   },
 }
