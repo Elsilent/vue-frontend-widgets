@@ -3,18 +3,17 @@ import axios from 'axios';
 import { computed, ref, toRefs } from 'vue';
 import Header from '../label/Header.vue';
 import LineBarChart from '../image/LineBarChart.vue';
-import LoaderLineScale from '../image/LoaderLineScale.vue';
+import Loader from '../image/Loader.vue';
 import Popover from '../container/Popover.vue';
 
 const props = defineProps<{
   formatter: (value: number) => string;
-  title: string;
+  title?: string;
   url: string;
 }>();
 
 const { formatter, title, url } = toRefs(props);
 
-const blurred = ref(false);
 const visible = ref(false);
 const valueKeys = ref<string[]>([]);
 const values = ref<number[] | undefined>();
@@ -117,7 +116,7 @@ const onSelectorFocus = async () => {
     parentClass="cell",
     popoverClass="trend-chart-popover",
   )
-    Header(size="small-3") {{ title }}
+    Header(v-if="title", size="small-3") {{ title }}
     LineBarChart(
       v-if="values",
       :activeLines="['values']",
@@ -127,7 +126,7 @@ const onSelectorFocus = async () => {
       :values="{ trend: trendValues, values: chartValues }",
     )
       template(#x-axis-label="{ index }") {{ valueKeys[index] }}
-    LoaderLineScale(v-else)
+    Loader(v-else)
 </template>
 
 <style lang="scss">
@@ -153,11 +152,8 @@ const onSelectorFocus = async () => {
 </style>
 
 <style lang="scss" scoped>
-@import '../../styles/colors.scss';
-
 .trend-chart-container {
   align-items: center;
-  color: $color-active;
   display: flex;
   font-size: inherit;
   justify-content: center;

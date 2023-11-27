@@ -2,23 +2,43 @@ import { resolve } from 'node:path';
 import { fileURLToPath, URL } from 'node:url';
 
 import { defineConfig } from 'vite';
+import dts from 'vite-plugin-dts';
 import vue from '@vitejs/plugin-vue';
 
 const srcDir = resolve(__dirname, 'src');
+
+const entries = [
+  'container',
+  'image',
+  'interaction',
+  'label',
+  'layout',
+  'marker',
+  'view',
+  'utils/currency',
+  'utils/date',
+  'utils/error',
+  'utils/format',
+  'utils/layout_header_account',
+  'utils/line_bar_chart',
+  'utils/match',
+  'utils/menu',
+  'utils/mood',
+  'utils/sort',
+  'utils/table',
+  'utils/theme',
+];
 
 // https://vitejs.dev/config/
 export default defineConfig({
   build: {
     lib: {
-      entry: {
-        container: resolve(srcDir, 'entries', 'container.ts'),
-        image: resolve(srcDir, 'entries', 'image.ts'),
-        interaction: resolve(srcDir, 'entries', 'interaction.ts'),
-        label: resolve(srcDir, 'entries', 'label.ts'),
-        layout: resolve(srcDir, 'entries', 'layout.ts'),
-        marker: resolve(srcDir, 'entries', 'marker.ts'),
-      },
-      fileName: (format, entry) => {
+      entry: entries.reduce((entryMap, entry) => {
+        entryMap[entry] = resolve(srcDir, 'entries', `${entry}.ts`);
+
+        return entryMap;
+      }, {} as Record<string, string>),
+      fileName: (format: string, entry: string) => {
         const extension = (() => {
           switch (format) {
             case 'cjs':
@@ -32,7 +52,25 @@ export default defineConfig({
         return `${entry}.${extension}`;
       },
     },
+    rollupOptions: {
+      external: ['numeral', 'vue'],
+      output: {
+        globals: {
+          vue: 'Vue',
+        },
+      },
+    },
   },
-  plugins: [vue()],
+  plugins: [
+    dts({
+      insertTypesEntry: true,
+    }),
+    vue(),
+  ],
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+    },
+  },
   base: '',
 });

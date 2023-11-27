@@ -10,13 +10,14 @@ Frontend widgets which can be used across Vue 3 TrackAd projects.
 
 ```vue
 <script lang="ts" setup>
-import Align from 'trackad-frontend-widgets/src/components/container/Align.vue';
-import Info from 'trackad-frontend-widgets/src/components/label/Info.vue';
+import { Align } from 'trackad-frontend-widgets/container';
+import { Header, Info } from 'trackad-frontend-widgets/label';
 </script>
 
 <template lang="pug">
 Align(horizontal='center')
-  Info Hello, world!
+  Header Hello, world!
+  Info How are you doing today?
 </template>
 ```
 

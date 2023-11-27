@@ -591,11 +591,10 @@ const onColumnClick = (columnKey: string, subcolumnIndex?: number) => {
     return;
   }
 
-  if (dragColumnFromIndex.value === undefined) {
-    return;
-  }
-
-  if (dragModeEnabled.value && visibleColumnKeys.value[dragColumnFromIndex.value] === columnKey) {
+  if (dragColumnFromIndex.value !== undefined &&
+      dragModeEnabled.value &&
+      visibleColumnKeys.value[dragColumnFromIndex.value] === columnKey
+  ) {
     return;
   }
 
@@ -799,7 +798,7 @@ defineSlots<{
   additionalHeader: (props: { additionalHeader: string; columnKey: string }) => any;
   topTotal: (props: { columnKey: string; subcolumnKey?: string; values: any[] }) => any;
   topTotalRowNumber: (props: any) => any;
-  secondaryColumn: (props: { columnKey: string; subcolumnKey: string }) => any;
+  secondaryColumn: (props: { columnKey: string; subcolumnKey?: string }) => any;
   rowNumber: (props: { value: number | string }) => any;
   row: (props: {
     columnKey: string;
@@ -915,7 +914,7 @@ defineSlots<{
         slot(
           name="secondaryColumn",
           :columnKey="columnKey",
-          :subcolumnKey="getSubcolumnKey(index - 1)!",
+          :subcolumnKey="getSubcolumnKey(index - 1)",
         )
   template(v-for="(row, rowIndex) in orderedRowValues")
     .cell.row-number(
@@ -1007,6 +1006,7 @@ defineSlots<{
 
   > .cell {
     align-items: center;
+    box-sizing: border-box;
     color: black;
     display: flex;
     font-size: 12px;

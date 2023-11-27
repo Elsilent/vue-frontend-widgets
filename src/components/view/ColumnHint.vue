@@ -1,6 +1,5 @@
 <script lang="ts" setup>
-import Header from '../label/Header.vue';
-import Info from '../label/Info.vue';
+import { toRefs } from 'vue';
 import Popover from '../container/Popover.vue';
 
 const props = withDefaults(
@@ -13,6 +12,8 @@ const props = withDefaults(
     visible: false,
   },
 );
+
+const { description, title, visible } = toRefs(props);
 </script>
 
 <template lang="pug">
@@ -34,12 +35,9 @@ const props = withDefaults(
 </style>
 
 <style lang="scss" scoped>
-@import '../../styles/colors.scss';
-
 .column-hint {
   cursor: pointer;
   display: flex;
-  font-size: inherit;
   max-width: 30rem;
   padding: 0;
   text-decoration: none;

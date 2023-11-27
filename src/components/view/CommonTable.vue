@@ -3,6 +3,7 @@ import axios, { type AxiosRequestConfig } from 'axios';
 import { computed, nextTick, onMounted, ref, toRefs, watch } from 'vue';
 import numeral from '../../utils/numeral';
 import { cloneObject } from '../../utils/clone';
+import type { Mood } from '../../utils/enum/mood';
 import type {
   Column,
   ColumnDetails,
@@ -13,8 +14,9 @@ import CellHint from './CellHint.vue';
 import ColumnHint from './ColumnHint.vue';
 import DetailsSelector from './DetailsSelector.vue';
 import Dropdown from '../interaction/Dropdown.vue';
+import Info from '../label/Info.vue';
 import Input from '../interaction/Input.vue';
-import LoaderLineScale from '../image/LoaderLineScale.vue';
+import Loader from '../image/Loader.vue';
 import Pagination from './Pagination.vue';
 import Table from '../container/Table.vue';
 import TrendChart from './TrendChart.vue';
@@ -57,13 +59,6 @@ interface InlineFilterOperator {
   size?: 'small' | 'normal';
 }
 
-interface ValueColumn {
-  columnKey: string;
-  comparisonKey: string;
-  format?: 'difference';
-  type: ColumnType;
-}
-
 const props = withDefaults(
   defineProps<{
     /**
@@ -84,13 +79,10 @@ const props = withDefaults(
      */
     clientCurrencySymbolPrefix?: boolean;
     /**
-     * Are canceled orders displayed, used for the tooltip.
-     */
-    clientShowCancel?: boolean;
-    /**
      * Enables possibility to color metrics
      */
     colorMetrics?: boolean;
+    colorizeLabel: string;
     /**
      * Provides the list of columns to display on the table.
      */
@@ -213,13 +205,13 @@ const props = withDefaults(
      * The URL which to call to get the trend chart data
      */
     trendUrl?: string | Record<string, string>;
+    uncolorizeLabel: string;
   }>(),
   {
     cellClasses: () => ({}),
     clientCurrencyDecimal: 0,
     clientCurrencySymbol: '',
     clientCurrencySymbolPrefix: true,
-    clientShowCancel: false,
     colorMetrics: false,
     columnDetails: () => ({}),
     columnLinks: () => ({}),
@@ -239,7 +231,6 @@ const {
   clientCurrencyDecimal,
   clientCurrencySymbol,
   clientCurrencySymbolPrefix,
-  clientShowCancel,
   colorMetrics,
   columns,
   columnDetails,
@@ -269,7 +260,7 @@ const {
 const makeInlineFilters = () => {
   const inlineFilters: Record<string, InlineFilter> = {};
 
-  for (const [columnKey, column] of Object.entries(columns.value)) {
+  for (const columnKey of Object.keys(columns.value)) {
     if (!(columnKey in inlineFilterOperators.value)) {
       continue;
     }
@@ -315,6 +306,10 @@ const additionalHeaders = computed(() => {
 
   return additionalHeaders;
 });
+
+const comparisonColumnKeys = computed(() =>
+  comparisonColumns?.value ? Object.keys(comparisonColumns.value) : undefined,
+);
 
 /**
  * Retrieves the list of columns in current column (may differ from columns prop in drag mode)
@@ -373,32 +368,6 @@ const orderedRows = computed(() => {
 });
 
 /**
- * Retrieves column information used to render rows
- * when subcolumns are enabled
- */
-const valueColumns = computed(() =>
-  Object.entries(currentColumns.value)
-    .filter(([_, { colspan, visible }]) => (colspan ?? 1) !== 1 && visible)
-    .reduce((valueColumns, [key, column]) => {
-      if (!comparisonColumns?.value) {
-        return valueColumns;
-      }
-      for (let i = 0; i < (column.colspan ?? 0); i++) {
-        const comparisonKey = Object.keys(comparisonColumns.value)[i];
-
-        valueColumns.push({
-          comparisonKey,
-          columnKey: key,
-          format: comparisonColumns.value[comparisonKey].format,
-          type: comparisonColumns.value[comparisonKey].type,
-        });
-      }
-
-      return valueColumns;
-    }, [] as ValueColumn[]),
-);
-
-/**
  * Slices rows to current page
  */
 const visibleRows = computed(() => {
@@ -441,15 +410,15 @@ const canShorten = (columnKey: string, value: string) => {
 
 const columnHasTooltip = (column: Column) => !!column.tooltipTitle && !!column.tooltipDescription;
 
-const differenceClass = (value: number, columnKey: string) => {
+const differenceMood = (value: number, columnKey: string): Mood => {
   const inversed = inversedKpis?.value?.includes(columnKey) ?? false;
 
   if (value > 0) {
-    return inversed ? 'difference-negative' : 'difference-positive';
+    return inversed ? 'negative' : 'positive';
   } else if (value < 0) {
-    return inversed ? 'difference-positive' : 'difference-negative';
+    return inversed ? 'positive' : 'negative';
   } else {
-    return 'difference-neutral';
+    return 'neutral';
   }
 };
 
@@ -672,11 +641,11 @@ const getInlineFilterOperatorClasses = (columnKey: string) => {
   };
 };
 
-const getInlineFilterOperatorItems = (columnKey: string) => {
+const getInlineFilterOperatorItems = (columnKey: string): Record<string, string> => {
   const operators = getInlineFilterOperators(columnKey);
 
   if (!operators) {
-    return undefined;
+    return {};
   }
 
   return Object.entries(operators).reduce((operators, [operatorKey, operator]) => {
@@ -723,7 +692,7 @@ const getRawValue = (value: any, type: ColumnType) => {
  */
 const getRowTrendUrl = (row: Record<string, any>, urlKey?: string) => {
   if (!trendUrl) {
-    return undefined;
+    return '';
   }
 
   const url = new URL(
@@ -1014,7 +983,7 @@ const setOrderByFromDefault = async (fetchRows: boolean) => {
     return;
   }
 
-  const [firstColumnKey, { colspan }] = Object.entries(columns).find(
+  const [firstColumnKey, { colspan }] = Object.entries(columns.value).find(
     ([_, { visible }]) => visible,
   ) as [string, Column];
 
@@ -1286,7 +1255,7 @@ watch(
       :colorMetrics="colorMetrics",
       :coloredMetrics="coloredMetrics",
       :columns="currentColumns",
-      :comparisonColumns="comparisonColumns",
+      :comparisonColumnKeys="comparisonColumnKeys",
       :detailsRows="detailsRows",
       :dragColumns="dragColumns",
       :fixedColumnNumber="fixedColumnNumber",
@@ -1298,20 +1267,34 @@ watch(
       :showTotal="!!totalRow",
       :showTopTotal="showTopTotal",
     )
+      template(#colorizeLabel="{ enabled }")
+        Info(mood="white", size="small")
+          template(v-if="enabled") {{ uncolorizeLabel }}
+          template(v-else) {{ colorizeLabel }}
+      template(#columnRowNumber)
+        Info(contrast, size="small") #
+      template(#rowNumber="{ value }")
+        Info(contrast, size="small") {{ value }}
+      template(#totalRowNumber)
+        Info(contrast, size="small") #
       template(#column="{ columnKey, isGhost }")
         .d-flex.align-items-center(
           @mouseover="() => setColumnHintVisible(columnKey, true)",
           @mouseout="() => setColumnHintVisible(columnKey, false)",
         )
-          | {{ columns[columnKey].label }}
+          Info(contrast, size="small") {{ columns[columnKey].label }}
           ColumnHint(
             v-if="!isGhost && columnHasTooltip(columns[columnKey])",
             :description="columns[columnKey].tooltipDescription",
             :title="columns[columnKey].tooltipTitle",
             :visible="columnHintsVisible[columnKey]",
           )
-      template(#secondaryColumn="{ subcolumnKey }")
-        span.ws-pre {{ comparisonColumns![subcolumnKey].label }}
+      template(v-if="comparisonColumns", #secondaryColumn="{ subcolumnKey }")
+        Info(
+          v-if="subcolumnKey",
+          contrast,
+          size="small",
+        ) {{ comparisonColumns[subcolumnKey].label }}
       template(#row="{ columnKey, index, row, spanIndex, subcolumnKey, subindex, value }")
         slot(
           v-bind=`{
@@ -1326,23 +1309,27 @@ watch(
           name="row",
         )
           TrendChart(
-            v-if="subindex === undefined && trendUrl && columnKey === 'trend'"
+            v-if="subindex === undefined && columnKey === 'trend'",
             :class="getValueClass(columnKey, value, row.rowInfo.detailable)",
             :formatter="(value) => formatValue(value, 'int')",
-            :title="trendChartTitle!",
-            :url="getRowTrendUrl(row, subcolumnKey)!",
+            :title="trendChartTitle",
+            :url="getRowTrendUrl(row, subcolumnKey)",
           )
           template(v-else-if="row.rowInfo.detailable && columnKey === detailsColumn")
-            span.ws-pre(
+            Info(
               v-if="isColumnLinkable(row, columnKey) && row.rowInfo.detailable",
               :class="getValueClass(columnKey, value, row.rowInfo.detailable)",
+              contrast,
+              size="small",
             )
               a.column-link(:href="getColumnLinkUrl(columnLinks[columnKey], row).toString()")
                 | {{ shortenValue(formatValue(value, columns[columnKey].type), columnKey) }}
-            template(v-else) {{ formatValue(value, columns[columnKey].type) }}
-          span.ws-pre(
+            Info(v-else) {{ formatValue(value, columns[columnKey].type) }}
+          Info(
             v-else-if="isColumnLinkable(row, columnKey) && row.rowInfo.detailable",
             :class="getValueClass(columnKey, value, row.rowInfo.detailable)",
+            contrast,
+            size="small",
           )
             a.column-link(:href="getColumnLinkUrl(columnLinks[columnKey], row).toString()")
               | {{ shortenValue(formatValue(value, columns[columnKey].type), columnKey) }}
@@ -1353,9 +1340,11 @@ watch(
             :title="columnDetails[columnKey].title",
             :url="getColumnDetailsUrl(columnKey, row)",
           )
-          span(
+          Info(
             v-else,
             :class="getValueClass(columnKey, value, row.rowInfo.detailable)",
+            contrast,
+            size="small",
           ) {{ shortenValue(formatValue(value, columns[columnKey].type), columnKey) }}
           i.flex-grow-1.expand-column.fa(
             v-if='canShorten(columnKey, value)',
@@ -1363,13 +1352,13 @@ watch(
             :class="expandedColumns.includes(columnKey) ? 'fa-compress-alt' : 'fa-expand-alt'",
           )
           DetailsSelector(
-            v-if="row.rowInfo.detailable && columnKey === detailsColumn",
+            v-if="detailsLabels && row.rowInfo.detailable && columnKey === detailsColumn",
             @hideDetails="() => onHideDetails(row)",
             @showDetails="(kind) => onShowDetails(kind, row)",
             :class="{ 'flex-grow-1 text-right': !canShorten(columnKey, value) }",
-            :labels="detailsLabels!",
+            :labels="detailsLabels",
             :open="detailsRows[row[primaryColumn]] !== undefined",
-            :title="detailsSelectorTitle!",
+            :title="detailsSelectorTitle",
           )
       template(#additionalHeader="{ additionalHeader, columnKey }")
         .d-flex.inline-filter(
@@ -1379,10 +1368,11 @@ watch(
           Dropdown.inline-filter-dropdown(
             @update:modelValue="(operator) => setInlineFilter(columnKey, { operator: operator.toString() })",
             :id="`additional_header_${columnKey}`",
-            :items="getInlineFilterOperatorItems(columnKey)!",
+            :items="getInlineFilterOperatorItems(columnKey)",
             :modelValue="getInlineFilterCurrentOperatorItem(columnKey)",
           )
-            template(#item="{ item }") {{ item }}
+            template(#item="{ item }")
+              Info(contrast, size="small") {{ item }}
           Input.flex-grow-1.inline-filter-input(
             @blur="(event) => onInlineFilterBlur(event, columnKey)",
             @keyup="(event) => onInlineFilterKeyUp(event, columnKey)"
@@ -1398,22 +1388,28 @@ watch(
         )
           template(v-if="totalTitle && columnKey === totalColumnKey") {{ totalTitle(rowCount ?? allRows.length) }}
           template(v-else-if="totalRow")
-            span(
+            Info(
               v-if="subcolumnKey && comparisonColumns && comparisonColumns[subcolumnKey].format === 'difference'",
-              :class="differenceClass(totalRow[columnKey][subcolumnKey], columnKey)",
+              :mood="differenceMood(totalRow[columnKey][subcolumnKey], columnKey)",
+              contrast,
+              size="small",
             ) {{ formatTotalComparisonValue(columnKey, subcolumnKey, comparisonColumns[subcolumnKey].format) }}
             CellHint(
               v-else-if="totalRow && totalRow[columnKey] >= 0.01 && columnKey in columnDetails",
               :format="columnDetails[columnKey].format",
               :label="shortenValue(formatValue(totalRow[columnKey], columns[columnKey].type, comparisonColumns && subcolumnKey ? comparisonColumns[subcolumnKey].format : undefined), columnKey)",
               :title="columnDetails[columnKey].title",
-              :url="columnDetails[columnKey].baseUrl",
+              :url="getColumnDetailsTotalUrl(columnDetails[columnKey])",
             )
-            template(v-else-if="columnKey !== 'trend'")
+            Info(
+              v-else-if="columnKey !== 'trend'",
+              contrast,
+              size="small",
+            )
               template(v-if="subcolumnKey") {{ formatTotalComparisonValue(columnKey, subcolumnKey, comparisonColumns ? comparisonColumns[subcolumnKey].format : undefined) }}
               template(v-else) {{ formatValue(totalRow[columnKey], columns[columnKey].type) }}
   .loading-overlay(:class="{ visible: loading }")
-    LoaderLineScale
+    Loader
 </template>
 
 <style lang="scss" scoped>
@@ -1454,7 +1450,7 @@ watch(
 }
 
 .column-link {
-  color: $color-active;
+  @include apply-color(color, text-important-alt);
 }
 
 .details-selector {
@@ -1462,28 +1458,29 @@ watch(
 }
 
 .difference-negative {
-  color: $color-negative;
+  @include apply-color(color, text-negative);
 }
 
 .difference-positive {
-  color: $color-positive;
+  @include apply-color(color, text-positive);
 }
 
 .expand-column {
-  color: $color-active;
+  @include apply-color(color, text-important-alt);
+
   cursor: pointer;
   margin-left: 0.5rem;
 }
 
 .inline-filter {
-  &.size-small::v-deep .inline-filter-dropdown  + .select2 {
+  &.size-small:deep(.inline-filter-dropdown  + .select2) {
     min-width: 40px;
   }
-  &.size-normal::v-deep .inline-filter-dropdown  + .select2 {
+  &.size-normal:deep(.inline-filter-dropdown  + .select2) {
     min-width: 100px;
   }
 
-  &::v-deep .inline-filter-dropdown  + .select2 {
+  &:deep(.inline-filter-dropdown  + .select2) {
     .select2-selection.select2-selection--single {
       border-bottom-right-radius: 0;
       border-top-right-radius: 0;

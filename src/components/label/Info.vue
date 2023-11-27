@@ -22,7 +22,7 @@ const props = withDefaults(
 const { contrast, elevation, important, mood, size } = toRefs(props);
 
 const classes = computed(() => ({
-  contrast: contrast.value,
+  contrast: !mood?.value ? contrast.value : false,
   important: important.value,
   [`elevation-${elevation.value}`]: !mood?.value,
   [`mood-text-${mood?.value}`]: mood?.value,

@@ -6,9 +6,13 @@
     "composite": true,
     "baseUrl": ".",
     "lib": ["DOM", "ESNext"],
-    "noUnusedLocals": false,
+    "noUnusedLocals": true,
     "module": "ESNext",
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
+    "types": ["vite/client"]
   },
   "vueCompilerOptions": {
     "plugins": [

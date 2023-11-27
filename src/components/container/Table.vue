@@ -1,10 +1,6 @@
 <script lang="ts" setup>
 import { computed, nextTick, onUnmounted, ref, toRefs } from 'vue';
-import type {
-  Column,
-  ColumnType,
-  ComparisonColumn,
-} from '../../utils/type/component/container/table';
+import type { Column } from '@/utils/type/component/container/table';
 import Scrollable from './Scrollable.vue';
 import SimpleTable from './SimpleTable.vue';
 
@@ -19,7 +15,7 @@ const props = withDefaults(
     colorMetrics?: boolean;
     coloredMetrics?: string[];
     columns: Record<string, Column>;
-    comparisonColumns?: Record<string, ComparisonColumn>;
+    comparisonColumnKeys?: string[];
     detailsRows: Record<string, Record<string, any>>;
     dragColumns?: boolean;
     fixedColumnNumber?: number;
@@ -41,7 +37,7 @@ const props = withDefaults(
     cellClasses: () => ({}),
     colorMetrics: false,
     coloredMetrics: () => [],
-    comparisonColumns: () => ({}),
+    comparisonColumnKeys: () => [],
     dragColumns: false,
     fixedColumnNumber: 1,
     inversedKpis: () => [],
@@ -59,7 +55,7 @@ const {
   colorMetrics,
   coloredMetrics,
   columns,
-  comparisonColumns,
+  comparisonColumnKeys,
   detailsRows,
   dragColumns,
   fixedColumnNumber,
@@ -85,13 +81,6 @@ const headerHeights = ref<
 const totalHeight = ref(0);
 
 onUnmounted(() => resizeObserver.disconnect());
-
-/**
- * Retrieves keys of secondary columns
- */
-const comparisonColumnKeys = computed(() =>
-  comparisonColumns.value ? Object.keys(comparisonColumns.value) : [],
-);
 
 const fixedColumns = computed(() =>
   Object.keys(columns.value)
@@ -158,135 +147,92 @@ const tableStyle = computed(() => {
   return style;
 });
 
-/**
- * Retrieves all column keys merged with secondary keys
- */
-const valueColumnKeys = computed(() =>
-  Object.entries(columns.value)
-    .filter(([_, { colspan, visible }]) => (colspan ?? 1) !== 1 && visible)
-    .reduce((valueColumnKeys, [key, column]) => {
-      if (comparisonColumnKeys.value) {
-        for (let i = 0; i < (column.colspan ?? 0); i++) {
-          valueColumnKeys.push(`${key}-${comparisonColumnKeys.value[i]}`);
-        }
-      }
+const fixedTable = ref<typeof SimpleTable | undefined>();
+const scrollableTable = ref<typeof SimpleTable | undefined>();
 
-      return valueColumnKeys;
-    }, [] as string[]),
-);
-
-/**
- * Retrieves all possible pairs of additional headers and column keys
- *
- * @param {'fixed'|'scrollable'} columnKeysFilter
- */
-const getAdditionalHeaderColumns = (columnKeysFilter: 'fixed' | 'scrollable') => {
-  const columns = (() => {
-    switch (columnKeysFilter) {
-      case 'fixed':
-        return fixedColumns.value;
-      case 'scrollable':
-        return scrollableColumns.value;
-    }
-  })();
-
-  const columnKeys = Object.keys(columns);
-  const additionalHeaderKeys = Object.keys(additionalHeaders.value);
-
-  const additionalHeaderColumns = new Array(columnKeys.length * additionalHeaderKeys.length);
-
-  for (
-    let additionalHeaderIndex = 0;
-    additionalHeaderIndex < additionalHeaderKeys.length;
-    additionalHeaderIndex++
-  ) {
-    for (let columnIndex = 0; columnIndex < columnKeys.length; columnIndex++) {
-      const index = additionalHeaderIndex * additionalHeaderKeys.length + columnIndex;
-
-      additionalHeaderColumns[index] = [
-        additionalHeaderKeys[additionalHeaderIndex],
-        columnKeys[columnIndex],
-      ];
-    }
-  }
-
-  return additionalHeaderColumns;
-};
-
-const fixedTable = ref<HTMLElement | undefined>();
-const scrollableTable = ref<HTMLElement | undefined>();
+const resizing = ref(false);
 
 /**
  * Updates table size. Used on init and on resize
  */
 const updateTableSize = () => {
+  if (resizing.value) {
+    return;
+  }
+
+  resizing.value = true;
+
   fixedWidth.value = 0;
   headerHeights.value = undefined;
   totalHeight.value = 0;
 
-  nextTick(() => {
-    const getTableSizeInfo = (table: HTMLElement | undefined) => {
-      const info = {
-        hasSecondary: false,
-        mainColumnHeight: 0,
-        secondaryColumnHeight: 0,
-        totalColumnHeight: 0,
-        totalHeight: 0,
-        width: 0,
-      };
-
-      if (!table) {
-        return info;
-      }
-
-      const mainColumns = [...table.querySelectorAll('.cell.column-main')];
-      const secondaryColumn = table.querySelector('.cell.column-secondary');
-      const totalColumn = table.querySelector('.cell.total');
-
-      if (mainColumns.length > 0) {
-        info.mainColumnHeight = mainColumns[0].clientHeight;
-        info.width = mainColumns.reduce((sum, { clientWidth }) => sum + clientWidth, 0);
-        info.totalColumnHeight += info.mainColumnHeight;
-      }
-
-      if (secondaryColumn) {
-        info.hasSecondary = true;
-        info.secondaryColumnHeight = secondaryColumn.clientHeight;
-        info.totalColumnHeight += info.secondaryColumnHeight;
-      }
-
-      if (totalColumn) {
-        info.totalHeight = totalColumn.clientHeight;
-      }
-
-      return info;
+  const getTableSizeInfo = (table: HTMLElement | undefined) => {
+    const info = {
+      hasSecondary: false,
+      mainColumnHeight: 0,
+      secondaryColumnHeight: 0,
+      totalColumnHeight: 0,
+      totalHeight: 0,
+      width: 0,
     };
 
-    const fixedHeightInfo = getTableSizeInfo(fixedTable.value);
-    const scrollableHeightInfo = getTableSizeInfo(scrollableTable.value);
-
-    if (scrollableHeightInfo.hasSecondary) {
-      fixedWidth.value = fixedHeightInfo.width;
-      headerHeights.value = {
-        main: scrollableHeightInfo.mainColumnHeight,
-        secondary: scrollableHeightInfo.secondaryColumnHeight,
-        total: Math.max(fixedHeightInfo.totalColumnHeight, scrollableHeightInfo.totalColumnHeight),
-      };
-      totalHeight.value = fixedHeightInfo.totalHeight;
-    } else {
-      const total = Math.max(
-        fixedHeightInfo.totalColumnHeight,
-        scrollableHeightInfo.totalColumnHeight,
-      );
-
-      fixedWidth.value = fixedHeightInfo.width;
-      headerHeights.value = {
-        main: total,
-        total,
-      };
-      totalHeight.value = fixedHeightInfo.totalHeight;
+    if (!table) {
+      return info;
     }
-  });
+
+    const mainColumns = [...table.querySelectorAll('.cell.column-main')] as HTMLElement[];
+    const secondaryColumn = table.querySelector('.cell.column-secondary') as HTMLElement;
+    const totalColumn = table.querySelector('.cell.total') as HTMLElement;
+
+    const totalColumnHeights = [];
+
+    if (mainColumns.length > 0) {
+      info.mainColumnHeight = mainColumns[0].offsetHeight;
+      info.width = mainColumns.reduce((sum, { clientWidth }) => sum + clientWidth, 0);
+      totalColumnHeights.push(info.mainColumnHeight);
+    }
+
+    if (secondaryColumn) {
+      info.hasSecondary = true;
+      info.secondaryColumnHeight = secondaryColumn.offsetHeight;
+      totalColumnHeights.push(info.secondaryColumnHeight);
+    }
+
+    // We get a total column height for columns without colspan.
+    // 1 is added as a gap size between the column cells
+    info.totalColumnHeight = totalColumnHeights.reduce((sum, height) => sum + height + 1, -1);
+
+    if (totalColumn) {
+      info.totalHeight = totalColumn.clientHeight;
+    }
+
+    return info;
+  };
+
+  const fixedHeightInfo = getTableSizeInfo(fixedTable.value?.$el);
+  const scrollableHeightInfo = getTableSizeInfo(scrollableTable.value?.$el);
+
+  if (scrollableHeightInfo.hasSecondary) {
+    fixedWidth.value = fixedHeightInfo.width;
+    headerHeights.value = {
+      main: scrollableHeightInfo.mainColumnHeight,
+      secondary: scrollableHeightInfo.secondaryColumnHeight,
+      total: Math.max(fixedHeightInfo.totalColumnHeight, scrollableHeightInfo.totalColumnHeight),
+    };
+    totalHeight.value = fixedHeightInfo.totalHeight;
+  } else {
+    const total = Math.max(
+      fixedHeightInfo.totalColumnHeight,
+      scrollableHeightInfo.totalColumnHeight,
+    );
+
+    fixedWidth.value = fixedHeightInfo.width;
+    headerHeights.value = {
+      main: total,
+      total,
+    };
+    totalHeight.value = fixedHeightInfo.totalHeight;
+  }
 };
 
 const resizeObserver = new ResizeObserver(() => updateTableSize());
@@ -474,17 +420,18 @@ nextTick(() => {
 @import '../../styles/colors.scss';
 
 .table-container {
-  box-shadow: 0 0 0 1px $color-border;
+  @include apply-color(box-shadow, border-table, $value-prefix: 0 0 0 1px);
+
   display: flex;
   max-height: 80vh;
   position: relative;
 
   > .scrollable {
-    &::v-deep .scrollable-content {
+    &:deep(.scrollable-content) {
       flex-direction: row;
     }
 
-    &::v-deep .scrollable-area {
+    &:deep(.scrollable-area) {
       &.horizontal {
         bottom: calc(var(--total-height) - 20px);
         display: var(--total-scrollbar-display);
@@ -507,7 +454,8 @@ nextTick(() => {
     height: fit-content;
 
     &.fixed {
-      box-shadow: 1px 0 0 $color-border;
+      @include apply-color(box-shadow, border-table, $value-prefix: 1px 0 0);
+
       flex: 0;
       left: 0;
       position: sticky;
@@ -518,9 +466,9 @@ nextTick(() => {
       flex: 1;
     }
 
-    &.with-secondary::v-deep .cell.column-main {
+    &.with-secondary:deep(.cell.column-main) {
       &.column-main-extended {
-        height: calc(var(--header-total-height) + 1px);
+        height: var(--header-total-height);
       }
 
       &:not(.column-main-extended) {
@@ -528,13 +476,13 @@ nextTick(() => {
       }
     }
 
-    &.with-secondary::v-deep .cell.column-secondary {
+    &.with-secondary:deep(.cell.column-secondary) {
       height: var(--header-secondary-height);
       top: calc(var(--header-main-height) + 1px);
     }
 
-    &:not(.with-secondary)::v-deep .cell.column-main {
-      height: calc(var(--header-total-height) + 1px);
+    &:not(.with-secondary):deep(.cell.column-main) {
+      height: var(--header-total-height);
     }
   }
 }
