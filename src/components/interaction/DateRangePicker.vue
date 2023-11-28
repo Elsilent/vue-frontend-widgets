@@ -23,6 +23,7 @@ const props = withDefaults(
     modelValue: [string, string];
     monthLabels: string[];
     translator: (code: string) => string;
+    weekLabels: string[];
   }>(),
   {
     disabled: false,
@@ -163,17 +164,19 @@ Align.date-range-picker(
       Align.calendars
         Calendar(
           @update:range="(range) => updateModelValue(range)",
-          :range='modelValue',
           v-model:yearMonth='leftCalendarYearMonth',
           :mode='calendarMode',
           :monthLabels='monthLabels',
+          :range='modelValue',
+          :weekLabels='weekLabels',
         )
         Calendar(
           @update:range="(range) => updateModelValue(range)",
-          :range='modelValue',
           v-model:yearMonth='rightCalendarYearMonth',
           :mode='calendarMode',
           :monthLabels='monthLabels',
+          :range='modelValue',
+          :weekLabels='weekLabels',
         )
 </template>
 
