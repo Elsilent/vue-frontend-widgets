@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { computed, toRefs } from 'vue';
 import Dropdown from '../interaction/Dropdown.vue';
+import Info from '../label/Info.vue';
 
 const props = withDefaults(
   defineProps<{
@@ -78,23 +79,25 @@ const updatePageSize = (newPageSize: number) => {
 <template lang="pug">
 .pagination
   template(v-if="rowCount > currentPageSize")
-    .page(
+    Info.page(
       v-if="pageNumber > 0"
       @click="() => emit('update:pageNumber', 0)",
+      mood="important-alt",
     ) 1
-    .page-separator(v-if="pageNumber > pageRadius") …
+    Info.page-separator(v-if="pageNumber > pageRadius") …
     .page(
       v-for="pageIndex in visiblePageIndexes",
       @click="() => emit('update:pageNumber', pageIndex)",
       :class="{ current: pageIndex === pageNumber }",
       :key="pageIndex",
     ) {{ pageIndex + 1 }}
-    .page-separator(v-if='pageNumber < pageCount - pageRadius - 1') …
-    .page(
+    Info.page-separator(v-if='pageNumber < pageCount - pageRadius - 1') …
+    Info.page(
       v-if="pageNumber < pageCount - 1",
       @click="() => emit('update:pageNumber', pageCount - 1)",
+      mood="important-alt",
     ) {{ pageCount }}
-    .page-size-label {{ pageSizeLabel }}
+    Info.page-size-label {{ pageSizeLabel }}
   Dropdown.page-size-selector(
     v-if="rowCount > minPageSize",
     @update:modelValue="(value) => updatePageSize(parseInt(value.toString()))",
@@ -116,28 +119,26 @@ const updatePageSize = (newPageSize: number) => {
     align-items: center;
     border: 1px solid transparent;
     border-radius: 3px;
-    color: $color-important-alt;
     cursor: pointer;
     display: flex;
     height: 100%;
     padding: 0.5rem 0.75rem;
 
     &.current {
-      border-color: $color-important-alt;
+      @include apply-color(border-color, text-important-alt);
+
       cursor: default;
     }
   }
 
   > .page-separator {
     align-items: center;
-    color: $color-label;
     cursor: default;
     display: flex;
     padding: 0.5rem 0.75rem;
   }
 
   > .page-size-label {
-    color: $color-label;
     margin: 0 0.75rem;
   }
 }

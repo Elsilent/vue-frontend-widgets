@@ -45,8 +45,8 @@ const emit = defineEmits<{
       @include apply-color(
         background-color,
         background-elevated-3,
-        value-prefix: 'rgba(',
-        value-postfix: '0.25)'
+        $value-prefix: 'rgba(',
+        $value-postfix: '0.25)'
       );
       box-shadow: 0 0 1px rgba(black, 0.25);
 
@@ -61,8 +61,8 @@ const emit = defineEmits<{
       @include apply-color(
         background-color,
         background-elevated-3,
-        value-prefix: 'rgba(',
-        value-postfix: '0.75)'
+        $value-prefix: 'rgba(',
+        $value-postfix: '0.75)'
       );
 
       box-shadow: 0 0 1px rgba(black, 0.25);

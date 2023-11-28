@@ -3,9 +3,7 @@ import axios from 'axios';
 import { ref, toRefs } from 'vue';
 import numeral from '../../utils/numeral';
 import type { ColumnDetailsFormat } from '../../utils/type/component/container/table';
-import Header from '../label/Header.vue';
-import Info from '../label/Info.vue';
-import LoaderLineScale from '../image/LoaderLineScale.vue';
+import Loader from '../image/Loader.vue';
 import Popover from '../container/Popover.vue';
 
 interface DistributionData {
@@ -35,9 +33,7 @@ interface Line {
   value: string;
 }
 
-const left = ref(0);
 const lines = ref<Line[] | undefined>();
-const top = ref(0);
 const visible = ref(false);
 const root = ref<HTMLElement | undefined>();
 
@@ -124,7 +120,7 @@ const showData = async () => {
           span(
             size='small',
           ) {{ value }}
-    LoaderLineScale(v-else)
+    Loader(v-else)
 </template>
 
 <style lang="scss">
@@ -134,8 +130,6 @@ const showData = async () => {
 </style>
 
 <style lang="scss" scoped>
-@import '../../styles/colors.scss';
-
 .cell-hint {
   display: flex;
   font-size: inherit;

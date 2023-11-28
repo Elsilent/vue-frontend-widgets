@@ -23,7 +23,7 @@ export interface Column {
 export interface ComparisonColumn {
   label: string;
   format?: 'difference';
-  type: ColumnType;
+  type?: ColumnType;
 }
 
 export type ColumnDetailsFormat = 'distribution' | 'rated_distribution';

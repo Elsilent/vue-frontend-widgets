@@ -1,4 +1,4 @@
-import type { MenuItem as PopoverMenuItem } from '../../../menu';
+import type { MenuItem as PopoverMenuItem } from '../../../../menu';
 
 export interface Locale {
   code: string;

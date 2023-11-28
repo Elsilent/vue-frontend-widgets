@@ -3,7 +3,7 @@ export const sortInsensitive = <T extends { toString(): string }>(
   rightValue: T,
 ): number => {
   const insensitiveLeftValue = leftValue.toString().toLowerCase();
-  const insensitiveRightValue = leftValue.toString().toLowerCase();
+  const insensitiveRightValue = rightValue.toString().toLowerCase();
 
   if (insensitiveLeftValue > insensitiveRightValue) {
     return 1;

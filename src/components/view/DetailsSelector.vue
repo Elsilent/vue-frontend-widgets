@@ -6,7 +6,7 @@ const props = withDefaults(
   defineProps<{
     labels: Record<string, string>;
     open?: boolean;
-    title: string;
+    title?: string;
   }>(),
   {
     open: false,
@@ -75,7 +75,7 @@ onUnmounted(() => {
 
 <template lang="pug">
 .details-selector(@click.stop='() => onSelectorFocus()')
-  span {{ title }}
+  span(v-if="title") {{ title }}
   i.la(:class="open ? 'la-angle-right' : 'la-angle-down'")
   Popover(
     :visible="selectorVisible",
@@ -106,9 +106,9 @@ onUnmounted(() => {
 @import '../../styles/colors.scss';
 
 .details-selector {
-  color: $color-active;
+  @include apply-color(color, text-important-alt);
+
   cursor: pointer;
-  font-size: inherit;
   position: relative;
   text-decoration: none;
 
