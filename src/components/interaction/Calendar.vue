@@ -5,6 +5,7 @@ import Align from '../container/Align.vue';
 import Button from './Button.vue';
 import Dropdown from './Dropdown.vue';
 import Grid from '../container/Grid.vue';
+import Info from '../label/Info.vue';
 import { dateFormat, normalizeRange } from '../../utils/date';
 import match from '../../utils/match';
 import type { Mood } from '../../utils/enum/mood';
@@ -16,6 +17,7 @@ const props = withDefaults(
     mode: CalendarMode;
     monthLabels: string[];
     range: [string, string];
+    weekLabels?: string[];
     yearMonth: string;
   }>(),
   {
@@ -26,7 +28,7 @@ const props = withDefaults(
 const now = DateTime.now();
 const maxYear = now.year;
 
-const { minDate, mode, monthLabels, range, yearMonth } = toRefs(props);
+const { minDate, mode, monthLabels, range, weekLabels, yearMonth } = toRefs(props);
 
 const currentMonthIndex = computed(
   () => DateTime.fromFormat(yearMonth.value, dateFormat.yearMonth).month - 1,
@@ -43,6 +45,13 @@ const monthItems = computed(() =>
 
 const rangeEnd = computed(() => DateTime.fromFormat(range.value[1], dateFormat.yearMonthDay));
 const rangeStart = computed(() => DateTime.fromFormat(range.value[0], dateFormat.yearMonthDay));
+
+// Creates exactly 7 labels even if passed labels are shorter or longer
+const strictWeekLabels = computed(() =>
+  weekLabels?.value
+    ? Array.apply(null, Array(7)).map((_, index) => weekLabels.value![index] ?? '')
+    : undefined,
+);
 
 const yearItems = computed(() => {
   const minYear = DateTime.fromFormat(minDate.value, dateFormat.yearMonthDay).year;
@@ -187,6 +196,11 @@ Align.calendar(column)
     )
   Align.calendar-grid-container.flex-max(horizontal='center', vertical='center')
     Grid.calendar-grid.no-spacing(:columns='7')
+      template(v-if='strictWeekLabels')
+        Info.week-label(
+          v-for='weekLabel in strictWeekLabels',
+          important,
+        ) {{ weekLabel }}
       Button.day(
         v-for='day in calendarGridDayNumbers',
         @click.stop='() => updateRange(day)',
@@ -224,6 +238,11 @@ Align.calendar(column)
     > .calendar-grid {
       gap: 0;
       margin-bottom: $padding-size-small;
+
+      > .week-label {
+        padding: $padding-size-small-2;
+        text-align: center;
+      }
 
       > .day {
         border-width: 0;
