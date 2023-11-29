@@ -60,10 +60,10 @@
       "import": "./dist/utils/format.js",
       "require": "./dist/utils/format.cjs"
     },
-    "./utils/layout_header_account": {
-      "types": "./dist/utils/layout_header_account.d.ts",
-      "import": "./dist/utils/layout_header_account.js",
-      "require": "./dist/utils/layout_header_account.cjs"
+    "./utils/layout_header": {
+      "types": "./dist/utils/layout_header.d.ts",
+      "import": "./dist/utils/layout_header.js",
+      "require": "./dist/utils/layout_header.cjs"
     },
     "./utils/line_bar_chart": {
       "types": "./dist/utils/line_bar_chart.d.ts",

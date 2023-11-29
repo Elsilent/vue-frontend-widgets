@@ -1,8 +1,8 @@
 export interface Currency {
   code: string;
   fractionSize: number;
-  prefix: boolean;
   symbol: string;
+  symbolBeforeValue?: boolean;
 }
 
 export interface LabeledCurrency extends Currency {

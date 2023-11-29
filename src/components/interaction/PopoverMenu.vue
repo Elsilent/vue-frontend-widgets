@@ -7,21 +7,24 @@ import type { MenuItem } from '../../utils/interface/menu';
 
 const props = defineProps<{
   items: Record<string, MenuItem>;
+  popoverClass?: string;
   visible: boolean;
 }>();
 
 const { items, visible } = toRefs(props);
 
-const emit = defineEmits<(...args: any[]) => void>();
+const emit = defineEmits<(e: 'select', code: string) => void>();
 
 const whenClicked = (code: string) => {
   emit('select', code);
-  emit(`select:${code}`);
 };
 </script>
 
 <template lang="pug">
-Popover.popover-menu(:visible='visible')
+Popover(
+  :popoverClass='popoverClass',
+  :visible='visible',
+)
   .popover-item(
     v-for='({ icon, iconBackend, label }, code) in items',
     @click="() => whenClicked(code)",
@@ -35,16 +38,10 @@ Popover.popover-menu(:visible='visible')
 @import '../../styles/spacing.scss';
 @import '../../styles/transition.scss';
 
-.popover {
-  opacity: 0;
+.card.popover {
   padding: $padding-size-small-2 0;
   overflow: hidden;
-  pointer-events: none;
   transition-property: background-color, opacity;
-
-  &.visible {
-    opacity: 1;
-  }
 
   > .popover-item {
     cursor: pointer;

@@ -157,6 +157,7 @@ $-themes: (
   $value-prefix: null,
   $value-postfix: null,
   $rule-postfix: '',
+  $opacity: null,
 ) {
   @each $-theme, $-colors in $-themes {
     body > #app > .app-container.theme-#{$-theme} &#{$rule-postfix} {
@@ -164,6 +165,10 @@ $-themes: (
 
       @if $value-prefix {
         $-value: $value-prefix $-value $value-postfix;
+      }
+
+      @if $opacity {
+        $-value: rgba($-value, $opacity);
       }
 
       #{$property}: $-value;

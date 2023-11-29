@@ -42,12 +42,7 @@ const emit = defineEmits<{
 
   &:hover {
     > .scrollbar {
-      @include apply-color(
-        background-color,
-        background-elevated-3,
-        $value-prefix: 'rgba(',
-        $value-postfix: '0.25)'
-      );
+      @include apply-color(background-color, background-elevated-3, $opacity: 0.25);
       box-shadow: 0 0 1px rgba(black, 0.25);
 
       > .thumb {
@@ -58,12 +53,7 @@ const emit = defineEmits<{
 
   &:active {
     > .scrollbar {
-      @include apply-color(
-        background-color,
-        background-elevated-3,
-        $value-prefix: 'rgba(',
-        $value-postfix: '0.75)'
-      );
+      @include apply-color(background-color, background-elevated-3, $opacity: 0.75);
 
       box-shadow: 0 0 1px rgba(black, 0.25);
 

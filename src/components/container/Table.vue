@@ -188,7 +188,7 @@ const updateTableSize = () => {
 
     if (mainColumns.length > 0) {
       info.mainColumnHeight = mainColumns[0].offsetHeight;
-      info.width = mainColumns.reduce((sum, { clientWidth }) => sum + clientWidth, 0);
+      info.width = mainColumns.reduce((sum, { offsetWidth }) => sum + offsetWidth, 0);
       totalColumnHeights.push(info.mainColumnHeight);
     }
 
@@ -203,7 +203,7 @@ const updateTableSize = () => {
     info.totalColumnHeight = totalColumnHeights.reduce((sum, height) => sum + height + 1, -1);
 
     if (totalColumn) {
-      info.totalHeight = totalColumn.clientHeight;
+      info.totalHeight = totalColumn.offsetHeight;
     }
 
     return info;
@@ -233,6 +233,10 @@ const updateTableSize = () => {
     };
     totalHeight.value = fixedHeightInfo.totalHeight;
   }
+
+  nextTick(() => {
+    resizing.value = false;
+  });
 };
 
 const resizeObserver = new ResizeObserver(() => updateTableSize());
@@ -315,7 +319,8 @@ nextTick(() => {
           :columnKey="columnKey",
           :subcolumnKey="subcolumnKey",
         )
-      template(#rowNumber="{ value }") {{ value }}
+      template(#rowNumber="{ value }")
+        slot(name="rowNumber", :value="value")
       template(#row="{ columnKey, index, row, spanIndex, subcolumnKey, subindex, value }")
         slot(
           v-if="columnKey in fixedColumns",
@@ -417,7 +422,8 @@ nextTick(() => {
 </template>
 
 <style lang="scss" scoped>
-@import '../../styles/colors.scss';
+@import '@/styles/colors.scss';
+@import '@/styles/transition.scss';
 
 .table-container {
   @include apply-color(box-shadow, border-table, $value-prefix: 0 0 0 1px);
@@ -425,6 +431,8 @@ nextTick(() => {
   display: flex;
   max-height: 80vh;
   position: relative;
+  transition-duration: $transition-duration-normal;
+  transition-property: box-shadow;
 
   > .scrollable {
     &:deep(.scrollable-content) {
@@ -433,7 +441,7 @@ nextTick(() => {
 
     &:deep(.scrollable-area) {
       &.horizontal {
-        bottom: calc(var(--total-height) - 20px);
+        bottom: calc(var(--total-height));
         display: var(--total-scrollbar-display);
         left: var(--fixed-width);
       }

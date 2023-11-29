@@ -1,6 +1,9 @@
 <script lang="ts" setup>
 import { onUnmounted, ref, toRefs } from 'vue';
-import Popover from '../container/Popover.vue';
+import Align from '../container/Align.vue';
+import Icon from '../image/Icon.vue';
+import Info from '../label/Info.vue';
+import BodyPopover from '../container/BodyPopover.vue';
 
 const props = withDefaults(
   defineProps<{
@@ -74,51 +77,76 @@ onUnmounted(() => {
 </script>
 
 <template lang="pug">
-.details-selector(@click.stop='() => onSelectorFocus()')
-  span(v-if="title") {{ title }}
-  i.la(:class="open ? 'la-angle-right' : 'la-angle-down'")
-  Popover(
+.details-selector-container(
+  ref='root',
+  @click.stop='() => onSelectorFocus()',
+)
+  Align.details-selector(vertical='center')
+    Info(
+      v-if="title",
+      mood='important-alt',
+      size='small',
+    ) {{ title }}
+    Icon(
+      :value="open ? 'chevron-up' : 'chevron-down'",
+      mood='important-alt',
+      size='large-2',
+    )
+  BodyPopover(
+    :parentNode='root',
     :visible="selectorVisible",
-    parentClass="details-selector",
+    autoPosition,
     popoverClass="details-selector-popover",
   )
     div(ref='selectorContents')
-      .dropdown-item(
+      Info.dropdown-item(
         v-for='(label, kind) in labels',
         @click.stop="() => toggleDetails(kind)",
+        contrast,
       ) {{ label }}
 </template>
 
 <style lang="scss">
-.details-selector-popover {
+@import '@/styles/colors.scss';
+
+.popover.details-selector-popover {
   min-width: 10rem;
   padding: 0.5rem 0;
 
   > div {
     > .dropdown-item {
       cursor: pointer;
+      padding: 0.25rem 1.5rem;
     }
   }
 }
 </style>
 
 <style lang="scss" scoped>
-@import '../../styles/colors.scss';
+@import '@/styles/colors.scss';
 
-.details-selector {
-  @include apply-color(color, text-important-alt);
-
-  cursor: pointer;
-  position: relative;
-  text-decoration: none;
-
-  > span {
-    margin-right: 0.5rem;
-    user-select: none;
+.dropdown-item {
+  &:active {
+    @include apply-color(background-color, background-accent);
   }
 
-  > i {
-    font-size: 0.8rem;
+  &:not(:active):hover {
+    @include apply-color(background-color, background-lowered);
+    @include apply-color(color, text-white);
+  }
+}
+
+.details-selector-container {
+  > .details-selector {
+    @include apply-color(color, text-important-alt);
+
+    cursor: pointer;
+    text-decoration: none;
+
+    > .info {
+      margin-right: 0.25rem;
+      user-select: none;
+    }
   }
 }
 </style>

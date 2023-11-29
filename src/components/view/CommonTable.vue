@@ -9,6 +9,11 @@ import type {
   ColumnDetails,
   ColumnType,
   ComparisonColumn,
+  DetailsRequestOptions,
+  DetailsResponse,
+  InlineFilter,
+  GlobalRequestOptions,
+  GlobalResponse,
 } from '../../utils/type/component/container/table';
 import CellHint from './CellHint.vue';
 import ColumnHint from './ColumnHint.vue';
@@ -18,6 +23,7 @@ import Info from '../label/Info.vue';
 import Input from '../interaction/Input.vue';
 import Loader from '../image/Loader.vue';
 import Pagination from './Pagination.vue';
+import Separator from '../marker/Separator.vue';
 import Table from '../container/Table.vue';
 import TrendChart from './TrendChart.vue';
 
@@ -43,14 +49,59 @@ interface ColumnLinkInfo {
   disable_for: (number | string)[];
 }
 
-interface DetailsRequestInfo {
-  label: string;
-  request: AxiosRequestConfig;
-}
+type DetailsRequestInfo =
+  | AxiosRequestConfig
+  | ((options: DetailsRequestOptions) => Promise<DetailsResponse>);
 
-interface InlineFilter {
-  operator: string;
-  value: string;
+type GlobalRequestInfo =
+  | AxiosRequestConfig
+  | ((options: GlobalRequestOptions) => Promise<GlobalResponse>);
+
+const getDetailsRowsFromRequestInfo = async (
+  request: DetailsRequestInfo,
+  options: DetailsRequestOptions,
+): Promise<DetailsResponse> => {
+  if (typeof request === 'function') {
+    return await request(options);
+  }
+
+  return (
+    await axios({
+      ...request,
+      params: {
+        ...request.params,
+        ...options,
+      },
+    })
+  ).data;
+};
+
+const getGlobalRowsFromRequestInfo = async (
+  request: GlobalRequestInfo,
+  options: GlobalRequestOptions,
+): Promise<GlobalResponse> => {
+  if (typeof request === 'function') {
+    return await request(options);
+  }
+
+  return (
+    await axios({
+      ...request,
+      params: {
+        ...(request.params ?? {}),
+        filter: options.inlineFilters.value,
+        page_number: options.pageNumber,
+        page_size: options.pageSize,
+        order: options.orderBy,
+        reversed: options.reversed,
+      },
+    })
+  ).data;
+};
+
+interface DetailsRequestMetadata {
+  label: string;
+  request: DetailsRequestInfo;
 }
 
 interface InlineFilterOperator {
@@ -115,7 +166,7 @@ const props = withDefaults(
     /**
      * Mapping of details kind to the axios config which to call
      */
-    detailsRequests?: Record<string, DetailsRequestInfo>;
+    detailsRequests?: Record<string, DetailsRequestMetadata>;
     /**
      * Label to display in the details selector
      */
@@ -150,11 +201,11 @@ const props = withDefaults(
      */
     primaryColumnAlias?: string;
     /**
-     * The Axios config which to call to fetch the rows.
+     * The Axios config or async function which to call to fetch the rows.
      *
      * Don't use with static rows being provided
      */
-    request: AxiosRequestConfig;
+    request: GlobalRequestInfo;
     /**
      * Static rows to display
      *
@@ -289,11 +340,10 @@ const loading = ref(true);
 const orderBy = ref<[string[], boolean] | undefined>();
 const pageNumber = ref(0);
 const pageSize = ref(20);
-const previousRequest = ref<AxiosRequestConfig | undefined>();
 const rowCount = ref(0);
 const totalRow = ref<Record<string, any> | undefined>();
 
-const table = ref<HTMLElement | undefined>();
+const table = ref<typeof Table | undefined>();
 
 const additionalHeaders = computed(() => {
   const additionalHeaders: Record<string, { icon: string }> = {};
@@ -513,14 +563,11 @@ const getCachedDetails = async (kind: string, row: Record<string, any>) => {
     return cachedDetailsRows.value[kind][row[primaryColumn.value]];
   }
 
-  const { rows } = (
-    await axios({
-      ...detailsRequests!.value![kind],
-      params: {
-        [primaryColumnAlias?.value ?? primaryColumn.value]: row[primaryColumn.value],
-      },
-    })
-  ).data;
+  const { rows } = await getDetailsRowsFromRequestInfo(detailsRequests!.value![kind].request, {
+    row,
+    primaryColumn: primaryColumnAlias?.value ?? primaryColumn.value,
+    primaryColumnValue: row[primaryColumn.value],
+  });
 
   if (!cachedDetailsRows.value[kind]) {
     cachedDetailsRows.value[kind] = {};
@@ -808,14 +855,14 @@ const onHideDetails = (row: Record<string, any>) => {
   }
 
   const scroll = {
-    left: table.value!.scrollLeft,
-    top: table.value!.scrollTop,
+    left: table.value!.$el.scrollLeft,
+    top: table.value!.$el.scrollTop,
   };
 
   delete detailsRows.value[row[primaryColumn.value]];
 
   nextTick(() => {
-    table.value!.scrollTo(scroll);
+    table.value!.$el.scrollTo(scroll);
   });
 };
 
@@ -837,8 +884,8 @@ const onShowDetails = async (kind: string, row: Record<string, any>) => {
   }
 
   const scroll = {
-    left: table.value.scrollLeft,
-    top: table.value.scrollTop,
+    left: table.value.$el.scrollLeft,
+    top: table.value.$el.scrollTop,
   };
 
   loading.value = true;
@@ -846,7 +893,7 @@ const onShowDetails = async (kind: string, row: Record<string, any>) => {
   detailsRows.value[row[primaryColumn.value]] = await getCachedDetails(kind, row);
 
   nextTick(() => {
-    table.value!.scrollTo(scroll);
+    table.value!.$el.scrollTo(scroll);
 
     loading.value = false;
   });
@@ -1033,58 +1080,31 @@ const setRowsFromRequest = async (
     return false;
   }
 
-  if (
-    previousRequest.value &&
-    JSON.stringify(request.value) === JSON.stringify(previousRequest.value) &&
-    fetchedAllRows.value
-  ) {
+  if (fetchedAllRows.value) {
     return true;
   }
 
-  const url = new URL(request.value.url!, window.location.origin);
-  const params: Record<string, any | any[] | Record<any, any>> = {
-    ...(request.value.params ?? {}),
-    filter: inlineFilters.value,
-    page_number: pageNumber,
-    page_size: pageSize,
-    order: orderBy[0],
+  const response = await getGlobalRowsFromRequestInfo(request.value, {
+    inlineFilters: inlineFilters.value,
+    pageNumber: pageNumber,
+    pageSize: pageSize,
+    orderBy: orderBy[0],
     reversed: orderBy[1],
-  };
+  });
 
-  for (const [key, value] of Object.entries(params)) {
-    const items: [string, string][] =
-      typeof value === 'object'
-        ? Object.entries(value).map(([subkey, value]) => [`${key}[${subkey}]`, value])
-        : [[key, value]];
+  allRows.value = Object.values(response.rows);
+  fetchedAllRows.value = response.paginated !== true;
+  rowCount.value = response.rowCount;
 
-    for (const [key, value] of items) {
-      url.searchParams.set(key, value);
-    }
-  }
-
-  const {
-    detailed_rows: detailedRows,
-    paginated,
-    row_count: rowCount,
-    rows,
-    total,
-  } = (await axios({ ...request.value, url: url.toString() })).data;
-
-  allRows.value = Object.values(rows);
-  fetchedAllRows.value = paginated === false;
-  rowCount.value = rowCount;
-
-  if (detailedRows) {
-    detailsRows.value = detailedRows;
+  if (response.detailedRows) {
+    detailsRows.value = response.detailedRows;
   } else {
     detailsRows.value = {};
   }
 
-  if (total) {
-    totalRow.value = total;
+  if (response.total) {
+    totalRow.value = response.total;
   }
-
-  previousRequest.value = cloneObject(request.value);
 
   return true;
 };
@@ -1324,7 +1344,11 @@ watch(
             )
               a.column-link(:href="getColumnLinkUrl(columnLinks[columnKey], row).toString()")
                 | {{ shortenValue(formatValue(value, columns[columnKey].type), columnKey) }}
-            Info(v-else) {{ formatValue(value, columns[columnKey].type) }}
+            Info(
+              v-else
+              contrast,
+              size="small",
+            ) {{ formatValue(value, columns[columnKey].type) }}
           Info(
             v-else-if="isColumnLinkable(row, columnKey) && row.rowInfo.detailable",
             :class="getValueClass(columnKey, value, row.rowInfo.detailable)",
@@ -1351,15 +1375,15 @@ watch(
             @click='() => toggleExpandColumn(columnKey)',
             :class="expandedColumns.includes(columnKey) ? 'fa-compress-alt' : 'fa-expand-alt'",
           )
-          DetailsSelector(
-            v-if="detailsLabels && row.rowInfo.detailable && columnKey === detailsColumn",
-            @hideDetails="() => onHideDetails(row)",
-            @showDetails="(kind) => onShowDetails(kind, row)",
-            :class="{ 'flex-grow-1 text-right': !canShorten(columnKey, value) }",
-            :labels="detailsLabels",
-            :open="detailsRows[row[primaryColumn]] !== undefined",
-            :title="detailsSelectorTitle",
-          )
+          template(v-if="detailsLabels && row.rowInfo.detailable && columnKey === detailsColumn")
+            Separator(v-if='!canShorten(columnKey, value)')
+            DetailsSelector(
+              @hideDetails="() => onHideDetails(row)",
+              @showDetails="(kind) => onShowDetails(kind, row)",
+              :labels="detailsLabels",
+              :open="detailsRows[row[primaryColumn]] !== undefined",
+              :title="detailsSelectorTitle",
+            )
       template(#additionalHeader="{ additionalHeader, columnKey }")
         .d-flex.inline-filter(
           v-if="additionalHeader === 'inline_filters' && hasInlineFilters(columnKey)",
@@ -1386,7 +1410,11 @@ watch(
           :subcolumnKey="subcolumnKey",
           :values="values",
         )
-          template(v-if="totalTitle && columnKey === totalColumnKey") {{ totalTitle(rowCount ?? allRows.length) }}
+          template(v-if="totalTitle && columnKey === totalColumnKey")
+            Info(
+              contrast,
+              size="small",
+            ) {{ totalTitle(rowCount ?? allRows.length) }}
           template(v-else-if="totalRow")
             Info(
               v-if="subcolumnKey && comparisonColumns && comparisonColumns[subcolumnKey].format === 'difference'",
@@ -1453,7 +1481,7 @@ watch(
   @include apply-color(color, text-important-alt);
 }
 
-.details-selector {
+.details-selector-container {
   margin-left: 1rem;
 }
 
@@ -1473,14 +1501,14 @@ watch(
 }
 
 .inline-filter {
-  &.size-small:deep(.inline-filter-dropdown  + .select2) {
+  &.size-small:deep(.inline-filter-dropdown + .select2) {
     min-width: 40px;
   }
-  &.size-normal:deep(.inline-filter-dropdown  + .select2) {
+  &.size-normal:deep(.inline-filter-dropdown + .select2) {
     min-width: 100px;
   }
 
-  &:deep(.inline-filter-dropdown  + .select2) {
+  &:deep(.inline-filter-dropdown + .select2) {
     .select2-selection.select2-selection--single {
       border-bottom-right-radius: 0;
       border-top-right-radius: 0;
@@ -1510,8 +1538,9 @@ watch(
 }
 
 .loading-overlay {
+  @include apply-color(background-color, background-elevated-3, $opacity: 0.5);
+
   align-items: center;
-  background: rgba(white, 0.5);
   bottom: 0;
   display: flex;
   justify-content: center;

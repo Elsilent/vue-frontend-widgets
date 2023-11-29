@@ -97,12 +97,13 @@ watch(
 </script>
 
 <template lang="pug">
-Card.no-spacing.popover(
-  ref='popover',
-  :class='popoverClasses',
-  :style='popoverStyle',
-)
-  slot(default)
+Teleport(to='#app > .app-container')
+  Card.no-spacing.popover(
+    ref='popover',
+    :class='popoverClasses',
+    :style='popoverStyle',
+  )
+    slot(default)
 </template>
 
 <style lang="scss" scoped>

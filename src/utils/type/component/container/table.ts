@@ -48,3 +48,34 @@ export interface ColumnDetails {
   title?: string;
   totalUrl?: string;
 }
+
+export interface InlineFilter {
+  operator: string;
+  value: string;
+}
+
+export interface GlobalRequestOptions {
+  inlineFilters: Record<string, InlineFilter>;
+  pageNumber: number;
+  pageSize: number;
+  orderBy: string[];
+  reversed: boolean;
+}
+
+export interface DetailsRequestOptions {
+  primaryColumn: string;
+  primaryColumnValue: string;
+  row: Record<string, any>;
+}
+
+export interface DetailsResponse {
+  rows: Record<string, Record<string, any>> | Record<string, any>[];
+}
+
+export interface GlobalResponse {
+  detailedRows: Record<string, Record<string, any>>;
+  paginated?: boolean;
+  rowCount: number;
+  rows: Record<string, Record<string, any>> | Record<string, any>[];
+  total: Record<string, any>;
+}

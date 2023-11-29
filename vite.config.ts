@@ -19,7 +19,7 @@ const entries = [
   'utils/date',
   'utils/error',
   'utils/format',
-  'utils/layout_header_account',
+  'utils/layout_header',
   'utils/line_bar_chart',
   'utils/match',
   'utils/menu',
