@@ -1,0 +1,1 @@
+"use strict";Object.defineProperty(exports,Symbol.toStringTag,{value:"Module"});class t extends Error{constructor(...e){super(),this.message=this.getMessage(...e),Object.setPrototypeOf(this,new.target.prototype)}}exports.BaseError=t;

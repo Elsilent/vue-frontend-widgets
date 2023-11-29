@@ -1,0 +1,1 @@
+"use strict";Object.defineProperty(exports,Symbol.toStringTag,{value:"Module"});const e=require("vue"),t=require("./_plugin-vue_export-helper-f246444f.cjs"),r={class:"separator"};function o(a,n){return e.openBlock(),e.createElementBlock("div",r)}const _={},c=t._export_sfc(_,[["render",o],["__scopeId","data-v-34d6f7ab"]]);exports.Separator=c;
