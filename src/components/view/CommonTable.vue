@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import axios, { type AxiosRequestConfig } from 'axios';
+import axios from 'axios';
 import { computed, nextTick, onMounted, ref, toRefs, watch } from 'vue';
 import numeral from '../../utils/numeral';
 import { cloneObject } from '../../utils/clone';
@@ -9,9 +9,11 @@ import type {
   ColumnDetails,
   ColumnType,
   ComparisonColumn,
+  DetailsRequestInfo,
   DetailsRequestOptions,
   DetailsResponse,
   InlineFilter,
+  GlobalRequestInfo,
   GlobalRequestOptions,
   GlobalResponse,
 } from '../../utils/type/component/container/table';
@@ -48,14 +50,6 @@ interface ColumnLinkInfo {
   /** List of primary key values for which to disable links */
   disable_for: (number | string)[];
 }
-
-type DetailsRequestInfo =
-  | AxiosRequestConfig
-  | ((options: DetailsRequestOptions) => Promise<DetailsResponse>);
-
-type GlobalRequestInfo =
-  | AxiosRequestConfig
-  | ((options: GlobalRequestOptions) => Promise<GlobalResponse>);
 
 const getDetailsRowsFromRequestInfo = async (
   request: DetailsRequestInfo,
@@ -1235,6 +1229,7 @@ watch(columns, () => {
 watch(
   request,
   () => {
+    fetchedAllRows.value = false;
     // Reload the table on the request change
     setPageNumber(0);
   },

@@ -1,3 +1,5 @@
+import type { AxiosRequestConfig } from 'axios';
+
 export type ColumnType =
   | 'string'
   | 'int'
@@ -54,13 +56,9 @@ export interface InlineFilter {
   value: string;
 }
 
-export interface GlobalRequestOptions {
-  inlineFilters: Record<string, InlineFilter>;
-  pageNumber: number;
-  pageSize: number;
-  orderBy: string[];
-  reversed: boolean;
-}
+export type DetailsRequestInfo =
+  | AxiosRequestConfig
+  | ((options: DetailsRequestOptions) => Promise<DetailsResponse>);
 
 export interface DetailsRequestOptions {
   primaryColumn: string;
@@ -70,6 +68,18 @@ export interface DetailsRequestOptions {
 
 export interface DetailsResponse {
   rows: Record<string, Record<string, any>> | Record<string, any>[];
+}
+
+export type GlobalRequestInfo =
+  | AxiosRequestConfig
+  | ((options: GlobalRequestOptions) => Promise<GlobalResponse>);
+
+export interface GlobalRequestOptions {
+  inlineFilters: Record<string, InlineFilter>;
+  pageNumber: number;
+  pageSize: number;
+  orderBy: string[];
+  reversed: boolean;
 }
 
 export interface GlobalResponse {
