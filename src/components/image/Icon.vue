@@ -59,5 +59,9 @@ i.icon(:class='classes')
   @import '../../styles/size.scss';
 
   @include apply-mood;
+
+  &.mood-text-white {
+    @include apply-color(color, white);
+  }
 }
 </style>

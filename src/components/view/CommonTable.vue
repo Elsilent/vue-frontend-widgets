@@ -553,7 +553,7 @@ const formatValue = (value: any, type: ColumnType, format?: 'difference'): strin
  * and then storing them in memory
  */
 const getCachedDetails = async (kind: string, row: Record<string, any>) => {
-  if (cachedDetailsRows.value[kind] && !cachedDetailsRows.value[kind][row[primaryColumn.value]]) {
+  if (cachedDetailsRows.value[kind] && cachedDetailsRows.value[kind][row[primaryColumn.value]]) {
     return cachedDetailsRows.value[kind][row[primaryColumn.value]];
   }
 

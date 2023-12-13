@@ -7,4 +7,5 @@ import SideMenu from '../components/layout/SideMenu.vue';
 import SideMenuItem from '../components/layout/side_menu/MenuItem.vue';
 import SideMenuSubsection from '../components/layout/side_menu/MenuSubsection.vue';
 import ThemeToggle from '../components/layout/header/ThemeToggle.vue';
-export { AccountMenu, CurrencySelector, Form, Header, LocaleSelector, SideMenu, SideMenuItem, SideMenuSubsection, ThemeToggle, };
+import Toasts from '../components/layout/Toasts.vue';
+export { AccountMenu, CurrencySelector, Form, Header, LocaleSelector, SideMenu, SideMenuItem, SideMenuSubsection, ThemeToggle, Toasts, };

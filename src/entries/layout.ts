@@ -7,6 +7,7 @@ import SideMenu from '../components/layout/SideMenu.vue';
 import SideMenuItem from '../components/layout/side_menu/MenuItem.vue';
 import SideMenuSubsection from '../components/layout/side_menu/MenuSubsection.vue';
 import ThemeToggle from '../components/layout/header/ThemeToggle.vue';
+import Toasts from '../components/layout/Toasts.vue';
 
 export {
   AccountMenu,
@@ -18,4 +19,5 @@ export {
   SideMenuItem,
   SideMenuSubsection,
   ThemeToggle,
+  Toasts,
 };

@@ -19,8 +19,8 @@ const props = withDefaults(
 const { labels, open, title } = toRefs(props);
 
 const selectorVisible = ref(false);
+const popover = ref<typeof BodyPopover | undefined>();
 const root = ref<HTMLElement | undefined>();
-const selectorContents = ref<HTMLElement | undefined>();
 
 const emit = defineEmits<{
   (e: 'hideDetails'): void;
@@ -31,7 +31,7 @@ const onSelectorBlur = (event: MouseEvent) => {
   if (
     !event.target ||
     root.value?.contains(event.target as HTMLElement) ||
-    selectorContents.value?.contains(event.target as HTMLElement)
+    popover.value?.$el.contains(event.target as HTMLElement)
   ) {
     return;
   }
@@ -93,17 +93,17 @@ onUnmounted(() => {
       size='large-2',
     )
   BodyPopover(
+    ref='popover',
     :parentNode='root',
     :visible="selectorVisible",
     autoPosition,
     popoverClass="details-selector-popover",
   )
-    div(ref='selectorContents')
-      Info.dropdown-item(
-        v-for='(label, kind) in labels',
-        @click.stop="() => toggleDetails(kind)",
-        contrast,
-      ) {{ label }}
+    Info.dropdown-item(
+      v-for='(label, kind) in labels',
+      @click.stop="() => toggleDetails(kind)",
+      contrast,
+    ) {{ label }}
 </template>
 
 <style lang="scss">
@@ -113,11 +113,9 @@ onUnmounted(() => {
   min-width: 10rem;
   padding: 0.5rem 0;
 
-  > div {
-    > .dropdown-item {
-      cursor: pointer;
-      padding: 0.25rem 1.5rem;
-    }
+  > .dropdown-item {
+    cursor: pointer;
+    padding: 0.25rem 1.5rem;
   }
 }
 </style>
