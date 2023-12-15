@@ -121,7 +121,7 @@ const onSelectorFocus = async () => {
       v-if="values",
       :activeLines="['values']",
       :formatters="{ trend: formatter, values: formatter }",
-      :moods="{ trend: trendMood, values: 'important'}",
+      :moods="{ trend: { mood: trendMood }, values: { mood: 'important' } }",
       :styles="{ trend: 'line', values: 'line' }",
       :values="{ trend: trendValues, values: chartValues }",
     )

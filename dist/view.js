@@ -1,6 +1,6 @@
 import { defineComponent as le, toRefs as ue, ref as x, openBlock as C, createElementBlock as F, normalizeClass as q, createElementVNode as j, withModifiers as Ue, toDisplayString as A, unref as v, createVNode as I, withCtx as O, createCommentVNode as D, Fragment as G, renderList as mt, createBlock as P, pushScopeId as Wt, popScopeId as Gt, computed as U, watch as it, nextTick as ze, Teleport as tn, normalizeStyle as rn, renderSlot as lt, onUnmounted as nn, createTextVNode as k, onMounted as sn, createSlots as on, normalizeProps as an, guardReactiveProps as ln } from "vue";
 import oe from "numeral";
-import { L as ht, a as un } from "./LineBarChart-02e03964.js";
+import { L as ht, a as un } from "./LineBarChart-96b2a178.js";
 import { P as vt } from "./Popover-38d3223e.js";
 import { _ as ce } from "./_plugin-vue_export-helper-dad06003.js";
 import { C as cn, A as dn, I as fn } from "./Icon-8f2ed8ba.js";
@@ -1791,7 +1791,7 @@ const Zs = /* @__PURE__ */ ce(Qs, [["__scopeId", "data-v-3ad12b00"]]), Ys = { cl
     ]));
   }
 });
-const to = /* @__PURE__ */ ce(eo, [["__scopeId", "data-v-764cc1be"]]), ro = (e) => (Wt("data-v-a5db5eb0"), e = e(), Gt(), e), no = /* @__PURE__ */ ro(() => /* @__PURE__ */ j("i", { class: "la la-eye secondary" }, null, -1)), so = /* @__PURE__ */ le({
+const to = /* @__PURE__ */ ce(eo, [["__scopeId", "data-v-764cc1be"]]), ro = (e) => (Wt("data-v-b4f986aa"), e = e(), Gt(), e), no = /* @__PURE__ */ ro(() => /* @__PURE__ */ j("i", { class: "la la-eye secondary" }, null, -1)), so = /* @__PURE__ */ le({
   __name: "TrendChart",
   props: {
     formatter: { type: Function },
@@ -1862,7 +1862,7 @@ const to = /* @__PURE__ */ ce(eo, [["__scopeId", "data-v-764cc1be"]]), ro = (e) 
             key: 1,
             activeLines: ["values"],
             formatters: { trend: v(r), values: v(r) },
-            moods: { trend: y.value, values: "important" },
+            moods: { trend: { mood: y.value }, values: { mood: "important" } },
             styles: { trend: "line", values: "line" },
             values: { trend: E.value, values: g.value }
           }, {
@@ -1877,7 +1877,7 @@ const to = /* @__PURE__ */ ce(eo, [["__scopeId", "data-v-764cc1be"]]), ro = (e) 
     ]));
   }
 });
-const oo = /* @__PURE__ */ ce(so, [["__scopeId", "data-v-a5db5eb0"]]), ao = { class: "common-table" }, io = {
+const oo = /* @__PURE__ */ ce(so, [["__scopeId", "data-v-b4f986aa"]]), ao = { class: "common-table" }, io = {
   key: 0,
   class: "controls d-flex justify-content-end mb-1"
 }, lo = ["onMouseover", "onMouseout"], uo = ["href"], co = ["href"], fo = ["onClick"], at = 50, po = /* @__PURE__ */ le({

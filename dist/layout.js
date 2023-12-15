@@ -474,7 +474,7 @@ const Oe = /* @__PURE__ */ S(he, [["__scopeId", "data-v-2d6e4878"]]), ge = { cla
         for (const n of l.value)
           n.id in t.value || (t.value[n.id] = window.setTimeout(() => {
             c(n.id);
-          }, 3e3));
+          }, 5e3));
       },
       { deep: !0, immediate: !0 }
     ), (n, u) => (i(), I("div", ge, [
@@ -491,7 +491,7 @@ const Oe = /* @__PURE__ */ S(he, [["__scopeId", "data-v-2d6e4878"]]), ge = { cla
     ]));
   }
 });
-const Pe = /* @__PURE__ */ S(ye, [["__scopeId", "data-v-f321e502"]]);
+const Pe = /* @__PURE__ */ S(ye, [["__scopeId", "data-v-8efe1e68"]]);
 export {
   Fe as AccountMenu,
   Ne as CurrencySelector,

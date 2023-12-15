@@ -26,7 +26,7 @@ const props = withDefaults(
     barSumValues?: Record<number | string | symbol, number>;
     formatters: Record<number | string | symbol, (value: number) => string>;
     minHeight?: boolean;
-    moods: Record<number | string | symbol, Mood>;
+    moods: Record<number | string | symbol, { chart: number } | { mood: Mood }>;
     noXAxisLabels?: boolean;
     normalize?: boolean;
     showSecondaryYAxis?: boolean;
@@ -69,7 +69,7 @@ const axisLabels = computed(() => {
     line: [],
   };
 
-  const barAxisValues: Record<number|string|symbol, number> = {};
+  const barAxisValues: Record<number | string | symbol, number> = {};
 
   for (let index = 0; index < lineCount.value; index++) {
     switch (styles.value[valueKeys.value[index]]) {
@@ -83,9 +83,7 @@ const axisLabels = computed(() => {
         }
         break;
       case 'line':
-        axisValues.line.push(
-          ...Object.values(values.value[valueKeys.value[index]]),
-        );
+        axisValues.line.push(...Object.values(values.value[valueKeys.value[index]]));
         break;
     }
   }
@@ -97,9 +95,7 @@ const axisLabels = computed(() => {
       continue;
     }
 
-    axisValues.line.push(
-      ...Object.values(values.value[valueKeys.value[index]]),
-    );
+    axisValues.line.push(...Object.values(values.value[valueKeys.value[index]]));
   }
 
   const axisLabels: Record<Style, Record<number | string | symbol, number[]>> = {
@@ -284,7 +280,7 @@ const setXAxisLabelGroup = (index: number, element: Element | ComponentPublicIns
   }
 };
 
-const chartContents = ref<HTMLElement|undefined>();
+const chartContents = ref<HTMLElement | undefined>();
 
 const xAxisLabelRotate = ref<number>(0);
 
@@ -303,16 +299,17 @@ const updateXAxisLabelsStyle = () => {
   } else {
     // Treat full label width as a hypot, chart width as one of the sides
     const hypot = totalValueCount.value * maxWidth;
-    xAxisLabelRotate.value = Math.cos(chartContents.value.clientWidth / hypot) * 180 / Math.PI;
+    xAxisLabelRotate.value = (Math.cos(chartContents.value.clientWidth / hypot) * 180) / Math.PI;
   }
 
-  const rotateRad = xAxisLabelRotate.value * Math.PI / 180;
+  const rotateRad = (xAxisLabelRotate.value * Math.PI) / 180;
 
   xAxisLabelsHeight.value = maxWidth * Math.sin(rotateRad) + maxHeight * Math.cos(rotateRad);
 };
 
 const lineChartStyle = computed(() => ({
-  'margin-bottom': xAxisLabelsHeight.value === undefined ? undefined : `${xAxisLabelsHeight.value}px`,
+  'margin-bottom':
+    xAxisLabelsHeight.value === undefined ? undefined : `${xAxisLabelsHeight.value}px`,
 }));
 
 const xAxisLabelsStyle = computed(() => {
@@ -364,21 +361,28 @@ const getMoodClasses = (key: number | string | symbol, attributes?: string[]) =>
       [attribute]: components.attributes.includes(attribute),
     }),
     {
-      [`mood-${components.mood}`]: true,
-    },
+      [`chart-${components.chart}`]: !!components.chart,
+      [`mood-${components.mood}`]: !!components.mood,
+    } as Record<string, boolean>,
   );
 };
 
-const getMoodComponents = (mood: Mood) => {
+const getMoodComponents = (mood: { mood: Mood } | { chart: number }) => {
   let hasAttributes = false;
-  let normalMood = mood;
+  let normalMood = 'mood' in mood ? mood.mood : undefined;
+  let normalChart = 'chart' in mood ? mood.chart.toString() : undefined;
   const attributes: string[] = [];
 
   do {
     for (const attribute of supportedMoodAttributes) {
-      if (normalMood.endsWith(`-${attribute}`)) {
+      if ((normalMood ?? normalChart)!.endsWith(`-${attribute}`)) {
         attributes.push(attribute);
-        normalMood = normalMood.substring(0, normalMood.length - attribute.length - 1) as Mood;
+
+        if (normalMood) {
+          normalMood = normalMood.substring(0, normalMood.length - attribute.length - 1) as Mood;
+        } else if (normalChart) {
+          normalChart = normalChart.substring(0, normalChart.length - attribute.length - 1);
+        }
         hasAttributes = true;
       }
     }
@@ -386,6 +390,7 @@ const getMoodComponents = (mood: Mood) => {
 
   return {
     attributes,
+    chart: normalChart,
     mood: normalMood,
   };
 };
@@ -396,7 +401,11 @@ const getPointLeftPosition = (key: number | symbol | string) => {
   return totalValueCount.value === 1 ? 50 : (index * 100) / (totalValueCount.value - 1);
 };
 
-const getPointTopPosition = (value: number, lineLabel: number | string | symbol, style?: 'bar'|'line') => {
+const getPointTopPosition = (
+  value: number,
+  lineLabel: number | string | symbol,
+  style?: 'bar' | 'line',
+) => {
   if (!style) {
     style = styles.value[lineLabel];
   }
@@ -443,27 +452,19 @@ const setHover = (key: number | string | symbol, hover: boolean) => {
   }
 };
 
-watch(
-  values,
-  () => {
-    updateXAxisLabelsStyle();
-  },
-);
+watch(values, () => updateXAxisLabelsStyle());
 
 const resizeObserver = new ResizeObserver(() => {
   updateXAxisLabelsStyle();
 });
 
-watch(
-  chartContents,
-  () => {
-    resizeObserver.disconnect();
+watch(chartContents, () => {
+  resizeObserver.disconnect();
 
-    if (chartContents.value) {
-      resizeObserver.observe(chartContents.value);
-    }
-  },
-);
+  if (chartContents.value) {
+    resizeObserver.observe(chartContents.value);
+  }
+});
 
 onMounted(() => {
   updateXAxisLabelsStyle();
@@ -637,6 +638,30 @@ $-mood-colors: (
   positive,
 );
 
+$-chart-colors: (
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11,
+  12,
+  13,
+  14,
+  15,
+  16,
+  17,
+  18,
+  19,
+  20,
+  21,
+);
+
 .line-chart {
   display: flex;
 
@@ -773,6 +798,12 @@ $-mood-colors: (
         width: 100%;
       }
 
+      @each $-chart in $-chart-colors {
+        > .chart-#{$-chart} {
+          @include apply-color(color, chart-#{$-chart});
+        }
+      }
+
       @each $-mood in $-mood-colors {
         > .mood-#{$-mood} {
           &.opaque {
@@ -875,6 +906,12 @@ $-mood-colors: (
                 width: 10px;
               }
 
+              @each $-chart in $-chart-colors {
+                &.chart-#{$-chart} {
+                  @include apply-color(background-color, chart-#{$-chart});
+                }
+              }
+
               @each $-mood in $-mood-colors {
                 &.mood-#{$-mood} {
                   &.dashed {
@@ -952,6 +989,12 @@ $-mood-colors: (
             border-top-right-radius: 0.25rem;
           }
 
+          @each $-chart in $-chart-colors {
+            &.chart-#{$-chart} {
+              @include apply-color(background-color, chart-#{$-chart});
+            }
+          }
+
           @each $-mood in $-mood-colors {
             &.mood-#{$-mood} {
               @include apply-color(background-color, background-#{$-mood});
@@ -1007,6 +1050,13 @@ $-mood-colors: (
         transition-property: background-color, border-color, box-shadow, height, margin-left,
           margin-top, transform, width;
 
+        @each $-chart in $-chart-colors {
+          &.chart-#{$-chart} {
+            @include apply-color(background-color, chart-#{$-chart});
+            @include apply-color(border-color, chart-#{$-chart});
+          }
+        }
+
         @each $-mood in $-mood-colors {
           &.mood-#{$-mood} {
             @include apply-color(border-color, background-#{$-mood});
@@ -1023,6 +1073,12 @@ $-mood-colors: (
 
         &.visible {
           transform: scale(100%);
+
+          @each $-chart in $-chart-colors {
+            &.chart-#{$-chart} {
+              @include apply-color(box-shadow-color, chart-#{$-chart}, $value-prefix: 0 0 2px);
+            }
+          }
 
           @each $-mood in $-mood-colors {
             &.mood-#{$-mood} {
@@ -1106,6 +1162,12 @@ $-mood-colors: (
               height: 10px;
               margin-right: 0.5rem;
               width: 10px;
+            }
+
+            @each $-chart in $-chart-colors {
+              &.chart-#{$-chart} {
+                @include apply-color(background-color, chart-#{$-chart});
+              }
             }
 
             @each $-mood in $-mood-colors {

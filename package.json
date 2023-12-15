@@ -120,6 +120,7 @@
     "flag-icons": "^6.7.0",
     "luxon": "^3.3.0",
     "numeral": "^2.0.6",
+    "trackad-frontend-widgets": "../trackad-frontend-widgets",
     "vite-plugin-dts": "^3.6.3",
     "vue": "^3.3.4",
     "vue-router": "^4.2.5"
