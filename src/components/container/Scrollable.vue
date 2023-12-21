@@ -5,14 +5,23 @@ import ScrollableArea from './ScrollableArea.vue';
 const props = withDefaults(
   defineProps<{
     mode?: 'both' | 'both-top' | 'horizontal' | 'vertical';
+    /**
+     * When true prevents the contents from re-rendering on each scroll update.
+     *
+     * To force the contents to get updated provide a different value of the updateKey
+     * each time you need to update the contents
+     */
+    optimized?: boolean;
     relativeTo?: () => HTMLElement;
     scrollPosition: { left: number; top: number };
     scrollHeightDelta?: number;
     scrollWidthDelta?: number;
     staticPosition?: boolean;
+    updateKey?: any;
   }>(),
   {
     mode: 'vertical',
+    optimized: false,
     scrollPosition: () => ({ left: 0, top: 0 }),
     scrollHeightDelta: 0,
     scrollWidthDelta: 0,
@@ -155,7 +164,6 @@ const forceActive = (event: MouseEvent, newForceActiveMode: 'horizontal' | 'vert
   window.addEventListener('mouseup', unforceActive);
 };
 
-
 const setContainerHeightWith = (element: HTMLElement) => {
   if (containerHeight.value === element.clientHeight) {
     return;
@@ -283,7 +291,9 @@ watch(
 <template lang="pug">
 .scrollable(:class="{ [`mode-${mode}`]: true, static: staticPosition }")
   .scrollable-content(
+    v-memo="optimized ? [updateKey] : undefined",
     ref='content',
+    :key="updateKey",
     @mousemove='startTouchTimeout',
     @scroll='whenScrolled',
   )

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, nextTick, onUnmounted, ref, toRefs } from 'vue';
+import { computed, nextTick, onUnmounted, ref, toRefs, watch } from 'vue';
 import type { Column } from '@/utils/type/component/container/table';
 import Scrollable from './Scrollable.vue';
 import SimpleTable from './SimpleTable.vue';
@@ -79,6 +79,7 @@ const headerHeights = ref<
   | undefined
 >();
 const totalHeight = ref(0);
+const updateKey = ref(0);
 
 onUnmounted(() => resizeObserver.disconnect());
 
@@ -250,6 +251,10 @@ nextTick(() => {
     resizeObserver.observe(tableContainer.value);
   }
 });
+
+watch(rows, () => {
+  updateKey.value = Math.random();
+});
 </script>
 
 <template lang="pug">
@@ -260,7 +265,9 @@ nextTick(() => {
     :scrollPosition="scrollPosition",
     :scrollWidthDelta="fixedWidth",
     :style="tableStyle",
+    :updateKey="updateKey",
     mode="both-top",
+    optimized,
   )
     SimpleTable.fixed(
       ref="fixedTable",

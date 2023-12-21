@@ -778,6 +778,10 @@ const hasInlineFilters = (columnKey: string) => {
 };
 
 const hideActionButtons = () => {
+  if (!showInlineFilters.value) {
+    return;
+  }
+
   displayActionButtons.value = false;
 };
 
@@ -1163,6 +1167,10 @@ const setRows = async (
 };
 
 const showActionButtons = () => {
+  if (!showInlineFilters.value) {
+    return;
+  }
+
   displayActionButtons.value = true;
 };
 
