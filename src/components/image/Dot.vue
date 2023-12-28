@@ -17,7 +17,7 @@ const classes = computed(() => {
   const classes: Record<string, boolean> = {};
 
   if ('mood' in mood.value) {
-    classes[`mood-background-${mood.value}`] = true;
+    classes[`mood-background-${mood.value.mood}`] = true;
   } else if ('chart' in mood.value) {
     classes[`chart-${mood.value.chart}`] = true;
   }

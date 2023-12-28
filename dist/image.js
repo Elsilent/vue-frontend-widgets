@@ -146,7 +146,7 @@ const ne = /* @__PURE__ */ B(H, [["__scopeId", "data-v-2721093f"]]), ue = /* @__
   setup(d) {
     const s = d, { mood: e } = I(s), u = p(() => {
       const l = {};
-      return "mood" in e.value ? l[`mood-background-${e.value}`] = !0 : "chart" in e.value && (l[`chart-${e.value.chart}`] = !0), l;
+      return "mood" in e.value ? l[`mood-background-${e.value.mood}`] = !0 : "chart" in e.value && (l[`chart-${e.value.chart}`] = !0), l;
     });
     return (l, h) => (v(), w("div", {
       class: x(["dot", u.value])
