@@ -3396,19 +3396,6 @@ tr46@^4.1.1:
   dependencies:
     punycode "^2.3.0"
 
-trackad-frontend-widgets@../trackad-frontend-widgets:
-  version "0.1.0"
-  dependencies:
-    "@fontsource/open-sans" "^5.0.3"
-    axios "^1.6.1"
-    boxicons "^2.1.4"
-    flag-icons "^6.7.0"
-    luxon "^3.3.0"
-    numeral "^2.0.6"
-    vite-plugin-dts "^3.6.3"
-    vue "^3.3.4"
-    vue-router "^4.2.5"
-
 tslib@^1.8.1:
   version "1.14.1"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.14.1.tgz#cf2d38bdc34a134bcaf1091c41f6619e2f672d00"
