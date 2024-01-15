@@ -969,6 +969,11 @@ export default {
       this.reloadTable();
       this.updateColumnSizingInfo();
     },
+    additionalHeaders() {
+        this.$nextTick(() => {
+            this.updateColumnSizingInfo();
+        });
+    },
   },
 }
 </script>
