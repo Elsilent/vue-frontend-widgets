@@ -667,6 +667,14 @@ export default {
           const rawValue = parseFloat(value ?? 0);
 
           return Math.abs(rawValue) < 0.001 ? 0 : rawValue;
+        case 'average':
+          const TotalAverage = new RegExp('([A-z]+): ([0-9]+)');
+
+          if (TotalAverage.test(value)) {
+            return value;
+          }
+
+          return this.getRawValue(value, 'int');
         default:
           return value;
       }
@@ -768,6 +776,14 @@ export default {
           return percent;
         case 'time':
           return `${this.formatValue(Math.floor(parseInt(rawValue) / 60), 'int')}mn${this.formatValue(parseInt(rawValue) % 60, 'int')}s`;
+        case 'average':
+          const TotalAverage = new RegExp('([A-z]+): ([0-9]+)');
+
+          if (TotalAverage.test(rawValue)) {
+            return rawValue;
+          }
+
+          return numeral(parseInt(rawValue)).format('0,0');
         default:
           return rawValue;
       }

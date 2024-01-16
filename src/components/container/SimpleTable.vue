@@ -516,6 +516,14 @@ export default {
           return parseFloat(value ?? 0);
         case 'date':
           return this.convertDate(value);
+        case 'average':
+          const TotalAverage = new RegExp('([A-z]+): ([0-9]+)');
+
+          if (TotalAverage.test(value)) {
+            return value;
+          }
+
+          return this.getRawValue(value, 'int');
         default:
           return value;
       }
