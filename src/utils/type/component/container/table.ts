@@ -13,6 +13,8 @@ export type ColumnType =
 export interface Column {
   baseUrl?: string;
   colspan?: number;
+  fixed?: boolean;
+  group?: string;
   label: string;
   rowspan?: number;
   tooltipTitle?: string;
