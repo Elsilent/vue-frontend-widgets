@@ -291,11 +291,19 @@ watch(
 <template lang="pug">
 .scrollable(:class="{ [`mode-${mode}`]: true, static: staticPosition }")
   .scrollable-content(
-    v-memo="optimized ? [updateKey] : undefined",
-    ref='content',
+    v-if="optimized",
+    v-memo="[updateKey]",
+    ref="content",
     :key="updateKey",
-    @mousemove='startTouchTimeout',
-    @scroll='whenScrolled',
+    @mousemove="startTouchTimeout",
+    @scroll="whenScrolled",
+  )
+    slot(default)
+  .scrollable-content(
+    v-else,
+    ref="content",
+    @mousemove="startTouchTimeout",
+    @scroll="whenScrolled",
   )
     slot(default)
   ScrollableArea(

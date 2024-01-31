@@ -1,2 +1,3 @@
 import CommonTable from '../components/view/CommonTable.vue';
-export { CommonTable };
+import KpiSelector from '../components/view/KpiSelector.vue';
+export { CommonTable, KpiSelector };
