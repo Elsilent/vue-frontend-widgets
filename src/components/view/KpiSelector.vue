@@ -13,6 +13,7 @@ import Scrollable from '../container/Scrollable.vue';
 const props = defineProps<{
     applyLabel: string;
     columns: Record<string, Column>;
+    defaultValue: string[];
     filterLabel: string;
     groupNames: Record<string, string>;
     groupsTitle: string;
@@ -28,7 +29,7 @@ const emit = defineEmits<{
     (e: 'update:modelValue', value: string[]): void;
 }>();
 
-const { columns, groupNames, modelValue, showModalLabel } = toRefs(props);
+const { columns, defaultValue, groupNames, modelValue, showModalLabel } = toRefs(props);
 
 const currentGroup = ref<string | undefined>(Object.keys(groupNames.value)[0]);
 
@@ -157,7 +158,7 @@ const hide = (reset: boolean = false, event?: Event) => {
     }
 
     if (reset) {
-        resetColumns();
+        currentValue.value = [...modelValue.value];
     }
 
     visible.value = false;
@@ -174,7 +175,7 @@ const removeColumn = (columnKey: string) => {
 };
 
 const resetColumns = () => {
-    currentValue.value = [...modelValue.value];
+    currentValue.value = [...defaultValue.value];
 };
 
 const save = (value: string[]) => {
