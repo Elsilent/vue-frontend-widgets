@@ -4,6 +4,7 @@ import ScrollableArea from './ScrollableArea.vue';
 
 const props = withDefaults(
   defineProps<{
+    contentClass?: string;
     mode?: 'both' | 'both-top' | 'horizontal' | 'vertical';
     /**
      * When true prevents the contents from re-rendering on each scroll update.
@@ -297,6 +298,7 @@ watch(
     :key="updateKey",
     @mousemove="startTouchTimeout",
     @scroll="whenScrolled",
+    :class="contentClass",
   )
     slot(default)
   .scrollable-content(
@@ -304,6 +306,7 @@ watch(
     ref="content",
     @mousemove="startTouchTimeout",
     @scroll="whenScrolled",
+    :class="contentClass",
   )
     slot(default)
   ScrollableArea(
