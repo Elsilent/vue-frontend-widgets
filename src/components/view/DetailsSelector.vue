@@ -130,7 +130,7 @@ onUnmounted(() => {
 
   &:not(:active):hover {
     @include apply-color(background-color, background-lowered);
-    @include apply-color(color, text-white);
+    @include apply-color(color, white);
   }
 }
 

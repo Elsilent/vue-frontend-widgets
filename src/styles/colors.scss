@@ -205,6 +205,10 @@ $-themes: (
     body > #app > .app-container.theme-#{$-theme} &#{$rule-postfix} {
       $-value: map.get($-colors, $color);
 
+      @if $-value == null {
+        @error "Color `#{$color}` not found in theme `#{$-theme}`.";
+      }
+
       @if $value-prefix {
         $-value: $value-prefix $-value $value-postfix;
       }
