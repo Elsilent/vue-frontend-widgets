@@ -355,13 +355,15 @@ export default {
           ? 'negative'
           : 'positive';
 
-        classes[`color-intensity-${this.getColorIntensity(row[columnKey], columnKey, subcolumnIndex)}`] = true;
-        classes[`color-${colorMood}`] = true;
-
         if (subcolumnIndex !== undefined && this.comparisonColumnKeys[subcolumnIndex] === 'difference') {
           classes.colored = false;
         } else {
           classes.colored = this.indexOfColored(columnKey) >= 0;
+        }
+
+        if (classes.colored) {
+          classes[`color-intensity-${this.getColorIntensity(row[columnKey], columnKey, subcolumnIndex)}`] = true;
+          classes[`color-${colorMood}`] = true;
         }
       }
 
