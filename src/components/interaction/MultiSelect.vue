@@ -12,10 +12,12 @@ const props = withDefaults(
     items: Record<string | number | symbol, string>;
     modelValue?: (string | number | symbol)[];
     noInline?: boolean;
+    showAllItemsItem?: boolean;
   }>(),
   {
     disabled: false,
     noInline: false,
+    showAllItemsItem: false,
   },
 );
 
@@ -98,7 +100,7 @@ const whenBlurred = (event: FocusEvent) => {
   newValueInput.value?.focus();
 };
 
-const updateValue = (value: string | number | symbol) => {
+const toggleItem = (value: string | number | symbol) => {
   if (!modelValue || !modelValue.value || (disabled && disabled.value) || !active.value) {
     return;
   }
@@ -114,6 +116,10 @@ const updateValue = (value: string | number | symbol) => {
   }
 
   emit('update:modelValue', newValue);
+};
+
+const updateValue = (value: (string | number | symbol)[]) => {
+  emit('update:modelValue', value);
 };
 </script>
 
@@ -142,13 +148,13 @@ Align.multiselect-container(
         Info.current-value.no-spacing(
           v-else,
           v-for='itemCode in selectedItems',
-          @click.stop='() => updateValue(itemCode)',
+          @click.stop='() => toggleItem(itemCode)',
         ) {{ items[itemCode] }}
       input.flex-max.new-value-input.no-spacing(
         ref='newValueInput',
+        v-model='newValueFilter',
         @blur='(event) => whenBlurred(event)',
         :disabled='disabled',
-        v-model='newValueFilter',
       )
       Icon(
         backend='boxicons-solid',
@@ -156,10 +162,15 @@ Align.multiselect-container(
         value='down-arrow',
       )
     Align.dropdown-menu.no-spacing(column)
+      Info.item(
+        v-if="showAllItemsItem",
+        @click.stop="() => updateValue(Object.keys(items))",
+        :class="{ current: allItemsSelected }",
+      ) {{ allItemsLabel }}
       Info.item.no-spacing(
         v-for='(item, itemCode) in dropdownItems',
+        @click.stop="() => toggleItem(itemCode)",
         :class='{ current: modelValue?.includes(itemCode) }',
-        @click.stop="() => updateValue(itemCode)",
       ) {{ item }}
 </template>
 
