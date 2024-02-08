@@ -1,12 +1,14 @@
 <template lang="pug">
 .table-container(ref='tableContainer')
-  Scrollable(
-    @update:scrollPosition="(scrollPosition) => $emit('update:scrollPosition', scrollPosition)",
-    :scrollHeightDelta="(headerHeights ? headerHeights.total : 0) + totalHeight - 40",
-    :scrollPosition="scrollPosition",
-    :scrollWidthDelta="fixedWidth",
-    :style="tableStyle",
-    mode="both-top",
+  .top-scrollbar(
+    v-if="topScrollbarVisible",
+    ref="topScrollbar",
+    @scroll="() => updateScrollablePosition()",
+  )
+    .top-scrollbar-contents(:style="topScrollbarContentsStyle")
+  .scrollable(
+    ref="scrollable",
+    @scroll="() => updateTopScrollbarPosition()",
   )
     SimpleTable.fixed(
       ref="fixedTable",
@@ -30,6 +32,7 @@
       :showRowNumber="showRowNumber",
       :showTopTotal="showTopTotal",
       :showTotal="showTotal",
+      :style="tableStyle"
     )
       template(
         v-for="[additionalHeader, columnKey] in getAdditionalHeaderColumns('fixed')",
@@ -216,6 +219,8 @@ export default {
       fixedWidth: 0,
       headerHeights: undefined,
       resizeObserver: undefined,
+      topScrollbarContentsStyle: {},
+      topScrollbarVisible: false,
       totalHeight: 0,
     };
   },
@@ -256,6 +261,11 @@ export default {
       }
 
       return additionalHeaderColumns;
+    },
+    updateScrollablePosition() {
+      this.$refs.scrollable.scrollTo({
+        left: this.$refs.topScrollbar.scrollLeft,
+      });
     },
     /**
      * Updates table size. Used on init and on resize
@@ -324,7 +334,24 @@ export default {
           };
           this.totalHeight = fixedHeightInfo.totalHeight;
         }
+
+        this.updateTopScrollbarContentsStyle();
+        this.updateTopScrollbarVisible();
       });
+    },
+    updateTopScrollbarPosition() {
+      this.$refs.topScrollbar.scrollTo({
+        left: this.$refs.scrollable.scrollLeft,
+      });
+    },
+    updateTopScrollbarContentsStyle() {
+      this.topScrollbarContentsStyle = {
+        width: `${this.$refs.scrollable.scrollWidth}px`,
+      }
+    },
+    updateTopScrollbarVisible() {
+      this.topScrollbarVisible =
+        this.$refs.scrollable.scrollWidth > this.$refs.scrollable.clientWidth;
     },
   },
   mounted() {
@@ -333,6 +360,8 @@ export default {
 
       this.$nextTick(() => {
         this.resizeObserver.observe(this.$refs.tableContainer);
+
+        this.updateTopScrollbarVisible();
       });
     }
   },
@@ -487,6 +516,12 @@ export default {
       default: true,
     }
   },
+  watch: {
+    rows() {
+      this.updateTopScrollbarContentsStyle();
+      this.updateTopScrollbarVisible();
+    },
+  },
 }
 </script>
 
@@ -496,31 +531,31 @@ export default {
 .table-container {
   box-shadow: 0 0 0 1px $color-border;
   display: flex;
+  flex-direction: column;
   max-height: 80vh;
   position: relative;
 
+  > .top-scrollbar {
+    display: flex;
+    flex-shrink: 0;
+    height: min-content;
+    line-height: 0;
+    margin-bottom: -1px;
+    margin-top: -1px;
+    overflow-x: auto;
+    overflow-y: scroll;
+
+    > .top-scrollbar-contents {
+      display: inline-block;
+      flex-shrink: 0;
+      height: 1px;
+      line-height: 0;
+    }
+  }
+
   > .scrollable {
-    &::v-deep .scrollable-content {
-      flex-direction: row;
-    }
-
-    &::v-deep .scrollable-area {
-      &.horizontal {
-        bottom: calc(var(--total-height) - 20px);
-        display: var(--total-scrollbar-display);
-        left: var(--fixed-width);
-      }
-
-      &.horizontal-top {
-        left: var(--fixed-width);
-        top: calc(var(--header-total-height) - 20px);
-      }
-
-      &.vertical {
-        bottom: calc(var(--bottom-height) + 2px);
-        top: var(--header-total-height);
-      }
-    }
+    display: flex;
+    overflow: auto;
   }
 
   .table {
