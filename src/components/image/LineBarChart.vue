@@ -270,7 +270,7 @@ const linesStyle = computed(() => {
   };
 });
 
-const xAxisLabelsHeight = ref<number|undefined>();
+const xAxisLabelsHeight = ref<number | undefined>();
 
 const xAxisLabelGroup = ref<HTMLElement[]>([]);
 
@@ -628,39 +628,9 @@ onUnmounted(() => {
 @import '../../styles/shadows.scss';
 @import '../../styles/transition.scss';
 
-$-mood-colors: (
-  accent,
-  important,
-  important-alt,
-  negative,
-  neutral,
-  neutral-alt,
-  positive,
-);
+$-mood-colors: (accent, important, important-alt, negative, neutral, neutral-alt, positive);
 
-$-chart-colors: (
-  1,
-  2,
-  3,
-  4,
-  5,
-  6,
-  7,
-  8,
-  9,
-  10,
-  11,
-  12,
-  13,
-  14,
-  15,
-  16,
-  17,
-  18,
-  19,
-  20,
-  21,
-);
+$-chart-colors: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21);
 
 .line-chart {
   display: flex;
