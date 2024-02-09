@@ -101,7 +101,7 @@ const whenBlurred = (event: FocusEvent) => {
 };
 
 const toggleItem = (value: string | number | symbol) => {
-  if (!modelValue || !modelValue.value || (disabled && disabled.value) || !active.value) {
+  if (!modelValue?.value) || disabled?.value || !active.value) {
     return;
   }
 
@@ -169,7 +169,7 @@ Align.multiselect-container(
       ) {{ allItemsLabel }}
       Info.item.no-spacing(
         v-for='(item, itemCode) in dropdownItems',
-        @click.stop="() => toggleItem(itemCode)",
+        @click.stop="toggleItem(itemCode)",
         :class='{ current: modelValue?.includes(itemCode) }',
       ) {{ item }}
 </template>

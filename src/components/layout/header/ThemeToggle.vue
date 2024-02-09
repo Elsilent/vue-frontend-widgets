@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 import { computed, toRefs } from 'vue';
-import Align from '@/components/container/Align.vue';
-import Button from '@/components/interaction/Button.vue';
-import match from '@/utils/match';
-import type { Mood } from '@/utils/enum/mood';
-import type { Theme } from '@/utils/enum/theme';
-import UndefinedThemeError from '@/utils/error/undefined_theme';
+import Align from '../../container/Align.vue';
+import Button from '../../interaction/Button.vue';
+import match from '../../../utils/match';
+import type { Mood } from '../../../utils/enum/mood';
+import type { Theme } from '../../../utils/enum/theme';
+import UndefinedThemeError from '../../../utils/error/undefined_theme';
 
 const props = defineProps<{
   modelValue: Theme;
@@ -62,7 +62,7 @@ Align.theme-toggle
 </template>
 
 <style lang="scss" scoped>
-@import '@/styles/spacing.scss';
+@import '../../../styles/spacing.scss';
 
 @include default-spacing;
 </style>

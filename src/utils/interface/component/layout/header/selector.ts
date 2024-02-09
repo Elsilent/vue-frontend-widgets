@@ -1,4 +1,4 @@
-import type { MenuItem as PopoverMenuItem } from '@/utils/menu';
+import type { MenuItem as PopoverMenuItem } from '../../../../menu';
 
 export interface MenuItem extends PopoverMenuItem {
   handler: () => void;

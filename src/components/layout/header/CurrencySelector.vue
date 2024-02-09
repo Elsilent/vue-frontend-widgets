@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import { computed, onUnmounted, ref, toRefs } from 'vue';
-import Align from '@/components/container/Align.vue';
-import Button from '@/components/interaction/Button.vue';
-import PopoverMenu from '@/components/interaction/PopoverMenu.vue';
-import type { LabeledCurrency } from '@/utils/interface/currency';
-import type { MenuItem } from '@/utils/interface/menu';
+import Align from '../../container/Align.vue';
+import Button from '../../interaction/Button.vue';
+import PopoverMenu from '../../interaction/PopoverMenu.vue';
+import type { LabeledCurrency } from '../../../utils/interface/currency';
+import type { MenuItem } from '../../../utils/interface/menu';
 
 const props = defineProps<{
   currencies: LabeledCurrency[];
@@ -85,7 +85,7 @@ Align.currency-selector(
 </template>
 
 <style lang="scss" scoped>
-@import '@/styles/spacing.scss';
+@import '../../../styles/spacing.scss';
 
 @include default-spacing;
 </style>

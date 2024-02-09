@@ -1,3 +1,3 @@
-import formatOptions from '@/utils/format';
+import formatOptions from '../../utils/format';
 
 export default formatOptions;

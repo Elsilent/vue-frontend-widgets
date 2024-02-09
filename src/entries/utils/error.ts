@@ -1,3 +1,3 @@
-import BaseError from '@/utils/error/base';
+import BaseError from '../../utils/error/base';
 
 export { BaseError };

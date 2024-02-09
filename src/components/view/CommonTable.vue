@@ -199,7 +199,7 @@ const props = withDefaults(
      *
      * Don't use with static rows being provided
      */
-    request: GlobalRequestInfo;
+    request?: GlobalRequestInfo;
     /**
      * Static rows to display
      *
@@ -415,7 +415,7 @@ const orderedRows = computed(() => {
  * Slices rows to current page
  */
 const visibleRows = computed(() => {
-  if (!request.value || fetchedAllRows.value) {
+  if (!request?.value || fetchedAllRows.value) {
     return orderedRows.value;
   }
 
@@ -1074,7 +1074,7 @@ const setRowsFromRequest = async (
   pageSize: number,
   orderBy: [string[], boolean],
 ) => {
-  if (!request.value) {
+  if (!request?.value) {
     return false;
   }
 
@@ -1234,15 +1234,17 @@ watch(columns, () => {
   inlineFilters.value = makeInlineFilters();
 });
 
-watch(
-  request,
-  () => {
-    fetchedAllRows.value = false;
-    // Reload the table on the request change
-    setPageNumber(0);
-  },
-  { deep: true },
-);
+if (request) {
+    watch(
+      request,
+      () => {
+        fetchedAllRows.value = false;
+        // Reload the table on the request change
+        setPageNumber(0);
+      },
+      { deep: true },
+    );
+}
 </script>
 
 <template lang="pug">
