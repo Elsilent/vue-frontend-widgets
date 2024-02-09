@@ -107,8 +107,6 @@ onUnmounted(() => {
 </template>
 
 <style lang="scss">
-@import '@/styles/colors.scss';
-
 .popover.details-selector-popover {
   min-width: 10rem;
   padding: 0.5rem 0;
@@ -121,7 +119,7 @@ onUnmounted(() => {
 </style>
 
 <style lang="scss" scoped>
-@import '@/styles/colors.scss';
+@import '../../styles/colors.scss';
 
 .dropdown-item {
   &:active {

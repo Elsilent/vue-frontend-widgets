@@ -1695,7 +1695,7 @@ const Qs = /* @__PURE__ */ we(Ys, [["__scopeId", "data-v-d948a8f2"]]), Zs = /* @
     ], 512));
   }
 });
-const Ks = /* @__PURE__ */ we(Zs, [["__scopeId", "data-v-4f3c5e9b"]]), eo = { class: "pagination" }, to = ["onClick"], no = /* @__PURE__ */ ye({
+const Ks = /* @__PURE__ */ we(Zs, [["__scopeId", "data-v-4d4dbc91"]]), eo = { class: "pagination" }, to = ["onClick"], no = /* @__PURE__ */ ye({
   __name: "Pagination",
   props: {
     currentPageSize: {},

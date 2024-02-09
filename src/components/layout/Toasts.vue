@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { computed, ref, toRefs, watch } from 'vue';
 import Toast from '../interaction/Toast.vue';
-import type { Toast as IToast } from '@/utils/interface/toast';
+import type { Toast as IToast } from '../../utils/interface/toast';
 
 const props = defineProps<{
   toasts: IToast[];
@@ -71,7 +71,7 @@ watch(
 </template>
 
 <style lang="scss" scoped>
-@import '@/styles/spacing.scss';
+@import '../../styles/spacing.scss';
 
 @include default-spacing;
 

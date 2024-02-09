@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import { computed, ref, toRefs, onUnmounted } from 'vue';
-import Align from '@/components/container/Align.vue';
-import Avatar from '@/components/image/Avatar.vue';
-import PopoverMenu from '@/components/interaction/PopoverMenu.vue';
-import type { AvatarInfo } from '@/utils/type/component/layout/header/account_menu';
-import type { MenuItem } from '@/utils/interface/component/layout/header/selector';
+import Align from '../../container/Align.vue';
+import Avatar from '../../image/Avatar.vue';
+import PopoverMenu from '../../interaction/PopoverMenu.vue';
+import type { AvatarInfo } from '../../../utils/type/component/layout/header/account_menu';
+import type { MenuItem } from '../../../utils/interface/component/layout/header/selector';
 
 const props = defineProps<{
   avatar?: AvatarInfo;
@@ -73,7 +73,7 @@ Align.account-menu(ref='accountMenu')
 </template>
 
 <style lang="scss" scoped>
-@import '@/styles/spacing.scss';
+@import '../../../styles/spacing.scss';
 
 @include default-spacing;
 

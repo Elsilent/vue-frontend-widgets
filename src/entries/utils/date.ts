@@ -1,4 +1,4 @@
-import type { DatePreset, DateRangePreset } from '@/utils/date';
+import type { DatePreset, DateRangePreset } from '../../utils/date';
 import {
   dateFormat,
   dateToDisplayFormat,
@@ -8,7 +8,7 @@ import {
   rangeFromPreset,
   rangeToDisplayFormat,
   tryRangeFromDisplayFormat,
-} from '@/utils/date';
+} from '../../utils/date';
 
 export type { DatePreset, DateRangePreset };
 export {

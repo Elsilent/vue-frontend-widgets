@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import { computed, onUnmounted, ref, toRefs } from 'vue';
-import Align from '@/components/container/Align.vue';
-import Button from '@/components/interaction/Button.vue';
-import PopoverMenu from '@/components/interaction/PopoverMenu.vue';
-import type { Locale } from '@/utils/interface/component/layout/header/locale_selector';
-import type { MenuItem } from '@/utils/interface/menu';
+import Align from '../../container/Align.vue';
+import Button from '../../interaction/Button.vue';
+import PopoverMenu from '../../interaction/PopoverMenu.vue';
+import type { Locale } from '../../../utils/interface/component/layout/header/locale_selector';
+import type { MenuItem } from '../../../utils/interface/menu';
 
 const props = defineProps<{
   locales: Locale[];
@@ -84,8 +84,8 @@ Align.locale-selector(
 </template>
 
 <style lang="scss" scoped>
-@import '@/styles/radius.scss';
-@import '@/styles/spacing.scss';
+@import '../../../styles/radius.scss';
+@import '../../../styles/spacing.scss';
 
 @include default-spacing;
 
