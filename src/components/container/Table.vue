@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { computed, nextTick, onUnmounted, ref, toRefs, watch } from 'vue';
-import type { Column } from '@/utils/type/component/container/table';
+import { type Column } from '../../utils/type/component/container/table';
 import Scrollable from './Scrollable.vue';
 import SimpleTable from './SimpleTable.vue';
 
