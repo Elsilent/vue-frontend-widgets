@@ -429,8 +429,8 @@ watch(rows, () => {
 </template>
 
 <style lang="scss" scoped>
-@import '@/styles/colors.scss';
-@import '@/styles/transition.scss';
+@import '../../styles/colors.scss';
+@import '../../styles/transition.scss';
 
 .table-container {
   @include apply-color(box-shadow, border-table, $value-prefix: 0 0 0 1px);
