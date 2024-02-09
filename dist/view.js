@@ -1,8 +1,8 @@
-import { defineComponent as ge, toRefs as ye, ref as P, openBlock as C, createElementBlock as L, normalizeClass as M, createElementVNode as V, withModifiers as je, toDisplayString as N, unref as g, createVNode as R, withCtx as w, createCommentVNode as U, Fragment as q, renderList as Te, createBlock as I, pushScopeId as rn, popScopeId as sn, computed as j, watch as Xe, nextTick as Ye, Teleport as on, normalizeStyle as an, renderSlot as yt, onUnmounted as dr, createTextVNode as F, onMounted as fr, createSlots as pr, normalizeProps as vr, guardReactiveProps as mr } from "vue";
-import be from "numeral";
+import { defineComponent as ye, toRefs as _e, ref as P, openBlock as C, createElementBlock as L, normalizeClass as M, createElementVNode as V, withModifiers as je, toDisplayString as N, unref as g, createVNode as R, withCtx as w, createCommentVNode as U, Fragment as q, renderList as Te, createBlock as I, pushScopeId as rn, popScopeId as sn, computed as j, watch as Xe, nextTick as Ye, Teleport as on, normalizeStyle as an, renderSlot as yt, onUnmounted as dr, createTextVNode as F, onMounted as fr, createSlots as pr, normalizeProps as vr, guardReactiveProps as mr } from "vue";
+import ge from "numeral";
 import { L as Et, a as hr } from "./LineBarChart-96b2a178.js";
 import { P as xt } from "./Popover-38d3223e.js";
-import { _ as _e } from "./_plugin-vue_export-helper-dad06003.js";
+import { _ as we } from "./_plugin-vue_export-helper-dad06003.js";
 import { C as ln, A as Z, I as Ie } from "./Icon-8f2ed8ba.js";
 import { I as z } from "./Info-54758b60.js";
 import { D as un, I as cn, B as Vt } from "./Input-8e3a6104.js";
@@ -20,25 +20,25 @@ function dn(e, t) {
 const { toString: yr } = Object.prototype, { getPrototypeOf: Rt } = Object, Ke = ((e) => (t) => {
   const n = yr.call(t);
   return e[n] || (e[n] = n.slice(8, -1).toLowerCase());
-})(/* @__PURE__ */ Object.create(null)), oe = (e) => (e = e.toLowerCase(), (t) => Ke(t) === e), et = (e) => (t) => typeof t === e, { isArray: Pe } = Array, Ue = et("undefined");
+})(/* @__PURE__ */ Object.create(null)), ae = (e) => (e = e.toLowerCase(), (t) => Ke(t) === e), et = (e) => (t) => typeof t === e, { isArray: Pe } = Array, Ue = et("undefined");
 function _r(e) {
-  return e !== null && !Ue(e) && e.constructor !== null && !Ue(e.constructor) && ne(e.constructor.isBuffer) && e.constructor.isBuffer(e);
+  return e !== null && !Ue(e) && e.constructor !== null && !Ue(e.constructor) && re(e.constructor.isBuffer) && e.constructor.isBuffer(e);
 }
-const fn = oe("ArrayBuffer");
+const fn = ae("ArrayBuffer");
 function wr(e) {
   let t;
   return typeof ArrayBuffer < "u" && ArrayBuffer.isView ? t = ArrayBuffer.isView(e) : t = e && e.buffer && fn(e.buffer), t;
 }
-const Sr = et("string"), ne = et("function"), pn = et("number"), tt = (e) => e !== null && typeof e == "object", Cr = (e) => e === !0 || e === !1, Je = (e) => {
+const Sr = et("string"), re = et("function"), pn = et("number"), tt = (e) => e !== null && typeof e == "object", Cr = (e) => e === !0 || e === !1, Je = (e) => {
   if (Ke(e) !== "object")
     return !1;
   const t = Rt(e);
   return (t === null || t === Object.prototype || Object.getPrototypeOf(t) === null) && !(Symbol.toStringTag in e) && !(Symbol.iterator in e);
-}, Or = oe("Date"), Er = oe("File"), xr = oe("Blob"), Rr = oe("FileList"), Tr = (e) => tt(e) && ne(e.pipe), Ar = (e) => {
+}, Or = ae("Date"), Er = ae("File"), xr = ae("Blob"), Rr = ae("FileList"), Tr = (e) => tt(e) && re(e.pipe), Ar = (e) => {
   let t;
-  return e && (typeof FormData == "function" && e instanceof FormData || ne(e.append) && ((t = Ke(e)) === "formdata" || // detect form-data instance
-  t === "object" && ne(e.toString) && e.toString() === "[object FormData]"));
-}, Pr = oe("URLSearchParams"), kr = (e) => e.trim ? e.trim() : e.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, "");
+  return e && (typeof FormData == "function" && e instanceof FormData || re(e.append) && ((t = Ke(e)) === "formdata" || // detect form-data instance
+  t === "object" && re(e.toString) && e.toString() === "[object FormData]"));
+}, Pr = ae("URLSearchParams"), kr = (e) => e.trim ? e.trim() : e.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, "");
 function $e(e, t, { allOwnKeys: n = !1 } = {}) {
   if (e === null || typeof e > "u")
     return;
@@ -73,7 +73,7 @@ function _t() {
   return t;
 }
 const Nr = (e, t, n, { allOwnKeys: r } = {}) => ($e(t, (s, o) => {
-  n && ne(s) ? e[o] = dn(s, n) : e[o] = s;
+  n && re(s) ? e[o] = dn(s, n) : e[o] = s;
 }, { allOwnKeys: r }), e), Fr = (e) => (e.charCodeAt(0) === 65279 && (e = e.slice(1)), e), Lr = (e, t, n, r) => {
   e.prototype = Object.create(t.prototype, r), e.prototype.constructor = e, Object.defineProperty(e, "super", {
     value: t.prototype
@@ -118,12 +118,12 @@ const Nr = (e, t, n, { allOwnKeys: r } = {}) => ($e(t, (s, o) => {
   for (; (n = e.exec(t)) !== null; )
     r.push(n);
   return r;
-}, $r = oe("HTMLFormElement"), Mr = (e) => e.toLowerCase().replace(
+}, $r = ae("HTMLFormElement"), Mr = (e) => e.toLowerCase().replace(
   /[-_\s]([a-z\d])(\w*)/g,
   function(n, r, s) {
     return r.toUpperCase() + s;
   }
-), qt = (({ hasOwnProperty: e }) => (t, n) => e.call(t, n))(Object.prototype), Hr = oe("RegExp"), bn = (e, t) => {
+), qt = (({ hasOwnProperty: e }) => (t, n) => e.call(t, n))(Object.prototype), Hr = ae("RegExp"), bn = (e, t) => {
   const n = Object.getOwnPropertyDescriptors(e), r = {};
   $e(n, (s, o) => {
     let a;
@@ -131,10 +131,10 @@ const Nr = (e, t, n, { allOwnKeys: r } = {}) => ($e(t, (s, o) => {
   }), Object.defineProperties(e, r);
 }, Vr = (e) => {
   bn(e, (t, n) => {
-    if (ne(e) && ["arguments", "caller", "callee"].indexOf(n) !== -1)
+    if (re(e) && ["arguments", "caller", "callee"].indexOf(n) !== -1)
       return !1;
     const r = e[n];
-    if (ne(r)) {
+    if (re(r)) {
       if (t.enumerable = !1, "writable" in t) {
         t.writable = !1;
         return;
@@ -164,7 +164,7 @@ const Nr = (e, t, n, { allOwnKeys: r } = {}) => ($e(t, (s, o) => {
   return n;
 };
 function Xr(e) {
-  return !!(e && ne(e.append) && e[Symbol.toStringTag] === "FormData" && e[Symbol.iterator]);
+  return !!(e && re(e.append) && e[Symbol.toStringTag] === "FormData" && e[Symbol.iterator]);
 }
 const Yr = (e) => {
   const t = new Array(10), n = (r, s) => {
@@ -183,7 +183,7 @@ const Yr = (e) => {
     return r;
   };
   return n(e, 0);
-}, Qr = oe("AsyncFunction"), Zr = (e) => e && (tt(e) || ne(e)) && ne(e.then) && ne(e.catch), f = {
+}, Qr = ae("AsyncFunction"), Zr = (e) => e && (tt(e) || re(e)) && re(e.then) && re(e.catch), f = {
   isArray: Pe,
   isArrayBuffer: fn,
   isBuffer: _r,
@@ -199,7 +199,7 @@ const Yr = (e) => {
   isFile: Er,
   isBlob: xr,
   isRegExp: Hr,
-  isFunction: ne,
+  isFunction: re,
   isStream: Tr,
   isURLSearchParams: Pr,
   isTypedArray: zr,
@@ -212,7 +212,7 @@ const Yr = (e) => {
   inherits: Lr,
   toFlatObject: Br,
   kindOf: Ke,
-  kindOfTest: oe,
+  kindOfTest: ae,
   endsWith: Dr,
   toArray: Ir,
   forEachEntry: jr,
@@ -482,14 +482,14 @@ self instanceof WorkerGlobalScope && typeof self.importScripts == "function")(),
   hasBrowserEnv: En,
   hasStandardBrowserEnv: is,
   hasStandardBrowserWebWorkerEnv: us
-}, Symbol.toStringTag, { value: "Module" })), se = {
+}, Symbol.toStringTag, { value: "Module" })), oe = {
   ...cs,
   ...ls
 };
 function ds(e, t) {
-  return nt(e, new se.classes.URLSearchParams(), Object.assign({
+  return nt(e, new oe.classes.URLSearchParams(), Object.assign({
     visitor: function(n, r, s, o) {
-      return se.isNode && f.isBuffer(n) ? (this.append(r, n.toString("base64")), !1) : o.defaultVisitor.apply(this, arguments);
+      return oe.isNode && f.isBuffer(n) ? (this.append(r, n.toString("base64")), !1) : o.defaultVisitor.apply(this, arguments);
     }
   }, t));
 }
@@ -580,8 +580,8 @@ const At = {
   maxContentLength: -1,
   maxBodyLength: -1,
   env: {
-    FormData: se.classes.FormData,
-    Blob: se.classes.Blob
+    FormData: oe.classes.FormData,
+    Blob: oe.classes.Blob
   },
   validateStatus: function(t) {
     return t >= 200 && t < 300;
@@ -780,9 +780,9 @@ f.reduceDescriptors(rt.prototype, ({ value: e }, t) => {
   };
 });
 f.freezeMethods(rt);
-const de = rt;
+const fe = rt;
 function ht(e, t) {
-  const n = this || Pt, r = t || n, s = de.from(r.headers);
+  const n = this || Pt, r = t || n, s = fe.from(r.headers);
   let o = r.data;
   return f.forEach(e, function(d) {
     o = d.call(n, o, s.normalize(), t ? t.status : void 0);
@@ -807,7 +807,7 @@ function ws(e, t, n) {
     n
   ));
 }
-const Ss = se.hasStandardBrowserEnv ? (
+const Ss = oe.hasStandardBrowserEnv ? (
   // Standard browser envs support document.cookie
   function() {
     return {
@@ -847,7 +847,7 @@ function Os(e, t) {
 function Tn(e, t) {
   return e && !Cs(t) ? Os(e, t) : t;
 }
-const Es = se.hasStandardBrowserEnv ? (
+const Es = oe.hasStandardBrowserEnv ? (
   // Standard browser envs have full support of the APIs needed to test
   // whether the request URL is of the same origin as current location.
   function() {
@@ -920,14 +920,14 @@ function Qt(e, t) {
 const Ts = typeof XMLHttpRequest < "u", As = Ts && function(e) {
   return new Promise(function(n, r) {
     let s = e.data;
-    const o = de.from(e.headers).normalize(), a = e.responseType;
+    const o = fe.from(e.headers).normalize(), a = e.responseType;
     let d;
     function h() {
       e.cancelToken && e.cancelToken.unsubscribe(d), e.signal && e.signal.removeEventListener("abort", d);
     }
     let p;
     if (f.isFormData(s)) {
-      if (se.hasStandardBrowserEnv || se.hasStandardBrowserWebWorkerEnv)
+      if (oe.hasStandardBrowserEnv || oe.hasStandardBrowserWebWorkerEnv)
         o.setContentType(!1);
       else if ((p = o.getContentType()) !== !1) {
         const [v, ...m] = p ? p.split(";").map((y) => y.trim()).filter(Boolean) : [];
@@ -944,7 +944,7 @@ const Ts = typeof XMLHttpRequest < "u", As = Ts && function(e) {
     function T() {
       if (!c)
         return;
-      const v = de.from(
+      const v = fe.from(
         "getAllResponseHeaders" in c && c.getAllResponseHeaders()
       ), y = {
         data: !a || a === "text" || a === "json" ? c.responseText : c.response,
@@ -975,7 +975,7 @@ const Ts = typeof XMLHttpRequest < "u", As = Ts && function(e) {
         e,
         c
       )), c = null;
-    }, se.hasStandardBrowserEnv) {
+    }, oe.hasStandardBrowserEnv) {
       const v = Es(_) && e.xsrfCookieName && Ss.read(e.xsrfCookieName);
       v && o.set(e.xsrfHeaderName, v);
     }
@@ -985,7 +985,7 @@ const Ts = typeof XMLHttpRequest < "u", As = Ts && function(e) {
       c && (r(!v || v.type ? new Me(null, e, c) : v), c.abort(), c = null);
     }, e.cancelToken && e.cancelToken.subscribe(d), e.signal && (e.signal.aborted ? d() : e.signal.addEventListener("abort", d)));
     const S = xs(_);
-    if (S && se.protocols.indexOf(S) === -1) {
+    if (S && oe.protocols.indexOf(S) === -1) {
       r(new B("Unsupported protocol " + S + ":", B.ERR_BAD_REQUEST, e));
       return;
     }
@@ -1040,7 +1040,7 @@ function bt(e) {
     throw new Me(null, e);
 }
 function Kt(e) {
-  return bt(e), e.headers = de.from(e.headers), e.data = ht.call(
+  return bt(e), e.headers = fe.from(e.headers), e.data = ht.call(
     e,
     e.transformRequest
   ), ["post", "put", "patch"].indexOf(e.method) !== -1 && e.headers.setContentType("application/x-www-form-urlencoded", !1), An.getAdapter(e.adapter || Pt.adapter)(e).then(function(r) {
@@ -1048,16 +1048,16 @@ function Kt(e) {
       e,
       e.transformResponse,
       r
-    ), r.headers = de.from(r.headers), r;
+    ), r.headers = fe.from(r.headers), r;
   }, function(r) {
     return Rn(r) || (bt(e), r && r.response && (r.response.data = ht.call(
       e,
       e.transformResponse,
       r.response
-    ), r.response.headers = de.from(r.response.headers))), Promise.reject(r);
+    ), r.response.headers = fe.from(r.response.headers))), Promise.reject(r);
   });
 }
-const en = (e) => e instanceof de ? e.toJSON() : e;
+const en = (e) => e instanceof fe ? e.toJSON() : e;
 function Ae(e, t) {
   t = t || {};
   const n = {};
@@ -1168,7 +1168,7 @@ function ks(e, t, n) {
 const Ct = {
   assertOptions: ks,
   validators: kt
-}, he = Ct.validators;
+}, be = Ct.validators;
 class Qe {
   constructor(t) {
     this.defaults = t, this.interceptors = {
@@ -1188,14 +1188,14 @@ class Qe {
     typeof t == "string" ? (n = n || {}, n.url = t) : n = t || {}, n = Ae(this.defaults, n);
     const { transitional: r, paramsSerializer: s, headers: o } = n;
     r !== void 0 && Ct.assertOptions(r, {
-      silentJSONParsing: he.transitional(he.boolean),
-      forcedJSONParsing: he.transitional(he.boolean),
-      clarifyTimeoutError: he.transitional(he.boolean)
+      silentJSONParsing: be.transitional(be.boolean),
+      forcedJSONParsing: be.transitional(be.boolean),
+      clarifyTimeoutError: be.transitional(be.boolean)
     }, !1), s != null && (f.isFunction(s) ? n.paramsSerializer = {
       serialize: s
     } : Ct.assertOptions(s, {
-      encode: he.function,
-      serialize: he.function
+      encode: be.function,
+      serialize: be.function
     }, !0)), n.method = (n.method || this.defaults.method || "get").toLowerCase();
     let a = o && f.merge(
       o.common,
@@ -1206,7 +1206,7 @@ class Qe {
       (v) => {
         delete o[v];
       }
-    ), n.headers = de.concat(a, o);
+    ), n.headers = fe.concat(a, o);
     const d = [];
     let h = !0;
     this.interceptors.request.forEach(function(m) {
@@ -1441,14 +1441,14 @@ $.all = function(t) {
 $.spread = Fs;
 $.isAxiosError = Ls;
 $.mergeConfig = Ae;
-$.AxiosHeaders = de;
+$.AxiosHeaders = fe;
 $.formToJSON = (e) => xn(f.isHTMLForm(e) ? new FormData(e) : e);
 $.getAdapter = An.getAdapter;
 $.HttpStatusCode = Bs;
 $.default = $;
 const Ze = $;
-be.localeData().delimiters.thousands = " ";
-be.localeData().delimiters.decimal = ",";
+ge.localeData().delimiters.thousands = " ";
+ge.localeData().delimiters.decimal = ",";
 const Ds = (e) => e === void 0 ? void 0 : JSON.parse(JSON.stringify(e)), Is = (e) => {
   if (!Array.isArray(e) && Object.getPrototypeOf(e) !== Object.prototype)
     throw new Error(
@@ -1464,7 +1464,7 @@ const Ds = (e) => e === void 0 ? void 0 : JSON.parse(JSON.stringify(e)), Is = (e
 }, Us = {
   important: "",
   size: "small"
-}, $s = { size: "small" }, Ms = /* @__PURE__ */ ge({
+}, $s = { size: "small" }, Ms = /* @__PURE__ */ ye({
   __name: "CellHint",
   props: {
     format: {},
@@ -1473,7 +1473,7 @@ const Ds = (e) => e === void 0 ? void 0 : JSON.parse(JSON.stringify(e)), Is = (e
     url: {}
   },
   setup(e) {
-    const t = e, { format: n, label: r, title: s, url: o } = ye(t), a = P(), d = P(!1), h = P(), p = (m) => {
+    const t = e, { format: n, label: r, title: s, url: o } = _e(t), a = P(), d = P(!1), h = P(), p = (m) => {
       var y;
       m && (!m.target || (y = h.value) != null && y.contains(m.target)) || (d.value = !1, window.removeEventListener("mouseup", p));
     }, c = (m) => m.map(({ name: y, valueFormatted: E }) => ({
@@ -1481,7 +1481,7 @@ const Ds = (e) => e === void 0 ? void 0 : JSON.parse(JSON.stringify(e)), Is = (e
       value: E
     })), _ = (m) => m.map(({ name: y, rate: E, value: D }) => ({
       label: y,
-      value: `${be(D).format("0,0")} (${be(E).format("0,0.00")}%)`
+      value: `${ge(D).format("0,0")} (${ge(E).format("0,0.00")}%)`
     })), T = (m) => {
       switch (n.value) {
         case "distribution":
@@ -1531,7 +1531,7 @@ const Ds = (e) => e === void 0 ? void 0 : JSON.parse(JSON.stringify(e)), Is = (e
     ], 34));
   }
 });
-const nn = /* @__PURE__ */ _e(Ms, [["__scopeId", "data-v-9c7f570a"]]), Hs = (e) => (rn("data-v-7a1d1810"), e = e(), sn(), e), Vs = { class: "column-hint" }, qs = /* @__PURE__ */ Hs(() => /* @__PURE__ */ V("i", { class: "la la-question-circle" }, null, -1)), Js = { class: "popover-header" }, Ws = { class: "popover-body" }, Gs = /* @__PURE__ */ ge({
+const nn = /* @__PURE__ */ we(Ms, [["__scopeId", "data-v-9c7f570a"]]), Hs = (e) => (rn("data-v-7a1d1810"), e = e(), sn(), e), Vs = { class: "column-hint" }, qs = /* @__PURE__ */ Hs(() => /* @__PURE__ */ V("i", { class: "la la-question-circle" }, null, -1)), Js = { class: "popover-header" }, Ws = { class: "popover-body" }, Gs = /* @__PURE__ */ ye({
   __name: "ColumnHint",
   props: {
     description: {},
@@ -1539,7 +1539,7 @@ const nn = /* @__PURE__ */ _e(Ms, [["__scopeId", "data-v-9c7f570a"]]), Hs = (e) 
     visible: { type: Boolean, default: !1 }
   },
   setup(e) {
-    const t = e, { description: n, title: r, visible: s } = ye(t);
+    const t = e, { description: n, title: r, visible: s } = _e(t);
     return (o, a) => (C(), L("div", Vs, [
       qs,
       R(xt, {
@@ -1556,7 +1556,7 @@ const nn = /* @__PURE__ */ _e(Ms, [["__scopeId", "data-v-9c7f570a"]]), Hs = (e) 
     ]));
   }
 });
-const Xs = /* @__PURE__ */ _e(Gs, [["__scopeId", "data-v-7a1d1810"]]), Ys = /* @__PURE__ */ ge({
+const Xs = /* @__PURE__ */ we(Gs, [["__scopeId", "data-v-7a1d1810"]]), Ys = /* @__PURE__ */ ye({
   __name: "BodyPopover",
   props: {
     autoPosition: { type: Boolean, default: !1 },
@@ -1565,7 +1565,7 @@ const Xs = /* @__PURE__ */ _e(Gs, [["__scopeId", "data-v-7a1d1810"]]), Ys = /* @
     visible: { type: Boolean }
   },
   setup(e) {
-    const t = e, { autoPosition: n, parentNode: r, popoverClass: s, visible: o } = ye(t), a = P(), d = P(), h = P(), p = j(() => ({
+    const t = e, { autoPosition: n, parentNode: r, popoverClass: s, visible: o } = _e(t), a = P(), d = P(), h = P(), p = j(() => ({
       [(s == null ? void 0 : s.value) ?? ""]: !!s,
       visible: o.value
     })), c = j(() => {
@@ -1610,7 +1610,7 @@ const Xs = /* @__PURE__ */ _e(Gs, [["__scopeId", "data-v-7a1d1810"]]), Ys = /* @
     ]));
   }
 });
-const Qs = /* @__PURE__ */ _e(Ys, [["__scopeId", "data-v-d948a8f2"]]), Zs = /* @__PURE__ */ ge({
+const Qs = /* @__PURE__ */ we(Ys, [["__scopeId", "data-v-d948a8f2"]]), Zs = /* @__PURE__ */ ye({
   __name: "DetailsSelector",
   props: {
     labels: {},
@@ -1619,7 +1619,7 @@ const Qs = /* @__PURE__ */ _e(Ys, [["__scopeId", "data-v-d948a8f2"]]), Zs = /* @
   },
   emits: ["hideDetails", "showDetails"],
   setup(e, { emit: t }) {
-    const n = e, { labels: r, open: s, title: o } = ye(n), a = P(!1), d = P(), h = P(), p = (T) => {
+    const n = e, { labels: r, open: s, title: o } = _e(n), a = P(!1), d = P(), h = P(), p = (T) => {
       var S, v;
       !T.target || (S = h.value) != null && S.contains(T.target) || (v = d.value) != null && v.$el.contains(T.target) || (a.value = !1, window.removeEventListener("mouseup", p));
     }, c = () => {
@@ -1695,7 +1695,7 @@ const Qs = /* @__PURE__ */ _e(Ys, [["__scopeId", "data-v-d948a8f2"]]), Zs = /* @
     ], 512));
   }
 });
-const Ks = /* @__PURE__ */ _e(Zs, [["__scopeId", "data-v-4f3c5e9b"]]), eo = { class: "pagination" }, to = ["onClick"], no = /* @__PURE__ */ ge({
+const Ks = /* @__PURE__ */ we(Zs, [["__scopeId", "data-v-4f3c5e9b"]]), eo = { class: "pagination" }, to = ["onClick"], no = /* @__PURE__ */ ye({
   __name: "Pagination",
   props: {
     currentPageSize: {},
@@ -1708,7 +1708,7 @@ const Ks = /* @__PURE__ */ _e(Zs, [["__scopeId", "data-v-4f3c5e9b"]]), eo = { cl
   },
   emits: ["update:currentPageSize", "update:pageNumber"],
   setup(e, { emit: t }) {
-    const n = e, { currentPageSize: r, id: s, pageNumber: o, pageRadius: a, pageSizeLabel: d, pageSizes: h, rowCount: p } = ye(n), c = j(() => Math.min(...h.value)), _ = j(() => Math.ceil(p.value / r.value)), T = j(
+    const n = e, { currentPageSize: r, id: s, pageNumber: o, pageRadius: a, pageSizeLabel: d, pageSizes: h, rowCount: p } = _e(n), c = j(() => Math.min(...h.value)), _ = j(() => Math.ceil(p.value / r.value)), T = j(
       () => h.value.reduce((m, y) => (m[y] = y.toString(), m), {})
     ), S = j(() => {
       const m = [];
@@ -1791,7 +1791,7 @@ const Ks = /* @__PURE__ */ _e(Zs, [["__scopeId", "data-v-4f3c5e9b"]]), eo = { cl
     ]));
   }
 });
-const ro = /* @__PURE__ */ _e(no, [["__scopeId", "data-v-764cc1be"]]), so = (e) => (rn("data-v-b4f986aa"), e = e(), sn(), e), oo = /* @__PURE__ */ so(() => /* @__PURE__ */ V("i", { class: "la la-eye secondary" }, null, -1)), ao = /* @__PURE__ */ ge({
+const ro = /* @__PURE__ */ we(no, [["__scopeId", "data-v-764cc1be"]]), so = (e) => (rn("data-v-b4f986aa"), e = e(), sn(), e), oo = /* @__PURE__ */ so(() => /* @__PURE__ */ V("i", { class: "la la-eye secondary" }, null, -1)), ao = /* @__PURE__ */ ye({
   __name: "TrendChart",
   props: {
     formatter: { type: Function },
@@ -1799,7 +1799,7 @@ const ro = /* @__PURE__ */ _e(no, [["__scopeId", "data-v-764cc1be"]]), so = (e) 
     url: {}
   },
   setup(e) {
-    const t = e, { formatter: n, title: r, url: s } = ye(t), o = P(!1), a = P([]), d = P(), h = j(() => d.value ? Object.assign({}, d.value) : {}), p = j(() => {
+    const t = e, { formatter: n, title: r, url: s } = _e(t), o = P(!1), a = P([]), d = P(), h = j(() => d.value ? Object.assign({}, d.value) : {}), p = j(() => {
       var y;
       switch ((y = d.value) == null ? void 0 : y.length) {
         case 0:
@@ -1877,10 +1877,10 @@ const ro = /* @__PURE__ */ _e(no, [["__scopeId", "data-v-764cc1be"]]), so = (e) 
     ]));
   }
 });
-const lo = /* @__PURE__ */ _e(ao, [["__scopeId", "data-v-b4f986aa"]]), io = { class: "common-table" }, uo = {
+const lo = /* @__PURE__ */ we(ao, [["__scopeId", "data-v-b4f986aa"]]), io = { class: "common-table" }, uo = {
   key: 0,
   class: "controls d-flex justify-content-end mb-1"
-}, co = ["onMouseover", "onMouseout"], fo = ["href"], po = ["href"], vo = ["onClick"], gt = 50, mo = /* @__PURE__ */ ge({
+}, co = ["onMouseover", "onMouseout"], fo = ["href"], po = ["href"], vo = ["onClick"], gt = 50, mo = /* @__PURE__ */ ye({
   __name: "CommonTable",
   props: {
     cellClasses: { default: () => ({}) },
@@ -1954,18 +1954,18 @@ const lo = /* @__PURE__ */ _e(ao, [["__scopeId", "data-v-b4f986aa"]]), io = { cl
       inlineFilterOperators: H,
       inversedKpis: K,
       primaryColumn: J,
-      primaryColumnAlias: fe,
-      request: we,
-      rows: ae,
+      primaryColumnAlias: pe,
+      request: ee,
+      rows: le,
       shortenColumns: G,
       showInlineFilters: ke,
-      showRowNumber: le,
+      showRowNumber: ie,
       showPagination: st,
       showTopTotal: ot,
-      total: pe,
+      total: ve,
       totalColumnKey: at,
       trendUrl: Ne
-    } = ye(n), Fe = () => {
+    } = _e(n), Fe = () => {
       const l = {};
       for (const u of Object.keys(c.value))
         u in H.value && (l[u] = {
@@ -1973,7 +1973,7 @@ const lo = /* @__PURE__ */ _e(ao, [["__scopeId", "data-v-b4f986aa"]]), io = { cl
           value: ""
         });
       return l;
-    }, xe = P([]), ie = P({}), Se = P([]), Le = P({}), Ce = P([]), ve = P({}), A = P(!1), x = P(!1), k = P([]), X = P(!1), ee = P(Fe()), Oe = P(!0), Y = P(), me = P(0), Ee = P(20), He = P(0), re = P(), ue = P(), Nn = j(() => {
+    }, xe = P([]), ue = P({}), Se = P([]), Le = P({}), Ce = P([]), me = P({}), A = P(!1), x = P(!1), k = P([]), X = P(!1), te = P(Fe()), Oe = P(!0), Y = P(), he = P(0), Ee = P(20), He = P(0), se = P(), ce = P(), Nn = j(() => {
       const l = {};
       return x.value && (l.inline_filters = {
         icon: "filter"
@@ -1988,18 +1988,18 @@ const lo = /* @__PURE__ */ _e(ao, [["__scopeId", "data-v-b4f986aa"]]), io = { cl
     }), Lt = j(() => [...xe.value].sort((l, u) => {
       const i = (() => {
         const b = it(
-          Y.value[0].reduce((W, ce) => W[ce], l),
+          Y.value[0].reduce((W, de) => W[de], l),
           c.value[Y.value[0][0]].type
         ), O = it(
-          Y.value[0].reduce((W, ce) => W[ce], u),
+          Y.value[0].reduce((W, de) => W[de], u),
           c.value[Y.value[0][0]].type
         );
         return b > O ? 1 : b < O ? -1 : 0;
       })();
       return Y.value[1] ? -i : i;
-    })), Bt = j(() => !we.value || X.value ? Lt.value : Lt.value.slice(
-      me.value * Ee.value,
-      (me.value + 1) * Ee.value
+    })), Bt = j(() => !(ee != null && ee.value) || X.value ? Lt.value : Lt.value.slice(
+      he.value * Ee.value,
+      (he.value + 1) * Ee.value
     )), Bn = (l) => {
       Se.value.includes(l) || Se.value.push(l);
     }, Ve = (l, u) => !G.value || !G.value.includes(l) ? !1 : u.length > gt, Dn = (l) => !!l.tooltipTitle && !!l.tooltipDescription, In = (l, u) => {
@@ -2007,23 +2007,23 @@ const lo = /* @__PURE__ */ _e(ao, [["__scopeId", "data-v-b4f986aa"]]), io = { cl
       const i = ((b = K == null ? void 0 : K.value) == null ? void 0 : b.includes(u)) ?? !1;
       return l > 0 ? i ? "negative" : "positive" : l < 0 ? i ? "positive" : "negative" : "neutral";
     }, Dt = (l, u, i) => {
-      if (re.value)
-        return te(
-          re.value[l][u],
+      if (se.value)
+        return ne(
+          se.value[l][u],
           S.value[u].type ?? c.value[l].type,
           i
         );
-    }, te = (l, u, i) => {
+    }, ne = (l, u, i) => {
       let b = it(l, u);
       switch (u) {
         case "float":
-          return be(parseFloat(b)).format("0,0.00");
+          return ge(parseFloat(b)).format("0,0.00");
         case "int":
-          return be(parseInt(b)).format("0,0");
+          return ge(parseInt(b)).format("0,0");
         case "money": {
           let O = "0,0";
           a.value > 0 && (O += "." + "0".repeat(a.value));
-          const W = be(parseFloat(b)).format(O);
+          const W = ge(parseFloat(b)).format(O);
           return h.value ? d.value + " " + W : W + " " + d.value;
         }
         case "money_capped": {
@@ -2032,14 +2032,14 @@ const lo = /* @__PURE__ */ _e(ao, [["__scopeId", "data-v-b4f986aa"]]), io = { cl
             const W = a.value === 0 ? 1 : parseFloat("0." + "0".repeat(a.value - 1) + "1");
             return h.value ? `< ${d.value} ${W}` : `< ${W} ${d.value}`;
           } else
-            return te(l, "money", i);
+            return ne(l, "money", i);
         }
         case "percent": {
-          let O = be(parseFloat(b)).format("0,0.00") + "%";
+          let O = ge(parseFloat(b)).format("0,0.00") + "%";
           return i === "difference" && b > 0 && (O = `+${O}`), O;
         }
         case "time":
-          return `${te(Math.floor(parseInt(b) / 60), "int")}mn${te(
+          return `${ne(Math.floor(parseInt(b) / 60), "int")}mn${ne(
             parseInt(b) % 60,
             "int"
           )}s`;
@@ -2047,14 +2047,14 @@ const lo = /* @__PURE__ */ _e(ao, [["__scopeId", "data-v-b4f986aa"]]), io = { cl
           return b.toString();
       }
     }, zn = async (l, u) => {
-      if (ie.value[l] && ie.value[l][u[J.value]])
-        return ie.value[l][u[J.value]];
+      if (ue.value[l] && ue.value[l][u[J.value]])
+        return ue.value[l][u[J.value]];
       const { rows: i } = await r(y.value[l].request, {
         row: u,
-        primaryColumn: (fe == null ? void 0 : fe.value) ?? J.value,
+        primaryColumn: (pe == null ? void 0 : pe.value) ?? J.value,
         primaryColumnValue: u[J.value]
       });
-      return ie.value[l] || (ie.value[l] = {}), ie.value[l][u[J.value]] = Object.values(i), ie.value[l][u[J.value]];
+      return ue.value[l] || (ue.value[l] = {}), ue.value[l][u[J.value]] = Object.values(i), ue.value[l][u[J.value]];
     }, It = (l, u) => {
       const i = new URL(l.url, location.origin);
       if (Array.isArray(l.columns))
@@ -2079,11 +2079,11 @@ const lo = /* @__PURE__ */ _e(ao, [["__scopeId", "data-v-b4f986aa"]]), io = { cl
       const u = new URL(l.baseUrl);
       return u.searchParams.set("total", "true"), u.toString();
     }, $n = (l) => !G.value || !G.value.includes(l) ? -1 : k.value.indexOf(l), Mn = (l) => {
-      if (l in ee.value)
-        return ee.value[l].operator;
+      if (l in te.value)
+        return te.value[l].operator;
     }, Hn = (l) => {
-      if (l in ee.value)
-        return ee.value[l].value;
+      if (l in te.value)
+        return te.value[l].value;
     }, lt = (l) => H.value[l], Vn = (l) => {
       const u = lt(l);
       if (!u)
@@ -2119,7 +2119,7 @@ const lo = /* @__PURE__ */ _e(ao, [["__scopeId", "data-v-b4f986aa"]]), io = { cl
         u ? Ne.value[u] : Ne.value,
         location.origin
       );
-      return i.searchParams.set((fe == null ? void 0 : fe.value) ?? J.value, l[J.value]), i.toString();
+      return i.searchParams.set((pe == null ? void 0 : pe.value) ?? J.value, l[J.value]), i.toString();
     }, qe = (l, u, i) => Ve(l, u) ? [] : i ? (m == null ? void 0 : m.value) === l ? ["flex-grow-1", "text-left"] : G.value && G.value.includes(l) && Bt.value.some((b) => Ve(l, b[l])) ? ["flex-grow-1", "text-left"] : ["flex-grow-1"] : ["flew-grow-1"], Xn = (l) => l in H.value, Yn = () => {
       ke.value && (A.value = !1);
     }, jt = (l, u) => !(!(T != null && T.value) || !(u in T.value) || "disable_for" in T.value[u] && T.value[u].disable_for.includes(l[J.value])), Qn = (l, u) => {
@@ -2131,14 +2131,14 @@ const lo = /* @__PURE__ */ _e(ao, [["__scopeId", "data-v-b4f986aa"]]), io = { cl
     }, Ut = (l, u) => {
       Le.value[l] = u;
     }, Be = (l, u) => !G.value || !G.value.includes(u) || l.length <= gt ? l : `${l.substring(0, gt - 3)}...`, Kn = (l) => {
-      if (!ue.value)
+      if (!ce.value)
         return;
       const u = {
-        left: ue.value.$el.scrollLeft,
-        top: ue.value.$el.scrollTop
+        left: ce.value.$el.scrollLeft,
+        top: ce.value.$el.scrollTop
       };
-      delete ve.value[l[J.value]], Ye(() => {
-        ue.value.$el.scrollTo(u);
+      delete me.value[l[J.value]], Ye(() => {
+        ce.value.$el.scrollTo(u);
       });
     }, er = (l, u) => {
       const i = l.target.value;
@@ -2146,34 +2146,34 @@ const lo = /* @__PURE__ */ _e(ao, [["__scopeId", "data-v-b4f986aa"]]), io = { cl
     }, tr = (l, u) => {
       l.key === "Enter" && l.target.blur();
     }, nr = async (l, u) => {
-      if (!ue.value)
+      if (!ce.value)
         return;
       const i = {
-        left: ue.value.$el.scrollLeft,
-        top: ue.value.$el.scrollTop
+        left: ce.value.$el.scrollLeft,
+        top: ce.value.$el.scrollTop
       };
-      Oe.value = !0, ve.value[u[J.value]] = await zn(l, u), Ye(() => {
-        ue.value.$el.scrollTo(i), Oe.value = !1;
+      Oe.value = !0, me.value[u[J.value]] = await zn(l, u), Ye(() => {
+        ce.value.$el.scrollTo(i), Oe.value = !1;
       });
     }, rr = async (l = !1) => {
       await or(l) || await sr(l) || await Ht(l);
     }, ut = async (l) => {
-      await ct(l), me.value = l;
+      await ct(l), he.value = l;
     }, $t = async (l) => {
       const u = Wn();
       if (l === void 0) {
         const i = localStorage.getItem(u);
         i && (Ee.value = parseInt(i));
       } else
-        localStorage.setItem(u, l.toString()), await ct(0, l), me.value = 0, Ee.value = l;
+        localStorage.setItem(u, l.toString()), await ct(0, l), he.value = 0, Ee.value = l;
     }, Mt = (l, { operator: u, value: i }) => {
       if (u || (u = Object.keys(lt(l))[0]), !u)
         return;
       const b = {
-        ...ee.value[l],
+        ...te.value[l],
         operator: u
       };
-      i !== void 0 && (b.value = i), ee.value[l] = b, ut(0);
+      i !== void 0 && (b.value = i), te.value[l] = b, ut(0);
     }, sr = async (l) => {
       const u = (() => {
         for (const O in localStorage) {
@@ -2182,8 +2182,8 @@ const lo = /* @__PURE__ */ _e(ao, [["__scopeId", "data-v-b4f986aa"]]), io = { cl
           const W = O.substring(O.indexOf("/"));
           if (location.pathname !== W)
             return;
-          const ce = localStorage.getItem(O);
-          return ce ? JSON.parse(ce) : void 0;
+          const de = localStorage.getItem(O);
+          return de ? JSON.parse(de) : void 0;
         }
       })();
       if (!u || !u.order || !u.order[0] || typeof u.order[0][0] == "number")
@@ -2226,23 +2226,23 @@ const lo = /* @__PURE__ */ _e(ao, [["__scopeId", "data-v-b4f986aa"]]), io = { cl
       const u = localStorage.getItem(zt());
       return u ? (await Re(JSON.parse(u), !1, l), !0) : !1;
     }, ar = async (l, u, i) => {
-      if (!we.value)
+      if (!(ee != null && ee.value))
         return !1;
       if (X.value)
         return !0;
-      const b = await s(we.value, {
-        inlineFilters: ee.value,
+      const b = await s(ee.value, {
+        inlineFilters: te.value,
         pageNumber: l,
         pageSize: u,
         orderBy: i[0],
         reversed: i[1]
       });
-      return xe.value = Object.values(b.rows), X.value = b.paginated !== !0, He.value = b.rowCount, b.detailedRows ? ve.value = b.detailedRows : ve.value = {}, b.total && (re.value = b.total), !0;
+      return xe.value = Object.values(b.rows), X.value = b.paginated !== !0, He.value = b.rowCount, b.detailedRows ? me.value = b.detailedRows : me.value = {}, b.total && (se.value = b.total), !0;
     }, lr = () => {
-      if (!(ae != null && ae.value))
+      if (!(le != null && le.value))
         return !1;
-      let l = Object.values(ae.value);
-      for (const [u, i] of Object.entries(ee.value))
+      let l = Object.values(le.value);
+      for (const [u, i] of Object.entries(te.value))
         i.value && (l = l.filter(
           (b) => H.value[u][i.operator].callback(
             b[u],
@@ -2251,7 +2251,7 @@ const lo = /* @__PURE__ */ _e(ao, [["__scopeId", "data-v-b4f986aa"]]), io = { cl
         ));
       return xe.value = l, He.value = l.length, !0;
     }, ct = async (l, u, i) => {
-      l === void 0 && (l = me.value), u === void 0 && (u = Ee.value), i === void 0 && (i = Y.value), Oe.value = !0, lr() || await ar(me.value, Ee.value, Y.value), Oe.value = !1;
+      l === void 0 && (l = he.value), u === void 0 && (u = Ee.value), i === void 0 && (i = Y.value), Oe.value = !0, lr() || await ar(he.value, Ee.value, Y.value), Oe.value = !1;
     }, ir = () => {
       ke.value && (A.value = !0);
     }, ur = (l) => {
@@ -2260,16 +2260,16 @@ const lo = /* @__PURE__ */ _e(ao, [["__scopeId", "data-v-b4f986aa"]]), io = { cl
       const u = $n(l);
       u >= 0 ? k.value.splice(u, 1) : k.value.push(l);
     }, cr = () => {
-      x.value = !x.value, x.value && (ee.value = Fe());
+      x.value = !x.value, x.value && (te.value = Fe());
     }, Re = async (l, u = !0, i = !0) => {
-      me.value = 0, i && await ct(void 0, void 0, l), Y.value = l, u && localStorage.setItem(zt(), JSON.stringify(l));
+      he.value = 0, i && await ct(void 0, void 0, l), Y.value = l, u && localStorage.setItem(zt(), JSON.stringify(l));
     };
     return fr(() => {
-      Ce.value = Object.keys(c.value), re.value = pe == null ? void 0 : pe.value, Promise.all([Ht(!1), $t()]).then(() => rr(!0));
+      Ce.value = Object.keys(c.value), se.value = ve == null ? void 0 : ve.value, Promise.all([Ht(!1), $t()]).then(() => rr(!0));
     }), Xe(c, () => {
-      ee.value = Fe();
-    }), Xe(
-      we,
+      te.value = Fe();
+    }), ee && Xe(
+      ee,
       () => {
         X.value = !1, ut(0);
       },
@@ -2280,7 +2280,7 @@ const lo = /* @__PURE__ */ _e(ao, [["__scopeId", "data-v-b4f986aa"]]), io = { cl
           "onUpdate:pageNumber": u[0] || (u[0] = (i) => ut(i)),
           "onUpdate:currentPageSize": u[1] || (u[1] = (i) => $t(i)),
           currentPageSize: Ee.value,
-          pageNumber: me.value,
+          pageNumber: he.value,
           pageSizeLabel: l.pageSizeLabel,
           rowCount: He.value
         }, null, 8, ["currentPageSize", "pageNumber", "pageSizeLabel", "rowCount"])
@@ -2306,7 +2306,7 @@ const lo = /* @__PURE__ */ _e(ao, [["__scopeId", "data-v-b4f986aa"]]), io = { cl
         Y.value ? (C(), I(gr, {
           key: 0,
           ref_key: "table",
-          ref: ue,
+          ref: ce,
           onAddColoredMetric: u[3] || (u[3] = (i) => Bn(i)),
           "onMove:column": u[4] || (u[4] = ({ from: i, to: b }) => Qn(i, b)),
           onRemoveColoredMetric: u[5] || (u[5] = (i) => Zn(i)),
@@ -2317,15 +2317,15 @@ const lo = /* @__PURE__ */ _e(ao, [["__scopeId", "data-v-b4f986aa"]]), io = { cl
           coloredMetrics: Se.value,
           columns: Ln.value,
           comparisonColumnKeys: Fn.value,
-          detailsRows: ve.value,
+          detailsRows: me.value,
           dragColumns: g(E),
           fixedColumnNumber: g(D),
           inversedKpis: g(K),
           orderBy: Y.value,
           primaryColumn: g(J),
           rows: Bt.value,
-          showRowNumber: g(le),
-          showTotal: !!re.value,
+          showRowNumber: g(ie),
+          showTotal: !!se.value,
           showTopTotal: g(ot)
         }, pr({
           colorizeLabel: w(({ enabled: i }) => [
@@ -2399,22 +2399,22 @@ const lo = /* @__PURE__ */ _e(ao, [["__scopeId", "data-v-b4f986aa"]]), io = { cl
               }, null, 8, ["description", "title", "visible"])) : U("", !0)
             ], 40, co)
           ]),
-          row: w(({ columnKey: i, index: b, row: O, spanIndex: W, subcolumnKey: ce, subindex: dt, value: Q }) => [
+          row: w(({ columnKey: i, index: b, row: O, spanIndex: W, subcolumnKey: de, subindex: dt, value: Q }) => [
             yt(l.$slots, "row", vr(mr({
               columnKey: i,
               index: b,
               row: O,
               spanIndex: W,
-              subcolumnKey: ce,
+              subcolumnKey: de,
               subindex: dt,
               value: Q
             })), () => [
               dt === void 0 && i === "trend" ? (C(), I(lo, {
                 key: 0,
                 class: M(qe(i, Q, O.rowInfo.detailable)),
-                formatter: (ft) => te(ft, "int"),
+                formatter: (ft) => ne(ft, "int"),
                 title: l.trendChartTitle,
-                url: Gn(O, ce)
+                url: Gn(O, de)
               }, null, 8, ["class", "formatter", "title", "url"])) : O.rowInfo.detailable && i === g(m) ? (C(), L(q, { key: 1 }, [
                 jt(O, i) && O.rowInfo.detailable ? (C(), I(z, {
                   key: 0,
@@ -2426,7 +2426,7 @@ const lo = /* @__PURE__ */ _e(ao, [["__scopeId", "data-v-b4f986aa"]]), io = { cl
                     V("a", {
                       class: "column-link",
                       href: It(g(T)[i], O).toString()
-                    }, N(Be(te(Q, g(c)[i].type), i)), 9, fo)
+                    }, N(Be(ne(Q, g(c)[i].type), i)), 9, fo)
                   ]),
                   _: 2
                 }, 1032, ["class"])) : (C(), I(z, {
@@ -2435,7 +2435,7 @@ const lo = /* @__PURE__ */ _e(ao, [["__scopeId", "data-v-b4f986aa"]]), io = { cl
                   size: "small"
                 }, {
                   default: w(() => [
-                    F(N(te(Q, g(c)[i].type)), 1)
+                    F(N(ne(Q, g(c)[i].type)), 1)
                   ]),
                   _: 2
                 }, 1024))
@@ -2449,13 +2449,13 @@ const lo = /* @__PURE__ */ _e(ao, [["__scopeId", "data-v-b4f986aa"]]), io = { cl
                   V("a", {
                     class: "column-link",
                     href: It(g(T)[i], O).toString()
-                  }, N(Be(te(Q, g(c)[i].type), i)), 9, po)
+                  }, N(Be(ne(Q, g(c)[i].type), i)), 9, po)
                 ]),
                 _: 2
               }, 1032, ["class"])) : dt === void 0 && Q >= 0.01 && i in g(_) ? (C(), I(nn, {
                 key: 3,
                 format: g(_)[i].format,
-                label: Be(te(Q, g(c)[i].type), i),
+                label: Be(ne(Q, g(c)[i].type), i),
                 title: g(_)[i].title,
                 url: jn(i, O)
               }, null, 8, ["format", "label", "title", "url"])) : (C(), I(z, {
@@ -2465,7 +2465,7 @@ const lo = /* @__PURE__ */ _e(ao, [["__scopeId", "data-v-b4f986aa"]]), io = { cl
                 size: "small"
               }, {
                 default: w(() => [
-                  F(N(Be(te(Q, g(c)[i].type), i)), 1)
+                  F(N(Be(ne(Q, g(c)[i].type), i)), 1)
                 ]),
                 _: 2
               }, 1032, ["class"])),
@@ -2480,7 +2480,7 @@ const lo = /* @__PURE__ */ _e(ao, [["__scopeId", "data-v-b4f986aa"]]), io = { cl
                   onHideDetails: () => Kn(O),
                   onShowDetails: (ft) => nr(ft, O),
                   labels: Ft.value,
-                  open: ve.value[O[g(J)]] !== void 0,
+                  open: me.value[O[g(J)]] !== void 0,
                   title: l.detailsSelectorTitle
                 }, null, 8, ["onHideDetails", "onShowDetails", "labels", "open", "title"])
               ], 64)) : U("", !0)
@@ -2521,7 +2521,7 @@ const lo = /* @__PURE__ */ _e(ao, [["__scopeId", "data-v-b4f986aa"]]), io = { cl
             ], 2)) : U("", !0)
           ]),
           total: w(({ columnKey: i, subcolumnKey: b, values: O }) => [
-            yt(l.$slots, g(pe), {
+            yt(l.$slots, g(ve), {
               columnKey: i,
               subcolumnKey: b,
               values: O
@@ -2535,10 +2535,10 @@ const lo = /* @__PURE__ */ _e(ao, [["__scopeId", "data-v-b4f986aa"]]), io = { cl
                   F(N(l.totalTitle(He.value ?? xe.value.length)), 1)
                 ]),
                 _: 1
-              })) : re.value ? (C(), L(q, { key: 1 }, [
+              })) : se.value ? (C(), L(q, { key: 1 }, [
                 b && g(S) && g(S)[b].format === "difference" ? (C(), I(z, {
                   key: 0,
-                  mood: In(re.value[i][b], i),
+                  mood: In(se.value[i][b], i),
                   contrast: "",
                   size: "small"
                 }, {
@@ -2546,10 +2546,10 @@ const lo = /* @__PURE__ */ _e(ao, [["__scopeId", "data-v-b4f986aa"]]), io = { cl
                     F(N(Dt(i, b, g(S)[b].format)), 1)
                   ]),
                   _: 2
-                }, 1032, ["mood"])) : re.value && re.value[i] >= 0.01 && i in g(_) ? (C(), I(nn, {
+                }, 1032, ["mood"])) : se.value && se.value[i] >= 0.01 && i in g(_) ? (C(), I(nn, {
                   key: 1,
                   format: g(_)[i].format,
-                  label: Be(te(re.value[i], g(c)[i].type, g(S) && b ? g(S)[b].format : void 0), i),
+                  label: Be(ne(se.value[i], g(c)[i].type, g(S) && b ? g(S)[b].format : void 0), i),
                   title: g(_)[i].title,
                   url: Un(g(_)[i])
                 }, null, 8, ["format", "label", "title", "url"])) : i !== "trend" ? (C(), I(z, {
@@ -2561,7 +2561,7 @@ const lo = /* @__PURE__ */ _e(ao, [["__scopeId", "data-v-b4f986aa"]]), io = { cl
                     b ? (C(), L(q, { key: 0 }, [
                       F(N(Dt(i, b, g(S) ? g(S)[b].format : void 0)), 1)
                     ], 64)) : (C(), L(q, { key: 1 }, [
-                      F(N(te(re.value[i], g(c)[i].type)), 1)
+                      F(N(ne(se.value[i], g(c)[i].type)), 1)
                     ], 64))
                   ]),
                   _: 2
@@ -2597,7 +2597,7 @@ const lo = /* @__PURE__ */ _e(ao, [["__scopeId", "data-v-b4f986aa"]]), io = { cl
     ]));
   }
 });
-const Lo = /* @__PURE__ */ _e(mo, [["__scopeId", "data-v-861a659b"]]), ho = ["onClick"], bo = ["onClick"], go = { class: "items" }, yo = /* @__PURE__ */ ge({
+const Lo = /* @__PURE__ */ we(mo, [["__scopeId", "data-v-553e3408"]]), ho = ["onClick"], bo = ["onClick"], go = { class: "items" }, yo = /* @__PURE__ */ ye({
   __name: "KpiSelector",
   props: {
     applyLabel: {},
@@ -2615,11 +2615,11 @@ const Lo = /* @__PURE__ */ _e(mo, [["__scopeId", "data-v-861a659b"]]), ho = ["on
   },
   emits: ["update:modelValue"],
   setup(e, { emit: t }) {
-    const n = e, { columns: r, defaultValue: s, groupNames: o, modelValue: a, showModalLabel: d } = ye(n), h = P(Object.keys(o.value)[0]), p = P([...a.value]), c = P([]), _ = P([]), T = P(""), S = P(void 0), v = P({ left: 0, top: 0 }), m = P({ left: 0, top: 0 }), y = P({ left: 0, top: 0 }), E = P(void 0), D = P(void 0), H = P(void 0), K = P(void 0), J = j(() => Object.fromEntries(
+    const n = e, { columns: r, defaultValue: s, groupNames: o, modelValue: a, showModalLabel: d } = _e(n), h = P(Object.keys(o.value)[0]), p = P([...a.value]), c = P([]), _ = P([]), T = P(""), S = P(void 0), v = P({ left: 0, top: 0 }), m = P({ left: 0, top: 0 }), y = P({ left: 0, top: 0 }), E = P(void 0), D = P(void 0), H = P(void 0), K = P(void 0), J = j(() => Object.fromEntries(
       Object.entries(r.value).filter(([A, x]) => x.fixed !== !0 && (T.value.trim() === "" || x.label.toLowerCase().includes(T.value.trim().toLowerCase())))
-    )), fe = j(() => Object.keys(o.value).reduce((A, x) => (A[x] = Object.fromEntries(
+    )), pe = j(() => Object.keys(o.value).reduce((A, x) => (A[x] = Object.fromEntries(
       Object.entries(J.value).filter(([k, X]) => X.group === x)
-    ), A), {})), we = j(() => h.value === void 0 ? void 0 : fe.value[h.value]), ae = j(() => Object.fromEntries(
+    ), A), {})), ee = j(() => h.value === void 0 ? void 0 : pe.value[h.value]), le = j(() => Object.fromEntries(
       Object.entries(o.value).filter(([A, x]) => Object.values(J.value).some((k) => k.group === A))
     )), G = j(() => {
       if (!(D.value === void 0 || H.value === void 0 || K.value === void 0))
@@ -2627,18 +2627,18 @@ const Lo = /* @__PURE__ */ _e(mo, [["__scopeId", "data-v-861a659b"]]), ho = ["on
     }), ke = j(() => {
       if (G.value !== void 0)
         return `${G.value}px`;
-    }), le = j(() => {
+    }), ie = j(() => {
       if (E.value === void 0 || G.value === void 0)
         return;
       const A = p.value.indexOf(E.value), x = A - 1 - p.value.slice(0, A).reverse().findIndex((Y) => r.value[Y].fixed === !0);
       let k = p.value.slice(A + 1).findIndex((Y) => r.value[Y].fixed === !0);
       k >= 0 ? k += A + 1 : k = p.value.length;
-      const X = st(p.value[x]), ee = X.offsetHeight, Oe = Math.min(
-        Math.round((G.value - X.offsetTop) / ee - 1),
+      const X = st(p.value[x]), te = X.offsetHeight, Oe = Math.min(
+        Math.round((G.value - X.offsetTop) / te - 1),
         k - x - 1
       );
       return x + Oe + 1;
-    }), st = (A) => _.value[p.value.indexOf(A)], ot = (A) => c.value[p.value.indexOf(A)], pe = (A = !1, x) => {
+    }), st = (A) => _.value[p.value.indexOf(A)], ot = (A) => c.value[p.value.indexOf(A)], ve = (A = !1, x) => {
       x && x.target !== x.currentTarget || (A && (p.value = [...a.value]), S.value = !1, h.value = Object.keys(o.value)[0]);
     }, at = (A) => {
       const x = p.value.indexOf(A);
@@ -2647,10 +2647,10 @@ const Lo = /* @__PURE__ */ _e(mo, [["__scopeId", "data-v-861a659b"]]), ho = ["on
       p.value = [...s.value];
     }, Fe = (A) => {
       const x = [...A];
-      t("update:modelValue", x), pe(!1);
+      t("update:modelValue", x), ve(!1);
     }, xe = (A) => {
       h.value = A.toString();
-    }, ie = () => {
+    }, ue = () => {
       S.value = !0;
     }, Se = (A) => {
       const x = p.value.indexOf(A);
@@ -2658,27 +2658,27 @@ const Lo = /* @__PURE__ */ _e(mo, [["__scopeId", "data-v-861a659b"]]), ho = ["on
     }, Le = (A) => {
       K.value = A.clientY;
     }, Ce = () => {
-      const A = le.value;
+      const A = ie.value;
       if (E.value !== void 0 && A !== void 0) {
         const x = p.value.indexOf(E.value);
         p.value.splice(x, 1), p.value.splice(A, 0, E.value);
       }
       E.value = void 0, D.value = void 0, H.value = void 0, K.value = void 0, window.removeEventListener("mousemove", Le), window.removeEventListener("mouseup", Ce);
-    }, ve = (A, x) => {
+    }, me = (A, x) => {
       E.value = x, D.value = ot(x).$el.offsetTop, H.value = A.clientY, K.value = A.clientY, window.addEventListener("mousemove", Le), window.addEventListener("mouseup", Ce);
     };
     return Xe(T, (A) => {
-      A ? (!h.value || !(h.value in ae.value)) && (h.value = Object.keys(ae.value)[0]) : h.value || (h.value = Object.keys(ae.value)[0]);
+      A ? (!h.value || !(h.value in le.value)) && (h.value = Object.keys(le.value)[0]) : h.value || (h.value = Object.keys(le.value)[0]);
     }), (A, x) => (C(), L(q, null, [
       R(Vt, {
-        onClick: x[0] || (x[0] = () => ie()),
+        onClick: x[0] || (x[0] = () => ue()),
         label: g(d),
         mood: "neutral"
       }, null, 8, ["label"]),
       (C(), I(on, { to: "#app > .app-container" }, [
         R(Z, {
           class: M(["kpi-selector-container no-spacing", { visible: S.value, hidden: S.value === !1 }]),
-          onClick: x[8] || (x[8] = je((k) => pe(!0, k), ["stop"])),
+          onClick: x[8] || (x[8] = je((k) => ve(!0, k), ["stop"])),
           column: "",
           horizontal: "center",
           vertical: "center"
@@ -2725,7 +2725,7 @@ const Lo = /* @__PURE__ */ _e(mo, [["__scopeId", "data-v-861a659b"]]), ho = ["on
                       default: w(() => [
                         R(Ie, {
                           class: "close",
-                          onClick: x[2] || (x[2] = () => pe(!0)),
+                          onClick: x[2] || (x[2] = () => ve(!0)),
                           size: "large-3",
                           value: "x"
                         })
@@ -2737,7 +2737,7 @@ const Lo = /* @__PURE__ */ _e(mo, [["__scopeId", "data-v-861a659b"]]), ho = ["on
                 }),
                 R(Z, { class: "body flex-max no-spacing" }, {
                   default: w(() => [
-                    h.value !== void 0 && we.value !== void 0 ? (C(), L(q, { key: 0 }, [
+                    h.value !== void 0 && ee.value !== void 0 ? (C(), L(q, { key: 0 }, [
                       R(Z, {
                         class: "groups flex-max",
                         column: ""
@@ -2755,7 +2755,7 @@ const Lo = /* @__PURE__ */ _e(mo, [["__scopeId", "data-v-861a659b"]]), ho = ["on
                             scrollPosition: v.value
                           }, {
                             default: w(() => [
-                              (C(!0), L(q, null, Te(Object.entries(ae.value), ([k, X]) => (C(), L("div", {
+                              (C(!0), L(q, null, Te(Object.entries(le.value), ([k, X]) => (C(), L("div", {
                                 class: M(["item no-spacing", { selected: h.value === k }]),
                                 onClick: () => xe(k)
                               }, [
@@ -2789,7 +2789,7 @@ const Lo = /* @__PURE__ */ _e(mo, [["__scopeId", "data-v-861a659b"]]), ho = ["on
                             scrollPosition: m.value
                           }, {
                             default: w(() => [
-                              (C(!0), L(q, null, Te(Object.entries(we.value), ([k, X]) => (C(), L("div", {
+                              (C(!0), L(q, null, Te(Object.entries(ee.value), ([k, X]) => (C(), L("div", {
                                 class: M(["item no-spacing", { selected: p.value.includes(k) }]),
                                 onClick: () => Se(k),
                                 key: k
@@ -2855,7 +2855,7 @@ const Lo = /* @__PURE__ */ _e(mo, [["__scopeId", "data-v-861a659b"]]), ho = ["on
                                   ref: _
                                 }, [
                                   V("div", {
-                                    class: M(["separator-top no-spacing", { "place-after": le.value !== void 0 && E.value !== void 0 && k === p.value[le.value] && le.value < p.value.indexOf(E.value) }])
+                                    class: M(["separator-top no-spacing", { "place-after": ie.value !== void 0 && E.value !== void 0 && k === p.value[ie.value] && ie.value < p.value.indexOf(E.value) }])
                                   }, null, 2),
                                   R(Z, {
                                     class: M(["item no-spacing", { dragged: k === E.value }]),
@@ -2878,7 +2878,7 @@ const Lo = /* @__PURE__ */ _e(mo, [["__scopeId", "data-v-861a659b"]]), ho = ["on
                                       }, 1032, ["class"])) : (C(), L(q, { key: 1 }, [
                                         R(Ie, {
                                           class: "move",
-                                          onMousedown: (X) => ve(X, k),
+                                          onMousedown: (X) => me(X, k),
                                           value: "dots-vertical-rounded"
                                         }, null, 8, ["onMousedown"]),
                                         R(z, {
@@ -2900,7 +2900,7 @@ const Lo = /* @__PURE__ */ _e(mo, [["__scopeId", "data-v-861a659b"]]), ho = ["on
                                     _: 2
                                   }, 1032, ["class", "style"]),
                                   V("div", {
-                                    class: M(["separator-bottom no-spacing", { "place-after": le.value !== void 0 && E.value !== void 0 && k === p.value[le.value] && le.value >= p.value.indexOf(E.value) }])
+                                    class: M(["separator-bottom no-spacing", { "place-after": ie.value !== void 0 && E.value !== void 0 && k === p.value[ie.value] && ie.value >= p.value.indexOf(E.value) }])
                                   }, null, 2)
                                 ], 512))), 256))
                               ])
@@ -2952,7 +2952,7 @@ const Lo = /* @__PURE__ */ _e(mo, [["__scopeId", "data-v-861a659b"]]), ho = ["on
     ], 64));
   }
 });
-const Bo = /* @__PURE__ */ _e(yo, [["__scopeId", "data-v-aaf5fd34"]]);
+const Bo = /* @__PURE__ */ we(yo, [["__scopeId", "data-v-aaf5fd34"]]);
 export {
   Lo as CommonTable,
   Bo as KpiSelector
