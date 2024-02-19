@@ -70,7 +70,9 @@ Align.currency-selector(
   horizontal='center',
 )
   Button.currency-button(
-    @click='() => showMenu()',
+    @click='showMenu()',
+    @focus='showMenu()',
+    @blur='hideMenu()',
     :label="currentCurrency?.symbol",
     mood='neutral',
     outline,

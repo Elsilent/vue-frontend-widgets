@@ -68,7 +68,9 @@ Align.locale-selector(
   horizontal='center',
 )
   Button.locale-button(
-    @click='() => showMenu()',
+    @click='showMenu()',
+    @focus="showMenu()",
+    @blur="hideMenu()",
     :icon='localeIcon',
     iconBackend='flag-icons-square',
     mood='neutral',

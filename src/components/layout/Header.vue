@@ -41,7 +41,6 @@ Align.header(vertical='center')
   > .title {
     @include apply-color(background-color, background-elevated-2);
 
-    cursor: pointer;
     transition-duration: $transition-duration-normal;
     transition-property: background-color;
     width: min-content;
