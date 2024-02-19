@@ -101,7 +101,7 @@ const whenBlurred = (event: FocusEvent) => {
 };
 
 const toggleItem = (value: string | number | symbol) => {
-  if (!modelValue?.value) || disabled?.value || !active.value) {
+  if (!modelValue?.value || disabled?.value || !active.value) {
     return;
   }
 

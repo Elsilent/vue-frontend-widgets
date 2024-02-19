@@ -454,7 +454,20 @@ const canShorten = (columnKey: string, value: string) => {
 
 const columnHasTooltip = (column: Column) => !!column.tooltipTitle && !!column.tooltipDescription;
 
-const differenceMood = (value: number, columnKey: string): Mood => {
+const differenceMood = (
+  value: number,
+  columnKey: string,
+  subcolumnKey?: string,
+): Mood | undefined => {
+  if (
+    !subcolumnKey
+      || !comparisonColumns?.value
+      || !(subcolumnKey in comparisonColumns.value)
+      || comparisonColumns.value[subcolumnKey].format !== 'difference'
+  ) {
+    return undefined;
+  }
+
   const inversed = inversedKpis?.value?.includes(columnKey) ?? false;
 
   if (value > 0) {
@@ -464,25 +477,6 @@ const differenceMood = (value: number, columnKey: string): Mood => {
   } else {
     return 'neutral';
   }
-};
-
-/**
- * Formats total value based on subcolumn
- */
-const formatTotalComparisonValue = (
-  columnKey: string,
-  comparisonKey: string,
-  format?: 'difference',
-) => {
-  if (!totalRow.value) {
-    return undefined;
-  }
-
-  return formatValue(
-    totalRow.value[columnKey][comparisonKey],
-    comparisonColumns!.value![comparisonKey].type ?? columns.value[columnKey].type,
-    format,
-  );
 };
 
 /**
@@ -726,6 +720,38 @@ const getRawValue = (value: any, type: ColumnType) => {
     default:
       return value;
   }
+};
+
+const getRowFormattedValue = (
+  value: any,
+  columnKey: string,
+  subcolumnKey?: string,
+  shorten: boolean = false,
+) => {
+  const [columnType, format] = (() => {
+    if (!subcolumnKey || !comparisonColumns?.value || !(subcolumnKey in comparisonColumns.value)) {
+      return [columns.value[columnKey].type, undefined];
+    }
+
+    return [
+      comparisonColumns.value[subcolumnKey].type ?? columns.value[columnKey].type,
+      comparisonColumns.value[subcolumnKey].format,
+    ];
+  })();
+
+  let formattedValue = formatValue(value, columnType);
+
+  if (format === 'difference') {
+    formattedValue = value > 0
+      ? `+${formattedValue}`
+      : formattedValue;
+  }
+
+  if (shorten) {
+    return shortenValue(formattedValue, columnKey);
+  }
+
+  return formattedValue;
 };
 
 /**
@@ -1344,37 +1370,41 @@ if (request) {
             Info(
               v-if="isColumnLinkable(row, columnKey) && row.rowInfo.detailable",
               :class="getValueClass(columnKey, value, row.rowInfo.detailable)",
+              :mood="differenceMood(value, columnKey, subcolumnKey)",
               contrast,
               size="small",
             )
               a.column-link(:href="getColumnLinkUrl(columnLinks[columnKey], row).toString()")
-                | {{ shortenValue(formatValue(value, columns[columnKey].type), columnKey) }}
+                | {{ getRowFormattedValue(value, columnKey, subcolumnKey, true) }}
             Info(
               v-else
+              :mood="differenceMood(value, columnKey, subcolumnKey)",
               contrast,
               size="small",
-            ) {{ formatValue(value, columns[columnKey].type) }}
+            ) {{ getRowFormattedValue(value, columnKey, subcolumnKey) }}
           Info(
             v-else-if="isColumnLinkable(row, columnKey) && row.rowInfo.detailable",
             :class="getValueClass(columnKey, value, row.rowInfo.detailable)",
+            :mood="differenceMood(value, columnKey, subcolumnKey)",
             contrast,
             size="small",
           )
             a.column-link(:href="getColumnLinkUrl(columnLinks[columnKey], row).toString()")
-              | {{ shortenValue(formatValue(value, columns[columnKey].type), columnKey) }}
+              | {{ getRowFormattedValue(value, columnKey, subcolumnKey, true) }}
           CellHint(
             v-else-if="subindex === undefined && value >= 0.01 && columnKey in columnDetails",
             :format="columnDetails[columnKey].format",
-            :label="shortenValue(formatValue(value, columns[columnKey].type), columnKey)",
+            :label="getRowFormattedValue(value, columnKey, subcolumnKey, true)",
             :title="columnDetails[columnKey].title",
             :url="getColumnDetailsUrl(columnKey, row)",
           )
           Info(
             v-else,
             :class="getValueClass(columnKey, value, row.rowInfo.detailable)",
+            :mood="differenceMood(value, columnKey, subcolumnKey)",
             contrast,
             size="small",
-          ) {{ shortenValue(formatValue(value, columns[columnKey].type), columnKey) }}
+          ) {{ getRowFormattedValue(value, columnKey, subcolumnKey, true) }}
           i.flex-grow-1.expand-column.fa(
             v-if='canShorten(columnKey, value)',
             @click='() => toggleExpandColumn(columnKey)',
@@ -1421,26 +1451,25 @@ if (request) {
               size="small",
             ) {{ totalTitle(rowCount ?? allRows.length) }}
           template(v-else-if="totalRow")
-            Info(
-              v-if="subcolumnKey && comparisonColumns && comparisonColumns[subcolumnKey].format === 'difference'",
-              :mood="differenceMood(totalRow[columnKey][subcolumnKey], columnKey)",
-              contrast,
-              size="small",
-            ) {{ formatTotalComparisonValue(columnKey, subcolumnKey, comparisonColumns[subcolumnKey].format) }}
             CellHint(
-              v-else-if="totalRow && totalRow[columnKey] >= 0.01 && columnKey in columnDetails",
+              v-if="totalRow && totalRow[columnKey] >= 0.01 && columnKey in columnDetails",
               :format="columnDetails[columnKey].format",
               :label="shortenValue(formatValue(totalRow[columnKey], columns[columnKey].type, comparisonColumns && subcolumnKey ? comparisonColumns[subcolumnKey].format : undefined), columnKey)",
               :title="columnDetails[columnKey].title",
               :url="getColumnDetailsTotalUrl(columnDetails[columnKey])",
             )
             Info(
-              v-else-if="columnKey !== 'trend'",
+              v-else-if="subcolumnKey",
+              :mood="differenceMood(totalRow[columnKey][subcolumnKey], columnKey, subcolumnKey)",
               contrast,
               size="small",
-            )
-              template(v-if="subcolumnKey") {{ formatTotalComparisonValue(columnKey, subcolumnKey, comparisonColumns ? comparisonColumns[subcolumnKey].format : undefined) }}
-              template(v-else) {{ formatValue(totalRow[columnKey], columns[columnKey].type) }}
+            ) {{ getRowFormattedValue(totalRow[columnKey][subcolumnKey], columnKey, subcolumnKey) }}
+            Info(
+              v-else,
+              :mood="differenceMood(totalRow[columnKey], columnKey, subcolumnKey)",
+              contrast,
+              size="small",
+            ) {{ getRowFormattedValue(totalRow[columnKey], columnKey) }}
   .loading-overlay(:class="{ visible: loading }")
     Loader
 </template>
