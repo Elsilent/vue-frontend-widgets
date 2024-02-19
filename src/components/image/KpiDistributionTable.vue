@@ -3,8 +3,13 @@ import { computed, ref, toRefs, watch } from 'vue';
 import Align from '../container/Align.vue';
 import Badge from '../container/Badge.vue';
 import Info from '../label/Info.vue';
+import Link from '../interaction/Link.vue';
 import ProgressBar from './ProgressBar.vue';
-import type { Mood } from '../../utils/enum/mood';
+import type { Mood } from '@/utils/enum/mood';
+import type {
+  DistributionRow,
+  DistributionRows,
+} from '@/utils/type/component/image/kpiDistributionTable';
 import format from '../../utils/format';
 
 const props = defineProps<{
@@ -18,7 +23,7 @@ const props = defineProps<{
       mood: Mood;
     }
   >;
-  rows: Record<string, Record<string, number>>;
+  rows: DistributionRows;
 }>();
 
 const { metrics, rows } = toRefs(props);
@@ -39,7 +44,7 @@ const getMetricDistribution = (zeroed = false) => {
       }
 
       if (!zeroed) {
-        metricSums[metric] += value;
+        metricSums[metric] += +value;
       }
     }
   }
@@ -54,11 +59,11 @@ const getMetricDistribution = (zeroed = false) => {
 
         return metricDistribution;
       },
-      {} as Record<string, number>,
+      {} as DistributionRow,
     );
 
     return distribution;
-  }, {} as Record<string, Record<string, number>>);
+  }, {} as DistributionRows);
 };
 
 const metricDistribution = ref(getMetricDistribution(true));
@@ -75,17 +80,19 @@ watch(rows, () => {
   metricDistribution.value = getMetricDistribution();
 });
 
-const metricsAlignment = computed(() => Object.values(metrics.value)
-  .map((metric) => {
-    switch (metric.align) {
-      case 'left':
-        return 'min-content 1fr';
-      case 'center':
-      default:
-        return 'max-content 1fr';
-    }
-  })
-  .join(' '));
+const metricsAlignment = computed(() =>
+  Object.values(metrics.value)
+    .map((metric) => {
+      switch (metric.align) {
+        case 'left':
+          return 'min-content 1fr';
+        case 'center':
+        default:
+          return 'max-content 1fr';
+      }
+    })
+    .join(' '),
+);
 
 const style = computed(() => ({
   '--alignment': `max-content ${metricsAlignment.value}`,
@@ -110,8 +117,8 @@ const style = computed(() => ({
       Info {{ metric.label }} (%)
   template(v-for='(row, dimension) in rows')
     Align.cell.row-first(vertical='center')
-      slot(name='cell(dimension)', :value='dimension')
-        Info {{ dimension }}
+      slot(name='cell(dimension)', :value='{name: dimension, link: row.link}')
+        Link(:to="row.link") {{ dimension }}
     template(v-for='(metric, metricCode) in metrics')
       Align.cell(
         :horizontal="metric.align ?? 'center'",

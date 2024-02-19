@@ -591,9 +591,10 @@ const onColumnClick = (columnKey: string, subcolumnIndex?: number) => {
     return;
   }
 
-  if (dragColumnFromIndex.value !== undefined &&
-      dragModeEnabled.value &&
-      visibleColumnKeys.value[dragColumnFromIndex.value] === columnKey
+  if (
+    dragColumnFromIndex.value !== undefined &&
+    dragModeEnabled.value &&
+    visibleColumnKeys.value[dragColumnFromIndex.value] === columnKey
   ) {
     return;
   }
@@ -1050,7 +1051,7 @@ defineSlots<{
                 box-shadow,
                 border-table,
                 $value-prefix: 0 0 0 1px,
-                $value-postfix: 0 0.25 0.5rem rgba(black, 0.25),
+                $value-postfix: 0 0.25 0.5rem rgba(black, 0.25)
               );
 
               transition: background-color 0.3s, box-shadow 0.3s;

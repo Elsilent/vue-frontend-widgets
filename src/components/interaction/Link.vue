@@ -3,16 +3,20 @@ import { toRefs } from 'vue';
 import { RouterLink, type RouteLocationRaw } from 'vue-router';
 import Info from '../label/Info.vue';
 
-const props = defineProps<{
+export interface Props {
   to: RouteLocationRaw | URL;
-}>();
+  isExternal?: boolean;
+}
 
+const props = withDefaults(defineProps<Props>(), {
+  isExternal: false,
+});
 const { to } = toRefs(props);
 </script>
 
 <template lang="pug">
 RouterLink.link(
-  v-if="typeof to === 'string' || 'name' in to",
+  v-if="!props.isExternal && (typeof to === 'string' || 'name' in to)",
   :to='to',
 )
   Info(mood='important-alt')
@@ -20,6 +24,7 @@ RouterLink.link(
 a.link(
   v-else,
   :href='to.toString()',
+  :target="props.isExternal ? '_blank' : '_self'"
 )
   Info(mood='important-alt')
     slot(default)
