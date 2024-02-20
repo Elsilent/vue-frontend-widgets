@@ -17,6 +17,10 @@ import type {
   GlobalRequestOptions,
   GlobalResponse,
 } from '../../utils/type/component/container/table';
+import {
+  mergeComparisonData,
+  mergeComparisonRow,
+} from '../../utils/type/component/container/table';
 import CellHint from './CellHint.vue';
 import ColumnHint from './ColumnHint.vue';
 import DetailsSelector from './DetailsSelector.vue';
@@ -148,6 +152,13 @@ const props = withDefaults(
      * Provides the list of subcolumn info
      */
     comparisonColumns?: Record<string, ComparisonColumn>;
+    /**
+     * The Axios config or async function which to call to fetch the comparison rows.
+     *
+     * Don't use with static rows being provided or
+     * if original request already provides comparison data
+     */
+    comparisonRequest?: Record<string, GlobalRequestInfo>;
     /**
      * Default ordering. Example: [name, false]
      * will order by name in ascending direction
@@ -281,6 +292,7 @@ const {
   columnDetails,
   columnLinks,
   comparisonColumns,
+  comparisonRequest,
   defaultOrderBy,
   detailsColumn,
   detailsRequests,
@@ -1108,15 +1120,40 @@ const setRowsFromRequest = async (
     return true;
   }
 
-  const response = await getGlobalRowsFromRequestInfo(request.value, {
-    inlineFilters: inlineFilters.value,
-    pageNumber: pageNumber,
-    pageSize: pageSize,
-    orderBy: orderBy[0],
-    reversed: orderBy[1],
-  });
+  const [response, comparisonResponse] = await (async () => {
+    const requestPromises = [getGlobalRowsFromRequestInfo(request!.value!, {
+      inlineFilters: inlineFilters.value,
+      pageNumber: pageNumber,
+      pageSize: pageSize,
+      orderBy: orderBy[0],
+      reversed: orderBy[1],
+    })];
 
-  allRows.value = Object.values(response.rows);
+    if (comparisonRequest?.value) {
+      requestPromises.push(getGlobalRowsFromRequestInfo(comparisonRequest.value, {
+        inlineFilters: inlineFilters.value,
+        pageNumber: pageNumber,
+        pageSize: pageSize,
+        orderBy: orderBy[0],
+        reversed: orderBy[1],
+      }));
+    }
+
+    const responses = await Promise.all(requestPromises);
+
+    if (responses.length > 1 && responses.some((response) => response.paginated === true)) {
+      throw new Error('Paginated fetching is not supported for separate comparison requests.');
+    }
+
+    return responses;
+  })();
+
+  allRows.value = Object.values(comparisonResponse ? mergeComparisonData(
+    response.rows,
+    comparisonResponse.rows,
+    columns.value,
+    primaryColumn.value,
+  ) : response.rows);
   fetchedAllRows.value = response.paginated !== true;
   rowCount.value = response.rowCount;
 
@@ -1127,7 +1164,11 @@ const setRowsFromRequest = async (
   }
 
   if (response.total) {
-    totalRow.value = response.total;
+    totalRow.value = comparisonResponse ? mergeComparisonRow(
+      response.total,
+      comparisonResponse.total,
+      columns.value,
+    ) : response.total;
   }
 
   return true;

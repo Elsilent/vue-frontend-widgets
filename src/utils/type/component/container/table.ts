@@ -91,3 +91,55 @@ export interface GlobalResponse {
   rows: Record<string, Record<string, any>> | Record<string, any>[];
   total: Record<string, any>;
 }
+
+export function mergeComparisonRow(
+    originalRow: Record<string, any>,
+    comparisonRow: Record<string, any> | undefined,
+    columns: Record<string, Column>,
+) {
+    const mergedRow: Record<string, any> = {};
+
+    for (const [columnKey, originalValue] of Object.entries(originalRow)) {
+        if (!(columnKey in columns)) {
+            continue;
+        }
+
+        if ((columns[columnKey].colspan ?? 0) > 1) {
+            const comparisonValue = comparisonRow
+                ? comparisonRow[columnKey]
+                : undefined;
+
+            mergedRow[columnKey] = {
+                original: originalValue,
+                comparison: comparisonValue ?? 0,
+                difference: comparisonValue === undefined
+                    ? 100
+                    : ((originalValue - comparisonValue) / originalValue) * 100,
+            };
+        } else {
+            mergedRow[columnKey] = originalValue;
+        }
+    }
+
+    return mergedRow;
+}
+
+export function mergeComparisonData(
+    original: Record<string, Record<string, any>> | Record<string, any>[],
+    comparison: Record<string, Record<string, any>> | Record<string, any>[],
+    columns: Record<string, Column>,
+    primaryColumn: string,
+) {
+    const mergedData: Record<string, Record<string, any>> = {};
+
+    for (const originalRow of Object.values(original)) {
+        const primaryValue = originalRow[primaryColumn];
+
+        const comparisonRow = Object.values(comparison)
+            .find((comparisonRow) => comparisonRow[primaryColumn] === primaryValue);
+
+        mergedData[primaryValue] = mergeComparisonRow(originalRow, comparisonRow, columns);
+    }
+
+    return mergedData;
+}
