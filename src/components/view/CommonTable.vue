@@ -1278,11 +1278,11 @@ const updateOrderBy = async (
   // Always set to first page when changing ordering
   pageNumber.value = 0;
 
+  orderBy.value = newOrderBy;
+
   if (fetchRows) {
     await setRows(undefined, undefined, newOrderBy);
   }
-
-  orderBy.value = newOrderBy;
 
   if (save) {
     localStorage.setItem(getOrderByKey(), JSON.stringify(newOrderBy));
