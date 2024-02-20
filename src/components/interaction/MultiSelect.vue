@@ -21,7 +21,7 @@ const props = withDefaults(
   },
 );
 
-const { disabled, items, modelValue } = toRefs(props);
+const { disabled, items, modelValue, showAllItemsItem } = toRefs(props);
 
 const active = ref(false);
 
@@ -68,10 +68,18 @@ const selectedItems = computed(() => {
   return [...modelValue.value].sort(sort);
 });
 
-const style = computed(() => ({
-  '--item-count': Object.keys(dropdownItems.value).length,
-  '--selection-offset': selectionOffset.value,
-}));
+const style = computed(() => {
+  let itemCount = Object.keys(dropdownItems.value).length;
+
+  if (showAllItemsItem.value) {
+    itemCount++;
+  }
+
+  return {
+    '--item-count': itemCount,
+    '--selection-offset': selectionOffset.value,
+  };
+});
 
 const emit = defineEmits<{
   (event: 'update:modelValue', value: (string | number | symbol)[]): void;
