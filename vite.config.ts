@@ -27,6 +27,7 @@ const entries = [
   'utils/sort',
   'utils/table',
   'utils/theme',
+  'utils/kpi_distribution_table',
 ];
 
 // https://vitejs.dev/config/
@@ -53,7 +54,7 @@ export default defineConfig({
       },
     },
     rollupOptions: {
-      external: ['numeral', 'vue'],
+      external: ['numeral', 'vue', 'vue-router'],
       output: {
         globals: {
           vue: 'Vue',

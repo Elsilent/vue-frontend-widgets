@@ -1302,15 +1302,15 @@ watch(columns, () => {
 });
 
 if (request) {
-    watch(
-      request,
-      () => {
-        fetchedAllRows.value = false;
-        // Reload the table on the request change
-        setPageNumber(0);
-      },
-      { deep: true },
-    );
+  watch(
+    request,
+    () => {
+      fetchedAllRows.value = false;
+      // Reload the table on the request change
+      setPageNumber(0);
+    },
+    { deep: true },
+  );
 }
 </script>
 

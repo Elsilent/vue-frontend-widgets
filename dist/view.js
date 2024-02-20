@@ -1,13 +1,13 @@
 import { defineComponent as ge, toRefs as we, ref as A, openBlock as O, createElementBlock as B, normalizeClass as H, createElementVNode as J, withModifiers as Me, toDisplayString as N, unref as _, createVNode as T, withCtx as S, createCommentVNode as V, Fragment as X, renderList as ke, createBlock as I, pushScopeId as on, popScopeId as an, computed as U, watch as Ze, nextTick as Ke, Teleport as ln, normalizeStyle as un, renderSlot as _t, onUnmounted as pr, createTextVNode as L, onMounted as vr, createSlots as mr, normalizeProps as hr, guardReactiveProps as br } from "vue";
 import be from "numeral";
-import { L as Rt, a as gr } from "./LineBarChart-96b2a178.js";
+import { L as Rt, a as gr } from "./LineBarChart-8bc1f7a1.js";
 import { P as Tt } from "./Popover-38d3223e.js";
 import { _ as ye } from "./_plugin-vue_export-helper-dad06003.js";
 import { C as cn, A as ee, I as Ue } from "./Icon-8f2ed8ba.js";
 import { I as j } from "./Info-54758b60.js";
 import { D as dn, I as fn, B as Jt } from "./Input-8e3a6104.js";
 import { Separator as wr } from "./marker.js";
-import { T as yr, S as mt } from "./Table-b9985d3a.js";
+import { T as yr, S as mt } from "./Table-fa18db72.js";
 import { H as $e } from "./Header-8b49a8fe.js";
 import "./utils/error.js";
 import "./match-b8889c93.js";
@@ -2648,7 +2648,7 @@ const co = /* @__PURE__ */ ye(uo, [["__scopeId", "data-v-b4f986aa"]]), fo = { cl
     ]));
   }
 });
-const Io = /* @__PURE__ */ ye(go, [["__scopeId", "data-v-10136179"]]), wo = ["onClick"], yo = ["onClick"], _o = { class: "items" }, So = /* @__PURE__ */ ge({
+const Io = /* @__PURE__ */ ye(go, [["__scopeId", "data-v-f27978de"]]), wo = ["onClick"], yo = ["onClick"], _o = { class: "items" }, So = /* @__PURE__ */ ge({
   __name: "KpiSelector",
   props: {
     applyLabel: {},
@@ -2667,11 +2667,17 @@ const Io = /* @__PURE__ */ ye(go, [["__scopeId", "data-v-10136179"]]), wo = ["on
   emits: ["update:modelValue"],
   setup(e, { emit: t }) {
     const n = e, { columns: r, defaultValue: s, groupNames: o, modelValue: a, showModalLabel: d } = we(n), m = A(Object.keys(o.value)[0]), p = A([...a.value]), c = A([]), w = A([]), P = A(""), y = A(void 0), v = A({ left: 0, top: 0 }), b = A({ left: 0, top: 0 }), g = A({ left: 0, top: 0 }), E = A(void 0), D = A(void 0), Q = A(void 0), Z = A(void 0), _e = U(() => Object.fromEntries(
-      Object.entries(r.value).filter(([x, R]) => R.fixed !== !0 && (P.value.trim() === "" || R.label.toLowerCase().includes(P.value.trim().toLowerCase())))
+      Object.entries(r.value).filter(
+        ([x, R]) => R.fixed !== !0 && (P.value.trim() === "" || R.label.toLowerCase().includes(P.value.trim().toLowerCase()))
+      )
     )), W = U(() => Object.keys(o.value).reduce((x, R) => (x[R] = Object.fromEntries(
       Object.entries(_e.value).filter(([k, G]) => G.group === R)
-    ), x), {})), ie = U(() => m.value === void 0 ? void 0 : W.value[m.value]), Y = U(() => Object.fromEntries(
-      Object.entries(o.value).filter(([x, R]) => Object.values(_e.value).some((k) => k.group === x))
+    ), x), {})), ie = U(
+      () => m.value === void 0 ? void 0 : W.value[m.value]
+    ), Y = U(() => Object.fromEntries(
+      Object.entries(o.value).filter(
+        ([x, R]) => Object.values(_e.value).some((k) => k.group === x)
+      )
     )), ue = U(() => {
       if (!(D.value === void 0 || Q.value === void 0 || Z.value === void 0))
         return D.value + Z.value - Q.value - g.value.top;
@@ -3003,7 +3009,7 @@ const Io = /* @__PURE__ */ ye(go, [["__scopeId", "data-v-10136179"]]), wo = ["on
     ], 64));
   }
 });
-const zo = /* @__PURE__ */ ye(So, [["__scopeId", "data-v-aaf5fd34"]]);
+const zo = /* @__PURE__ */ ye(So, [["__scopeId", "data-v-c28be373"]]);
 export {
   Io as CommonTable,
   zo as KpiSelector
