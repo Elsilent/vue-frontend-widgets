@@ -40,8 +40,7 @@ const hideMenu = (event?: MouseEvent) => {
     return;
   }
 
-  console.log('hi');
-
+  currencySelector.value?.$el.querySelector('.button').blur();
   menuVisible.value = false;
 
   window.removeEventListener('mousedown', hideMenu);

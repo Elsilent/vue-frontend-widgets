@@ -41,7 +41,7 @@ const hideMenu = (event?: MouseEvent) => {
   }
 
   menuVisible.value = false;
-
+  localeSelector.value?.$el.querySelector('.button').blur();
   window.removeEventListener('mousedown', hideMenu);
 };
 

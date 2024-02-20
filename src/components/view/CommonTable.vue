@@ -472,10 +472,10 @@ const differenceMood = (
   subcolumnKey?: string,
 ): Mood | undefined => {
   if (
-    !subcolumnKey
-      || !comparisonColumns?.value
-      || !(subcolumnKey in comparisonColumns.value)
-      || comparisonColumns.value[subcolumnKey].format !== 'difference'
+    !subcolumnKey ||
+    !comparisonColumns?.value ||
+    !(subcolumnKey in comparisonColumns.value) ||
+    comparisonColumns.value[subcolumnKey].format !== 'difference'
   ) {
     return undefined;
   }
@@ -754,9 +754,7 @@ const getRowFormattedValue = (
   let formattedValue = formatValue(value, columnType);
 
   if (format === 'difference') {
-    formattedValue = value > 0
-      ? `+${formattedValue}`
-      : formattedValue;
+    formattedValue = value > 0 ? `+${formattedValue}` : formattedValue;
   }
 
   if (shorten) {
@@ -1331,7 +1329,6 @@ if (request) {
   )
     .action-buttons(:class="{ active: displayActionButtons }")
       button.btn.btn-small.btn-success(
-        v-if="showInlineFilters",
         @click="() => toggleInlineFilters()",
       )
         .las(:class="displayInlineFilters ? 'la-trash' : 'la-filter'")

@@ -262,6 +262,7 @@ Button(
     @click="() => show()",
     :label="showModalLabel",
     mood="neutral",
+    tabindex="-1"
 )
 Teleport(to="#app > .app-container")
     Align.kpi-selector-container.no-spacing(
