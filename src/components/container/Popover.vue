@@ -146,6 +146,6 @@ export default {
   flex-direction: column;
   min-width: 15rem;
   position: absolute;
-  z-index: 2;
+  z-index: 35;
 }
 </style>
