@@ -71,12 +71,13 @@ template(v-for='(item, code) in items')
   )
   MenuItem(
     v-else,
-    @click='() => router.push(item.route)',
+    @click.prevent='() => router.push(item.route)',
     :active='`${prefix}${code}` === activeMenuItemCode',
     :icon='item.icon',
     :iconBackend='item.iconBackend',
     :label='translator(item.label)',
     :level='nextItemLevel',
+    :link="router.resolve({ name: item.route.name }).href"
   )
 </template>
 

@@ -5,7 +5,7 @@ import { P as Tt } from "./Popover-38d3223e.js";
 import { _ as ye } from "./_plugin-vue_export-helper-dad06003.js";
 import { C as cn, A as ee, I as Ue } from "./Icon-8f2ed8ba.js";
 import { I as j } from "./Info-54758b60.js";
-import { D as dn, I as fn, B as Jt } from "./Input-8e3a6104.js";
+import { D as dn, I as fn, B as Jt } from "./Input-b2f3286e.js";
 import { Separator as wr } from "./marker.js";
 import { T as yr, S as mt } from "./Table-fa18db72.js";
 import { H as $e } from "./Header-8b49a8fe.js";
@@ -1474,7 +1474,9 @@ function Ln(e, t, n) {
 function Us(e, t, n, r) {
   const s = {};
   for (const o of Object.values(e)) {
-    const a = o[r], d = Object.values(t).find((m) => m[r] === a);
+    const a = o[r], d = Object.values(t).find(
+      (m) => m[r] === a
+    );
     s[a] = Ln(o, d, n);
   }
   return s;
@@ -2259,35 +2261,37 @@ const co = /* @__PURE__ */ ye(uo, [["__scopeId", "data-v-b4f986aa"]]), fo = { cl
       if (Re.value)
         return !0;
       const [h, C] = await (async () => {
-        const $ = [s(Y.value, {
-          inlineFilters: K.value,
-          pageNumber: l,
-          pageSize: u,
-          orderBy: i[0],
-          reversed: i[1]
-        })];
-        v != null && v.value && $.push(s(v.value, {
-          inlineFilters: K.value,
-          pageNumber: l,
-          pageSize: u,
-          orderBy: i[0],
-          reversed: i[1]
-        }));
+        const $ = [
+          s(Y.value, {
+            inlineFilters: K.value,
+            pageNumber: l,
+            pageSize: u,
+            orderBy: i[0],
+            reversed: i[1]
+          })
+        ];
+        v != null && v.value && $.push(
+          s(v.value, {
+            inlineFilters: K.value,
+            pageNumber: l,
+            pageSize: u,
+            orderBy: i[0],
+            reversed: i[1]
+          })
+        );
         const z = await Promise.all($);
         if (z.length > 1 && z.some((ze) => ze.paginated === !0))
           throw new Error("Paginated fetching is not supported for separate comparison requests.");
         return z;
       })();
-      return Ee.value = Object.values(C ? Us(
-        h.rows,
-        C.rows,
-        c.value,
-        W.value
-      ) : h.rows), Re.value = h.paginated !== !0, Je.value = h.rowCount, h.detailedRows ? x.value = h.detailedRows : x.value = {}, h.total && (se.value = C ? Ln(
-        h.total,
-        C.total,
-        c.value
-      ) : h.total), !0;
+      return Ee.value = Object.values(
+        C ? Us(
+          h.rows,
+          C.rows,
+          c.value,
+          W.value
+        ) : h.rows
+      ), Re.value = h.paginated !== !0, Je.value = h.rowCount, h.detailedRows ? x.value = h.detailedRows : x.value = {}, h.total && (se.value = C ? Ln(h.total, C.total, c.value) : h.total), !0;
     }, ur = () => {
       if (!(ue != null && ue.value))
         return !1;
@@ -2312,7 +2316,7 @@ const co = /* @__PURE__ */ ye(uo, [["__scopeId", "data-v-b4f986aa"]]), fo = { cl
     }, fr = () => {
       k.value = !k.value, k.value && (K.value = Be());
     }, Ae = async (l, u = !0, i = !0) => {
-      me.value = 0, i && await pt(void 0, void 0, l), oe.value = l, u && localStorage.setItem(jt(), JSON.stringify(l));
+      me.value = 0, oe.value = l, i && await pt(void 0, void 0, l), u && localStorage.setItem(jt(), JSON.stringify(l));
     };
     return vr(() => {
       xe.value = Object.keys(c.value), se.value = Oe == null ? void 0 : Oe.value, Promise.all([qt(!1), Vt()]).then(() => or(!0));
@@ -2648,7 +2652,7 @@ const co = /* @__PURE__ */ ye(uo, [["__scopeId", "data-v-b4f986aa"]]), fo = { cl
     ]));
   }
 });
-const Io = /* @__PURE__ */ ye(go, [["__scopeId", "data-v-f27978de"]]), wo = ["onClick"], yo = ["onClick"], _o = { class: "items" }, So = /* @__PURE__ */ ge({
+const Io = /* @__PURE__ */ ye(go, [["__scopeId", "data-v-97bc8d5a"]]), wo = ["onClick"], yo = ["onClick"], _o = { class: "items" }, So = /* @__PURE__ */ ge({
   __name: "KpiSelector",
   props: {
     applyLabel: {},
@@ -2730,7 +2734,8 @@ const Io = /* @__PURE__ */ ye(go, [["__scopeId", "data-v-f27978de"]]), wo = ["on
       T(Jt, {
         onClick: R[0] || (R[0] = () => Ee()),
         label: _(d),
-        mood: "neutral"
+        mood: "neutral",
+        tabindex: "-1"
       }, null, 8, ["label"]),
       (O(), I(ln, { to: "#app > .app-container" }, [
         T(ee, {
@@ -3009,7 +3014,7 @@ const Io = /* @__PURE__ */ ye(go, [["__scopeId", "data-v-f27978de"]]), wo = ["on
     ], 64));
   }
 });
-const zo = /* @__PURE__ */ ye(So, [["__scopeId", "data-v-c28be373"]]);
+const zo = /* @__PURE__ */ ye(So, [["__scopeId", "data-v-2f0f8a78"]]);
 export {
   Io as CommonTable,
   zo as KpiSelector
