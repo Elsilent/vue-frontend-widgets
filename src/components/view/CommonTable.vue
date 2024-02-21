@@ -1119,22 +1119,26 @@ const setRowsFromRequest = async (
   }
 
   const [response, comparisonResponse] = await (async () => {
-    const requestPromises = [getGlobalRowsFromRequestInfo(request!.value!, {
-      inlineFilters: inlineFilters.value,
-      pageNumber: pageNumber,
-      pageSize: pageSize,
-      orderBy: orderBy[0],
-      reversed: orderBy[1],
-    })];
-
-    if (comparisonRequest?.value) {
-      requestPromises.push(getGlobalRowsFromRequestInfo(comparisonRequest.value, {
+    const requestPromises = [
+      getGlobalRowsFromRequestInfo(request!.value!, {
         inlineFilters: inlineFilters.value,
         pageNumber: pageNumber,
         pageSize: pageSize,
         orderBy: orderBy[0],
         reversed: orderBy[1],
-      }));
+      }),
+    ];
+
+    if (comparisonRequest?.value) {
+      requestPromises.push(
+        getGlobalRowsFromRequestInfo(comparisonRequest.value, {
+          inlineFilters: inlineFilters.value,
+          pageNumber: pageNumber,
+          pageSize: pageSize,
+          orderBy: orderBy[0],
+          reversed: orderBy[1],
+        }),
+      );
     }
 
     const responses = await Promise.all(requestPromises);
@@ -1146,12 +1150,16 @@ const setRowsFromRequest = async (
     return responses;
   })();
 
-  allRows.value = Object.values(comparisonResponse ? mergeComparisonData(
-    response.rows,
-    comparisonResponse.rows,
-    columns.value,
-    primaryColumn.value,
-  ) : response.rows);
+  allRows.value = Object.values(
+    comparisonResponse
+      ? mergeComparisonData(
+          response.rows,
+          comparisonResponse.rows,
+          columns.value,
+          primaryColumn.value,
+        )
+      : response.rows,
+  );
   fetchedAllRows.value = response.paginated !== true;
   rowCount.value = response.rowCount;
 
@@ -1162,11 +1170,9 @@ const setRowsFromRequest = async (
   }
 
   if (response.total) {
-    totalRow.value = comparisonResponse ? mergeComparisonRow(
-      response.total,
-      comparisonResponse.total,
-      columns.value,
-    ) : response.total;
+    totalRow.value = comparisonResponse
+      ? mergeComparisonRow(response.total, comparisonResponse.total, columns.value)
+      : response.total;
   }
 
   return true;
@@ -1329,6 +1335,7 @@ if (request) {
   )
     .action-buttons(:class="{ active: displayActionButtons }")
       button.btn.btn-small.btn-success(
+        v-if="showInlineFilters",
         @click="() => toggleInlineFilters()",
       )
         .las(:class="displayInlineFilters ? 'la-trash' : 'la-filter'")
