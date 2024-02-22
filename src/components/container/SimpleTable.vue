@@ -530,6 +530,15 @@ export default {
           return value;
       }
     },
+    getSortValue(value, type) {
+      let sortValue = this.getRawValue(value, type);
+
+      if (typeof sortValue === 'string' || sortValue instanceof String) {
+        sortValue = sortValue.toLowerCase();
+      }
+
+      return sortValue;
+    },
     /**
      * Retrieves row number cell contents
      */
@@ -707,14 +716,14 @@ export default {
         }))
         .sort((leftRow, rightRow) => {
           const comparison = (() => {
-            const leftValue = this.getRawValue(
+            const leftValue = this.getSortValue(
               this.orderBy[0].reduce(
                 (value, key) => value[key],
                 leftRow,
               ),
               this.orderColumnType,
             );
-            const rightValue = this.getRawValue(
+            const rightValue = this.getSortValue(
               this.orderBy[0].reduce(
                 (value, key) => value[key],
                 rightRow,
