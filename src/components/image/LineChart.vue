@@ -101,9 +101,11 @@
         :class="{ visible: hovers.includes(index - 1) }",
         :style="{ left: `${getPointLeftPosition(index - 1)}%` }",
       )
+        //- translateX is calculated by special formula, depending on angle,
+            to place whole labels, but only under the x-axis
         .x-axis-label-group(
           ref="xAxisLabelGroup",
-          :style="{ transform: `rotate(-${xAxisLabelRotate}deg) translateX(-${xAxisLabelRotate * 50 / 90}%)` }",
+          :style="{ transform: `rotate(-${xAxisLabelRotate}deg) translateX(-${ Math.trunc(8.3 * Math.pow(xAxisLabelRotate, 0.4)) }%)` }",
         )
           slot(name="xAxis", :valueKey="index - 1")
             template(v-for="lineIndex in lineCount")
