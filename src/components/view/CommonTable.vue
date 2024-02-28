@@ -1094,9 +1094,11 @@ const setOrderByFromLocalStorage = async (fetchRows: boolean) => {
   const orderBy = localStorage.getItem(getOrderByKey());
 
   if (orderBy) {
-    await updateOrderBy(JSON.parse(orderBy), false, fetchRows);
-
-    return true;
+    const orderColumn = JSON.parse(orderBy)[0][0];
+    if (columns.value[orderColumn]) {
+      await updateOrderBy(JSON.parse(orderBy), false, fetchRows);
+      return true;
+    }
   } else {
     return false;
   }
@@ -1302,7 +1304,12 @@ onMounted(() => {
 });
 
 watch(columns, () => {
+  currentColumnKeys.value = Object.keys(columns.value);
   inlineFilters.value = makeInlineFilters();
+});
+
+watch(defaultOrderBy, () => {
+  setOrderByFromDefault(true);
 });
 
 if (request) {
