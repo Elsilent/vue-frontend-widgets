@@ -514,7 +514,6 @@ Teleport(to="#app > .app-container")
         margin-left: $padding-size-small-2;
         margin-right: $padding-size-small-2;
         padding: $padding-size-small-2 $padding-size-large;
-        overflow: hidden;
         position: relative;
 
         &::before {
