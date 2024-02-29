@@ -7,7 +7,7 @@ import { C as cn, A as ee, I as Ue } from "./Icon-8f2ed8ba.js";
 import { I as j } from "./Info-54758b60.js";
 import { D as dn, I as fn, B as Jt } from "./Input-b2f3286e.js";
 import { Separator as wr } from "./marker.js";
-import { T as yr, S as ht } from "./Table-fa18db72.js";
+import { T as yr, S as ht } from "./Table-f27f25ec.js";
 import { H as $e } from "./Header-8b49a8fe.js";
 import "./utils/error.js";
 import "./match-b8889c93.js";

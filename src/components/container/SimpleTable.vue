@@ -292,7 +292,7 @@ const orderedRowValues = computed<Record<string, any>[]>(
                 ...detailRow,
                 rowInfo: {
                   index,
-                  subindex,
+                  subindex: +subindex,
                   detailable: false,
                 },
               }),
