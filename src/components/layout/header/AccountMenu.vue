@@ -61,7 +61,8 @@ Align.account-menu(ref='accountMenu')
   Avatar(
     @click='showMenu()',
     @focus='showMenu()',
-    @blur='hideMenu()',
+    @keydown.shift.tab='hideMenu()',
+    @keydown.tab='hideMenu()',
     :icon='avatarIcon',
     :iconBackend='avatarIconBackend',
     :label='avatarLabel',

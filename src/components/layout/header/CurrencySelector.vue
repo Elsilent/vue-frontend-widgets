@@ -71,7 +71,8 @@ Align.currency-selector(
   Button.currency-button(
     @click='showMenu()',
     @focus='showMenu()',
-    @blur='hideMenu()',
+    @keydown.shift.tab='hideMenu()',
+    @keydown.tab='hideMenu()',
     :label="currentCurrency?.symbol",
     mood='neutral',
     outline,

@@ -21,6 +21,7 @@ const { selectedItem, onKeypressDown, onKeypressUp, clearSelectedItem } = useUpD
 });
 
 const whenClicked = (code: string) => {
+  clearSelectedItem();
   emit('select', code);
 };
 
@@ -69,6 +70,7 @@ Popover(
   .popover-item(
     v-for='({ icon, iconBackend, label }, code, index) in items',
     @click="whenClicked(code)",
+    @mouseover="selectedItem = index",
     :class="{selected: selectedItem === index}"
   )
     Icon(v-if='icon', :backend='iconBackend', :value='icon')
@@ -91,7 +93,6 @@ Popover(
     transition-duration: $transition-duration-fast-2;
     transition-property: background-color;
 
-    &:hover,
     &.selected {
       @include apply-color(background-color, background-normal);
     }
