@@ -40,8 +40,6 @@ const hideMenu = (event?: MouseEvent) => {
     return;
   }
 
-  console.log('hi');
-
   menuVisible.value = false;
 
   window.removeEventListener('mousedown', hideMenu);
