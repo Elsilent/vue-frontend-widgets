@@ -17,6 +17,7 @@ $padding-size-small-2: $padding-size-normal * 0.65;
 $padding-size-small-3: $padding-size-normal * 0.25;
 $padding-size-small-4: math.div($padding-size-normal, 7);
 $side-menu-width: 260px;
+$side-menu-width-collapsed: 60px;
 
 @mixin spacing($rule, $direction, $amount, $property: margin, $additional-properties: ()) {
   &+#{$rule} {

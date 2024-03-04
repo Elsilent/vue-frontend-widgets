@@ -10,9 +10,10 @@ import match from '../../../utils/match';
 const props = withDefaults(
   defineProps<{
     active?: boolean;
+    fullWidth: boolean;
     icon?: string;
     iconBackend?: IconBackend;
-    label: string;
+    label?: string;
     level?: number;
     withSublevel?: boolean;
   }>(),
@@ -23,7 +24,7 @@ const props = withDefaults(
   },
 );
 
-const { active, icon, iconBackend, label, level, withSublevel } = toRefs(props);
+const { active, fullWidth, icon, iconBackend, label, level, withSublevel } = toRefs(props);
 
 const itemIconSize = computed(
   () =>
@@ -49,6 +50,7 @@ const itemLabelSize = computed(
 
 const classes = computed(() => ({
   active: active.value,
+  'full-width': fullWidth.value,
   [`level-${level.value}`]: true,
   'with-sublevel': withSublevel.value,
 }));
@@ -64,11 +66,12 @@ const classes = computed(() => ({
     :value='icon',
   )
   Info(
+    v-if='fullWidth && label',
     :elevation='itemElevation',
     :size='itemLabelSize',
   ) {{ label }}
   Icon.chevron(
-    v-if='withSublevel',
+    v-if='fullWidth && withSublevel',
     :elevation='itemElevation',
     size='large-3',
     value='chevron-right',
@@ -88,18 +91,20 @@ const classes = computed(() => ({
   &.active {
     @include apply-color(background-color, background-menu-lowered);
 
-    > .item-icon,
-    > .info {
-      transform: translateX($padding-size-menu-small-2);
-    }
+    &.full-width {
+      > .item-icon,
+      > .info {
+        transform: translateX($padding-size-menu-small-2 * 2);
+      }
 
-    > .chevron {
-      transform: rotateZ(90deg);
+      > .chevron {
+        transform: rotateZ(90deg);
+      }
     }
   }
 
   &.level-1 {
-    padding: $padding-size-menu-large $padding-size-menu-large $padding-size-menu-large
+    padding: $padding-size-menu-large 0 $padding-size-menu-large
       $padding-size-menu-large;
     transition: background-color 0.2s, box-shadow 0.2s;
 
@@ -113,32 +118,43 @@ const classes = computed(() => ({
   }
 
   &.level-2 {
-    padding: $padding-size-menu-normal $padding-size-menu-large $padding-size-menu-normal
+    padding: $padding-size-menu-normal 0 $padding-size-menu-normal
       $padding-size-menu-large * 3.5;
   }
 
   &.level-3 {
-    padding: $padding-size-menu-normal $padding-size-menu-large $padding-size-menu-normal
+    padding: $padding-size-menu-normal 0 $padding-size-menu-normal
       $padding-size-menu-large * 4.5;
   }
 
   &:hover {
-    > .item-icon,
-    > .info {
-      transform: translateX($padding-size-menu-small-2);
+    &.full-width {
+      > .item-icon,
+      > .info {
+        transform: translateX($padding-size-menu-small-2 * 2);
+      }
     }
   }
 
-  > .item-icon {
+  > .chevron {
     margin-right: $padding-size-menu-large;
+  }
+
+  > .item-icon + .info {
+    margin-left: $padding-size-menu-large;
   }
 
   > .info {
     flex: 1;
+    margin-right: $padding-size-menu-large;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   > .icon,
   > .info {
+    transform: translateX($padding-size-menu-small-2);
     transition: transform 0.2s;
   }
 }
