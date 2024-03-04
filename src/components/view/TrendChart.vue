@@ -13,6 +13,7 @@
       :formatter='formatter',
       :moods="{ trend: trendMood, values: 'important'}",
       :values='{ trend: trendValues, values }',
+      :no-x-axis-labels="true",
     )
       template(#x-axis-label='{ index }') {{ valueKeys[index] }}
     LoaderLineScale(v-else)
