@@ -96,6 +96,7 @@
       :style="xAxisLabelsStyle",
     )
       .x-axis-label-group-container(
+        v-if="showInfo"
         v-for="index in totalValueCount",
         :key="`x-axis-label-group-${index}`",
         :class="{ visible: hovers.includes(index - 1) }",
@@ -495,6 +496,10 @@ export default {
     yAxisTitles: {
       type: Array,
       required: false,
+    },
+    showInfo: {
+      type: Boolean,
+      default: true,
     }
   },
   watch: {
