@@ -41,8 +41,6 @@ const classes = computed(() => ({
 .badge {
   @import '../../styles/size.scss';
 
-  @include apply-mood;
-
   border-radius: $border-radius-round;
   border-style: solid;
   border-width: 1px;
@@ -50,5 +48,30 @@ const classes = computed(() => ({
   padding: $padding-size-small-3 $padding-size-normal;
   transition-duration: $transition-duration-normal;
   transition-property: background-color, border-color;
+
+  &.mood-border-accent {
+    @include apply-color(border-color, background-accent);
+  }
+  &.mood-border-important {
+    @include apply-color(border-color, background-important);
+  }
+  &.mood-border-important-alt {
+    @include apply-color(border-color, background-important-alt);
+  }
+  &.mood-border-inactive {
+    @include apply-color(border-color, background-inactive);
+  }
+  &.mood-border-negative {
+    @include apply-color(border-color, background-negative);
+  }
+  &.mood-border-neutral {
+    @include apply-color(border-color, background-neutral);
+  }
+  &.mood-border-neutral-alt {
+    @include apply-color(border-color, background-neutral-alt);
+  }
+  &.mood-border-positive {
+    @include apply-color(border-color, background-positive);
+  }
 }
 </style>
