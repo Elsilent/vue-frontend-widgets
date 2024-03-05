@@ -199,7 +199,7 @@ $-themes: (
   $value-prefix: null,
   $value-postfix: null,
   $rule-postfix: '',
-  $opacity: null,
+  $opacity: null
 ) {
   @each $-theme, $-colors in $-themes {
     body > #app > .app-container.theme-#{$-theme} &#{$rule-postfix} {

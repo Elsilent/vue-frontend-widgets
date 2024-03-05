@@ -6,11 +6,13 @@
 @font-face {
   font-family: 'Magistral Book';
   src: url('https://db.onlinewebfonts.com/t/90ca58f744f7cb5ecf0d8d2ace2a6a86.eot');
-  src: url('https://db.onlinewebfonts.com/t/90ca58f744f7cb5ecf0d8d2ace2a6a86.eot?#iefix') format('embedded-opentype'),
-       url('https://db.onlinewebfonts.com/t/90ca58f744f7cb5ecf0d8d2ace2a6a86.woff2') format('woff2'),
-       url('https://db.onlinewebfonts.com/t/90ca58f744f7cb5ecf0d8d2ace2a6a86.woff') format('woff'),
-       url('https://db.onlinewebfonts.com/t/90ca58f744f7cb5ecf0d8d2ace2a6a86.ttf') format('truetype'),
-       url('https://db.onlinewebfonts.com/t/90ca58f744f7cb5ecf0d8d2ace2a6a86.svg#MagistralW01-Book') format('svg');
+  src: url('https://db.onlinewebfonts.com/t/90ca58f744f7cb5ecf0d8d2ace2a6a86.eot?#iefix')
+      format('embedded-opentype'),
+    url('https://db.onlinewebfonts.com/t/90ca58f744f7cb5ecf0d8d2ace2a6a86.woff2') format('woff2'),
+    url('https://db.onlinewebfonts.com/t/90ca58f744f7cb5ecf0d8d2ace2a6a86.woff') format('woff'),
+    url('https://db.onlinewebfonts.com/t/90ca58f744f7cb5ecf0d8d2ace2a6a86.ttf') format('truetype'),
+    url('https://db.onlinewebfonts.com/t/90ca58f744f7cb5ecf0d8d2ace2a6a86.svg#MagistralW01-Book')
+      format('svg');
 }
 
 $-font-family-fallback: Helvetica, Arial, sans-serif;

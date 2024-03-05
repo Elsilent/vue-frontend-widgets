@@ -1,6 +1,7 @@
 @use 'sass:math';
 
-$logo-size: 35px;
+$brand-text-size: 28px;
+$logo-size: 24px;
 $padding-size-menu-normal: 12px;
 $padding-size-menu-large: $padding-size-menu-normal * 1.25;
 $padding-size-menu-large-2: $padding-size-menu-normal * 3;
@@ -20,11 +21,10 @@ $side-menu-width: 260px;
 $side-menu-width-collapsed: 60px;
 
 @mixin spacing($rule, $direction, $amount, $property: margin, $additional-properties: ()) {
-  &+#{$rule} {
+  & + #{$rule} {
     #{$property}-#{$direction}: $amount;
 
-    @each $property-name,
-    $property-value in $additional-properties {
+    @each $property-name, $property-value in $additional-properties {
       #{$property-name}: $property-value;
     }
   }
@@ -46,22 +46,23 @@ $side-menu-width-collapsed: 60px;
   @include spacing-top($rule, 0, $property, $additional-properties);
 }
 
-@mixin reasonable-spacing($parent-rule,
+@mixin reasonable-spacing(
+  $parent-rule,
   $child-rule,
   $vertical-amount,
   $horizontal-amount: $vertical-amount,
   $property: margin,
-  $additional-properties: (),
+  $additional-properties: ()
 ) {
   #{$parent-rule} {
     @include spacing-top($child-rule, $vertical-amount, $property, $additional-properties);
 
-    .align:not(.column)>& {
+    .align:not(.column) > & {
       @include no-spacing-top($child-rule, $property, $additional-properties);
       @include spacing-left($child-rule, $horizontal-amount, $property, $additional-properties);
     }
 
-    .grid>& {
+    .grid > & {
       @include no-spacing-top($child-rule, $property, $additional-properties);
     }
   }
@@ -70,16 +71,32 @@ $side-menu-width-collapsed: 60px;
 @mixin default-spacing {
   @include reasonable-spacing('*', ':not(.no-spacing):not(.spacing-small)', $padding-size-normal);
   @include reasonable-spacing('*', ':not(.no-spacing).spacing-small', $padding-size-small);
-  @include reasonable-spacing('*', '.align:not(.no-spacing):not(.spacing-small)', $padding-size-large-2);
+  @include reasonable-spacing(
+    '*',
+    '.align:not(.no-spacing):not(.spacing-small)',
+    $padding-size-large-2
+  );
   @include reasonable-spacing('*', '.align:not(.no-spacing).spacing-small', $padding-size-large);
-  @include reasonable-spacing('*', '.grid:not(.no-spacing):not(.spacing-small)', $padding-size-large-2);
+  @include reasonable-spacing(
+    '*',
+    '.grid:not(.no-spacing):not(.spacing-small)',
+    $padding-size-large-2
+  );
   @include reasonable-spacing('*', '.card:not(.no-spacing)', $padding-size-large-2);
   @include reasonable-spacing('*', '.header:not(.no-spacing)', $padding-size-large-3);
   @include reasonable-spacing('*', '.info:not(.no-spacing)', $padding-size-large);
   @include reasonable-spacing('.dot', '.info:not(.no-spacing)', $padding-size-small-3);
   @include reasonable-spacing('.icon', '.info:not(.no-spacing)', $padding-size-small-3);
-  @include reasonable-spacing('.info:not(.spacing-regular)', ':not(.no-spacing)', $padding-size-small-2);
-  @include reasonable-spacing('.info:not(.spacing-regular)', '.align:not(.no-spacing)', $padding-size-small-2);
+  @include reasonable-spacing(
+    '.info:not(.spacing-regular)',
+    ':not(.no-spacing)',
+    $padding-size-small-2
+  );
+  @include reasonable-spacing(
+    '.info:not(.spacing-regular)',
+    '.align:not(.no-spacing)',
+    $padding-size-small-2
+  );
   @include reasonable-spacing('*', '.kpi-distrubution-table:not(.no-spacing)', $padding-size-large);
   @include reasonable-spacing('*', '.no-spacing', 0);
   @include reasonable-spacing('.grid > *', '.no-spacing', 0);
