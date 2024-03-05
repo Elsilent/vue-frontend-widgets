@@ -44,7 +44,7 @@ const whenClicked = (event: Event) => {
 </script>
 
 <template lang="pug">
-.button(
+button.button(
   @click='(event) => whenClicked(event)',
   :class='classes',
 )
@@ -112,7 +112,12 @@ const whenClicked = (event: Event) => {
   &:not(.disabled) {
     cursor: pointer;
 
-    &:active {
+    &:focus {
+      outline: none;
+    }
+
+    &:not(.outline):active,
+    &:not(.outline):focus {
       &.mood-border {
         &-accent {
           @include apply-color(background-color, background-active-accent);
@@ -151,7 +156,10 @@ const whenClicked = (event: Event) => {
       }
     }
 
-    &:hover:not(:active) {
+    &:hover:not(:active),
+    &.outline:hover,
+    &.outline:focus,
+    &.outline:active {
       &.mood-border {
         &-accent {
           @include apply-color(background-color, background-hover-accent);

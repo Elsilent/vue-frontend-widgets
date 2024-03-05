@@ -59,7 +59,10 @@ onUnmounted(() => {
 <template lang="pug">
 Align.account-menu(ref='accountMenu')
   Avatar(
-    @click='() => showMenu()',
+    @click='showMenu()',
+    @focus='showMenu()',
+    @keydown.shift.tab='hideMenu()',
+    @keydown.tab='hideMenu()',
     :icon='avatarIcon',
     :iconBackend='avatarIconBackend',
     :label='avatarLabel',

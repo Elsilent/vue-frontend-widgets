@@ -137,13 +137,14 @@ watch(textValue, (textValue) => {
 
 <template lang="pug">
 Align.date-range-picker(
-  @click='() => activate()',
+  @click='activate()',
   ref='dateRangePicker',
   tabindex='-1',
 )
   Input(
     ref='dateRangePickerInput',
     v-model='textValue',
+    @focus='activate()',
     @blur='(event) => whenBlurred(event)',
     :disabled='disabled',
   )
@@ -151,6 +152,7 @@ Align.date-range-picker(
     :disabled='disabled',
     icon='calendar',
     mood='inactive',
+    tabindex="-1",
   )
   Popover.date-range-picker-body.no-spacing(:visible='active')
     Align.sections

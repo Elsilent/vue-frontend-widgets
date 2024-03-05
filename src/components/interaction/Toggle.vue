@@ -6,6 +6,7 @@ const props = withDefaults(
   defineProps<{
     mood?: Mood;
     modelValue: boolean;
+    id: string;
   }>(),
   {
     mood: 'positive',
@@ -43,9 +44,17 @@ const whenClicked = () => {
 </script>
 
 <template lang="pug">
-.toggle(
-  @click="() => whenClicked()",
-  :class='toggleClasses',
+input(
+  type="checkbox"
+  :id="props.id"
+  :value="modelValue"
+  @change="whenClicked()"
+  @keyup.enter="whenClicked()"
+  class='toggle-input'
+)
+label.toggle(
+  :for="props.id"
+  :class='toggleClasses'
 )
 </template>
 
@@ -133,48 +142,49 @@ const whenClicked = () => {
         }
       }
     }
+  }
 
-    &:hover:not(:active) {
-      &.mood-border {
-        &-accent {
-          @include apply-color(background-color, background-hover-accent);
-          @include apply-color(border-color, border-hover-accent);
-        }
+  &:hover:not(:active, .disabled),
+  &-input:focus + .toggle {
+    &.mood-border {
+      &-accent {
+        @include apply-color(background-color, background-hover-accent);
+        @include apply-color(border-color, border-hover-accent);
+      }
 
-        &-important {
-          @include apply-color(background-color, background-hover-important);
-          @include apply-color(border-color, border-hover-important);
-        }
+      &-important {
+        @include apply-color(background-color, background-hover-important);
+        @include apply-color(border-color, border-hover-important);
+      }
 
-        &-important-alt {
-          @include apply-color(background-color, background-hover-important-alt);
-          @include apply-color(border-color, border-hover-important-alt);
-        }
+      &-important-alt {
+        @include apply-color(background-color, background-hover-important-alt);
+        @include apply-color(border-color, border-hover-important-alt);
+      }
 
-        &-inactive {
-          @include apply-color(background-color, background-hover-inactive);
-          @include apply-color(border-color, border-hover-inactive);
-        }
+      &-inactive {
+        @include apply-color(background-color, background-hover-inactive);
+        @include apply-color(border-color, border-hover-inactive);
+      }
 
-        &-negative {
-          @include apply-color(background-color, background-hover-negative);
-          @include apply-color(border-color, border-hover-negative);
-        }
+      &-negative {
+        @include apply-color(background-color, background-hover-negative);
+        @include apply-color(border-color, border-hover-negative);
+      }
 
-        &-neutral {
-          @include apply-color(background-color, background-hover-neutral);
-          @include apply-color(border-color, border-hover-neutral);
-        }
+      &-neutral {
+        @include apply-color(background-color, background-hover-neutral);
+        @include apply-color(border-color, border-hover-neutral);
+      }
 
-        &-neutral-alt {
-          @include apply-color(background-color, background-hover-neutral-alt);
-          @include apply-color(border-color, border-hover-neutral-alt);
-        }
+      &-neutral-alt {
+        @include apply-color(background-color, background-hover-neutral-alt);
+        @include apply-color(border-color, border-hover-neutral-alt);
+      }
 
-        &-positive {
-          @include apply-color(background-color, background-hover-positive);
-          @include apply-color(border-color, border-hover-positive);
-        }
+      &-positive {
+        @include apply-color(background-color, background-hover-positive);
+        @include apply-color(border-color, border-hover-positive);
       }
     }
   }
@@ -194,6 +204,11 @@ const whenClicked = () => {
     transition-duration: $transition-duration-normal;
     transition-property: background-color, border-color, transform;
     width: $padding-size-normal;
+  }
+  &-input {
+    appearance: none;
+    margin: 0;
+    outline: 0;
   }
 }
 </style>

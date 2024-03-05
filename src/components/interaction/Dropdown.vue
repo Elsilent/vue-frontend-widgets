@@ -5,6 +5,7 @@ import { computed, ref, toRefs } from 'vue';
 import Align from '../container/Align.vue';
 import Icon from '../image/Icon.vue';
 import Info from '../label/Info.vue';
+import { useUpDownKeys } from '../../composables/upDownKeys';
 
 const props = withDefaults(
   defineProps<{
@@ -12,14 +13,20 @@ const props = withDefaults(
     modelValue?: string | number | symbol;
     noInline?: boolean;
     size?: 'small' | 'normal';
+    tabindex?: number;
   }>(),
   {
     noInline: false,
     size: 'normal',
+    tabindex: 0,
   },
 );
 
 const { items, modelValue, size } = toRefs(props);
+
+const { selectedItem, onKeypressDown, onKeypressUp, clearSelectedItem } = useUpDownKeys({
+  length: Object.keys(items.value).length - 1,
+});
 
 const active = ref(false);
 
@@ -55,7 +62,17 @@ const emit = defineEmits<{
 const updateValue = (value: string | number | symbol) => {
   emit('update:modelValue', value);
 
+  clearSelectedItem();
   active.value = false;
+};
+
+const onKeypressEnter = () => {
+  if (active.value) {
+    updateValue(Object.keys(items.value)[selectedItem.value]);
+    return;
+  }
+  clearSelectedItem();
+  active.value = true;
 };
 </script>
 
@@ -67,9 +84,12 @@ Align(
   .dropdown(
     @blur='() => active = false',
     @click='() => active = !active',
+    @keyup.enter='onKeypressEnter()',
+    @keydown.down.prevent="onKeypressDown()",
+    @keydown.up.prevent="onKeypressUp()",
     :class='classes',
     :style='style',
-    tabindex='-1',
+    :tabindex='tabindex',
   )
     Align.item.current(vertical='center')
       Info.flex-max {{ modelValue === undefined ? '&nbsp;' : items[modelValue] }}
@@ -80,9 +100,9 @@ Align(
       )
     Align.dropdown-menu.no-spacing(column)
       Info.item.no-spacing(
-        v-for='(item, itemCode) in items',
-        :class='{ current: modelValue === itemCode }',
-        @click.stop="() => updateValue(itemCode)",
+        v-for='(item, itemCode, index) in items',
+        :class='{ current: modelValue === itemCode, selected: selectedItem === index }',
+        @click.stop="updateValue(itemCode)",
       ) {{ item }}
 </template>
 
@@ -168,6 +188,10 @@ Align(
     }
   }
 
+  &:focus {
+    @include apply-color(border-color, background-important-alt);
+  }
+
   > .dropdown-menu {
     @include apply-color(background-color, background-elevated-3);
     @include apply-color(border-color, border-inactive);
@@ -192,12 +216,13 @@ Align(
     > .item {
       transition-duration: $transition-duration-fast-2;
 
-      &:hover {
+      &:hover,
+      &.selected {
         @include apply-color(background-color, background-lowered);
       }
 
       &.current {
-        &:not(:hover) {
+        &:not(:hover, .selected) {
           @include apply-color(background-color, background-accent);
           @include apply-color(color, white);
         }

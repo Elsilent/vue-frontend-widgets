@@ -169,6 +169,7 @@ Align.calendar(column)
     Button.month-picker(
       @click.stop='() => previousMonth()',
       :disabled='!hasPreviousMonth',
+      :tabindex="-1",
       icon='chevron-left',
       mood='neutral',
       outline,
@@ -178,17 +179,20 @@ Align.calendar(column)
       @update:modelValue='(index) => updateMonth(index)',
       :items='monthItems',
       :modelValue='currentMonthIndex',
+      :tabindex="-1",
       size='small',
     )
     Dropdown.spacing-small(
       @update:modelValue='(year) => updateYear(year)',
       :items='yearItems',
       :modelValue='currentYear',
+      :tabindex="-1",
       size='small',
     )
     Button.month-picker.spacing-small(
       @click.stop='() => nextMonth()',
       :disabled='!hasNextMonth',
+      :tabindex="-1",
       icon='chevron-right',
       mood='neutral',
       outline,
@@ -209,6 +213,7 @@ Align.calendar(column)
         :label='day.day.toString()',
         :mood='dayMood(day)',
         :outline="dayMood(day) === 'neutral'",
+        tabindex="-1",
       )
 </template>
 
@@ -220,6 +225,9 @@ Align.calendar(column)
 
 .calendar {
   width: 20rem;
+  .button {
+    background-color: transparent;
+  }
 
   > .header {
     > .button {

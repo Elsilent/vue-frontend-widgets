@@ -40,6 +40,7 @@ const hideMenu = (event?: MouseEvent) => {
     return;
   }
 
+  currencySelector.value?.$el.querySelector('.button').blur();
   menuVisible.value = false;
 
   window.removeEventListener('mousedown', hideMenu);
@@ -68,7 +69,10 @@ Align.currency-selector(
   horizontal='center',
 )
   Button.currency-button(
-    @click='() => showMenu()',
+    @click='showMenu()',
+    @focus='showMenu()',
+    @keydown.shift.tab='hideMenu()',
+    @keydown.tab='hideMenu()',
     :label="currentCurrency?.symbol",
     mood='neutral',
     outline,

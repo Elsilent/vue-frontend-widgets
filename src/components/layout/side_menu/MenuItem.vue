@@ -16,6 +16,7 @@ const props = withDefaults(
     label?: string;
     level?: number;
     withSublevel?: boolean;
+    link?: string;
   }>(),
   {
     active: false,
@@ -57,7 +58,11 @@ const classes = computed(() => ({
 </script>
 
 <template lang="pug">
-.menu-item(:class='classes')
+component.menu-item(
+  :class='classes'
+  :is="link? 'a' : 'div'"
+  :href="link ? link : undefined"
+)
   Icon.item-icon(
     v-if='icon',
     :backend='iconBackend',
@@ -87,6 +92,7 @@ const classes = computed(() => ({
   cursor: pointer;
   display: flex;
   transition: background-color 0.2s;
+  text-decoration: none;
 
   &.active {
     @include apply-color(background-color, background-menu-lowered);

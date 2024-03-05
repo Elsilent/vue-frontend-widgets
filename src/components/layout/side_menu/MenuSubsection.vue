@@ -106,13 +106,14 @@ Collapse(:expanded='level === 0 || expandedPrefix.startsWith(prefix)')
     )
     MenuItem(
       v-else-if='fullWidth || level === 0',
-      @click='() => whenItemClicked(code)',
+      @click.prevent='() => whenItemClicked(code)',
       :active='`${prefix}${code}` === activeMenuItemCode',
       :fullWidth='fullWidth',
       :icon='item.icon',
       :iconBackend='item.iconBackend',
       :label='fullWidth ? translator(item.label) : undefined',
       :level='nextItemLevel',
+      :link="router.resolve(item.route).href"
     )
 </template>
 

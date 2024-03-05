@@ -23,6 +23,7 @@ const { icon, iconBackend, label, source } = toRefs(props);
 <template lang="pug">
 .avatar(
   :style='source ? `background-image: url(${source})` : undefined',
+  tabindex="0"
 )
   Icon(
     v-if='!label && !source',
@@ -57,5 +58,9 @@ const { icon, iconBackend, label, source } = toRefs(props);
   transition-property: background-color;
   user-select: none;
   width: $padding-size-normal * 2.5;
+
+  &:focus {
+    outline: none;
+  }
 }
 </style>

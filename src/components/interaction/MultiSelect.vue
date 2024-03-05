@@ -4,6 +4,7 @@ import Align from '../container/Align.vue';
 import Icon from '../image/Icon.vue';
 import Info from '../label/Info.vue';
 import { sort } from '../../utils/sort';
+import { useUpDownKeys } from '../../composables/upDownKeys';
 
 const props = withDefaults(
   defineProps<{
@@ -39,6 +40,7 @@ const allItemsSelected = computed(() => {
 const allItemsTitle = computed(() => Object.values(items.value).sort(sort).join(', '));
 
 const dropdownItems = computed(() => {
+  clearSelectedItem();
   const filteredItems = newValueFilter.value
     ? Object.entries(items.value)
         .filter(([, item]) => item.toLowerCase().includes(newValueFilter.value.toLowerCase()))
@@ -52,8 +54,12 @@ const dropdownItems = computed(() => {
   }, {} as Record<string | number | symbol, string>);
 });
 
+const { selectedItem, onKeypressDown, onKeypressUp, clearSelectedItem } = useUpDownKeys({
+  length: computed(() => Object.keys(dropdownItems.value).length - 1),
+});
+
 const selectionOffset = computed(() => {
-  if (!modelValue?.value || modelValue.value === undefined) {
+  if (!modelValue?.value) {
     return 1;
   }
 
@@ -138,10 +144,13 @@ Align.multiselect-container(
   column
 )
   .multiselect(
-    @click='() => activate()',
+    @click='activate()',
     :class='{ active, disabled }',
     :style='style',
     tabindex='-1',
+    @keydown.down.prevent="onKeypressDown()",
+    @keydown.up.prevent="onKeypressUp()",
+    @keydown.enter.prevent="toggleItem(Object.keys(dropdownItems)[selectedItem])",
   )
     Align.current-item(vertical='center')
       Info.default-value(v-if='!modelValue || modelValue.length === 0') &nbsp;
@@ -161,7 +170,8 @@ Align.multiselect-container(
       input.flex-max.new-value-input.no-spacing(
         ref='newValueInput',
         v-model='newValueFilter',
-        @blur='(event) => whenBlurred(event)',
+        @blur='whenBlurred($event)',
+        @focus='activate()'
         :disabled='disabled',
       )
       Icon(
@@ -172,13 +182,13 @@ Align.multiselect-container(
     Align.dropdown-menu.no-spacing(column)
       Info.item(
         v-if="showAllItemsItem",
-        @click.stop="() => updateValue(Object.keys(items))",
+        @click.stop="updateValue(Object.keys(items))",
         :class="{ current: allItemsSelected }",
       ) {{ allItemsLabel }}
       Info.item.no-spacing(
-        v-for='(item, itemCode) in dropdownItems',
+        v-for='(item, itemCode, index) in dropdownItems',
         @click.stop="toggleItem(itemCode)",
-        :class='{ current: modelValue?.includes(itemCode) }',
+        :class='{ current: modelValue?.includes(itemCode), selected: selectedItem === index }',
       ) {{ item }}
 </template>
 
@@ -297,12 +307,13 @@ $-item-height: $font-size-normal * 1.5 + $padding-size-small-2 * 2 - 2;
     > .item {
       transition-duration: $transition-duration-fast-2;
 
-      &:hover {
+      &:hover,
+      &.selected {
         @include apply-color(background-color, background-lowered);
       }
 
       &.current {
-        &:not(:hover) {
+        &:not(:hover, .selected) {
           @include apply-color(background-color, background-accent);
           @include apply-color(color, white);
         }
@@ -315,7 +326,10 @@ $-item-height: $font-size-normal * 1.5 + $padding-size-small-2 * 2 - 2;
     transition-property: background-color, color;
   }
 
-  &.active {
+  &.active,
+  &:focus {
+    @include apply-color(border-color, background-important-alt);
+
     > .dropdown-menu {
       height: calc(var(--item-count) * $-item-height);
       pointer-events: initial;

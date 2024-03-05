@@ -472,10 +472,10 @@ const differenceMood = (
   subcolumnKey?: string,
 ): Mood | undefined => {
   if (
-    !subcolumnKey
-      || !comparisonColumns?.value
-      || !(subcolumnKey in comparisonColumns.value)
-      || comparisonColumns.value[subcolumnKey].format !== 'difference'
+    !subcolumnKey ||
+    !comparisonColumns?.value ||
+    !(subcolumnKey in comparisonColumns.value) ||
+    comparisonColumns.value[subcolumnKey].format !== 'difference'
   ) {
     return undefined;
   }
@@ -754,9 +754,7 @@ const getRowFormattedValue = (
   let formattedValue = formatValue(value, columnType);
 
   if (format === 'difference') {
-    formattedValue = value > 0
-      ? `+${formattedValue}`
-      : formattedValue;
+    formattedValue = value > 0 ? `+${formattedValue}` : formattedValue;
   }
 
   if (shorten) {
@@ -1096,9 +1094,11 @@ const setOrderByFromLocalStorage = async (fetchRows: boolean) => {
   const orderBy = localStorage.getItem(getOrderByKey());
 
   if (orderBy) {
-    await updateOrderBy(JSON.parse(orderBy), false, fetchRows);
-
-    return true;
+    const orderColumn = JSON.parse(orderBy)[0][0];
+    if (columns.value[orderColumn]) {
+      await updateOrderBy(JSON.parse(orderBy), false, fetchRows);
+      return true;
+    }
   } else {
     return false;
   }
@@ -1121,22 +1121,26 @@ const setRowsFromRequest = async (
   }
 
   const [response, comparisonResponse] = await (async () => {
-    const requestPromises = [getGlobalRowsFromRequestInfo(request!.value!, {
-      inlineFilters: inlineFilters.value,
-      pageNumber: pageNumber,
-      pageSize: pageSize,
-      orderBy: orderBy[0],
-      reversed: orderBy[1],
-    })];
-
-    if (comparisonRequest?.value) {
-      requestPromises.push(getGlobalRowsFromRequestInfo(comparisonRequest.value, {
+    const requestPromises = [
+      getGlobalRowsFromRequestInfo(request!.value!, {
         inlineFilters: inlineFilters.value,
         pageNumber: pageNumber,
         pageSize: pageSize,
         orderBy: orderBy[0],
         reversed: orderBy[1],
-      }));
+      }),
+    ];
+
+    if (comparisonRequest?.value) {
+      requestPromises.push(
+        getGlobalRowsFromRequestInfo(comparisonRequest.value, {
+          inlineFilters: inlineFilters.value,
+          pageNumber: pageNumber,
+          pageSize: pageSize,
+          orderBy: orderBy[0],
+          reversed: orderBy[1],
+        }),
+      );
     }
 
     const responses = await Promise.all(requestPromises);
@@ -1148,12 +1152,16 @@ const setRowsFromRequest = async (
     return responses;
   })();
 
-  allRows.value = Object.values(comparisonResponse ? mergeComparisonData(
-    response.rows,
-    comparisonResponse.rows,
-    columns.value,
-    primaryColumn.value,
-  ) : response.rows);
+  allRows.value = Object.values(
+    comparisonResponse
+      ? mergeComparisonData(
+          response.rows,
+          comparisonResponse.rows,
+          columns.value,
+          primaryColumn.value,
+        )
+      : response.rows,
+  );
   fetchedAllRows.value = response.paginated !== true;
   rowCount.value = response.rowCount;
 
@@ -1164,11 +1172,9 @@ const setRowsFromRequest = async (
   }
 
   if (response.total) {
-    totalRow.value = comparisonResponse ? mergeComparisonRow(
-      response.total,
-      comparisonResponse.total,
-      columns.value,
-    ) : response.total;
+    totalRow.value = comparisonResponse
+      ? mergeComparisonRow(response.total, comparisonResponse.total, columns.value)
+      : response.total;
   }
 
   return true;
@@ -1278,11 +1284,11 @@ const updateOrderBy = async (
   // Always set to first page when changing ordering
   pageNumber.value = 0;
 
+  orderBy.value = newOrderBy;
+
   if (fetchRows) {
     await setRows(undefined, undefined, newOrderBy);
   }
-
-  orderBy.value = newOrderBy;
 
   if (save) {
     localStorage.setItem(getOrderByKey(), JSON.stringify(newOrderBy));
@@ -1298,8 +1304,15 @@ onMounted(() => {
 });
 
 watch(columns, () => {
+  currentColumnKeys.value = Object.keys(columns.value);
   inlineFilters.value = makeInlineFilters();
 });
+
+if (defaultOrderBy) {
+  watch(defaultOrderBy, () => {
+    setOrderByFromDefault(true);
+  });
+}
 
 if (request) {
   watch(

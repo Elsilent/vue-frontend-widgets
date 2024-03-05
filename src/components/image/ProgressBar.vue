@@ -2,15 +2,20 @@
 import type { Mood } from '../../utils/enum/mood';
 import { computed, toRefs } from 'vue';
 
-const props = defineProps<{
-  mood: Mood;
-  value: number;
-}>();
+const props = withDefaults(
+  defineProps<{
+    mood: Mood;
+    value: number;
+    size?: 'small' | 'large';
+  }>(),
+  { size: 'large' },
+);
 
-const { value } = toRefs(props);
+const { value, size } = toRefs(props);
 
 const style = computed(() => ({
   '--width': `${value.value * 100}%`,
+  '--height': size.value === 'large' ? '30px' : 'auto',
 }));
 </script>
 
@@ -29,7 +34,7 @@ const style = computed(() => ({
 @import '../../styles/transition.scss';
 
 .progress-bar {
-  @include apply-color(background-color, background-lowered-2);
+  @include apply-color(background-color, background-lowered-2, null, null, '', 0.3);
   @include apply-mood($rule-postfix: '::after');
 
   border-radius: $border-radius-normal;
@@ -38,10 +43,11 @@ const style = computed(() => ({
   position: relative;
   transition-duration: $transition-duration-normal;
   transition-property: background-color;
+  box-sizing: border-box;
+  height: var(--height);
+  border: 1px solid transparent;
 
   &::after {
-    background-blend-mode: color-burn, normal;
-    background-image: linear-gradient(to right, rgba(black, 30%), transparent);
     background-position: center left;
     background-size: 100%;
     bottom: 0;
@@ -53,6 +59,7 @@ const style = computed(() => ({
     transition-timing-function: ease;
     transition-property: background-color, width;
     width: var(--width);
+    border-radius: $border-radius-normal;
   }
 }
 </style>

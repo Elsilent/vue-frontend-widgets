@@ -87,9 +87,6 @@ Align.header(vertical='center')
   > .title {
     @include apply-color(background-color, background-elevated-2);
 
-    cursor: pointer;
-    height: 100%;
-    padding: 0 $padding-size-normal;
     transition-duration: $transition-duration-normal;
     transition-property: background-color;
     width: min-content;

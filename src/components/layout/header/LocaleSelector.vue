@@ -41,7 +41,7 @@ const hideMenu = (event?: MouseEvent) => {
   }
 
   menuVisible.value = false;
-
+  localeSelector.value?.$el.querySelector('.button').blur();
   window.removeEventListener('mousedown', hideMenu);
 };
 
@@ -68,7 +68,10 @@ Align.locale-selector(
   horizontal='center',
 )
   Button.locale-button(
-    @click='() => showMenu()',
+    @click='showMenu()',
+    @focus="showMenu()",
+    @keydown.shift.tab='hideMenu()',
+    @keydown.tab='hideMenu()',
     :icon='localeIcon',
     iconBackend='flag-icons-square',
     mood='neutral',

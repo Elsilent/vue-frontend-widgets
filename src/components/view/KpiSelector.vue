@@ -262,6 +262,7 @@ Button(
     @click="() => show()",
     :label="showModalLabel",
     mood="neutral",
+    tabindex="-1"
 )
 Teleport(to="#app > .app-container")
     Align.kpi-selector-container.no-spacing(
@@ -513,7 +514,6 @@ Teleport(to="#app > .app-container")
         margin-left: $padding-size-small-2;
         margin-right: $padding-size-small-2;
         padding: $padding-size-small-2 $padding-size-large;
-        overflow: hidden;
         position: relative;
 
         &::before {
