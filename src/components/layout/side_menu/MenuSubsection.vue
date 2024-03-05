@@ -28,17 +28,8 @@ const props = withDefaults(
   },
 );
 
-const {
-  expandedPrefix,
-  icon,
-  iconBackend,
-  items,
-  label,
-  level,
-  prefix,
-  router,
-  translator,
-} = toRefs(props);
+const { expandedPrefix, icon, iconBackend, items, label, level, prefix, router, translator } =
+  toRefs(props);
 
 const emit = defineEmits<{
   (e: 'update:expandedPrefix', expandedPrefix: string): void;
