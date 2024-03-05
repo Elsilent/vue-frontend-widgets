@@ -9,8 +9,10 @@
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
-  height: $logo-size;
+  max-height: $logo-size;
+  max-width: $logo-size;
+  min-height: $logo-size;
+  min-width: $logo-size;
   transform: translateY(-0.5px);
-  width: $logo-size;
 }
 </style>

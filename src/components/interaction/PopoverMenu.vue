@@ -33,7 +33,7 @@ watch(visible, (visible) => {
   }
 });
 
-const onKeypress = (e) => {
+const onKeypress = (e: KeyboardEvent) => {
   switch (e.code) {
     case 'ArrowDown':
       onKeypressDown();

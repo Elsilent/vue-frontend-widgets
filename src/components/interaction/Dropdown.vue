@@ -5,7 +5,7 @@ import { computed, ref, toRefs } from 'vue';
 import Align from '../container/Align.vue';
 import Icon from '../image/Icon.vue';
 import Info from '../label/Info.vue';
-import { useUpDownKeys } from '../../composables/upDownKeys.js';
+import { useUpDownKeys } from '../../composables/upDownKeys';
 
 const props = withDefaults(
   defineProps<{

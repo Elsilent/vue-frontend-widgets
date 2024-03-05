@@ -1,123 +1,123 @@
-import { defineComponent as h, toRefs as I, computed as p, ref as M, onUnmounted as D, openBlock as d, createBlock as w, withCtx as k, createVNode as y, withKeys as L, withModifiers as U, unref as i, createTextVNode as V, toDisplayString as x, createCommentVNode as z, createElementVNode as F, renderSlot as G, resolveDynamicComponent as W, normalizeClass as J, resolveComponent as X, createElementBlock as B, Fragment as T, renderList as K, pushScopeId as Y, popScopeId as Z, watch as ee } from "vue";
-import { A, I as O } from "./Icon-8f2ed8ba.js";
-import { A as ne, L as oe } from "./Logo-d6af18ef.js";
-import { P as q, T as te } from "./Toast-de12191e.js";
-import { _ as S } from "./_plugin-vue_export-helper-dad06003.js";
-import { B as H, D as le, I as ae } from "./Input-b2f3286e.js";
-import { G as se } from "./Form-f36966a3.js";
-import { I as C } from "./Info-54758b60.js";
-import { Separator as ue } from "./marker.js";
-import { B as re } from "./BrandText-d1a46d42.js";
-import { BaseError as ce } from "./utils/error.js";
-import { m as E } from "./match-b8889c93.js";
+import { defineComponent as k, toRefs as B, computed as w, ref as I, onUnmounted as H, openBlock as d, createBlock as y, withCtx as h, createVNode as b, withKeys as P, withModifiers as U, unref as u, createTextVNode as E, toDisplayString as L, createCommentVNode as M, renderSlot as D, pushScopeId as X, popScopeId as Y, createElementVNode as A, Transition as ne, createElementBlock as S, resolveDynamicComponent as oe, normalizeClass as R, resolveComponent as le, Fragment as V, renderList as G, watch as Z } from "vue";
+import { A as W, I as K } from "./Icon-8f2ed8ba.js";
+import { A as ae, L as se } from "./Logo-cbfeb6b8.js";
+import { P as O, T as ue } from "./Toast-5c462a52.js";
+import { _ as x } from "./_plugin-vue_export-helper-dad06003.js";
+import { B as j, D as ie, I as re } from "./Input-7f2c48d4.js";
+import { G as de } from "./Form-f36966a3.js";
+import { I as z } from "./Info-54758b60.js";
+import { Separator as ce } from "./marker.js";
+import { B as ve } from "./BrandText-d1a46d42.js";
+import { BaseError as me } from "./utils/error.js";
+import { m as F } from "./match-b8889c93.js";
 import { U as N } from "./undefined_theme-2b4e75dd.js";
 import "./Popover-38d3223e.js";
-const ie = /* @__PURE__ */ h({
+const pe = /* @__PURE__ */ k({
   __name: "AccountMenu",
   props: {
     avatar: {},
     menuItems: {}
   },
-  setup(v) {
-    const m = v, { avatar: n, menuItems: u } = I(m), f = p(
-      () => n && n.value && "icon" in n.value ? n.value.icon : void 0
-    ), t = p(
-      () => n && n.value && "iconBackend" in n.value ? n.value.iconBackend : void 0
-    ), l = p(
-      () => n && n.value && "label" in n.value ? n.value.label : void 0
-    ), c = p(
-      () => n && n.value && "source" in n.value ? n.value.source : void 0
-    ), o = M(), a = M(!1), _ = (e) => {
+  setup(c) {
+    const m = c, { avatar: l, menuItems: s } = B(m), _ = w(
+      () => l && l.value && "icon" in l.value ? l.value.icon : void 0
+    ), i = w(
+      () => l && l.value && "iconBackend" in l.value ? l.value.iconBackend : void 0
+    ), a = w(
+      () => l && l.value && "label" in l.value ? l.value.label : void 0
+    ), t = w(
+      () => l && l.value && "source" in l.value ? l.value.source : void 0
+    ), e = I(), o = I(!1), p = (n) => {
       var r;
-      e && ((r = o.value) != null && r.$el.contains(e.target)) || (a.value = !1, window.removeEventListener("mousedown", _));
-    }, b = () => {
-      a.value = !0, window.addEventListener("mousedown", _);
-    }, s = (e) => {
-      u.value[e].handler(), _();
+      n && ((r = e.value) != null && r.$el.contains(n.target)) || (o.value = !1, window.removeEventListener("mousedown", p));
+    }, f = () => {
+      o.value = !0, window.addEventListener("mousedown", p);
+    }, v = (n) => {
+      s.value[n].handler(), p();
     };
-    return D(() => {
-      window.removeEventListener("mousedown", _);
-    }), (e, r) => (d(), w(A, {
+    return H(() => {
+      window.removeEventListener("mousedown", p);
+    }), (n, r) => (d(), y(W, {
       class: "account-menu",
       ref_key: "accountMenu",
-      ref: o
+      ref: e
     }, {
-      default: k(() => [
-        y(ne, {
-          onClick: r[0] || (r[0] = (g) => b()),
-          onFocus: r[1] || (r[1] = (g) => b()),
+      default: h(() => [
+        b(ae, {
+          onClick: r[0] || (r[0] = (g) => f()),
+          onFocus: r[1] || (r[1] = (g) => f()),
           onKeydown: [
-            r[2] || (r[2] = L(U((g) => _(), ["shift"]), ["tab"])),
-            r[3] || (r[3] = L((g) => _(), ["tab"]))
+            r[2] || (r[2] = P(U((g) => p(), ["shift"]), ["tab"])),
+            r[3] || (r[3] = P((g) => p(), ["tab"]))
           ],
-          icon: f.value,
-          iconBackend: t.value,
-          label: l.value,
-          source: c.value
+          icon: _.value,
+          iconBackend: i.value,
+          label: a.value,
+          source: t.value
         }, null, 8, ["icon", "iconBackend", "label", "source"]),
-        y(q, {
+        b(O, {
           class: "account-menu",
-          onSelect: r[4] || (r[4] = (g) => s(g)),
-          items: i(u),
-          visible: a.value
+          onSelect: r[4] || (r[4] = (g) => v(g)),
+          items: u(s),
+          visible: o.value
         }, null, 8, ["items", "visible"])
       ]),
       _: 1
     }, 512));
   }
 });
-const Ke = /* @__PURE__ */ S(ie, [["__scopeId", "data-v-6b125e88"]]), de = /* @__PURE__ */ h({
+const je = /* @__PURE__ */ x(pe, [["__scopeId", "data-v-6b125e88"]]), _e = /* @__PURE__ */ k({
   __name: "CurrencySelector",
   props: {
     currencies: {},
     modelValue: {}
   },
   emits: ["update:modelValue"],
-  setup(v, { emit: m }) {
-    const n = v, { currencies: u, modelValue: f } = I(n), t = M(), l = M(!1), c = p(
-      () => u.value.reduce((s, e) => (s[e.code] = {
-        label: e.label
-      }, s), {}) ?? {}
-    ), o = p(
-      () => u.value.find(({ code: s }) => f.value === s)
-    ), a = (s) => {
-      var e, r;
-      s && ((e = t.value) != null && e.$el.contains(s.target)) || ((r = t.value) == null || r.$el.querySelector(".button").blur(), l.value = !1, window.removeEventListener("mousedown", a));
-    }, _ = () => {
-      l.value = !0, window.addEventListener("mousedown", a);
-    }, b = (s) => {
-      m("update:modelValue", s), a();
+  setup(c, { emit: m }) {
+    const l = c, { currencies: s, modelValue: _ } = B(l), i = I(), a = I(!1), t = w(
+      () => s.value.reduce((v, n) => (v[n.code] = {
+        label: n.label
+      }, v), {}) ?? {}
+    ), e = w(
+      () => s.value.find(({ code: v }) => _.value === v)
+    ), o = (v) => {
+      var n, r;
+      v && ((n = i.value) != null && n.$el.contains(v.target)) || ((r = i.value) == null || r.$el.querySelector(".button").blur(), a.value = !1, window.removeEventListener("mousedown", o));
+    }, p = () => {
+      a.value = !0, window.addEventListener("mousedown", o);
+    }, f = (v) => {
+      m("update:modelValue", v), o();
     };
-    return D(() => {
-      window.removeEventListener("mousedown", a);
-    }), (s, e) => (d(), w(A, {
+    return H(() => {
+      window.removeEventListener("mousedown", o);
+    }), (v, n) => (d(), y(W, {
       class: "currency-selector",
       ref_key: "currencySelector",
-      ref: t,
+      ref: i,
       horizontal: "center"
     }, {
-      default: k(() => {
+      default: h(() => {
         var r;
         return [
-          y(H, {
+          b(j, {
             class: "currency-button",
-            onClick: e[0] || (e[0] = (g) => _()),
-            onFocus: e[1] || (e[1] = (g) => _()),
+            onClick: n[0] || (n[0] = (g) => p()),
+            onFocus: n[1] || (n[1] = (g) => p()),
             onKeydown: [
-              e[2] || (e[2] = L(U((g) => a(), ["shift"]), ["tab"])),
-              e[3] || (e[3] = L((g) => a(), ["tab"]))
+              n[2] || (n[2] = P(U((g) => o(), ["shift"]), ["tab"])),
+              n[3] || (n[3] = P((g) => o(), ["tab"]))
             ],
-            label: (r = o.value) == null ? void 0 : r.symbol,
+            label: (r = e.value) == null ? void 0 : r.symbol,
             mood: "neutral",
             outline: "",
             size: "large-3",
             shape: "round"
           }, null, 8, ["label"]),
-          y(q, {
+          b(O, {
             class: "currency-menu no-spacing",
-            onSelect: e[4] || (e[4] = (g) => b(g)),
-            items: c.value,
-            visible: l.value
+            onSelect: n[4] || (n[4] = (g) => f(g)),
+            items: t.value,
+            visible: a.value
           }, null, 8, ["items", "visible"])
         ];
       }),
@@ -125,161 +125,217 @@ const Ke = /* @__PURE__ */ S(ie, [["__scopeId", "data-v-6b125e88"]]), de = /* @_
     }, 512));
   }
 });
-const qe = /* @__PURE__ */ S(de, [["__scopeId", "data-v-a650d612"]]), ve = /* @__PURE__ */ h({
+const Je = /* @__PURE__ */ x(_e, [["__scopeId", "data-v-a650d612"]]), fe = /* @__PURE__ */ k({
   __name: "Form",
   props: {
     fields: {},
     values: {}
   },
-  setup(v) {
-    const m = v, { fields: n } = I(m);
-    return (u, f) => (d(), w(se, {
-      fields: i(n),
-      values: u.values
+  setup(c) {
+    const m = c, { fields: l } = B(m);
+    return (s, _) => (d(), y(de, {
+      fields: u(l),
+      values: s.values
     }, {
-      "field(dropdown)": k(({ code: t, label: l, options: c, value: o }) => [
-        l ? (d(), w(C, {
+      "field(dropdown)": h(({ code: i, label: a, options: t, value: e }) => [
+        a ? (d(), y(z, {
           key: 0,
           class: "label"
         }, {
-          default: k(() => [
-            V(x(l), 1)
+          default: h(() => [
+            E(L(a), 1)
           ]),
           _: 2
-        }, 1024)) : z("", !0),
-        y(le, {
-          "onUpdate:modelValue": (a) => u.$emit(`update:${t}`, a),
-          items: c.items,
-          modelValue: o
+        }, 1024)) : M("", !0),
+        b(ie, {
+          "onUpdate:modelValue": (o) => s.$emit(`update:${i}`, o),
+          items: t.items,
+          modelValue: e
         }, null, 8, ["onUpdate:modelValue", "items", "modelValue"])
       ]),
-      "field(info)": k(({ label: t }) => [
-        y(C, null, {
-          default: k(() => [
-            V(x(t), 1)
+      "field(info)": h(({ label: i }) => [
+        b(z, null, {
+          default: h(() => [
+            E(L(i), 1)
           ]),
           _: 2
         }, 1024)
       ]),
-      "field(input)": k(({ code: t, label: l, value: c }) => [
-        l ? (d(), w(C, {
+      "field(input)": h(({ code: i, label: a, value: t }) => [
+        a ? (d(), y(z, {
           key: 0,
           class: "label"
         }, {
-          default: k(() => [
-            V(x(l), 1)
+          default: h(() => [
+            E(L(a), 1)
           ]),
           _: 2
-        }, 1024)) : z("", !0),
-        y(ae, {
-          "onUpdate:modelValue": (o) => u.$emit(`update:${t}`, o),
-          modelValue: c
+        }, 1024)) : M("", !0),
+        b(re, {
+          "onUpdate:modelValue": (e) => s.$emit(`update:${i}`, e),
+          modelValue: t
         }, null, 8, ["onUpdate:modelValue", "modelValue"])
       ]),
       _: 1
     }, 8, ["fields", "values"]));
   }
 });
-const He = /* @__PURE__ */ S(ve, [["__scopeId", "data-v-39d44946"]]), me = /* @__PURE__ */ h({
+const Qe = /* @__PURE__ */ x(fe, [["__scopeId", "data-v-39d44946"]]), he = (c) => (X("data-v-4e2c8ed5"), c = c(), Y(), c), ye = /* @__PURE__ */ he(() => /* @__PURE__ */ A("div", { class: "menu-button-lines" }, null, -1)), we = /* @__PURE__ */ k({
   __name: "Header",
-  setup(v) {
-    const m = () => {
+  emits: ["menuToggle"],
+  setup(c, { emit: m }) {
+    const l = () => {
       document.documentElement.scrollTo({
         left: 0,
         top: 0
       });
     };
-    return (n, u) => (d(), w(A, {
+    return (s, _) => (d(), y(W, {
       class: "header",
       vertical: "center"
     }, {
-      default: k(() => [
-        F("div", {
+      default: h(() => [
+        b(W, {
+          class: "menu-button",
+          onClick: _[0] || (_[0] = () => m("menuToggle")),
+          vertical: "center"
+        }, {
+          default: h(() => [
+            ye
+          ]),
+          _: 1
+        }),
+        b(W, {
           class: "title",
-          onClick: u[0] || (u[0] = () => m())
-        }, [
-          y(C, { size: "large-2" }, {
-            default: k(() => [
-              G(n.$slots, "title", {}, void 0, !0)
-            ]),
-            _: 3
-          })
-        ]),
-        y(ue),
-        G(n.$slots, "end", {}, void 0, !0)
+          onClick: _[1] || (_[1] = () => l()),
+          vertical: "center"
+        }, {
+          default: h(() => [
+            b(z, { size: "large-2" }, {
+              default: h(() => [
+                D(s.$slots, "title", {}, void 0, !0)
+              ]),
+              _: 3
+            })
+          ]),
+          _: 3
+        }),
+        b(ce),
+        D(s.$slots, "end", {}, void 0, !0)
       ]),
       _: 3
     }));
   }
 });
-const je = /* @__PURE__ */ S(me, [["__scopeId", "data-v-b7acc042"]]), _e = /* @__PURE__ */ h({
+const Xe = /* @__PURE__ */ x(we, [["__scopeId", "data-v-4e2c8ed5"]]), be = /* @__PURE__ */ k({
   __name: "LocaleSelector",
   props: {
     locales: {},
     modelValue: {}
   },
   emits: ["update:modelValue"],
-  setup(v, { emit: m }) {
-    const n = v, { locales: u, modelValue: f } = I(n), t = M(), l = M(!1), c = p(
-      () => u.value.reduce((s, e) => (s[e.code] = {
-        icon: e.icon,
+  setup(c, { emit: m }) {
+    const l = c, { locales: s, modelValue: _ } = B(l), i = I(), a = I(!1), t = w(
+      () => s.value.reduce((v, n) => (v[n.code] = {
+        icon: n.icon,
         iconBackend: "flag-icons"
-      }, s), {})
-    ), o = p(
-      () => u.value.find((s) => s.code === f.value).icon
-    ), a = (s) => {
-      var e, r;
-      s && ((e = t.value) != null && e.$el.contains(s.target)) || (l.value = !1, (r = t.value) == null || r.$el.querySelector(".button").blur(), window.removeEventListener("mousedown", a));
-    }, _ = () => {
-      l.value = !0, window.addEventListener("mousedown", a);
-    }, b = (s) => {
-      m("update:modelValue", s), a();
+      }, v), {})
+    ), e = w(
+      () => s.value.find((v) => v.code === _.value).icon
+    ), o = (v) => {
+      var n, r;
+      v && ((n = i.value) != null && n.$el.contains(v.target)) || (a.value = !1, (r = i.value) == null || r.$el.querySelector(".button").blur(), window.removeEventListener("mousedown", o));
+    }, p = () => {
+      a.value = !0, window.addEventListener("mousedown", o);
+    }, f = (v) => {
+      m("update:modelValue", v), o();
     };
-    return D(() => {
-      window.removeEventListener("mousedown", a);
-    }), (s, e) => (d(), w(A, {
+    return H(() => {
+      window.removeEventListener("mousedown", o);
+    }), (v, n) => (d(), y(W, {
       class: "locale-selector",
       ref_key: "localeSelector",
-      ref: t,
+      ref: i,
       horizontal: "center"
     }, {
-      default: k(() => [
-        y(H, {
+      default: h(() => [
+        b(j, {
           class: "locale-button",
-          onClick: e[0] || (e[0] = (r) => _()),
-          onFocus: e[1] || (e[1] = (r) => _()),
+          onClick: n[0] || (n[0] = (r) => p()),
+          onFocus: n[1] || (n[1] = (r) => p()),
           onKeydown: [
-            e[2] || (e[2] = L(U((r) => a(), ["shift"]), ["tab"])),
-            e[3] || (e[3] = L((r) => a(), ["tab"]))
+            n[2] || (n[2] = P(U((r) => o(), ["shift"]), ["tab"])),
+            n[3] || (n[3] = P((r) => o(), ["tab"]))
           ],
-          icon: o.value,
+          icon: e.value,
           iconBackend: "flag-icons-square",
           mood: "neutral",
           outline: "",
           size: "large-3",
           shape: "round"
         }, null, 8, ["icon"]),
-        y(q, {
+        b(O, {
           class: "locale-menu no-spacing",
-          onSelect: e[4] || (e[4] = (r) => b(r)),
-          items: c.value,
-          visible: l.value
+          onSelect: n[4] || (n[4] = (r) => f(r)),
+          items: t.value,
+          visible: a.value
         }, null, 8, ["items", "visible"])
       ]),
       _: 1
     }, 512));
   }
 });
-const Ge = /* @__PURE__ */ S(_e, [["__scopeId", "data-v-dd1fb6f5"]]);
-class P extends ce {
+const Ye = /* @__PURE__ */ x(be, [["__scopeId", "data-v-dd1fb6f5"]]), ge = {
+  key: 0,
+  class: "collapse"
+}, ke = /* @__PURE__ */ k({
+  __name: "Collapse",
+  props: {
+    expanded: { type: Boolean, default: !1 }
+  },
+  setup(c) {
+    const m = c, { expanded: l } = B(m), s = (a) => {
+      const t = a;
+      t.style.height = "auto";
+    }, _ = (a) => {
+      const t = a, e = getComputedStyle(t).width;
+      t.style.width = e, t.style.position = "absolute", t.style.visibility = "hidden", t.style.height = "auto";
+      const o = getComputedStyle(t).height;
+      t.style.width = "", t.style.position = "", t.style.visibility = "", t.style.height = "0", getComputedStyle(t).height, requestAnimationFrame(() => {
+        t.style.height = o;
+      });
+    }, i = (a) => {
+      const t = a, e = getComputedStyle(t).height;
+      t.style.height = e, getComputedStyle(t).height, requestAnimationFrame(() => {
+        t.style.height = "0";
+      });
+    };
+    return (a, t) => (d(), y(ne, {
+      name: "collapse",
+      onAfterEnter: s,
+      onEnter: _,
+      onLeave: i
+    }, {
+      default: h(() => [
+        u(l) ? (d(), S("div", ge, [
+          D(a.$slots, "default", {}, void 0, !0)
+        ])) : M("", !0)
+      ]),
+      _: 3
+    }));
+  }
+});
+const xe = /* @__PURE__ */ x(ke, [["__scopeId", "data-v-10c3004c"]]);
+class J extends me {
   getMessage(m) {
     return `Invalid menu item level ${m}`;
   }
 }
-const pe = /* @__PURE__ */ h({
+const $e = /* @__PURE__ */ k({
   __name: "MenuItem",
   props: {
     active: { type: Boolean, default: !1 },
+    fullWidth: { type: Boolean },
     icon: {},
     iconBackend: {},
     label: {},
@@ -287,57 +343,61 @@ const pe = /* @__PURE__ */ h({
     withSublevel: { type: Boolean, default: !1 },
     link: {}
   },
-  setup(v) {
-    const m = v, { active: n, icon: u, iconBackend: f, label: t, level: l, withSublevel: c } = I(m), o = p(
-      () => E(l.value).when(1, () => "large-3").whenAny([2, 3], () => "large").or((s) => {
-        throw new P(s);
+  setup(c) {
+    const m = c, { active: l, fullWidth: s, icon: _, iconBackend: i, label: a, level: t, withSublevel: e } = B(m), o = w(
+      () => F(t.value).when(1, () => "large-3").whenAny([2, 3], () => "large").or((n) => {
+        throw new J(n);
       }).done
-    ), a = p(() => n.value ? "elevated-2" : "elevated"), _ = p(
-      () => E(l.value).when(1, () => "large").whenAny([2, 3], () => "normal").or((s) => {
-        throw new P(s);
+    ), p = w(() => l.value ? "elevated-2" : "elevated"), f = w(
+      () => F(t.value).when(1, () => "large").whenAny([2, 3], () => "normal").or((n) => {
+        throw new J(n);
       }).done
-    ), b = p(() => ({
-      active: n.value,
-      [`level-${l.value}`]: !0,
-      "with-sublevel": c.value
+    ), v = w(() => ({
+      active: l.value,
+      "full-width": s.value,
+      [`level-${t.value}`]: !0,
+      "with-sublevel": e.value
     }));
-    return (s, e) => (d(), w(W(s.link ? "a" : "div"), {
-      class: J(["menu-item", b.value]),
-      href: s.link ? s.link : void 0
+    return (n, r) => (d(), y(oe(n.link ? "a" : "div"), {
+      class: R(["menu-item", v.value]),
+      href: n.link ? n.link : void 0
     }, {
-      default: k(() => [
-        i(u) ? (d(), w(O, {
+      default: h(() => [
+        u(_) ? (d(), y(K, {
           key: 0,
           class: "item-icon",
-          backend: i(f),
-          elevation: a.value,
+          backend: u(i),
+          elevation: p.value,
           size: o.value,
-          value: i(u)
-        }, null, 8, ["backend", "elevation", "size", "value"])) : z("", !0),
-        y(C, {
-          elevation: a.value,
-          size: _.value
+          value: u(_)
+        }, null, 8, ["backend", "elevation", "size", "value"])) : M("", !0),
+        u(s) && u(a) ? (d(), y(z, {
+          key: 1,
+          elevation: p.value,
+          size: f.value
         }, {
-          default: k(() => [
-            V(x(i(t)), 1)
+          default: h(() => [
+            E(L(u(a)), 1)
           ]),
           _: 1
-        }, 8, ["elevation", "size"]),
-        i(c) ? (d(), w(O, {
-          key: 1,
+        }, 8, ["elevation", "size"])) : M("", !0),
+        u(s) && u(e) ? (d(), y(K, {
+          key: 2,
           class: "chevron",
-          elevation: a.value,
+          elevation: p.value,
           size: "large-3",
           value: "chevron-right"
-        }, null, 8, ["elevation"])) : z("", !0)
+        }, null, 8, ["elevation"])) : M("", !0)
       ]),
       _: 1
     }, 8, ["class", "href"]));
   }
 });
-const R = /* @__PURE__ */ S(pe, [["__scopeId", "data-v-78a874f4"]]), fe = /* @__PURE__ */ h({
+const Q = /* @__PURE__ */ x($e, [["__scopeId", "data-v-4f79a7a5"]]), Se = /* @__PURE__ */ k({
   __name: "MenuSubsection",
   props: {
+    fullWidth: { type: Boolean },
+    expandedPrefix: {},
     icon: {},
     iconBackend: {},
     items: {},
@@ -347,125 +407,172 @@ const R = /* @__PURE__ */ S(pe, [["__scopeId", "data-v-78a874f4"]]), fe = /* @__
     router: {},
     translator: {}
   },
-  setup(v) {
-    const m = v, { icon: n, iconBackend: u, items: f, label: t, level: l, prefix: c, router: o, translator: a } = I(m), _ = p(() => o.value.currentRoute.value.meta.menuItem), b = p(() => Object.entries(f.value).some(([r, g]) => "route" in g && `${c.value}${r}` === _.value)), s = p(() => l.value + 1), e = p(() => l.value + 1);
-    return (r, g) => {
-      const Q = X("MenuSubsection", !0);
-      return d(), B(T, null, [
-        i(t) ? (d(), B(T, { key: 0 }, [
-          i(l) === 0 ? (d(), w(C, {
-            key: 0,
-            class: "section",
-            elevation: "elevated"
-          }, {
-            default: k(() => [
-              V(x(i(a)(i(t)).toUpperCase()), 1)
-            ]),
-            _: 1
-          })) : (d(), w(R, {
+  emits: ["update:expandedPrefix"],
+  setup(c, { emit: m }) {
+    const l = c, {
+      expandedPrefix: s,
+      icon: _,
+      iconBackend: i,
+      items: a,
+      label: t,
+      level: e,
+      prefix: o,
+      router: p,
+      translator: f
+    } = B(l), v = w(() => p.value.currentRoute.value.meta.menuItem), n = w(() => e.value + 1), r = w(() => e.value + 1), g = (C) => {
+      m("update:expandedPrefix", o.value);
+      const T = a.value[C];
+      "items" in T || p.value.push(T.route);
+    };
+    return (C, T) => {
+      const ee = le("MenuSubsection", !0);
+      return d(), S(V, null, [
+        u(t) ? (d(), S(V, { key: 0 }, [
+          u(e) === 0 ? (d(), S(V, { key: 0 }, [
+            C.fullWidth ? (d(), y(z, {
+              key: 0,
+              class: "section",
+              elevation: "elevated"
+            }, {
+              default: h(() => [
+                E(L(u(f)(u(t)).toUpperCase()), 1)
+              ]),
+              _: 1
+            })) : (d(), y(K, {
+              key: 1,
+              class: "section-collapsed",
+              elevation: "elevated",
+              size: "large-3",
+              value: "dots-horizontal-rounded"
+            }))
+          ], 64)) : (d(), y(Q, {
             key: 1,
-            active: b.value,
-            icon: i(n),
-            iconBackend: i(u),
-            label: i(t),
-            level: i(l),
+            onClick: T[0] || (T[0] = () => m("update:expandedPrefix", u(o))),
+            active: u(s).startsWith(u(o)),
+            fullWidth: C.fullWidth,
+            icon: u(_),
+            iconBackend: u(i),
+            label: C.fullWidth ? u(t) : void 0,
+            level: u(e),
             withSublevel: ""
-          }, null, 8, ["active", "icon", "iconBackend", "label", "level"]))
-        ], 64)) : z("", !0),
-        (d(!0), B(T, null, K(i(f), ($, j) => (d(), B(T, null, [
-          "items" in $ ? (d(), w(Q, {
-            key: 0,
-            icon: $.icon,
-            iconBackend: $.iconBackend,
-            items: $.items,
-            level: e.value,
-            label: $.label ? i(a)($.label) : "",
-            prefix: `${i(c)}${j}.`,
-            router: i(o),
-            translator: i(a)
-          }, null, 8, ["icon", "iconBackend", "items", "level", "label", "prefix", "router", "translator"])) : (d(), w(R, {
-            key: 1,
-            onClick: U(() => i(o).push($.route), ["prevent"]),
-            active: `${i(c)}${j}` === _.value,
-            icon: $.icon,
-            iconBackend: $.iconBackend,
-            label: i(a)($.label),
-            level: s.value,
-            link: i(o).resolve({ name: $.route.name }).href
-          }, null, 8, ["onClick", "active", "icon", "iconBackend", "label", "level", "link"]))
-        ], 64))), 256))
+          }, null, 8, ["active", "fullWidth", "icon", "iconBackend", "label", "level"]))
+        ], 64)) : M("", !0),
+        b(xe, {
+          expanded: u(e) === 0 || u(s).startsWith(u(o))
+        }, {
+          default: h(() => [
+            (d(!0), S(V, null, G(u(a), ($, q) => (d(), S(V, null, [
+              "items" in $ ? (d(), y(ee, {
+                key: 0,
+                "onUpdate:expandedPrefix": T[1] || (T[1] = (te) => m("update:expandedPrefix", te)),
+                expandedPrefix: u(s),
+                fullWidth: C.fullWidth,
+                icon: $.icon,
+                iconBackend: $.iconBackend,
+                items: $.items,
+                level: r.value,
+                label: $.label ? u(f)($.label) : "",
+                prefix: `${u(o)}${q}.`,
+                router: u(p),
+                translator: u(f)
+              }, null, 8, ["expandedPrefix", "fullWidth", "icon", "iconBackend", "items", "level", "label", "prefix", "router", "translator"])) : C.fullWidth || u(e) === 0 ? (d(), y(Q, {
+                key: 1,
+                onClick: U(() => g(q), ["prevent"]),
+                active: `${u(o)}${q}` === v.value,
+                fullWidth: C.fullWidth,
+                icon: $.icon,
+                iconBackend: $.iconBackend,
+                label: C.fullWidth ? u(f)($.label) : void 0,
+                level: n.value,
+                link: u(p).resolve($.route).href
+              }, null, 8, ["onClick", "active", "fullWidth", "icon", "iconBackend", "label", "level", "link"])) : M("", !0)
+            ], 64))), 256))
+          ]),
+          _: 1
+        }, 8, ["expanded"])
       ], 64);
     };
   }
 });
-const be = /* @__PURE__ */ S(fe, [["__scopeId", "data-v-e2b93ab7"]]), we = (v) => (Y("data-v-00bfa0a4"), v = v(), Z(), v), ke = { class: "side-menu" }, ye = { class: "items" }, ge = /* @__PURE__ */ we(() => /* @__PURE__ */ F("div", { class: "pixel" }, " ", -1)), $e = /* @__PURE__ */ h({
+const Ie = /* @__PURE__ */ x(Se, [["__scopeId", "data-v-5930d33d"]]), Be = (c) => (X("data-v-303139ca"), c = c(), Y(), c), Ce = { class: "items" }, Me = /* @__PURE__ */ Be(() => /* @__PURE__ */ A("div", { class: "pixel" }, " ", -1)), Te = /* @__PURE__ */ k({
   __name: "SideMenu",
   props: {
     brandText: {},
+    fullWidth: { type: Boolean },
     menu: {},
     router: {},
     translator: { type: Function }
   },
-  setup(v) {
-    const m = v, { router: n } = I(m);
-    return (u, f) => (d(), B("div", ke, [
-      F("div", {
+  setup(c) {
+    const m = c, l = I(""), s = I(!1), { fullWidth: _, router: i } = B(m), a = w(() => _.value || s.value);
+    return Z(i.value.currentRoute, (t) => {
+      const e = t.meta.menuItem ?? "";
+      l.value = e.substring(0, e.lastIndexOf(".") + 1);
+    }, { immediate: !0 }), (t, e) => (d(), S("div", {
+      class: R(["side-menu", { "full-width": a.value }]),
+      onMouseenter: e[2] || (e[2] = (o) => s.value = !0),
+      onMouseleave: e[3] || (e[3] = (o) => s.value = !1)
+    }, [
+      A("div", {
         class: "brand",
-        onClick: f[0] || (f[0] = (t) => i(n).push({ name: "default" }))
+        onClick: e[0] || (e[0] = (o) => u(i).push({ name: "default" }))
       }, [
-        y(oe),
-        y(re, {
+        b(se),
+        b(ve, {
           elevation: "elevated-3",
           size: "large-4"
         }, {
-          default: k(() => [
-            V(x(u.brandText), 1)
+          default: h(() => [
+            E(L(t.brandText), 1)
           ]),
           _: 1
         })
       ]),
-      F("div", ye, [
-        (d(!0), B(T, null, K(u.menu, (t, l) => (d(), w(be, {
-          icon: t.icon,
-          iconBackend: t.iconBackend,
-          items: t.items,
-          label: t.label ?? "",
-          prefix: `${l}.`,
-          router: i(n),
-          translator: u.translator
-        }, null, 8, ["icon", "iconBackend", "items", "label", "prefix", "router", "translator"]))), 256)),
-        ge
+      A("div", Ce, [
+        (d(!0), S(V, null, G(t.menu, (o, p) => (d(), y(Ie, {
+          expandedPrefix: l.value,
+          "onUpdate:expandedPrefix": e[1] || (e[1] = (f) => l.value = f),
+          fullWidth: a.value,
+          icon: o.icon,
+          iconBackend: o.iconBackend,
+          items: o.items,
+          label: o.label ?? "",
+          prefix: `${p}.`,
+          router: u(i),
+          translator: t.translator
+        }, null, 8, ["expandedPrefix", "fullWidth", "icon", "iconBackend", "items", "label", "prefix", "router", "translator"]))), 256)),
+        Me
       ])
-    ]));
+    ], 34));
   }
 });
-const Oe = /* @__PURE__ */ S($e, [["__scopeId", "data-v-00bfa0a4"]]), he = /* @__PURE__ */ h({
+const Ze = /* @__PURE__ */ x(Te, [["__scopeId", "data-v-303139ca"]]), Ve = /* @__PURE__ */ k({
   __name: "ThemeToggle",
   props: {
     modelValue: {}
   },
   emits: ["update:modelValue"],
-  setup(v, { emit: m }) {
-    const n = v, { modelValue: u } = I(n), f = p(
-      () => E(u.value).when("dark", () => "moon").when("light", () => "sun").or((c) => {
-        throw new N(c);
+  setup(c, { emit: m }) {
+    const l = c, { modelValue: s } = B(l), _ = w(
+      () => F(s.value).when("dark", () => "moon").when("light", () => "sun").or((t) => {
+        throw new N(t);
       }).done
-    ), t = p(
-      () => E(u.value).when("dark", () => "accent").when("light", () => "important").or((c) => {
-        throw new N(c);
+    ), i = w(
+      () => F(s.value).when("dark", () => "accent").when("light", () => "important").or((t) => {
+        throw new N(t);
       }).done
-    ), l = () => {
-      const c = E(u.value).when("dark", () => "light").when("light", () => "dark").or((o) => {
-        throw new N(o);
+    ), a = () => {
+      const t = F(s.value).when("dark", () => "light").when("light", () => "dark").or((e) => {
+        throw new N(e);
       }).done;
-      m("update:modelValue", c);
+      m("update:modelValue", t);
     };
-    return (c, o) => (d(), w(A, { class: "theme-toggle" }, {
-      default: k(() => [
-        y(H, {
-          onClick: o[0] || (o[0] = () => l()),
-          icon: f.value,
-          mood: t.value,
+    return (t, e) => (d(), y(W, { class: "theme-toggle" }, {
+      default: h(() => [
+        b(j, {
+          onClick: e[0] || (e[0] = () => a()),
+          icon: _.value,
+          mood: i.value,
           outline: "",
           size: "large-2",
           shape: "round"
@@ -475,53 +582,53 @@ const Oe = /* @__PURE__ */ S($e, [["__scopeId", "data-v-00bfa0a4"]]), he = /* @_
     }));
   }
 });
-const Pe = /* @__PURE__ */ S(he, [["__scopeId", "data-v-8832a6ee"]]), Se = { class: "toasts" }, Ie = /* @__PURE__ */ h({
+const et = /* @__PURE__ */ x(Ve, [["__scopeId", "data-v-8832a6ee"]]), We = { class: "toasts" }, Ee = /* @__PURE__ */ k({
   __name: "Toasts",
   props: {
     toasts: {}
   },
   emits: ["removeToast"],
-  setup(v, { emit: m }) {
-    const n = v, { toasts: u } = I(n), f = p(
-      () => Object.entries(u.value).reverse().map(([o, a]) => [Number(o), a])
-    ), t = M([]), l = M([]), c = (o) => {
-      t.value.includes(o) || (t.value.push(o), clearTimeout(l.value[o]), delete l.value[o], window.setTimeout(() => {
-        m("removeToast", o), t.value = t.value.filter((a) => a !== o);
+  setup(c, { emit: m }) {
+    const l = c, { toasts: s } = B(l), _ = w(
+      () => Object.entries(s.value).reverse().map(([e, o]) => [Number(e), o])
+    ), i = I([]), a = I([]), t = (e) => {
+      i.value.includes(e) || (i.value.push(e), clearTimeout(a.value[e]), delete a.value[e], window.setTimeout(() => {
+        m("removeToast", e), i.value = i.value.filter((o) => o !== e);
       }, 500));
     };
-    return ee(
-      u,
+    return Z(
+      s,
       () => {
-        for (const o of u.value)
-          o.id in l.value || (l.value[o.id] = window.setTimeout(() => {
-            c(o.id);
+        for (const e of s.value)
+          e.id in a.value || (a.value[e.id] = window.setTimeout(() => {
+            t(e.id);
           }, 5e3));
       },
       { deep: !0, immediate: !0 }
-    ), (o, a) => (d(), B("div", Se, [
-      (d(!0), B(T, null, K(f.value, ([_, b]) => (d(), w(te, {
-        onClick: () => c(_),
-        class: J({ "fade-out": t.value.includes(b.id) }),
-        icon: b.icon,
-        iconBackend: b.iconBackend,
-        key: `toast-${b.id}`,
-        mood: b.mood,
-        message: b.message,
-        title: b.title
+    ), (e, o) => (d(), S("div", We, [
+      (d(!0), S(V, null, G(_.value, ([p, f]) => (d(), y(ue, {
+        onClick: () => t(p),
+        class: R({ "fade-out": i.value.includes(f.id) }),
+        icon: f.icon,
+        iconBackend: f.iconBackend,
+        key: `toast-${f.id}`,
+        mood: f.mood,
+        message: f.message,
+        title: f.title
       }, null, 8, ["onClick", "class", "icon", "iconBackend", "mood", "message", "title"]))), 128))
     ]));
   }
 });
-const Re = /* @__PURE__ */ S(Ie, [["__scopeId", "data-v-3d45b4ea"]]);
+const tt = /* @__PURE__ */ x(Ee, [["__scopeId", "data-v-3d45b4ea"]]);
 export {
-  Ke as AccountMenu,
-  qe as CurrencySelector,
-  He as Form,
-  je as Header,
-  Ge as LocaleSelector,
-  Oe as SideMenu,
-  R as SideMenuItem,
-  be as SideMenuSubsection,
-  Pe as ThemeToggle,
-  Re as Toasts
+  je as AccountMenu,
+  Je as CurrencySelector,
+  Qe as Form,
+  Xe as Header,
+  Ye as LocaleSelector,
+  Ze as SideMenu,
+  Q as SideMenuItem,
+  Ie as SideMenuSubsection,
+  et as ThemeToggle,
+  tt as Toasts
 };

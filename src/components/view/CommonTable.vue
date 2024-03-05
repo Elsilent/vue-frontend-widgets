@@ -1308,9 +1308,11 @@ watch(columns, () => {
   inlineFilters.value = makeInlineFilters();
 });
 
-watch(defaultOrderBy, () => {
-  setOrderByFromDefault(true);
-});
+if (defaultOrderBy) {
+  watch(defaultOrderBy, () => {
+    setOrderByFromDefault(true);
+  });
+}
 
 if (request) {
   watch(
