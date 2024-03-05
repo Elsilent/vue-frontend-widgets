@@ -108,13 +108,12 @@ const style = computed(() => ({
       horizontal='center',
       vertical='center',
     )
-      Info {{ metric.label }}
     Align.cell.header-cell(
       :class="{ 'row-last': metricCode === lastMetricCode }",
-      horizontal='center',
+      horizontal='left',
       vertical='center',
     )
-      Info {{ metric.label }} (%)
+      Info {{ metric.label }}
   template(v-for='(row, dimension) in rows')
     Align.cell.row-first(vertical='center')
       slot(name='cell(dimension)', :value='{name: dimension, link: row.link}')
@@ -127,7 +126,7 @@ const style = computed(() => ({
         Info {{ metric.formatter(row[metricCode]) }}
       Align.cell(
         :class="{ 'row-last': metricCode === lastMetricCode }",
-        horizontal='center',
+        horizontal='left',
         vertical='center',
       )
         ProgressBar(
@@ -146,12 +145,14 @@ const style = computed(() => ({
 @import '../../styles/transition.scss';
 
 .kpi-distribution-table {
+  --progressBarWidth: 140px;
   display: grid;
   grid-template-columns: var(--alignment);
 
   > .cell {
     padding: $padding-size-small-2;
     white-space: nowrap;
+    position: relative;
 
     &.row-first {
       padding-left: $padding-size-large;
@@ -171,8 +172,17 @@ const style = computed(() => ({
     }
 
     > .progress-bar {
-      margin-right: $padding-size-normal;
-      width: 100px;
+      width: var(--progressBarWidth);
+    }
+
+    > .badge {
+      @include apply-color(background-color, background-elevated-2);
+
+      position: absolute;
+      left: calc(var(--progressBarWidth) / 2 + $padding-size-small-2);
+      box-sizing: border-box;
+      padding: $padding-size-small-4 $padding-size-normal;
+      transform: translateX(-50%);
     }
   }
 }
