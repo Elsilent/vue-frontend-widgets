@@ -13,6 +13,5 @@
   max-width: $logo-size;
   min-height: $logo-size;
   min-width: $logo-size;
-  transform: translateY(-0.5px);
 }
 </style>

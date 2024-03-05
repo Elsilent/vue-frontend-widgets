@@ -1,13 +1,14 @@
 <script lang="ts" setup>
 import { computed, ref, toRefs, watch } from 'vue';
 import type { Router } from 'vue-router';
+import BrandTextImage from '../../components/image/BrandText.vue';
 import BrandText from '../../components/label/BrandText.vue';
 import Logo from '../../components/image/Logo.vue';
 import MenuSubsection from './side_menu/MenuSubsection.vue';
 import type { Menu } from '../../utils/menu';
 
 const props = defineProps<{
-  brandText: string;
+  brandText?: string;
   fullWidth: boolean;
   menu: Menu;
   router: Router;
@@ -22,11 +23,15 @@ const { fullWidth, router } = toRefs(props);
 
 const isFullWidth = computed(() => fullWidth.value || forceFullWidth.value);
 
-watch(router.value.currentRoute, (currentRoute) => {
-  const menuItem = (currentRoute.meta.menuItem as string | undefined) ?? '';
+watch(
+  router.value.currentRoute,
+  (currentRoute) => {
+    const menuItem = (currentRoute.meta.menuItem as string | undefined) ?? '';
 
-  expandedPrefix.value = menuItem.substring(0, menuItem.lastIndexOf('.') + 1);
-}, { immediate: true });
+    expandedPrefix.value = menuItem.substring(0, menuItem.lastIndexOf('.') + 1);
+  },
+  { immediate: true },
+);
 </script>
 
 <template lang="pug">
@@ -35,12 +40,15 @@ watch(router.value.currentRoute, (currentRoute) => {
   @mouseleave="forceFullWidth = false",
   :class="{ 'full-width': isFullWidth }",
 )
-  .brand(@click="router.push({ name: 'default' })")
-    Logo
-    BrandText(
-      elevation='elevated-3',
-      size='large-4',
-    ) {{ brandText }}
+  .brand-container(@click="router.push({ name: 'default' })")
+    .brand
+      Logo
+      BrandText(
+        v-if="brandText",
+        elevation='elevated-3',
+        size='large-4',
+      ) {{ brandText }}
+      BrandTextImage(v-else)
   .items
     template(v-for="(section, code) in menu")
       MenuSubsection(
@@ -78,34 +86,41 @@ watch(router.value.currentRoute, (currentRoute) => {
   &.full-width {
     width: $side-menu-width;
 
-    > .brand {
-      > .brand-text {
-        opacity: 1;
+    > .brand-container {
+      > .brand {
+        > .brand-text {
+          opacity: 1;
+        }
       }
     }
   }
 
-  > .brand {
+  > .brand-container {
     @include apply-shadow(large-header);
 
     align-items: center;
     cursor: pointer;
     display: flex;
     height: $padding-size-large-2 * 2 + $font-size-normal;
-    margin: 0 $padding-size-small;
+    padding: 0 $padding-size-large;
     overflow: hidden;
     user-select: none;
-    width: 100%;
 
-    > .brand-text {
-      opacity: 0;
-      transition-duration: $transition-duration-normal;
-      transition-property: color, opacity;
-      white-space: nowrap;
-    }
+    > .brand {
+      display: flex;
+      flex: 1;
 
-    > .logo + .brand-text {
-      margin-left: 0.5rem;
+      > .brand-text {
+        flex: 1;
+        opacity: 0;
+        transition-duration: $transition-duration-normal;
+        transition-property: color, opacity;
+        white-space: nowrap;
+      }
+
+      > .logo + .brand-text {
+        margin-left: 1rem;
+      }
     }
   }
 

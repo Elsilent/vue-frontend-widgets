@@ -7,7 +7,11 @@ $-shadows: (
   card: 0 $-shadow-base-size * 0.5 $-shadow-base-size,
   dragged: 0 $-shadow-base-size * 0.25 $-shadow-base-size * 0.5,
   large: 0 0 $-shadow-base-size * 2,
-  large-header: 0 (-$-shadow-base-size * 2) $-shadow-base-size * 2 $-shadow-base-size * 2,
+  large-header: 0
+    (
+      -$-shadow-base-size * 2,
+    )
+    $-shadow-base-size * 2 $-shadow-base-size * 2,
 );
 
 @mixin apply-shadow($shadow-size) {
@@ -17,9 +21,5 @@ $-shadows: (
     @error "Shadow `#{$shadow-size}` not found.";
   }
 
-  @include apply-color(
-    box-shadow,
-    shadow-normal,
-    $value-prefix: $-prefix,
-  );
+  @include apply-color(box-shadow, shadow-normal, $value-prefix: $-prefix);
 }
