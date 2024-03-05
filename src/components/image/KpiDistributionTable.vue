@@ -108,7 +108,7 @@ const style = computed(() => ({
       horizontal='center',
       vertical='center',
     )
-    Align.cell.header-cell(
+    Align.cell.header-cell.metric(
       :class="{ 'row-last': metricCode === lastMetricCode }",
       horizontal='left',
       vertical='center',
@@ -124,9 +124,10 @@ const style = computed(() => ({
         vertical='center',
       )
         Info {{ metric.formatter(row[metricCode]) }}
-      Align.cell(
+      Align.cell.metric(
+        :column="true",
         :class="{ 'row-last': metricCode === lastMetricCode }",
-        horizontal='left',
+        horizontal='center',
         vertical='center',
       )
         ProgressBar(
@@ -152,7 +153,6 @@ const style = computed(() => ({
   > .cell {
     padding: $padding-size-small-2;
     white-space: nowrap;
-    position: relative;
 
     &.row-first {
       padding-left: $padding-size-large;
@@ -160,6 +160,11 @@ const style = computed(() => ({
 
     &.row-last {
       padding-right: $padding-size-large;
+    }
+
+    &.metric {
+      max-width: var(--progressBarWidth);
+      width: 100%;
     }
 
     &:not(.header-cell) {
@@ -172,17 +177,16 @@ const style = computed(() => ({
     }
 
     > .progress-bar {
-      width: var(--progressBarWidth);
+      max-width: var(--progressBarWidth);
+      width: 100%;
     }
 
     > .badge {
       @include apply-color(background-color, background-elevated-2);
 
-      position: absolute;
-      left: calc(var(--progressBarWidth) / 2 + $padding-size-small-2);
-      box-sizing: border-box;
       padding: $padding-size-small-4 $padding-size-normal;
-      transform: translateX(-50%);
+      margin-top: -27.5px;
+      isolation: isolate;
     }
   }
 }
