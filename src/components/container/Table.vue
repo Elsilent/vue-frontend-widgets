@@ -181,8 +181,12 @@ const updateTableSize = () => {
       return info;
     }
 
-    const mainColumns = [...table.querySelectorAll('.cell.column-main:not(.column-main-extended)')] as HTMLElement[];
-    const mainExtendedColumns = [...table.querySelectorAll('.cell.column-main.column-main-extended')] as HTMLElement[];
+    const mainColumns = [
+      ...table.querySelectorAll('.cell.column-main:not(.column-main-extended)'),
+    ] as HTMLElement[];
+    const mainExtendedColumns = [
+      ...table.querySelectorAll('.cell.column-main.column-main-extended'),
+    ] as HTMLElement[];
     const secondaryColumn = table.querySelector('.cell.column-secondary') as HTMLElement;
     const totalColumn = table.querySelector('.cell.total') as HTMLElement;
 

@@ -107,11 +107,8 @@ const whenBlurred = (event: FocusEvent) => {
     newValueFilter.value = '';
 
     newValueInput.value?.blur();
-
-    return;
+    clearSelectedItem();
   }
-
-  newValueInput.value?.focus();
 };
 
 const toggleItem = (value: string | number | symbol) => {
@@ -130,10 +127,12 @@ const toggleItem = (value: string | number | symbol) => {
   }
 
   emit('update:modelValue', newValue);
+  newValueInput.value?.focus({ preventScroll: true });
 };
 
 const updateValue = (value: (string | number | symbol)[]) => {
   emit('update:modelValue', value);
+  newValueInput.value?.focus({ preventScroll: true });
 };
 </script>
 
@@ -189,6 +188,7 @@ Align.multiselect-container(
         v-for='(item, itemCode, index) in dropdownItems',
         @click.stop="toggleItem(itemCode)",
         :class='{ current: modelValue?.includes(itemCode), selected: selectedItem === index }',
+        @mouseover="selectedItem = index",
       ) {{ item }}
 </template>
 
@@ -302,18 +302,17 @@ $-item-height: $font-size-normal * 1.5 + $padding-size-small-2 * 2 - 2;
     transition-duration: $transition-duration-fast;
     transition-property: height, top, opacity;
     width: 100%;
-    z-index: 100;
+    z-index: 1001;
 
     > .item {
       transition-duration: $transition-duration-fast-2;
 
-      &:hover,
       &.selected {
         @include apply-color(background-color, background-lowered);
       }
 
       &.current {
-        &:not(:hover, .selected) {
+        &:not(.selected) {
           @include apply-color(background-color, background-accent);
           @include apply-color(color, white);
         }

@@ -110,8 +110,7 @@ component.menu-item(
   }
 
   &.level-1 {
-    padding: $padding-size-menu-large 0 $padding-size-menu-large
-      $padding-size-menu-large;
+    padding: $padding-size-menu-large 0 $padding-size-menu-large $padding-size-menu-large;
     transition: background-color 0.2s, box-shadow 0.2s;
 
     &.active.with-sublevel {
@@ -124,13 +123,11 @@ component.menu-item(
   }
 
   &.level-2 {
-    padding: $padding-size-menu-normal 0 $padding-size-menu-normal
-      $padding-size-menu-large * 3.5;
+    padding: $padding-size-menu-normal 0 $padding-size-menu-normal $padding-size-menu-large * 3.5;
   }
 
   &.level-3 {
-    padding: $padding-size-menu-normal 0 $padding-size-menu-normal
-      $padding-size-menu-large * 4.5;
+    padding: $padding-size-menu-normal 0 $padding-size-menu-normal $padding-size-menu-large * 4.5;
   }
 
   &:hover {

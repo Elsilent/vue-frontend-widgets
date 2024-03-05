@@ -22,11 +22,15 @@ const { fullWidth, router } = toRefs(props);
 
 const isFullWidth = computed(() => fullWidth.value || forceFullWidth.value);
 
-watch(router.value.currentRoute, (currentRoute) => {
-  const menuItem = (currentRoute.meta.menuItem as string | undefined) ?? '';
+watch(
+  router.value.currentRoute,
+  (currentRoute) => {
+    const menuItem = (currentRoute.meta.menuItem as string | undefined) ?? '';
 
-  expandedPrefix.value = menuItem.substring(0, menuItem.lastIndexOf('.') + 1);
-}, { immediate: true });
+    expandedPrefix.value = menuItem.substring(0, menuItem.lastIndexOf('.') + 1);
+  },
+  { immediate: true },
+);
 </script>
 
 <template lang="pug">
