@@ -181,7 +181,8 @@ const updateTableSize = () => {
       return info;
     }
 
-    const mainColumns = [...table.querySelectorAll('.cell.column-main')] as HTMLElement[];
+    const mainColumns = [...table.querySelectorAll('.cell.column-main:not(.column-main-extended)')] as HTMLElement[];
+    const mainExtendedColumns = [...table.querySelectorAll('.cell.column-main.column-main-extended')] as HTMLElement[];
     const secondaryColumn = table.querySelector('.cell.column-secondary') as HTMLElement;
     const totalColumn = table.querySelector('.cell.total') as HTMLElement;
 
@@ -197,6 +198,15 @@ const updateTableSize = () => {
       info.hasSecondary = true;
       info.secondaryColumnHeight = secondaryColumn.offsetHeight;
       totalColumnHeights.push(info.secondaryColumnHeight);
+    }
+
+    if (mainExtendedColumns.length > 0) {
+      info.width = mainExtendedColumns.reduce((sum, { offsetWidth }) => sum + offsetWidth, 0);
+
+      if (mainColumns.length === 0) {
+        info.mainColumnHeight = mainExtendedColumns[0].offsetHeight;
+        totalColumnHeights.push(info.mainColumnHeight);
+      }
     }
 
     // We get a total column height for columns without colspan.
