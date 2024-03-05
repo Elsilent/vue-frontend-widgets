@@ -1,6 +1,6 @@
-import { A as me, L as ge } from "./Logo-6077b57e.js";
-import { defineComponent as C, toRefs as I, computed as p, openBlock as f, createBlock as L, normalizeClass as x, withCtx as a, createVNode as t, createTextVNode as g, toDisplayString as b, unref as i, createCommentVNode as q, createElementBlock as y, normalizeStyle as O, ref as P, watch as j, Fragment as z, renderList as D, renderSlot as F } from "vue";
-import { C as T, A as v, I as A } from "./Icon-8f2ed8ba.js";
+import { A as pe, L as ge } from "./Logo-6077b57e.js";
+import { defineComponent as C, toRefs as I, computed as _, openBlock as v, createBlock as L, normalizeClass as x, withCtx as a, createVNode as t, createTextVNode as g, toDisplayString as b, unref as i, createCommentVNode as q, createElementBlock as y, normalizeStyle as O, ref as P, watch as j, Fragment as z, renderList as D, renderSlot as F } from "vue";
+import { C as T, A as f, I as A } from "./Icon-8f2ed8ba.js";
 import { I as k } from "./Info-54758b60.js";
 import { L as S } from "./LineBarChart-8bc1f7a1.js";
 import { a as he } from "./LineBarChart-8bc1f7a1.js";
@@ -30,9 +30,9 @@ const M = 0.01, H = (d, s) => {
     value: {}
   },
   setup(d) {
-    const s = d, { comparisonValue: e, inversed: c, value: l } = I(s), m = p(
+    const s = d, { comparisonValue: e, inversed: c, value: l } = I(s), p = _(
       () => l === void 0 || l.value === void 0 || e === void 0 || e.value === void 0
-    ), n = p(() => m.value ? "equal" : H(l.value, e.value)), B = p(() => {
+    ), n = _(() => p.value ? "equal" : H(l.value, e.value)), B = _(() => {
       const o = "minus", r = "up-arrow-alt", u = "down-arrow-alt";
       switch (n.value) {
         case "equal":
@@ -43,7 +43,7 @@ const M = 0.01, H = (d, s) => {
           return u;
       }
       return "less" in n.value ? u : r;
-    }), K = p(() => {
+    }), K = _(() => {
       switch (n.value) {
         case "equal":
           return 0;
@@ -53,7 +53,7 @@ const M = 0.01, H = (d, s) => {
           return -1;
       }
       return "less" in n.value ? n.value.less : n.value.greater;
-    }), _ = p(() => {
+    }), m = _(() => {
       const o = "neutral", r = c.value ? "important" : "positive", u = c.value ? "positive" : "important";
       switch (n.value) {
         case "equal":
@@ -64,16 +64,16 @@ const M = 0.01, H = (d, s) => {
           return u;
       }
       return "less" in n.value ? u : r;
-    }), w = p(() => ({
-      loading: m.value
+    }), w = _(() => ({
+      loading: p.value
     }));
-    return (o, r) => (f(), L(T, {
+    return (o, r) => (v(), L(T, {
       class: x(["kpi-card", w.value])
     }, {
       default: a(() => [
-        t(v, { column: "" }, {
+        t(f, { column: "" }, {
           default: a(() => [
-            t(v, { vertical: "center" }, {
+            t(f, { vertical: "center" }, {
               default: a(() => [
                 t(k, {
                   class: "flex-max",
@@ -96,16 +96,16 @@ const M = 0.01, H = (d, s) => {
               ]),
               _: 1
             }),
-            t(v, {
+            t(f, {
               class: "spacing-small",
               vertical: "center"
             }, {
               default: a(() => [
                 t(A, {
-                  mood: _.value,
+                  mood: m.value,
                   value: B.value
                 }, null, 8, ["mood", "value"]),
-                t(k, { mood: _.value }, {
+                t(k, { mood: m.value }, {
                   default: a(() => [
                     g(b(i(N).proportion(K.value)), 1)
                   ]),
@@ -124,7 +124,7 @@ const M = 0.01, H = (d, s) => {
           ]),
           _: 1
         }),
-        i(l) === void 0 || i(e) === void 0 ? (f(), L(v, {
+        i(l) === void 0 || i(e) === void 0 ? (v(), L(f, {
           key: 0,
           class: "loader-container no-spacing",
           horizontal: "center",
@@ -146,11 +146,11 @@ const ie = /* @__PURE__ */ $(J, [["__scopeId", "data-v-2721093f"]]), de = /* @__
     mood: { default: () => ({ mood: "accent" }) }
   },
   setup(d) {
-    const s = d, { mood: e } = I(s), c = p(() => {
+    const s = d, { mood: e } = I(s), c = _(() => {
       const l = {};
       return "mood" in e.value ? l[`mood-background-${e.value.mood}`] = !0 : "chart" in e.value && (l[`chart-${e.value.chart}`] = !0), l;
     });
-    return (l, m) => (f(), y("div", {
+    return (l, p) => (v(), y("div", {
       class: x(["dot", c.value])
     }, null, 2));
   }
@@ -165,16 +165,16 @@ const Q = /* @__PURE__ */ C({
     value: {}
   },
   setup(d) {
-    const s = d, { value: e } = I(s), c = p(() => ({
+    const s = d, { value: e } = I(s), c = _(() => ({
       loading: e === void 0 || e.value === void 0
     }));
-    return (l, m) => (f(), L(T, {
+    return (l, p) => (v(), L(T, {
       class: x(["kpi-card", c.value])
     }, {
       default: a(() => [
-        t(v, { vertical: "center" }, {
+        t(f, { vertical: "center" }, {
           default: a(() => [
-            t(v, {
+            t(f, {
               class: "flex-max",
               column: ""
             }, {
@@ -205,7 +205,7 @@ const Q = /* @__PURE__ */ C({
           ]),
           _: 1
         }),
-        i(e) === void 0 ? (f(), L(v, {
+        i(e) === void 0 ? (v(), L(f, {
           key: 0,
           class: "loader-container no-spacing",
           horizontal: "center",
@@ -221,7 +221,7 @@ const Q = /* @__PURE__ */ C({
     }, 8, ["class"]));
   }
 });
-const fe = /* @__PURE__ */ $(Q, [["__scopeId", "data-v-e84b3f2e"]]), U = /* @__PURE__ */ C({
+const ve = /* @__PURE__ */ $(Q, [["__scopeId", "data-v-e84b3f2e"]]), U = /* @__PURE__ */ C({
   __name: "ProgressBar",
   props: {
     mood: {},
@@ -229,12 +229,12 @@ const fe = /* @__PURE__ */ $(Q, [["__scopeId", "data-v-e84b3f2e"]]), U = /* @__P
     size: { default: "large" }
   },
   setup(d) {
-    const s = d, { value: e, size: c } = I(s), l = p(() => ({
+    const s = d, { value: e, size: c } = I(s), l = _(() => ({
       "--width": `${e.value * 100}%`,
       "--height": c.value === "large" ? "30px" : "auto"
     }));
-    return (m, n) => (f(), y("div", {
-      class: x(["progress-bar", [`mood-background-${m.mood}`]]),
+    return (p, n) => (v(), y("div", {
+      class: x(["progress-bar", [`mood-background-${p.mood}`]]),
       style: O(l.value)
     }, null, 6));
   }
@@ -247,29 +247,29 @@ const W = /* @__PURE__ */ $(U, [["__scopeId", "data-v-ac82b9ec"]]), X = /* @__PU
     rows: {}
   },
   setup(d) {
-    const s = d, { metrics: e, rows: c } = I(s), l = p(() => {
-      const _ = Object.keys(e.value);
-      return _[_.length - 1];
-    }), m = (_ = !1) => {
+    const s = d, { metrics: e, rows: c } = I(s), l = _(() => {
+      const m = Object.keys(e.value);
+      return m[m.length - 1];
+    }), p = (m = !1) => {
       const w = {};
       for (const o of Object.values(c.value))
         for (const [r, u] of Object.entries(o))
-          r in w || (w[r] = 0), _ || (w[r] += +u);
+          r in w || (w[r] = 0), m || (w[r] += +u);
       return Object.keys(c.value).reduce((o, r) => (o[r] = Object.keys(e.value).reduce(
         (u, h) => (u[h] = w[h] === 0 ? 0 : c.value[r][h] / w[h], u),
         {}
       ), o), {});
-    }, n = P(m(!0));
+    }, n = P(p(!0));
     setTimeout(() => {
-      n.value = m();
+      n.value = p();
     }, 10), j(e, () => {
-      n.value = m();
+      n.value = p();
     }), j(c, () => {
-      n.value = m();
+      n.value = p();
     });
-    const B = p(
-      () => Object.values(e.value).map((_) => {
-        switch (_.align) {
+    const B = _(
+      () => Object.values(e.value).map((m) => {
+        switch (m.align) {
           case "left":
             return "min-content 1fr";
           case "center":
@@ -277,35 +277,35 @@ const W = /* @__PURE__ */ $(U, [["__scopeId", "data-v-ac82b9ec"]]), X = /* @__PU
             return "max-content 1fr";
         }
       }).join(" ")
-    ), K = p(() => ({
+    ), K = _(() => ({
       "--alignment": `max-content ${B.value}`
     }));
-    return (_, w) => (f(), y("div", {
+    return (m, w) => (v(), y("div", {
       class: "kpi-distribution-table",
       style: O(K.value)
     }, [
-      t(v, {
+      t(f, {
         class: "cell header-cell row-first",
         vertical: "center"
       }, {
         default: a(() => [
           t(k, null, {
             default: a(() => [
-              g(b(_.dimensionLabel), 1)
+              g(b(m.dimensionLabel), 1)
             ]),
             _: 1
           })
         ]),
         _: 1
       }),
-      (f(!0), y(z, null, D(i(e), (o, r) => (f(), y(z, null, [
-        t(v, {
+      (v(!0), y(z, null, D(i(e), (o, r) => (v(), y(z, null, [
+        t(f, {
           class: "cell header-cell",
           horizontal: "center",
           vertical: "center"
         }),
-        t(v, {
-          class: x(["cell header-cell", { "row-last": r === l.value }]),
+        t(f, {
+          class: x(["cell header-cell metric", { "row-last": r === l.value }]),
           horizontal: "left",
           vertical: "center"
         }, {
@@ -320,13 +320,13 @@ const W = /* @__PURE__ */ $(U, [["__scopeId", "data-v-ac82b9ec"]]), X = /* @__PU
           _: 2
         }, 1032, ["class"])
       ], 64))), 256)),
-      (f(!0), y(z, null, D(i(c), (o, r) => (f(), y(z, null, [
-        t(v, {
+      (v(!0), y(z, null, D(i(c), (o, r) => (v(), y(z, null, [
+        t(f, {
           class: "cell row-first",
           vertical: "center"
         }, {
           default: a(() => [
-            F(_.$slots, "cell(dimension)", {
+            F(m.$slots, "cell(dimension)", {
               value: { name: r, link: o.link }
             }, () => [
               t(G, {
@@ -341,8 +341,8 @@ const W = /* @__PURE__ */ $(U, [["__scopeId", "data-v-ac82b9ec"]]), X = /* @__PU
           ]),
           _: 2
         }, 1024),
-        (f(!0), y(z, null, D(i(e), (u, h) => (f(), y(z, null, [
-          t(v, {
+        (v(!0), y(z, null, D(i(e), (u, h) => (v(), y(z, null, [
+          t(f, {
             class: "cell",
             horizontal: u.align ?? "center",
             vertical: "center"
@@ -357,9 +357,10 @@ const W = /* @__PURE__ */ $(U, [["__scopeId", "data-v-ac82b9ec"]]), X = /* @__PU
             ]),
             _: 2
           }, 1032, ["horizontal"]),
-          t(v, {
-            class: x(["cell", { "row-last": h === l.value }]),
-            horizontal: "left",
+          t(f, {
+            class: x(["cell metric", { "row-last": h === l.value }]),
+            column: !0,
+            horizontal: "center",
             vertical: "center"
           }, {
             default: a(() => [
@@ -384,14 +385,14 @@ const W = /* @__PURE__ */ $(U, [["__scopeId", "data-v-ac82b9ec"]]), X = /* @__PU
     ], 4));
   }
 });
-const ve = /* @__PURE__ */ $(X, [["__scopeId", "data-v-f6abc468"]]);
+const fe = /* @__PURE__ */ $(X, [["__scopeId", "data-v-ecf75058"]]);
 export {
-  me as Avatar,
+  pe as Avatar,
   ie as ComparisonKpiCard,
   de as Dot,
   A as Icon,
-  fe as KpiCard,
-  ve as KpiDistributionTable,
+  ve as KpiCard,
+  fe as KpiDistributionTable,
   he as LineBarChart,
   S as Loader,
   ge as Logo,
