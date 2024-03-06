@@ -8,7 +8,6 @@ import Header from '../label/Header.vue';
 import Icon from '../image/Icon.vue';
 import Info from '../label/Info.vue';
 import Input from '../interaction/Input.vue';
-import Scrollable from '../container/Scrollable.vue';
 
 const props = defineProps<{
   applyLabel: string;
@@ -42,12 +41,6 @@ const enabledColumnContainers = ref<HTMLElement[]>([]);
 const filterValue = ref('');
 
 const visible = ref<boolean | undefined>(undefined);
-
-const groupsScrollPosition = ref<{ left: number; top: number }>({ left: 0, top: 0 });
-
-const columnsScrollPosition = ref<{ left: number; top: number }>({ left: 0, top: 0 });
-
-const enabledColumnsScrollPosition = ref<{ left: number; top: number }>({ left: 0, top: 0 });
 
 const draggedColumnKey = ref<string | undefined>(undefined);
 
@@ -99,12 +92,7 @@ const dragRawPosition = computed(() => {
     return undefined;
   }
 
-  return (
-    dragColumnStart.value +
-    dragPointerCurrent.value -
-    dragPointerStart.value -
-    enabledColumnsScrollPosition.value.top
-  );
+  return dragColumnStart.value + dragPointerCurrent.value - dragPointerStart.value;
 });
 
 const dragPosition = computed(() => {
@@ -293,10 +281,7 @@ Teleport(to="#app > .app-container")
                 template(v-if="currentGroup !== undefined && currentGroupColumns !== undefined")
                     Align.groups.flex-max(column)
                         Header(size="large-2") {{ groupsTitle }}
-                        Scrollable.flex-max.no-spacing(
-                            @update:scrollPosition="(scrollPosition) => groupsScrollPosition = scrollPosition",
-                            :scrollPosition="groupsScrollPosition",
-                        )
+                        .scrollable.flex-max.no-spacing
                             .item.no-spacing(
                                 v-for="[groupKey, groupName] in Object.entries(filteredGroupNames)",
                                 @click="() => setCurrentGroup(groupKey)",
@@ -305,10 +290,7 @@ Teleport(to="#app > .app-container")
                                 Info(size="small") {{ groupName }}
                     Align.group-columns.flex-max.no-spacing(column)
                         Header(size="large-2") {{ groupNames[currentGroup] }}
-                        Scrollable.flex-max.no-spacing(
-                            @update:scrollPosition="(scrollPosition) => columnsScrollPosition = scrollPosition",
-                            :scrollPosition="columnsScrollPosition",
-                        )
+                        .scrollable.flex-max.no-spacing
                             .item.no-spacing(
                                 v-for="[columnKey, column] in Object.entries(currentGroupColumns)",
                                 @click="() => toggleColumn(columnKey)",
@@ -326,12 +308,8 @@ Teleport(to="#app > .app-container")
                                 mood="important-alt",
                                 size="small",
                             ) {{ resetLabel }}
-                        Scrollable.flex-max.no-spacing(
-                            @update:scrollPosition="(scrollPosition) => enabledColumnsScrollPosition = scrollPosition",
-                            :contentClass="draggedColumnKey === undefined ? undefined : 'dragged'",
-                            :scrollPosition="enabledColumnsScrollPosition",
-                        )
-                            .items
+                        .scrollable
+                            .items.flex-max.no-spacing
                                 .item-container.no-spacing(
                                     v-for="columnKey in currentValue",
                                     ref="enabledColumnContainers",
@@ -390,6 +368,7 @@ Teleport(to="#app > .app-container")
 @import '../../styles/shadows.scss';
 @import '../../styles/spacing.scss';
 @import '../../styles/transition.scss';
+@import '../../styles/scrollbar.scss';
 
 @include default-spacing;
 
@@ -427,7 +406,10 @@ Teleport(to="#app > .app-container")
       padding-top: $padding-size-normal;
     }
 
-    &:deep(.scrollable-content) {
+    .scrollable {
+      @include scrollbar();
+
+      overflow-x: hidden;
       padding-bottom: math.div($padding-size-small-2, 2);
       transition-duration: $transition-duration-normal;
       transition-property: background-color;
@@ -442,6 +424,7 @@ Teleport(to="#app > .app-container")
         position: relative;
 
         > .item-container {
+          margin-right: -10px;
           > .item {
             padding-bottom: $padding-size-small-2;
             padding-left: $padding-size-large + $padding-size-small-2;
@@ -512,7 +495,7 @@ Teleport(to="#app > .app-container")
         cursor: pointer;
         margin-bottom: $padding-size-small-2;
         margin-left: $padding-size-small-2;
-        margin-right: $padding-size-small-2;
+        margin-right: 0;
         padding: $padding-size-small-2 $padding-size-large;
         position: relative;
 
