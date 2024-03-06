@@ -1,0 +1,41 @@
+@import './colors.scss';
+@import './radius.scss';
+
+@mixin scrollbar {
+  overflow-y: hidden;
+  scrollbar-gutter: stable;
+
+  &:hover {
+    overflow-y: auto;
+  }
+
+  &::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    @include apply-color(background-color, background-neutral, $opacity: 0.35);
+
+    cursor: pointer;
+    width: 6px;
+    border: 2px solid transparent;
+    border-radius: $border-radius-normal;
+    background-clip: padding-box;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    @include apply-color(background-color, background-neutral, $opacity: 0.75);
+  }
+
+  &::-webkit-scrollbar-thumb:active {
+    @include apply-color(background-color, background-neutral, $opacity: 1);
+  }
+
+  &::-webkit-scrollbar-track {
+    @include apply-color(border-color, background-neutral, $opacity: 0.15);
+
+    background-color: transparent;
+    border: 1px solid;
+    border-radius: $border-radius-normal;
+  }
+}
