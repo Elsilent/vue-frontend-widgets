@@ -147,7 +147,7 @@ const props = withDefaults(
      * - { column_name: ColumnLinkInfo, ... }
      * - ColumnLinkInfo:
      */
-    columnLinks?: Record<string, ColumnLinkInfo>;
+    columnLinks?: Record<string, ColumnLinkInfo | null>;
     /**
      * Provides the list of subcolumn info
      */
@@ -581,7 +581,11 @@ const getCachedDetails = async (kind: string, row: Record<string, any>) => {
 /**
  * Retrieves the URL to redirect the user based on row data
  */
-const getColumnLinkUrl = (columnLinkInfo: ColumnLinkInfo, row: Record<string, any>) => {
+const getColumnLinkUrl = (columnLinkInfo: ColumnLinkInfo | null, row: Record<string, any>) => {
+  if (!columnLinkInfo) {
+    return row.url;
+  }
+
   const url = new URL(columnLinkInfo.url, location.origin);
 
   if (Array.isArray(columnLinkInfo.columns)) {
@@ -830,8 +834,14 @@ const isColumnLinkable = (row: Record<string, any>, columnKey: string) => {
     return false;
   }
 
-  if ('disable_for' in columnLinks.value[columnKey]) {
-    if (columnLinks.value[columnKey].disable_for.includes(row[primaryColumn.value])) {
+  const columnLinkValue = columnLinks.value[columnKey];
+
+  if (columnLinkValue === null) {
+    return !!row.url;
+  }
+
+  if ('disable_for' in columnLinkValue) {
+    if (columnLinkValue.disable_for.includes(row[primaryColumn.value])) {
       return false;
     }
   }
@@ -1428,7 +1438,10 @@ if (request) {
               contrast,
               size="small",
             )
-              a.column-link(:href="getColumnLinkUrl(columnLinks[columnKey], row).toString()")
+              a.column-link(
+                :href="getColumnLinkUrl(columnLinks[columnKey], row).toString()"
+                :target="row.url ? '_blank' : '_self'"
+              )
                 | {{ getRowFormattedValue(value, columnKey, subcolumnKey, true) }}
             Info(
               v-else
@@ -1443,7 +1456,10 @@ if (request) {
             contrast,
             size="small",
           )
-            a.column-link(:href="getColumnLinkUrl(columnLinks[columnKey], row).toString()")
+            a.column-link(
+              :href="getColumnLinkUrl(columnLinks[columnKey], row).toString()"
+              :target="row.url ? '_blank' : '_self'"
+            )
               | {{ getRowFormattedValue(value, columnKey, subcolumnKey, true) }}
           CellHint(
             v-else-if="subindex === undefined && value >= 0.01 && columnKey in columnDetails",
