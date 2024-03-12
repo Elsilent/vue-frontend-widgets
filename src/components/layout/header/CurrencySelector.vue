@@ -77,7 +77,7 @@ Align.currency-selector(
     mood='neutral',
     outline,
     size='large-3',
-    shape='round',
+    shape='normal',
   )
   PopoverMenu.currency-menu.no-spacing(
     @select='(currency: string) => setCurrency(currency)',
@@ -90,4 +90,9 @@ Align.currency-selector(
 @import '../../../styles/spacing.scss';
 
 @include default-spacing;
+
+button.shape-normal.currency-button {
+  border-radius: 15px;
+  padding: 0 8px 0 8px;
+}
 </style>

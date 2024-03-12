@@ -111,7 +111,7 @@ const Ze = /* @__PURE__ */ k(pe, [["__scopeId", "data-v-6b125e88"]]), _e = /* @_
             mood: "neutral",
             outline: "",
             size: "large-3",
-            shape: "round"
+            shape: "normal"
           }, null, 8, ["label"]),
           w(O, {
             class: "currency-menu no-spacing",
@@ -125,7 +125,7 @@ const Ze = /* @__PURE__ */ k(pe, [["__scopeId", "data-v-6b125e88"]]), _e = /* @_
     }, 512));
   }
 });
-const et = /* @__PURE__ */ k(_e, [["__scopeId", "data-v-a650d612"]]), fe = /* @__PURE__ */ $({
+const et = /* @__PURE__ */ k(_e, [["__scopeId", "data-v-0cb2d935"]]), fe = /* @__PURE__ */ $({
   __name: "Form",
   props: {
     fields: {},
