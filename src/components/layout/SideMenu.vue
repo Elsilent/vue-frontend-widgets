@@ -71,6 +71,7 @@ watch(
 @import '../../styles/shadows.scss';
 @import '../../styles/spacing.scss';
 @import '../../styles/transition.scss';
+@import '../../styles/scrollbar.scss';
 
 .side-menu {
   @include apply-color(background-color, background-menu);
@@ -125,16 +126,17 @@ watch(
   }
 
   > .items {
+    @include scrollbar;
+
     flex: 1;
     overflow-x: hidden;
-    overflow-y: auto;
+
+    &:deep(> *) {
+      margin-right: -10px;
+    }
 
     > .pixel {
       font-size: $font-size-large;
-    }
-
-    &::-webkit-scrollbar {
-      width: 0;
     }
   }
 }
