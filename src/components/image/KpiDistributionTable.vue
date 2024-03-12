@@ -80,15 +80,17 @@ watch(rows, () => {
   metricDistribution.value = getMetricDistribution();
 });
 
+const PROGRESS_BAR_WIDTH = '140px';
+
 const metricsAlignment = computed(() =>
   Object.values(metrics.value)
     .map((metric) => {
       switch (metric.align) {
         case 'left':
-          return 'min-content 1fr';
+          return `1fr ${PROGRESS_BAR_WIDTH}`;
         case 'center':
         default:
-          return 'max-content 1fr';
+          return `1fr ${PROGRESS_BAR_WIDTH}`;
       }
     })
     .join(' '),
@@ -96,6 +98,7 @@ const metricsAlignment = computed(() =>
 
 const style = computed(() => ({
   '--alignment': `max-content ${metricsAlignment.value}`,
+  '--progressBarWidth': PROGRESS_BAR_WIDTH,
 }));
 </script>
 
@@ -146,13 +149,13 @@ const style = computed(() => ({
 @import '../../styles/transition.scss';
 
 .kpi-distribution-table {
-  --progressBarWidth: 140px;
   display: grid;
   grid-template-columns: var(--alignment);
 
   > .cell {
     padding: $padding-size-small-2;
     white-space: nowrap;
+    box-sizing: border-box;
 
     &.row-first {
       padding-left: $padding-size-large;
