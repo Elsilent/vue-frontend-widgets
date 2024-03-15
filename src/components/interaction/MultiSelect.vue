@@ -14,15 +14,17 @@ const props = withDefaults(
     modelValue?: (string | number | symbol)[];
     noInline?: boolean;
     showAllItemsItem?: boolean;
+    collapseTags?: boolean;
   }>(),
   {
     disabled: false,
     noInline: false,
     showAllItemsItem: false,
+    collapseTags: true,
   },
 );
 
-const { disabled, items, modelValue, showAllItemsItem } = toRefs(props);
+const { disabled, items, modelValue, showAllItemsItem, collapseTags } = toRefs(props);
 
 const active = ref(false);
 
@@ -161,6 +163,13 @@ Align.multiselect-container(
           v-if='allItemsSelected && allItemsLabel',
           :title='allItemsTitle',
         ) {{ allItemsLabel }}
+        template(v-else-if="collapseTags")
+          Info.current-value.no-spacing(
+            @click='() => toggleItem(selectedItems[0])',
+          ) {{ items[selectedItems[0]] }}
+          template(v-if="selectedItems.length > 1")
+            Info.current-value.no-spacing
+              | {{ selectedItems.length - 1 }} more
         Info.current-value.no-spacing(
           v-else,
           v-for='itemCode in selectedItems',
@@ -270,7 +279,7 @@ $-item-height: $font-size-normal * 1.5 + $padding-size-small-2 * 2 - 2;
       font-family: $font-family-normal;
       font-size: $font-size-normal;
       outline: none;
-      width: min-content;
+      width: 100%;
     }
 
     > .icon {
