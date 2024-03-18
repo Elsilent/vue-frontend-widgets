@@ -8,7 +8,7 @@ import { Separator as F } from "./marker.js";
 import { f as R } from "./format-14736529.js";
 import { _ as C } from "./_plugin-vue_export-helper-dad06003.js";
 import { B as W } from "./Badge-86839218.js";
-import { L as G } from "./Link-3e37d26a.js";
+import { L as G } from "./Link-dfe99e72.js";
 import "./utils/error.js";
 import "./match-b8889c93.js";
 import "numeral";
