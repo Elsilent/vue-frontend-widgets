@@ -27,6 +27,7 @@ import DetailsSelector from './DetailsSelector.vue';
 import Dropdown from '../interaction/Dropdown.vue';
 import Info from '../label/Info.vue';
 import Input from '../interaction/Input.vue';
+import Link from '../interaction/Link.vue';
 import Loader from '../image/Loader.vue';
 import Pagination from './Pagination.vue';
 import Separator from '../marker/Separator.vue';
@@ -332,6 +333,7 @@ const makeInlineFilters = () => {
 };
 
 const allRows = ref<Record<string, any>[]>([]);
+const allComparisonRowsSrc = ref<[GlobalResponse, GlobalResponse] | undefined>(undefined);
 const cachedDetailsRows = ref<Record<string, Record<string, any>>>({});
 const coloredMetrics = ref<string[]>([]);
 const columnHintsVisible = ref<Record<string, boolean>>({});
@@ -1162,16 +1164,13 @@ const setRowsFromRequest = async (
     return responses;
   })();
 
-  allRows.value = Object.values(
-    comparisonResponse
-      ? mergeComparisonData(
-          response.rows,
-          comparisonResponse.rows,
-          columns.value,
-          primaryColumn.value,
-        )
-      : response.rows,
-  );
+  if (comparisonResponse) {
+    allComparisonRowsSrc.value = [response, comparisonResponse];
+    updateComparisonRows();
+  } else {
+    allRows.value = Object.values(response.rows);
+  }
+
   fetchedAllRows.value = response.paginated !== true;
   rowCount.value = response.rowCount;
 
@@ -1181,13 +1180,26 @@ const setRowsFromRequest = async (
     detailsRows.value = {};
   }
 
-  if (response.total) {
-    totalRow.value = comparisonResponse
-      ? mergeComparisonRow(response.total, comparisonResponse.total, columns.value)
-      : response.total;
+  if (response.total && !comparisonResponse) {
+    totalRow.value = response.total;
   }
 
   return true;
+};
+
+const updateComparisonRows = () => {
+  if (!allComparisonRowsSrc.value) {
+    return;
+  }
+  const [response, comparisonResponse] = allComparisonRowsSrc.value;
+
+  allRows.value = Object.values(
+    mergeComparisonData(response.rows, comparisonResponse.rows, columns.value, primaryColumn.value),
+  );
+
+  if (response.total) {
+    totalRow.value = mergeComparisonRow(response.total, comparisonResponse.total, columns.value);
+  }
 };
 
 /**
@@ -1316,6 +1328,10 @@ onMounted(() => {
 watch(columns, () => {
   currentColumnKeys.value = Object.keys(columns.value);
   inlineFilters.value = makeInlineFilters();
+
+  if (allComparisonRowsSrc) {
+    updateComparisonRows();
+  }
 });
 
 if (defaultOrderBy) {
@@ -1438,10 +1454,7 @@ if (request) {
               contrast,
               size="small",
             )
-              a.column-link(
-                :href="getColumnLinkUrl(columnLinks[columnKey], row).toString()"
-                :target="row.url ? '_blank' : '_self'"
-              )
+              Link(:to="getColumnLinkUrl(columnLinks[columnKey], row).toString()" :is-external="!!row.url")
                 | {{ getRowFormattedValue(value, columnKey, subcolumnKey, true) }}
             Info(
               v-else
@@ -1456,10 +1469,7 @@ if (request) {
             contrast,
             size="small",
           )
-            a.column-link(
-              :href="getColumnLinkUrl(columnLinks[columnKey], row).toString()"
-              :target="row.url ? '_blank' : '_self'"
-            )
+            Link(:to="getColumnLinkUrl(columnLinks[columnKey], row).toString()" :is-external="!!row.url")
               | {{ getRowFormattedValue(value, columnKey, subcolumnKey, true) }}
           CellHint(
             v-else-if="subindex === undefined && value >= 0.01 && columnKey in columnDetails",
@@ -1579,10 +1589,6 @@ if (request) {
 
 .table {
   overflow-y: scroll;
-}
-
-.column-link {
-  @include apply-color(color, text-important-alt);
 }
 
 .details-selector-container {
