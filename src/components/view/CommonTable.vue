@@ -1447,30 +1447,28 @@ if (request) {
             :url="getRowTrendUrl(row, subcolumnKey)",
           )
           template(v-else-if="row.rowInfo.detailable && columnKey === detailsColumn")
-            Info(
+            Link(
               v-if="isColumnLinkable(row, columnKey) && row.rowInfo.detailable",
-              :class="getValueClass(columnKey, value, row.rowInfo.detailable)",
-              :mood="differenceMood(value, columnKey, subcolumnKey)",
+              :to="getColumnLinkUrl(columnLinks[columnKey], row).toString()",
+              :is-external="!!row.url",
               contrast,
               size="small",
             )
-              Link(:to="getColumnLinkUrl(columnLinks[columnKey], row).toString()" :is-external="!!row.url")
-                | {{ getRowFormattedValue(value, columnKey, subcolumnKey, true) }}
+              | {{ getRowFormattedValue(value, columnKey, subcolumnKey, true) }}
             Info(
               v-else
               :mood="differenceMood(value, columnKey, subcolumnKey)",
               contrast,
               size="small",
             ) {{ getRowFormattedValue(value, columnKey, subcolumnKey) }}
-          Info(
+          Link(
             v-else-if="isColumnLinkable(row, columnKey) && row.rowInfo.detailable",
-            :class="getValueClass(columnKey, value, row.rowInfo.detailable)",
-            :mood="differenceMood(value, columnKey, subcolumnKey)",
+            :to="getColumnLinkUrl(columnLinks[columnKey], row).toString()",
+            :is-external="!!row.url",
             contrast,
             size="small",
           )
-            Link(:to="getColumnLinkUrl(columnLinks[columnKey], row).toString()" :is-external="!!row.url")
-              | {{ getRowFormattedValue(value, columnKey, subcolumnKey, true) }}
+            | {{ getRowFormattedValue(value, columnKey, subcolumnKey, true) }}
           CellHint(
             v-else-if="subindex === undefined && value >= 0.01 && columnKey in columnDetails",
             :format="columnDetails[columnKey].format",

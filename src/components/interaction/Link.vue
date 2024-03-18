@@ -19,14 +19,14 @@ RouterLink.link(
   v-if="!props.isExternal && (typeof to === 'string' || 'name' in to)",
   :to='to',
 )
-  Info(mood='important-alt')
+  Info(mood='important-alt' v-bind="$attrs")
     slot(default)
 a.link(
   v-else,
   :href='to.toString()',
   :target="props.isExternal ? '_blank' : '_self'"
 )
-  Info(mood='important-alt')
+  Info(mood='important-alt' v-bind="$attrs")
     slot(default)
 </template>
 
