@@ -15,12 +15,14 @@ const props = withDefaults(
     noInline?: boolean;
     showAllItemsItem?: boolean;
     collapseTags?: boolean;
+    collapseTagsLabel?: string;
   }>(),
   {
     disabled: false,
     noInline: false,
     showAllItemsItem: false,
     collapseTags: true,
+    collapseTagsLabel: '',
   },
 );
 
@@ -157,19 +159,23 @@ Align.multiselect-container(
       Info.default-value(v-if='!modelValue || modelValue.length === 0') &nbsp;
       Align.current-values(
         v-else,
-        wrap,
+        :wrap="!collapseTags",
       )
         Info.current-value.all-items(
           v-if='allItemsSelected && allItemsLabel',
           :title='allItemsTitle',
         ) {{ allItemsLabel }}
         template(v-else-if="collapseTags")
-          Info.current-value.no-spacing(
+          Info.current-value.no-spacing.cuttable(
             @click='() => toggleItem(selectedItems[0])',
           ) {{ items[selectedItems[0]] }}
-          template(v-if="selectedItems.length > 1")
+          Info.current-value.no-spacing.cuttable(
+            v-if="selectedItems.length === 2"
+            @click='() => toggleItem(selectedItems[1])',
+          ) {{ items[selectedItems[1]] }}
+          template(v-else-if="selectedItems.length > 2")
             Info.current-value.no-spacing
-              | {{ selectedItems.length - 1 }} more
+              | {{ collapseTagsLabel }}
         Info.current-value.no-spacing(
           v-else,
           v-for='itemCode in selectedItems',
@@ -243,6 +249,7 @@ $-item-height: $font-size-normal * 1.5 + $padding-size-small-2 * 2 - 2;
       gap: $padding-size-small-2;
       padding: ($padding-size-small-2 - $padding-size-small-3 - 1px)
         ($padding-size-normal - $padding-size-small-2);
+      max-width: 90%;
 
       > .current-value {
         @include apply-color(background-color, background-accent);
@@ -262,6 +269,12 @@ $-item-height: $font-size-normal * 1.5 + $padding-size-small-2 * 2 - 2;
 
         &:not(.all-items) {
           cursor: pointer;
+        }
+
+        &.cuttable {
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
         }
       }
     }
