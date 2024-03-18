@@ -1,7 +1,9 @@
 @use 'sass:math';
 
-$brand-text-size: 28px;
-$logo-size: 24px;
+$brand-text-size-small: 17px;
+$logo-size-small: 24px;
+$brand-text-size: 23px;
+$logo-size: 30px;
 $padding-size-menu-normal: 12px;
 $padding-size-menu-large: $padding-size-menu-normal * 1.25;
 $padding-size-menu-large-2: $padding-size-menu-normal * 3;

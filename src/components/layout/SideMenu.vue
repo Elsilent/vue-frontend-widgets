@@ -42,13 +42,13 @@ watch(
 )
   .brand-container(@click="router.push({ name: 'default' })")
     .brand
-      Logo
+      Logo(force-dark-mode)
       BrandText(
         v-if="brandText",
         elevation='elevated-3',
         size='large-4',
       ) {{ brandText }}
-      BrandTextImage(v-else)
+      BrandTextImage(v-else full force-dark-mode)
   .items
     template(v-for="(section, code) in menu")
       MenuSubsection(
@@ -110,6 +110,8 @@ watch(
     > .brand {
       display: flex;
       flex: 1;
+      align-items: flex-end;
+      margin-bottom: $padding-size-small-3 * 2;
 
       > .brand-text {
         flex: 1;

@@ -2,6 +2,8 @@
 
 $-themes: (
   dark: (
+    brand-primary: white,
+    brand-secondary: #626262,
     background-lowered: #1d1f26,
     background-lowered-2: #20222a,
     background-lowered-3: #25272f,
@@ -97,6 +99,8 @@ $-themes: (
     white: white,
   ),
   light: (
+    brand-primary: #0554f1,
+    brand-secondary: #94bcfb,
     background-lowered: #e4e5ea,
     background-lowered-2: #dddddd,
     background-lowered-3: #babfc7,
