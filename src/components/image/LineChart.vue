@@ -278,10 +278,11 @@ export default {
           }
 
           const length = line.length * this.smoothing;
-
+          
+          // limited max top for control point by 100 for cutting line under x-axis
           return {
             left: currentPoint.left + Math.cos(angle) * length,
-            top: currentPoint.top + Math.sin(angle) * length,
+            top: Math.min(currentPoint.top + Math.sin(angle) * length, 100),
           };
         }
 
