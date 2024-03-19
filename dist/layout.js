@@ -1,18 +1,18 @@
-import { defineComponent as $, toRefs as B, computed as y, ref as I, onUnmounted as H, openBlock as r, createBlock as h, withCtx as b, createVNode as w, withKeys as P, withModifiers as U, unref as u, createTextVNode as E, toDisplayString as L, createCommentVNode as T, renderSlot as D, pushScopeId as X, popScopeId as Y, createElementVNode as F, createElementBlock as x, Transition as ne, resolveDynamicComponent as oe, normalizeClass as R, resolveComponent as le, Fragment as V, renderList as G, watch as Z } from "vue";
+import { defineComponent as g, toRefs as B, computed as y, ref as I, onUnmounted as H, openBlock as r, createBlock as h, withCtx as b, createVNode as w, withKeys as P, withModifiers as U, unref as u, createTextVNode as E, toDisplayString as L, createCommentVNode as T, renderSlot as D, pushScopeId as X, popScopeId as Y, createElementVNode as F, Transition as ne, createElementBlock as S, resolveDynamicComponent as oe, normalizeClass as R, resolveComponent as le, Fragment as V, renderList as G, watch as Z } from "vue";
 import { A as W, I as K } from "./Icon-8f2ed8ba.js";
-import { A as ae, L as se } from "./Logo-6077b57e.js";
-import { P as O, T as ue } from "./Toast-5c462a52.js";
-import { _ as k } from "./_plugin-vue_export-helper-dad06003.js";
-import { B as j, D as ie, I as re } from "./Input-7f2c48d4.js";
-import { G as de } from "./Form-f36966a3.js";
+import { A as ae, L as se, B as ue } from "./BrandText-bbfcb065.js";
+import { P as O, T as ie } from "./Toast-5c462a52.js";
+import { _ as x } from "./_plugin-vue_export-helper-dad06003.js";
+import { B as j, D as re, I as de } from "./Input-7f2c48d4.js";
+import { G as ce } from "./Form-f36966a3.js";
 import { I as z } from "./Info-54758b60.js";
-import { Separator as ce } from "./marker.js";
-import { B as ve } from "./BrandText-d1a46d42.js";
-import { BaseError as me } from "./utils/error.js";
+import { Separator as ve } from "./marker.js";
+import { B as me } from "./BrandText-d1a46d42.js";
+import { BaseError as pe } from "./utils/error.js";
 import { m as A } from "./match-b8889c93.js";
 import { U as N } from "./undefined_theme-2b4e75dd.js";
 import "./Popover-38d3223e.js";
-const pe = /* @__PURE__ */ $({
+const _e = /* @__PURE__ */ g({
   __name: "AccountMenu",
   props: {
     avatar: {},
@@ -44,11 +44,11 @@ const pe = /* @__PURE__ */ $({
     }, {
       default: b(() => [
         w(ae, {
-          onClick: d[0] || (d[0] = (g) => f()),
-          onFocus: d[1] || (d[1] = (g) => f()),
+          onClick: d[0] || (d[0] = (k) => f()),
+          onFocus: d[1] || (d[1] = (k) => f()),
           onKeydown: [
-            d[2] || (d[2] = P(U((g) => p(), ["shift"]), ["tab"])),
-            d[3] || (d[3] = P((g) => p(), ["tab"]))
+            d[2] || (d[2] = P(U((k) => p(), ["shift"]), ["tab"])),
+            d[3] || (d[3] = P((k) => p(), ["tab"]))
           ],
           icon: _.value,
           iconBackend: i.value,
@@ -57,7 +57,7 @@ const pe = /* @__PURE__ */ $({
         }, null, 8, ["icon", "iconBackend", "label", "source"]),
         w(O, {
           class: "account-menu",
-          onSelect: d[4] || (d[4] = (g) => v(g)),
+          onSelect: d[4] || (d[4] = (k) => v(k)),
           items: u(s),
           visible: o.value
         }, null, 8, ["items", "visible"])
@@ -66,7 +66,7 @@ const pe = /* @__PURE__ */ $({
     }, 512));
   }
 });
-const Ze = /* @__PURE__ */ k(pe, [["__scopeId", "data-v-6b125e88"]]), _e = /* @__PURE__ */ $({
+const Qe = /* @__PURE__ */ x(_e, [["__scopeId", "data-v-6b125e88"]]), fe = /* @__PURE__ */ g({
   __name: "CurrencySelector",
   props: {
     currencies: {},
@@ -101,11 +101,11 @@ const Ze = /* @__PURE__ */ k(pe, [["__scopeId", "data-v-6b125e88"]]), _e = /* @_
         return [
           w(j, {
             class: "currency-button",
-            onClick: n[0] || (n[0] = (g) => p()),
-            onFocus: n[1] || (n[1] = (g) => p()),
+            onClick: n[0] || (n[0] = (k) => p()),
+            onFocus: n[1] || (n[1] = (k) => p()),
             onKeydown: [
-              n[2] || (n[2] = P(U((g) => o(), ["shift"]), ["tab"])),
-              n[3] || (n[3] = P((g) => o(), ["tab"]))
+              n[2] || (n[2] = P(U((k) => o(), ["shift"]), ["tab"])),
+              n[3] || (n[3] = P((k) => o(), ["tab"]))
             ],
             label: (d = t.value) == null ? void 0 : d.symbol,
             mood: "neutral",
@@ -115,7 +115,7 @@ const Ze = /* @__PURE__ */ k(pe, [["__scopeId", "data-v-6b125e88"]]), _e = /* @_
           }, null, 8, ["label"]),
           w(O, {
             class: "currency-menu no-spacing",
-            onSelect: n[4] || (n[4] = (g) => f(g)),
+            onSelect: n[4] || (n[4] = (k) => f(k)),
             items: e.value,
             visible: a.value
           }, null, 8, ["items", "visible"])
@@ -125,7 +125,7 @@ const Ze = /* @__PURE__ */ k(pe, [["__scopeId", "data-v-6b125e88"]]), _e = /* @_
     }, 512));
   }
 });
-const et = /* @__PURE__ */ k(_e, [["__scopeId", "data-v-0cb2d935"]]), fe = /* @__PURE__ */ $({
+const Xe = /* @__PURE__ */ x(fe, [["__scopeId", "data-v-0cb2d935"]]), he = /* @__PURE__ */ g({
   __name: "Form",
   props: {
     fields: {},
@@ -133,7 +133,7 @@ const et = /* @__PURE__ */ k(_e, [["__scopeId", "data-v-0cb2d935"]]), fe = /* @_
   },
   setup(c) {
     const m = c, { fields: l } = B(m);
-    return (s, _) => (r(), h(de, {
+    return (s, _) => (r(), h(ce, {
       fields: u(l),
       values: s.values
     }, {
@@ -147,7 +147,7 @@ const et = /* @__PURE__ */ k(_e, [["__scopeId", "data-v-0cb2d935"]]), fe = /* @_
           ]),
           _: 2
         }, 1024)) : T("", !0),
-        w(ie, {
+        w(re, {
           "onUpdate:modelValue": (o) => s.$emit(`update:${i}`, o),
           items: e.items,
           modelValue: t
@@ -171,7 +171,7 @@ const et = /* @__PURE__ */ k(_e, [["__scopeId", "data-v-0cb2d935"]]), fe = /* @_
           ]),
           _: 2
         }, 1024)) : T("", !0),
-        w(re, {
+        w(de, {
           "onUpdate:modelValue": (t) => s.$emit(`update:${i}`, t),
           modelValue: e
         }, null, 8, ["onUpdate:modelValue", "modelValue"])
@@ -180,7 +180,7 @@ const et = /* @__PURE__ */ k(_e, [["__scopeId", "data-v-0cb2d935"]]), fe = /* @_
     }, 8, ["fields", "values"]));
   }
 });
-const tt = /* @__PURE__ */ k(fe, [["__scopeId", "data-v-39d44946"]]), he = (c) => (X("data-v-85b21410"), c = c(), Y(), c), be = /* @__PURE__ */ he(() => /* @__PURE__ */ F("div", { class: "menu-button-lines" }, null, -1)), ye = /* @__PURE__ */ $({
+const Ye = /* @__PURE__ */ x(he, [["__scopeId", "data-v-39d44946"]]), be = (c) => (X("data-v-85b21410"), c = c(), Y(), c), ye = /* @__PURE__ */ be(() => /* @__PURE__ */ F("div", { class: "menu-button-lines" }, null, -1)), we = /* @__PURE__ */ g({
   __name: "Header",
   emits: ["menuToggle"],
   setup(c, { emit: m }) {
@@ -201,7 +201,7 @@ const tt = /* @__PURE__ */ k(fe, [["__scopeId", "data-v-39d44946"]]), he = (c) =
           vertical: "center"
         }, {
           default: b(() => [
-            be
+            ye
           ]),
           _: 1
         }),
@@ -220,14 +220,14 @@ const tt = /* @__PURE__ */ k(fe, [["__scopeId", "data-v-39d44946"]]), he = (c) =
           ]),
           _: 3
         }),
-        w(ce),
+        w(ve),
         D(s.$slots, "end", {}, void 0, !0)
       ]),
       _: 3
     }));
   }
 });
-const nt = /* @__PURE__ */ k(ye, [["__scopeId", "data-v-85b21410"]]), we = /* @__PURE__ */ $({
+const Ze = /* @__PURE__ */ x(we, [["__scopeId", "data-v-85b21410"]]), ke = /* @__PURE__ */ g({
   __name: "LocaleSelector",
   props: {
     locales: {},
@@ -285,14 +285,10 @@ const nt = /* @__PURE__ */ k(ye, [["__scopeId", "data-v-85b21410"]]), we = /* @_
     }, 512));
   }
 });
-const ot = /* @__PURE__ */ k(we, [["__scopeId", "data-v-dd1fb6f5"]]), ge = { class: "brand-text" };
-function ke(c, m) {
-  return r(), x("div", ge);
-}
-const xe = {}, $e = /* @__PURE__ */ k(xe, [["render", ke], ["__scopeId", "data-v-fa9bf0e5"]]), Se = {
+const et = /* @__PURE__ */ x(ke, [["__scopeId", "data-v-dd1fb6f5"]]), ge = {
   key: 0,
   class: "collapse"
-}, Ie = /* @__PURE__ */ $({
+}, xe = /* @__PURE__ */ g({
   __name: "Collapse",
   props: {
     expanded: { type: Boolean, default: !1 }
@@ -321,7 +317,7 @@ const xe = {}, $e = /* @__PURE__ */ k(xe, [["render", ke], ["__scopeId", "data-v
       onLeave: i
     }, {
       default: b(() => [
-        u(l) ? (r(), x("div", Se, [
+        u(l) ? (r(), S("div", ge, [
           D(a.$slots, "default", {}, void 0, !0)
         ])) : T("", !0)
       ]),
@@ -329,13 +325,13 @@ const xe = {}, $e = /* @__PURE__ */ k(xe, [["render", ke], ["__scopeId", "data-v
     }));
   }
 });
-const Be = /* @__PURE__ */ k(Ie, [["__scopeId", "data-v-10c3004c"]]);
-class J extends me {
+const $e = /* @__PURE__ */ x(xe, [["__scopeId", "data-v-10c3004c"]]);
+class J extends pe {
   getMessage(m) {
     return `Invalid menu item level ${m}`;
   }
 }
-const Ce = /* @__PURE__ */ $({
+const Se = /* @__PURE__ */ g({
   __name: "MenuItem",
   props: {
     active: { type: Boolean, default: !1 },
@@ -397,7 +393,7 @@ const Ce = /* @__PURE__ */ $({
     }, 8, ["class", "href"]));
   }
 });
-const Q = /* @__PURE__ */ k(Ce, [["__scopeId", "data-v-e982b607"]]), Te = /* @__PURE__ */ $({
+const Q = /* @__PURE__ */ x(Se, [["__scopeId", "data-v-e982b607"]]), Ie = /* @__PURE__ */ g({
   __name: "MenuSubsection",
   props: {
     fullWidth: { type: Boolean },
@@ -413,16 +409,16 @@ const Q = /* @__PURE__ */ k(Ce, [["__scopeId", "data-v-e982b607"]]), Te = /* @__
   },
   emits: ["update:expandedPrefix"],
   setup(c, { emit: m }) {
-    const l = c, { expandedPrefix: s, icon: _, iconBackend: i, items: a, label: e, level: t, prefix: o, router: p, translator: f } = B(l), v = y(() => p.value.currentRoute.value.meta.menuItem), n = y(() => t.value + 1), d = y(() => t.value + 1), g = (C) => {
+    const l = c, { expandedPrefix: s, icon: _, iconBackend: i, items: a, label: e, level: t, prefix: o, router: p, translator: f } = B(l), v = y(() => p.value.currentRoute.value.meta.menuItem), n = y(() => t.value + 1), d = y(() => t.value + 1), k = (C) => {
       m("update:expandedPrefix", o.value);
       const M = a.value[C];
       "items" in M || p.value.push(M.route);
     };
     return (C, M) => {
       const ee = le("MenuSubsection", !0);
-      return r(), x(V, null, [
-        u(e) ? (r(), x(V, { key: 0 }, [
-          u(t) === 0 ? (r(), x(V, { key: 0 }, [
+      return r(), S(V, null, [
+        u(e) ? (r(), S(V, { key: 0 }, [
+          u(t) === 0 ? (r(), S(V, { key: 0 }, [
             C.fullWidth ? (r(), h(z, {
               key: 0,
               class: "section",
@@ -451,34 +447,34 @@ const Q = /* @__PURE__ */ k(Ce, [["__scopeId", "data-v-e982b607"]]), Te = /* @__
             withSublevel: ""
           }, null, 8, ["active", "fullWidth", "icon", "iconBackend", "label", "level"]))
         ], 64)) : T("", !0),
-        w(Be, {
+        w($e, {
           expanded: u(t) === 0 || u(s).startsWith(u(o))
         }, {
           default: b(() => [
-            (r(!0), x(V, null, G(u(a), (S, q) => (r(), x(V, null, [
-              "items" in S ? (r(), h(ee, {
+            (r(!0), S(V, null, G(u(a), ($, q) => (r(), S(V, null, [
+              "items" in $ ? (r(), h(ee, {
                 key: 0,
                 "onUpdate:expandedPrefix": M[1] || (M[1] = (te) => m("update:expandedPrefix", te)),
                 expandedPrefix: u(s),
                 fullWidth: C.fullWidth,
-                icon: S.icon,
-                iconBackend: S.iconBackend,
-                items: S.items,
+                icon: $.icon,
+                iconBackend: $.iconBackend,
+                items: $.items,
                 level: d.value,
-                label: S.label ? u(f)(S.label) : "",
+                label: $.label ? u(f)($.label) : "",
                 prefix: `${u(o)}${q}.`,
                 router: u(p),
                 translator: u(f)
               }, null, 8, ["expandedPrefix", "fullWidth", "icon", "iconBackend", "items", "level", "label", "prefix", "router", "translator"])) : C.fullWidth || u(t) === 0 ? (r(), h(Q, {
                 key: 1,
-                onClick: U(() => g(q), ["prevent"]),
+                onClick: U(() => k(q), ["prevent"]),
                 active: `${u(o)}${q}` === v.value,
                 fullWidth: C.fullWidth,
-                icon: S.icon,
-                iconBackend: S.iconBackend,
-                label: C.fullWidth ? u(f)(S.label) : void 0,
+                icon: $.icon,
+                iconBackend: $.iconBackend,
+                label: C.fullWidth ? u(f)($.label) : void 0,
                 level: n.value,
-                link: u(p).resolve(S.route).href
+                link: u(p).resolve($.route).href
               }, null, 8, ["onClick", "active", "fullWidth", "icon", "iconBackend", "label", "level", "link"])) : T("", !0)
             ], 64))), 256))
           ]),
@@ -488,7 +484,7 @@ const Q = /* @__PURE__ */ k(Ce, [["__scopeId", "data-v-e982b607"]]), Te = /* @__
     };
   }
 });
-const Me = /* @__PURE__ */ k(Te, [["__scopeId", "data-v-d52b95ab"]]), Ve = (c) => (X("data-v-cef654da"), c = c(), Y(), c), We = { class: "brand" }, Ee = { class: "items" }, Le = /* @__PURE__ */ Ve(() => /* @__PURE__ */ F("div", { class: "pixel" }, " ", -1)), ze = /* @__PURE__ */ $({
+const Be = /* @__PURE__ */ x(Ie, [["__scopeId", "data-v-d52b95ab"]]), Ce = (c) => (X("data-v-ee824bbc"), c = c(), Y(), c), Te = { class: "brand" }, Me = { class: "items" }, Ve = /* @__PURE__ */ Ce(() => /* @__PURE__ */ F("div", { class: "pixel" }, " ", -1)), We = /* @__PURE__ */ g({
   __name: "SideMenu",
   props: {
     brandText: {},
@@ -506,7 +502,7 @@ const Me = /* @__PURE__ */ k(Te, [["__scopeId", "data-v-d52b95ab"]]), Ve = (c) =
         l.value = t.substring(0, t.lastIndexOf(".") + 1);
       },
       { immediate: !0 }
-    ), (e, t) => (r(), x("div", {
+    ), (e, t) => (r(), S("div", {
       class: R(["side-menu", { "full-width": a.value }]),
       onMouseenter: t[2] || (t[2] = (o) => s.value = !0),
       onMouseleave: t[3] || (t[3] = (o) => s.value = !1)
@@ -515,9 +511,9 @@ const Me = /* @__PURE__ */ k(Te, [["__scopeId", "data-v-d52b95ab"]]), Ve = (c) =
         class: "brand-container",
         onClick: t[0] || (t[0] = (o) => u(i).push({ name: "default" }))
       }, [
-        F("div", We, [
-          w(se),
-          e.brandText ? (r(), h(ve, {
+        F("div", Te, [
+          w(se, { "force-dark-mode": "" }),
+          e.brandText ? (r(), h(me, {
             key: 0,
             elevation: "elevated-3",
             size: "large-4"
@@ -526,11 +522,15 @@ const Me = /* @__PURE__ */ k(Te, [["__scopeId", "data-v-d52b95ab"]]), Ve = (c) =
               E(L(e.brandText), 1)
             ]),
             _: 1
-          })) : (r(), h($e, { key: 1 }))
+          })) : (r(), h(ue, {
+            key: 1,
+            full: "",
+            "force-dark-mode": ""
+          }))
         ])
       ]),
-      F("div", Ee, [
-        (r(!0), x(V, null, G(e.menu, (o, p) => (r(), h(Me, {
+      F("div", Me, [
+        (r(!0), S(V, null, G(e.menu, (o, p) => (r(), h(Be, {
           expandedPrefix: l.value,
           "onUpdate:expandedPrefix": t[1] || (t[1] = (f) => l.value = f),
           fullWidth: a.value,
@@ -542,12 +542,12 @@ const Me = /* @__PURE__ */ k(Te, [["__scopeId", "data-v-d52b95ab"]]), Ve = (c) =
           router: u(i),
           translator: e.translator
         }, null, 8, ["expandedPrefix", "fullWidth", "icon", "iconBackend", "items", "label", "prefix", "router", "translator"]))), 256)),
-        Le
+        Ve
       ])
     ], 34));
   }
 });
-const lt = /* @__PURE__ */ k(ze, [["__scopeId", "data-v-cef654da"]]), Pe = /* @__PURE__ */ $({
+const tt = /* @__PURE__ */ x(We, [["__scopeId", "data-v-ee824bbc"]]), Ee = /* @__PURE__ */ g({
   __name: "ThemeToggle",
   props: {
     modelValue: {}
@@ -583,7 +583,7 @@ const lt = /* @__PURE__ */ k(ze, [["__scopeId", "data-v-cef654da"]]), Pe = /* @_
     }));
   }
 });
-const at = /* @__PURE__ */ k(Pe, [["__scopeId", "data-v-8832a6ee"]]), Fe = { class: "toasts" }, Ae = /* @__PURE__ */ $({
+const nt = /* @__PURE__ */ x(Ee, [["__scopeId", "data-v-8832a6ee"]]), Le = { class: "toasts" }, ze = /* @__PURE__ */ g({
   __name: "Toasts",
   props: {
     toasts: {}
@@ -606,8 +606,8 @@ const at = /* @__PURE__ */ k(Pe, [["__scopeId", "data-v-8832a6ee"]]), Fe = { cla
           }, 5e3));
       },
       { deep: !0, immediate: !0 }
-    ), (t, o) => (r(), x("div", Fe, [
-      (r(!0), x(V, null, G(_.value, ([p, f]) => (r(), h(ue, {
+    ), (t, o) => (r(), S("div", Le, [
+      (r(!0), S(V, null, G(_.value, ([p, f]) => (r(), h(ie, {
         onClick: () => e(p),
         class: R({ "fade-out": i.value.includes(f.id) }),
         icon: f.icon,
@@ -620,16 +620,16 @@ const at = /* @__PURE__ */ k(Pe, [["__scopeId", "data-v-8832a6ee"]]), Fe = { cla
     ]));
   }
 });
-const st = /* @__PURE__ */ k(Ae, [["__scopeId", "data-v-3d45b4ea"]]);
+const ot = /* @__PURE__ */ x(ze, [["__scopeId", "data-v-3d45b4ea"]]);
 export {
-  Ze as AccountMenu,
-  et as CurrencySelector,
-  tt as Form,
-  nt as Header,
-  ot as LocaleSelector,
-  lt as SideMenu,
+  Qe as AccountMenu,
+  Xe as CurrencySelector,
+  Ye as Form,
+  Ze as Header,
+  et as LocaleSelector,
+  tt as SideMenu,
   Q as SideMenuItem,
-  Me as SideMenuSubsection,
-  at as ThemeToggle,
-  st as Toasts
+  Be as SideMenuSubsection,
+  nt as ThemeToggle,
+  ot as Toasts
 };

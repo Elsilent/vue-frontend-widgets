@@ -8,4 +8,5 @@ import LineBarChart from '../components/image/LineBarChart.vue';
 import Loader from '../components/image/Loader.vue';
 import Logo from '../components/image/Logo.vue';
 import ProgressBar from '../components/image/ProgressBar.vue';
-export { Avatar, ComparisonKpiCard, Dot, Icon, KpiCard, KpiDistributionTable, LineBarChart, Loader, Logo, ProgressBar, };
+import BrandTextImage from '../components/image/BrandText.vue';
+export { Avatar, ComparisonKpiCard, Dot, Icon, KpiCard, KpiDistributionTable, LineBarChart, Loader, Logo, ProgressBar, BrandTextImage, };

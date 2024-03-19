@@ -1,9 +1,9 @@
-import { A as ge, L as be } from "./Logo-6077b57e.js";
-import { defineComponent as x, toRefs as B, computed as p, openBlock as v, createBlock as I, normalizeClass as $, withCtx as a, createVNode as t, createTextVNode as g, toDisplayString as b, unref as i, createCommentVNode as q, createElementBlock as y, normalizeStyle as S, ref as N, watch as j, Fragment as z, renderList as K, renderSlot as E } from "vue";
-import { C as T, A as f, I as A } from "./Icon-8f2ed8ba.js";
+import { A as ge, B as be, L as he } from "./BrandText-bbfcb065.js";
+import { defineComponent as x, toRefs as I, computed as p, openBlock as v, createBlock as $, normalizeClass as B, withCtx as a, createVNode as t, createTextVNode as g, toDisplayString as b, unref as i, createCommentVNode as j, createElementBlock as y, normalizeStyle as q, ref as N, watch as T, Fragment as z, renderList as K, renderSlot as E } from "vue";
+import { C as S, A as f, I as A } from "./Icon-8f2ed8ba.js";
 import { I as k } from "./Info-54758b60.js";
 import { L as P } from "./LineBarChart-8bc1f7a1.js";
-import { a as ye } from "./LineBarChart-8bc1f7a1.js";
+import { a as ke } from "./LineBarChart-8bc1f7a1.js";
 import { Separator as F } from "./marker.js";
 import { f as R } from "./format-14736529.js";
 import { _ as C } from "./_plugin-vue_export-helper-dad06003.js";
@@ -30,7 +30,7 @@ const M = 0.01, H = (d, s) => {
     value: {}
   },
   setup(d) {
-    const s = d, { comparisonValue: e, inversed: c, value: l } = B(s), m = p(
+    const s = d, { comparisonValue: e, inversed: c, value: l } = I(s), m = p(
       () => l === void 0 || l.value === void 0 || e === void 0 || e.value === void 0
     ), n = p(() => m.value ? "equal" : H(l.value, e.value)), L = p(() => {
       const o = "minus", r = "up-arrow-alt", u = "down-arrow-alt";
@@ -67,8 +67,8 @@ const M = 0.01, H = (d, s) => {
     }), w = p(() => ({
       loading: m.value
     }));
-    return (o, r) => (v(), I(T, {
-      class: $(["kpi-card", w.value])
+    return (o, r) => (v(), $(S, {
+      class: B(["kpi-card", w.value])
     }, {
       default: a(() => [
         t(f, { column: "" }, {
@@ -124,7 +124,7 @@ const M = 0.01, H = (d, s) => {
           ]),
           _: 1
         }),
-        i(l) === void 0 || i(e) === void 0 ? (v(), I(f, {
+        i(l) === void 0 || i(e) === void 0 ? (v(), $(f, {
           key: 0,
           class: "loader-container no-spacing",
           horizontal: "center",
@@ -134,7 +134,7 @@ const M = 0.01, H = (d, s) => {
             t(P)
           ]),
           _: 1
-        })) : q("", !0)
+        })) : j("", !0)
       ]),
       _: 1
     }, 8, ["class"]));
@@ -146,12 +146,12 @@ const de = /* @__PURE__ */ C(J, [["__scopeId", "data-v-2721093f"]]), ve = /* @__
     mood: { default: () => ({ mood: "accent" }) }
   },
   setup(d) {
-    const s = d, { mood: e } = B(s), c = p(() => {
+    const s = d, { mood: e } = I(s), c = p(() => {
       const l = {};
       return "mood" in e.value ? l[`mood-background-${e.value.mood}`] = !0 : "chart" in e.value && (l[`chart-${e.value.chart}`] = !0), l;
     });
     return (l, m) => (v(), y("div", {
-      class: $(["dot", c.value])
+      class: B(["dot", c.value])
     }, null, 2));
   }
 });
@@ -165,11 +165,11 @@ const Q = /* @__PURE__ */ x({
     value: {}
   },
   setup(d) {
-    const s = d, { value: e } = B(s), c = p(() => ({
+    const s = d, { value: e } = I(s), c = p(() => ({
       loading: e === void 0 || e.value === void 0
     }));
-    return (l, m) => (v(), I(T, {
-      class: $(["kpi-card", c.value])
+    return (l, m) => (v(), $(S, {
+      class: B(["kpi-card", c.value])
     }, {
       default: a(() => [
         t(f, { vertical: "center" }, {
@@ -205,7 +205,7 @@ const Q = /* @__PURE__ */ x({
           ]),
           _: 1
         }),
-        i(e) === void 0 ? (v(), I(f, {
+        i(e) === void 0 ? (v(), $(f, {
           key: 0,
           class: "loader-container no-spacing",
           horizontal: "center",
@@ -215,7 +215,7 @@ const Q = /* @__PURE__ */ x({
             t(P)
           ]),
           _: 1
-        })) : q("", !0)
+        })) : j("", !0)
       ]),
       _: 1
     }, 8, ["class"]));
@@ -229,13 +229,13 @@ const fe = /* @__PURE__ */ C(Q, [["__scopeId", "data-v-e84b3f2e"]]), U = /* @__P
     size: { default: "large" }
   },
   setup(d) {
-    const s = d, { value: e, size: c } = B(s), l = p(() => ({
+    const s = d, { value: e, size: c } = I(s), l = p(() => ({
       "--width": `${e.value * 100}%`,
       "--height": c.value === "large" ? "30px" : "auto"
     }));
     return (m, n) => (v(), y("div", {
-      class: $(["progress-bar", [`mood-background-${m.mood}`]]),
-      style: S(l.value)
+      class: B(["progress-bar", [`mood-background-${m.mood}`]]),
+      style: q(l.value)
     }, null, 6));
   }
 });
@@ -247,7 +247,7 @@ const X = /* @__PURE__ */ C(U, [["__scopeId", "data-v-ac82b9ec"]]), O = "140px",
     rows: {}
   },
   setup(d) {
-    const s = d, { metrics: e, rows: c } = B(s), l = p(() => {
+    const s = d, { metrics: e, rows: c } = I(s), l = p(() => {
       const _ = Object.keys(e.value);
       return _[_.length - 1];
     }), m = (_ = !1) => {
@@ -262,9 +262,9 @@ const X = /* @__PURE__ */ C(U, [["__scopeId", "data-v-ac82b9ec"]]), O = "140px",
     }, n = N(m(!0));
     setTimeout(() => {
       n.value = m();
-    }, 10), j(e, () => {
+    }, 10), T(e, () => {
       n.value = m();
-    }), j(c, () => {
+    }), T(c, () => {
       n.value = m();
     });
     const L = p(
@@ -283,7 +283,7 @@ const X = /* @__PURE__ */ C(U, [["__scopeId", "data-v-ac82b9ec"]]), O = "140px",
     }));
     return (_, w) => (v(), y("div", {
       class: "kpi-distribution-table",
-      style: S(D.value)
+      style: q(D.value)
     }, [
       t(f, {
         class: "cell header-cell row-first",
@@ -306,7 +306,7 @@ const X = /* @__PURE__ */ C(U, [["__scopeId", "data-v-ac82b9ec"]]), O = "140px",
           vertical: "center"
         }),
         t(f, {
-          class: $(["cell header-cell metric", { "row-last": r === l.value }]),
+          class: B(["cell header-cell metric", { "row-last": r === l.value }]),
           horizontal: "left",
           vertical: "center"
         }, {
@@ -359,7 +359,7 @@ const X = /* @__PURE__ */ C(U, [["__scopeId", "data-v-ac82b9ec"]]), O = "140px",
             _: 2
           }, 1032, ["horizontal"]),
           t(f, {
-            class: $(["cell metric", { "row-last": h === l.value }]),
+            class: B(["cell metric", { "row-last": h === l.value }]),
             column: !0,
             horizontal: "center",
             vertical: "center"
@@ -389,13 +389,14 @@ const X = /* @__PURE__ */ C(U, [["__scopeId", "data-v-ac82b9ec"]]), O = "140px",
 const _e = /* @__PURE__ */ C(Y, [["__scopeId", "data-v-707c5df7"]]);
 export {
   ge as Avatar,
+  be as BrandTextImage,
   de as ComparisonKpiCard,
   ve as Dot,
   A as Icon,
   fe as KpiCard,
   _e as KpiDistributionTable,
-  ye as LineBarChart,
+  ke as LineBarChart,
   P as Loader,
-  be as Logo,
+  he as Logo,
   X as ProgressBar
 };

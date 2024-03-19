@@ -8,6 +8,7 @@ import LineBarChart from '../components/image/LineBarChart.vue';
 import Loader from '../components/image/Loader.vue';
 import Logo from '../components/image/Logo.vue';
 import ProgressBar from '../components/image/ProgressBar.vue';
+import BrandTextImage from '../components/image/BrandText.vue';
 
 export {
   Avatar,
@@ -20,4 +21,5 @@ export {
   Loader,
   Logo,
   ProgressBar,
+  BrandTextImage,
 };
