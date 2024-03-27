@@ -1,4 +1,4 @@
-import { f as t } from "../format-14736529.js";
+import { f as t } from "../format-d2aab685.js";
 import "numeral";
 export {
   t as default

@@ -5,7 +5,7 @@ import { I as k } from "./Info-54758b60.js";
 import { L as P } from "./LineBarChart-8bc1f7a1.js";
 import { a as ke } from "./LineBarChart-8bc1f7a1.js";
 import { Separator as F } from "./marker.js";
-import { f as R } from "./format-14736529.js";
+import { f as R } from "./format-d2aab685.js";
 import { _ as C } from "./_plugin-vue_export-helper-dad06003.js";
 import { B as W } from "./Badge-86839218.js";
 import { L as G } from "./Link-dfe99e72.js";
