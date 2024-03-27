@@ -2,6 +2,7 @@ export interface Currency {
   code: string;
   fractionSize: number;
   symbol: string;
+  name: string;
   symbolBeforeValue?: boolean;
 }
 
