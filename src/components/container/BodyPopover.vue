@@ -2,19 +2,27 @@
 import { computed, nextTick, ref, toRefs, watch } from 'vue';
 import Card from './Card.vue';
 
+defineOptions({
+  inheritAttrs: false,
+});
+
 const props = withDefaults(
   defineProps<{
     autoPosition?: boolean;
     parentNode?: HTMLElement;
     popoverClass?: string;
     visible: boolean;
+    placementY?: 'top' | 'bottom';
+    placementX?: 'right' | 'left' | 'center';
   }>(),
   {
     autoPosition: false,
+    placementY: 'bottom',
+    placementX: 'center',
   },
 );
 
-const { autoPosition, parentNode, popoverClass, visible } = toRefs(props);
+const { autoPosition, parentNode, popoverClass, visible, placementY, placementX } = toRefs(props);
 
 const left = ref<number | undefined>();
 const popover = ref<typeof Card | undefined>();
@@ -41,34 +49,49 @@ const updatePosition = () => {
     return;
   }
 
-  const parentRect = parentNode.value.getBoundingClientRect();
+  const parentRect: DOMRect = parentNode.value.getBoundingClientRect();
 
   left.value = 0;
   top.value = 0;
 
   nextTick(() => {
-    const scrollLeft = parentRect.left;
-    const scrollTop = parentRect.top + document.documentElement.scrollTop;
-
-    const popoverWidth = popover.value!.$el.offsetWidth;
-    const popoverWidthDelta = (popoverWidth - parentRect.width) / 2;
-
-    if (parentRect.left - popoverWidthDelta < 0) {
-      left.value = scrollLeft;
-    } else if (parentRect.left + popoverWidthDelta + parentRect.width > document.body.clientWidth) {
-      left.value = scrollLeft - popoverWidth + parentRect.width;
-    } else {
-      left.value = scrollLeft - popoverWidthDelta;
-    }
-
-    const popoverHeight = popover.value!.$el.offsetHeight;
-
-    if (parentRect.bottom + popoverHeight > document.body.clientHeight) {
-      top.value = scrollTop - popoverHeight;
-    } else {
-      top.value = scrollTop + parentRect.height;
-    }
+    getXPosition(parentRect);
+    getYPosition(parentRect);
   });
+};
+
+const getXPosition = (parentRect: DOMRect) => {
+  const scrollLeft = parentRect.left;
+
+  const popoverWidth = popover.value!.$el.offsetWidth;
+  const popoverWidthDelta = (popoverWidth - parentRect.width) / 2;
+
+  if (parentRect.left - popoverWidthDelta < 0) {
+    left.value = scrollLeft;
+  } else if (
+    placementX.value === 'right' ||
+    parentRect.left + popoverWidthDelta + parentRect.width > document.body.clientWidth
+  ) {
+    left.value = scrollLeft - popoverWidth + parentRect.width;
+  } else if (placementX.value === 'left') {
+    left.value = scrollLeft;
+  } else {
+    left.value = scrollLeft - popoverWidthDelta;
+  }
+};
+
+const getYPosition = (parentRect: DOMRect) => {
+  const scrollTop = parentRect.top + document.documentElement.scrollTop;
+  const popoverHeight = popover.value!.$el.offsetHeight;
+
+  if (
+    placementY.value === 'top' ||
+    parentRect.bottom + popoverHeight > document.body.clientHeight
+  ) {
+    top.value = scrollTop - popoverHeight;
+  } else {
+    top.value = scrollTop + parentRect.height;
+  }
 };
 
 const resizeObserver = autoPosition?.value ? new ResizeObserver(() => updatePosition()) : undefined;

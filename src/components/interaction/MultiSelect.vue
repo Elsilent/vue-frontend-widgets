@@ -5,6 +5,7 @@ import Icon from '../image/Icon.vue';
 import Info from '../label/Info.vue';
 import { sort } from '../../utils/sort';
 import { useUpDownKeys } from '../../composables/upDownKeys';
+import BodyPopover from '../container/BodyPopover.vue';
 
 const props = withDefaults(
   defineProps<{
@@ -14,21 +15,30 @@ const props = withDefaults(
     modelValue?: (string | number | symbol)[];
     noInline?: boolean;
     showAllItemsItem?: boolean;
+    collapseTags?: boolean;
+    collapseTagsLabel?: string;
+    collapseTagsTooltip?: boolean;
   }>(),
   {
     disabled: false,
     noInline: false,
     showAllItemsItem: false,
+    collapseTags: false,
+    collapseTagsLabel: '',
+    collapseTagsTooltip: false,
   },
 );
 
-const { disabled, items, modelValue, showAllItemsItem } = toRefs(props);
+const { disabled, items, modelValue, showAllItemsItem, collapseTags } = toRefs(props);
 
 const active = ref(false);
 
 const multiSelectContainer = ref<typeof Align | null>(null);
 const newValueInput = ref<HTMLInputElement | null>(null);
 const newValueFilter = ref<string>('');
+const tooltipVisibility = ref<boolean>(false);
+
+const collapseTagRef = ref<InstanceType<typeof Info> | undefined>();
 
 const allItemsSelected = computed(() => {
   if (!modelValue || !modelValue.value) {
@@ -55,7 +65,7 @@ const dropdownItems = computed(() => {
 });
 
 const { selectedItem, onKeypressDown, onKeypressUp, clearSelectedItem } = useUpDownKeys({
-  length: computed(() => Object.keys(dropdownItems.value).length - 1),
+  length: computed(() => Object.keys(dropdownItems.value).length),
 });
 
 const selectionOffset = computed(() => {
@@ -97,6 +107,7 @@ const activate = () => {
   }
 
   active.value = true;
+  tooltipVisibility.value = false;
 
   newValueInput.value?.focus();
 };
@@ -116,7 +127,11 @@ const toggleItem = (value: string | number | symbol) => {
     return;
   }
 
-  const newValue = [...modelValue.value];
+  if (!value) {
+    updateValue(Object.keys(items.value));
+    return;
+  }
+  const newValue = allItemsSelected.value ? [] : [...modelValue.value];
 
   const index = newValue.indexOf(value);
 
@@ -134,6 +149,14 @@ const updateValue = (value: (string | number | symbol)[]) => {
   emit('update:modelValue', value);
   newValueInput.value?.focus({ preventScroll: true });
 };
+
+const tooltipContent = computed(() => {
+  let res = items.value[selectedItems.value[1]];
+  for (let i = 2; i < selectedItems.value.length; i++) {
+    res += ', ' + items.value[selectedItems.value[i]];
+  }
+  return res;
+});
 </script>
 
 <template lang="pug">
@@ -149,18 +172,43 @@ Align.multiselect-container(
     tabindex='-1',
     @keydown.down.prevent="onKeypressDown()",
     @keydown.up.prevent="onKeypressUp()",
-    @keydown.enter.prevent="toggleItem(Object.keys(dropdownItems)[selectedItem])",
+    @keydown.enter.prevent="toggleItem(Object.keys(dropdownItems)[selectedItem - 1])",
   )
     Align.current-item(vertical='center')
       Info.default-value(v-if='!modelValue || modelValue.length === 0') &nbsp;
       Align.current-values(
         v-else,
-        wrap,
+        :wrap="!collapseTags",
       )
         Info.current-value.all-items(
           v-if='allItemsSelected && allItemsLabel',
           :title='allItemsTitle',
         ) {{ allItemsLabel }}
+        template(v-else-if="collapseTags")
+          Info.current-value.no-spacing.cuttable(
+            @click='() => toggleItem(selectedItems[0])',
+          ) {{ items[selectedItems[0]] }}
+          Info.current-value.no-spacing.cuttable(
+            v-if="selectedItems.length === 2"
+            @click='() => toggleItem(selectedItems[1])',
+          ) {{ items[selectedItems[1]] }}
+          template(v-else-if="selectedItems.length > 2")
+            Info.current-value.no-spacing(
+              ref="collapseTagRef"
+              @mouseover="tooltipVisibility = !active"
+              @mouseleave="tooltipVisibility = false"
+            )
+              | {{ collapseTagsLabel }}
+            BodyPopover(
+              v-if="collapseTagsTooltip"
+              :visible="tooltipVisibility",
+              autoPosition,
+              :parentNode="collapseTagRef?.$el",
+              popoverClass="collapse-tooltip",
+              placementY="top"
+              placementX="left"
+            )
+              Info {{ tooltipContent }}
         Info.current-value.no-spacing(
           v-else,
           v-for='itemCode in selectedItems',
@@ -182,13 +230,14 @@ Align.multiselect-container(
       Info.item(
         v-if="showAllItemsItem",
         @click.stop="updateValue(Object.keys(items))",
-        :class="{ current: allItemsSelected }",
+        :class="{ current: allItemsSelected, selected: selectedItem === 0}",
+        @mouseover="selectedItem = 0",
       ) {{ allItemsLabel }}
       Info.item.no-spacing(
         v-for='(item, itemCode, index) in dropdownItems',
         @click.stop="toggleItem(itemCode)",
-        :class='{ current: modelValue?.includes(itemCode), selected: selectedItem === index }',
-        @mouseover="selectedItem = index",
+        :class='{ current: modelValue?.includes(itemCode) && !allItemsSelected, selected: selectedItem - 1 === index }',
+        @mouseover="selectedItem = index + 1",
       ) {{ item }}
 </template>
 
@@ -234,6 +283,7 @@ $-item-height: $font-size-normal * 1.5 + $padding-size-small-2 * 2 - 2;
       gap: $padding-size-small-2;
       padding: ($padding-size-small-2 - $padding-size-small-3 - 1px)
         ($padding-size-normal - $padding-size-small-2);
+      max-width: 90%;
 
       > .current-value {
         @include apply-color(background-color, background-accent);
@@ -254,6 +304,12 @@ $-item-height: $font-size-normal * 1.5 + $padding-size-small-2 * 2 - 2;
         &:not(.all-items) {
           cursor: pointer;
         }
+
+        &.cuttable {
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+        }
       }
     }
 
@@ -270,7 +326,7 @@ $-item-height: $font-size-normal * 1.5 + $padding-size-small-2 * 2 - 2;
       font-family: $font-family-normal;
       font-size: $font-size-normal;
       outline: none;
-      width: min-content;
+      width: 100%;
     }
 
     > .icon {
@@ -341,6 +397,24 @@ $-item-height: $font-size-normal * 1.5 + $padding-size-small-2 * 2 - 2;
         transform: rotateZ(180deg);
       }
     }
+  }
+}
+</style>
+
+<style lang="scss">
+@import '../../styles/colors.scss';
+@import '../../styles/spacing.scss';
+.collapse-tooltip.popover {
+  @include apply-color(border-color, border-inactive);
+
+  border: 1px solid;
+  bottom: 100%;
+  max-width: 400px;
+  height: max-content;
+  padding: 0;
+  transform: translateY(-10px);
+  .info {
+    margin: $padding-size-small-2;
   }
 }
 </style>
