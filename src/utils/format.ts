@@ -31,4 +31,5 @@ export default {
     return prefix ? `${symbol} ${formattedValue}` : `${formattedValue} ${symbol}`;
   },
   proportion: (value: number) => numeral(value).format('0,0.00%'),
+  percent: (value: number) => numeral(value / 100).format('0,0.00%'),
 };
