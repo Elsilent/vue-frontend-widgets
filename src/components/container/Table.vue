@@ -223,33 +223,31 @@ const updateTableSize = () => {
 
     return info;
   };
-
-  const fixedHeightInfo = getTableSizeInfo(fixedTable.value?.$el);
-  const scrollableHeightInfo = getTableSizeInfo(scrollableTable.value?.$el);
-
-  if (scrollableHeightInfo.hasSecondary) {
-    fixedWidth.value = fixedHeightInfo.width;
-    headerHeights.value = {
-      main: scrollableHeightInfo.mainColumnHeight,
-      secondary: scrollableHeightInfo.secondaryColumnHeight,
-      total: Math.max(fixedHeightInfo.totalColumnHeight, scrollableHeightInfo.totalColumnHeight),
-    };
-    totalHeight.value = fixedHeightInfo.totalHeight;
-  } else {
-    const total = Math.max(
-      fixedHeightInfo.totalColumnHeight,
-      scrollableHeightInfo.totalColumnHeight,
-    );
-
-    fixedWidth.value = fixedHeightInfo.width;
-    headerHeights.value = {
-      main: total,
-      total,
-    };
-    totalHeight.value = fixedHeightInfo.totalHeight;
-  }
-
   nextTick(() => {
+    const fixedHeightInfo = getTableSizeInfo(fixedTable.value?.$el);
+    const scrollableHeightInfo = getTableSizeInfo(scrollableTable.value?.$el);
+
+    if (scrollableHeightInfo.hasSecondary) {
+      fixedWidth.value = fixedHeightInfo.width;
+      headerHeights.value = {
+        main: scrollableHeightInfo.mainColumnHeight,
+        secondary: scrollableHeightInfo.secondaryColumnHeight,
+        total: Math.max(fixedHeightInfo.totalColumnHeight, scrollableHeightInfo.totalColumnHeight),
+      };
+      totalHeight.value = fixedHeightInfo.totalHeight;
+    } else {
+      const total = Math.max(
+        fixedHeightInfo.totalColumnHeight,
+        scrollableHeightInfo.totalColumnHeight,
+      );
+
+      fixedWidth.value = fixedHeightInfo.width;
+      headerHeights.value = {
+        main: total,
+        total,
+      };
+      totalHeight.value = fixedHeightInfo.totalHeight;
+    }
     resizing.value = false;
   });
 };
@@ -266,8 +264,11 @@ nextTick(() => {
   }
 });
 
-watch(rows, () => {
+watch(rows, (newRows, oldRows) => {
   updateKey.value = Math.random();
+  if (!oldRows.length) {
+    updateTableSize();
+  }
 });
 </script>
 
