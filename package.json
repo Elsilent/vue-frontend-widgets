@@ -9,8 +9,11 @@
     "build": "webpack"
   },
   "dependencies": {
+    "@tweenjs/tween.js": "^23.1.1",
     "axios": "^1.4.0",
+    "funnel-graph-js": "^1.4.2",
     "numeral": "^2.0.6",
+    "polymorph-js": "^1.0.2",
     "vue2-teleport": "^1.0.1"
   },
   "devDependencies": {
