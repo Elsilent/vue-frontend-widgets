@@ -1,12 +1,12 @@
 <template lang="pug">
 .column-hint
-  i.la.la-question-circle
+  i.la(:class="`la-${icon}`")
   Popover(
     :visible="visible",
     parentClass="cell",
     popoverClass="column-hint-popover",
   )
-    .popover-header {{ title }}
+    .popover-header(:style='headerStyle') {{ title }}
     .popover-body {{ description }}
 </template>
 
@@ -21,7 +21,25 @@ export default {
     Info,
     Popover,
   },
+  computed: {
+    headerStyle() {
+      if (this.headerColor) {
+        return { 'background-color': this.headerColor };
+      }
+
+      return {};
+    },
+  },
   props: {
+    // todo: refactor to support theming
+    headerColor: {
+      type: String,
+      required: false,
+    },
+    icon: {
+      type: String,
+      default: 'question-circle',
+    },
     description: {
       type: String,
       required: false,

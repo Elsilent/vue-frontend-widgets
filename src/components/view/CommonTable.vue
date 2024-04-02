@@ -57,6 +57,11 @@
             :title="getColumnTooltipTitle(column)",
             :visible="columnHintsVisible[columnKey]",
           )
+          slot(
+            name="columnAdditional",
+            :columnKey="columnKey",
+            :isGhost="isGhost",
+          )
       template(
         v-for="{ comparisonKey, key } in valueColumns",
         #[`column(${key})`],
