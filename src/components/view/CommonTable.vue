@@ -46,6 +46,11 @@
         v-for="(column, columnKey) in currentColumns",
         #[`column(${columnKey})`]="{ isGhost }",
       )
+        slot(
+          name="columnAdditional",
+          :columnKey="columnKey",
+          :isGhost="isGhost",
+        )
         .d-flex.align-items-center(
           @mouseover="() => setColumnHintVisible(columnKey, true)",
           @mouseout="() => setColumnHintVisible(columnKey, false)",
@@ -56,11 +61,6 @@
             :description="getColumnTooltipContent(column)",
             :title="getColumnTooltipTitle(column)",
             :visible="columnHintsVisible[columnKey]",
-          )
-          slot(
-            name="columnAdditional",
-            :columnKey="columnKey",
-            :isGhost="isGhost",
           )
       template(
         v-for="{ comparisonKey, key } in valueColumns",
