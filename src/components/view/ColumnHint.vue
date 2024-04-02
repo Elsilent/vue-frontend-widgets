@@ -1,12 +1,12 @@
 <template lang="pug">
 .column-hint
   i.la(
-    @mouseover="() => manualVisible = true",
-    @mouseout="() => manualVisible = false",
+    @mouseover="() => setManualVisible(true)",
+    @mouseout="() => setManualVisible(false)",
     :class="`la-${icon}`",
   )
   Popover(
-    :visible="visible === undefined ? manualVisible : visible",
+    :visible="manualVisible || visible",
     parentClass="cell",
     popoverClass="column-hint-popover",
   )
@@ -39,6 +39,11 @@ export default {
       manualVisible: false,
     };
   },
+  methods: {
+    setManualVisible(visible) {
+      this.manualVisible = visible;
+    },
+  },
   props: {
     // todo: refactor to support theming
     headerColor: {
@@ -59,7 +64,7 @@ export default {
     },
     visible: {
       type: Boolean,
-      required: false,
+      default: false,
     },
   },
 }
