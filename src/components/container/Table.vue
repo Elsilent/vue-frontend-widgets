@@ -270,6 +270,9 @@ watch(rows, (newRows, oldRows) => {
     updateTableSize();
   }
 });
+watch(columns, () => {
+  updateTableSize();
+});
 </script>
 
 <template lang="pug">
