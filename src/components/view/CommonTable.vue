@@ -441,6 +441,7 @@ const visibleRows = computed(() => {
 
 const emit = defineEmits<{
   (e: 'move:column', _: { from: number; to: number }): void;
+  (e: 'update:orderBy', value: [string[], boolean]): void;
 }>();
 
 const addColoredMetric = (columnKey: string) => {
@@ -1315,6 +1316,8 @@ const updateOrderBy = async (
   if (save) {
     localStorage.setItem(getOrderByKey(), JSON.stringify(newOrderBy));
   }
+
+  emit('update:orderBy', newOrderBy);
 };
 
 onMounted(() => {

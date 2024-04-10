@@ -80,6 +80,7 @@ button.button(
   justify-content: center;
   transition-duration: $transition-duration-normal;
   transition-property: background-color, border-color, opacity;
+  background-color: transparent;
 
   &.mood-background-inactive {
     > .icon,
