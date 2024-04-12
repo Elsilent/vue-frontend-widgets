@@ -9,7 +9,7 @@ import { B as _r } from "./BodyPopover-9b857526.js";
 import { D as cn, I as dn, B as Wt } from "./Input-633fea29.js";
 import { L as Gt } from "./Link-dfe99e72.js";
 import { Separator as Sr } from "./marker.js";
-import { T as Cr } from "./Table-a26cba9b.js";
+import { T as Cr } from "./Table-b2418560.js";
 import { H as ze } from "./Header-8b49a8fe.js";
 import "./utils/error.js";
 import "./match-b8889c93.js";

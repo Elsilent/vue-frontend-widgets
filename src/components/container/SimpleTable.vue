@@ -1204,11 +1204,11 @@ defineSlots<{
 
         &:not(.colored) {
           &.even {
-            @include apply-color(background-color, background-normal);
+            @include apply-color(background-color, background-row-even);
           }
 
           &:not(.even) {
-            @include apply-color(background-color, background-elevated-2);
+            @include apply-color(background-color, background-row-odd);
           }
         }
       }
