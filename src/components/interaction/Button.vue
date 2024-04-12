@@ -60,6 +60,7 @@ button.button(
     :mood="outline ? mood : 'white'",
     :size='size',
   ) {{ label }}
+  slot
 </template>
 
 <style lang="scss" scoped>
