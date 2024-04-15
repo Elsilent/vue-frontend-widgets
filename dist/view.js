@@ -2284,8 +2284,8 @@ const fo = /* @__PURE__ */ Se(co, [["__scopeId", "data-v-b4f986aa"]]), po = { cl
       W.value = Object.keys(c.value), K.value = Oe == null ? void 0 : Oe.value, Promise.all([ft(!1), Mt()]).then(() => sr(!0));
     }), Ge(c, () => {
       W.value = Object.keys(c.value), te.value = Ee(), xe && Ht();
-    }), m && Ge(m, () => {
-      ft(!0);
+    }), m && Ge(m, (l, u) => {
+      (l == null ? void 0 : l[0][0]) !== (u == null ? void 0 : u[0][0]) && ft(!0);
     }), J && Ge(
       J,
       () => {
@@ -2610,7 +2610,7 @@ const fo = /* @__PURE__ */ Se(co, [["__scopeId", "data-v-b4f986aa"]]), po = { cl
     ]));
   }
 });
-const Mo = /* @__PURE__ */ Se(bo, [["__scopeId", "data-v-6e76ee6c"]]), go = { class: "scrollable flex-max no-spacing" }, yo = ["onClick"], wo = { class: "scrollable flex-max no-spacing" }, _o = ["onClick"], So = { class: "scrollable" }, Co = { class: "items flex-max no-spacing" }, Oo = /* @__PURE__ */ we({
+const Mo = /* @__PURE__ */ Se(bo, [["__scopeId", "data-v-e1c87a54"]]), go = { class: "scrollable flex-max no-spacing" }, yo = ["onClick"], wo = { class: "scrollable flex-max no-spacing" }, _o = ["onClick"], So = { class: "scrollable" }, Co = { class: "items flex-max no-spacing" }, Oo = /* @__PURE__ */ we({
   __name: "KpiSelector",
   props: {
     applyLabel: {},
