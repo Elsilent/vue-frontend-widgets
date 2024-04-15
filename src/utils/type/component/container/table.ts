@@ -106,14 +106,19 @@ export function mergeComparisonRow(
 
     if ((columns[columnKey].colspan ?? 0) > 1) {
       const comparisonValue = comparisonRow ? comparisonRow[columnKey] : undefined;
+      let differenceValue;
+      if (comparisonValue === undefined) {
+        differenceValue = 100;
+      } else if (originalValue === 0) {
+        differenceValue = -100;
+      } else {
+        differenceValue = ((originalValue - comparisonValue) / originalValue) * 100;
+      }
 
       mergedRow[columnKey] = {
         original: originalValue,
         comparison: comparisonValue ?? 0,
-        difference:
-          comparisonValue === undefined
-            ? 100
-            : ((originalValue - comparisonValue) / originalValue) * 100,
+        difference: differenceValue,
       };
     } else {
       mergedRow[columnKey] = originalValue;
