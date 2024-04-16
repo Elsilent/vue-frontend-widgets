@@ -1338,8 +1338,10 @@ watch(columns, () => {
 });
 
 if (defaultOrderBy) {
-  watch(defaultOrderBy, () => {
-    setOrderByFromDefault(true);
+  watch(defaultOrderBy, (newOrder, oldOrder) => {
+    if (newOrder?.[0][0] !== oldOrder?.[0][0]) {
+      setOrderByFromDefault(true);
+    }
   });
 }
 
