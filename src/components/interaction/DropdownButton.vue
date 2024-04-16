@@ -11,9 +11,11 @@ withDefaults(
     list: Record<string, any>;
     label: string;
     loading: boolean;
+    disabled: boolean;
   }>(),
   {
     loading: false,
+    disabled: false,
   },
 );
 
@@ -56,6 +58,7 @@ const windowClickHandler = (e: Event) => {
 .exportBtn
   Button(
     @click="toggleVisibility()",
+    :disabled="disabled"
     :label="label",
     mood="accent",
     tabindex="-1",
@@ -75,6 +78,10 @@ const windowClickHandler = (e: Event) => {
     style="margin: 0"
   )
     .exportBtn-menu_item(v-for="item in list")
+      Icon.chevron.no-spacing(
+        size='large-3',
+        :value="item.submenu ? 'chevron-left' : ''"
+      )
       Info {{ item.name }}
       Align.exportBtn-subMenu( column, v-if="item.submenu")
         .exportBtn-subMenu_item(
@@ -95,18 +102,19 @@ const windowClickHandler = (e: Event) => {
   position: relative;
 
   &:deep(.button) {
+    padding-left: $padding-size-large;
     padding-right: $padding-size-small-3;
   }
 
   .loader,
   .chevron {
-    margin-left: $padding-size-small-2;
+    margin-left: $padding-size-small;
     transition-duration: $transition-duration-normal;
     transition-property: background-color, border-color, opacity;
   }
   &:hover,
   &:active {
-    .chevron {
+    .button .chevron {
       @include apply-color(color, white);
     }
   }
@@ -123,11 +131,18 @@ const windowClickHandler = (e: Event) => {
     position: absolute;
     z-index: 5;
     width: 100%;
-    margin: 0;
 
     &_item {
       cursor: pointer;
-      padding: $padding-size-small-2 $padding-size-normal;
+      padding: $padding-size-small-2 $padding-size-normal $padding-size-small-2 0;
+      display: flex;
+
+      & .chevron {
+        min-width: 21px;
+        min-height: 21px;
+        margin-left: 0;
+        visibility: hidden;
+      }
 
       & .exportBtn-subMenu {
         @include apply-color(background-color, background-elevated-3);
@@ -156,6 +171,10 @@ const windowClickHandler = (e: Event) => {
 
         .exportBtn-subMenu {
           display: flex;
+        }
+
+        & .chevron {
+          visibility: visible;
         }
       }
     }
