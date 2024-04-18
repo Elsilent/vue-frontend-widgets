@@ -97,7 +97,7 @@ input.input(
   }
 
   &::placeholder {
-    @include apply-color(color, border-inactive);
+    @include apply-color(color, placeholder);
   }
 }
 </style>
