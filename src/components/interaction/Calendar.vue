@@ -1,24 +1,24 @@
 <script lang="ts" setup>
 import { DateTime, Duration } from 'luxon';
-import { computed, toRefs } from 'vue';
+import { computed, toRefs, watch, ref } from 'vue';
 import Align from '../container/Align.vue';
 import Button from './Button.vue';
 import Dropdown from './Dropdown.vue';
 import Grid from '../container/Grid.vue';
 import Info from '../label/Info.vue';
 import { dateFormat, normalizeRange } from '../../utils/date';
-import match from '../../utils/match';
 import type { Mood } from '../../utils/enum/mood';
 import type { CalendarMode } from '../../utils/type/component/interaction/calendar';
 
 const props = withDefaults(
   defineProps<{
     minDate?: string;
-    mode: CalendarMode;
     monthLabels: string[];
     range: [string, string];
     weekLabels?: string[];
     yearMonth: string;
+    relatedMaxDate?: string;
+    relatedMinDate?: string;
   }>(),
   {
     minDate: '2020-01-01',
@@ -28,7 +28,24 @@ const props = withDefaults(
 const now = DateTime.now();
 const maxYear = now.year;
 
-const { minDate, mode, monthLabels, range, weekLabels, yearMonth } = toRefs(props);
+const { minDate, monthLabels, range, weekLabels, yearMonth, relatedMinDate, relatedMaxDate } =
+  toRefs(props);
+
+const mode = ref<CalendarMode>('start');
+
+const minDateTimestamp = computed(() =>
+  DateTime.fromFormat(minDate.value, dateFormat.yearMonthDay),
+);
+const relatedMinDateTimestamp = computed(() =>
+  relatedMinDate?.value
+    ? DateTime.fromFormat(relatedMinDate?.value, dateFormat.yearMonthDay)
+    : undefined,
+);
+const relatedMaxDateTimestamp = computed(() =>
+  relatedMaxDate?.value
+    ? DateTime.fromFormat(relatedMaxDate?.value, dateFormat.yearMonthDay)
+    : undefined,
+);
 
 const currentMonthIndex = computed(
   () => DateTime.fromFormat(yearMonth.value, dateFormat.yearMonth).month - 1,
@@ -54,7 +71,7 @@ const strictWeekLabels = computed(() =>
 );
 
 const yearItems = computed(() => {
-  const minYear = DateTime.fromFormat(minDate.value, dateFormat.yearMonthDay).year;
+  const minYear = minDateTimestamp.value.year;
 
   return new Array(maxYear - minYear + 1).fill(0).reduce((yearItems, _, index) => {
     const year = minYear + index;
@@ -97,16 +114,34 @@ const calendarGridDayNumbers = computed(() =>
 const emit = defineEmits<{
   (event: 'update:range', value: [string, string]): void;
   (event: 'update:yearMonth', value: string): void;
+  (event: 'selectDay', value: DateTime): void;
+  (event: 'hoverDay', value: DateTime): void;
 }>();
 
 const belongsToCurrentMonth = (date: DateTime) => date.hasSame(yearMonthStart.value, 'month');
 
 const dayClasses = (day: DateTime) => {
   return {
-    'in-range': day >= rangeStart.value && day <= rangeEnd.value,
+    'in-range': !currentSelected.value && day >= rangeStart.value && day <= rangeEnd.value,
     now: now.hasSame(day, 'day'),
-    'range-end': day.hasSame(rangeEnd.value, 'day'),
-    'range-start': day.hasSame(rangeStart.value, 'day'),
+    hovered:
+      (day >= currentHovered.value! && day <= currentSelected.value!) ||
+      (day <= currentHovered.value! && day >= currentSelected.value!),
+    'selected-day': currentSelected.value?.hasSame(day, 'day'),
+    'first-day': !currentSelected.value && day.hasSame(rangeStart.value, 'day'),
+    'first-selected-day':
+      currentSelected.value &&
+      ((day.hasSame(currentSelected.value, 'day') &&
+        currentSelected.value <= currentHovered.value!) ||
+        (day.hasSame(currentHovered.value!, 'day') &&
+          currentSelected.value >= currentHovered.value!)),
+    'last-day': !currentSelected.value && day.hasSame(rangeEnd.value, 'day'),
+    'last-selected-day':
+      currentSelected.value &&
+      ((day.hasSame(currentSelected.value, 'day') &&
+        currentSelected.value >= currentHovered.value!) ||
+        (day.hasSame(currentHovered.value!, 'day') &&
+          currentSelected.value <= currentHovered.value!)),
     'this-month': belongsToCurrentMonth(day),
   };
 };
@@ -114,15 +149,16 @@ const dayMood = (day: DateTime): Mood => {
   if (now.hasSame(day, 'day')) {
     return 'important';
   }
-  if (belongsToCurrentMonth(day) && day >= rangeStart.value && day <= rangeEnd.value) {
-    return 'accent';
-  }
   return 'neutral';
 };
-const hasNextMonth = computed(() => yearMonthStart.value.endOf('month') < now);
+const hasNextMonth = computed(
+  () =>
+    yearMonthStart.value.endOf('month') <
+    (relatedMaxDateTimestamp.value?.minus({ month: 1 }) ?? now),
+);
 const hasPreviousMonth = computed(
   () =>
-    DateTime.fromFormat(minDate.value, dateFormat.yearMonthDay).startOf('month') <
+    (relatedMinDateTimestamp.value?.plus({ month: 1 }) ?? minDateTimestamp.value).startOf('month') <
     yearMonthStart.value,
 );
 const nextMonth = () => {
@@ -146,11 +182,19 @@ const updateMonth = (monthIndex: number | string | symbol, year?: number) => {
   emit('update:yearMonth', newYearMonth);
 };
 const updateRange = (day: DateTime) => {
-  const newRange = match<'end' | 'start', [string, string]>(mode.value)
-    .when('end', () => [range.value[0], day.toFormat(dateFormat.yearMonthDay)])
-    .when('start', () => [day.toFormat(dateFormat.yearMonthDay), range.value[1]]).done!;
-
-  emit('update:range', normalizeRange(newRange));
+  if (mode.value === 'start') {
+    currentSelected.value = day;
+    mode.value = 'end';
+    emit('selectDay', currentSelected.value);
+  } else if (currentSelected.value) {
+    emit(
+      'update:range',
+      normalizeRange([
+        day.toFormat(dateFormat.yearMonthDay),
+        currentSelected.value.toFormat(dateFormat.yearMonthDay),
+      ]),
+    );
+  }
 };
 const updateYear = (year: number | string | symbol) => {
   const newYearMonth = yearMonthStart.value
@@ -161,6 +205,57 @@ const updateYear = (year: number | string | symbol) => {
 
   emit('update:yearMonth', newYearMonth);
 };
+
+const currentSelected = ref<DateTime>();
+const currentHovered = ref<DateTime>();
+
+const setSelectedDay = (day: DateTime) => {
+  currentSelected.value = day;
+  mode.value = 'end';
+};
+const setHoveredDay = (day: DateTime) => {
+  currentHovered.value = day;
+};
+const resetSelectedDay = () => {
+  mode.value = 'start';
+  currentSelected.value = undefined;
+  currentHovered.value = undefined;
+};
+defineExpose({
+  setSelectedDay,
+  setHoveredDay,
+  resetSelectedDay,
+});
+
+watch(relatedMinDateTimestamp, (newRelatedMin) => {
+  if (newRelatedMin) {
+    const isNeedChanges = yearMonthStart.value <= newRelatedMin.startOf('month');
+    if (isNeedChanges) {
+      const isMax = newRelatedMin.startOf('month') >= now.minus({ month: 1 });
+      if (isMax) {
+        updateMonth(now.month - 1, now.year);
+      } else {
+        const newDate = newRelatedMin.plus({ month: 1 });
+        updateMonth(newDate.month - 1, newDate.year);
+      }
+    }
+  }
+});
+
+watch(relatedMaxDateTimestamp, (newRelatedMax) => {
+  if (newRelatedMax) {
+    const isNeedChanges = yearMonthStart.value.endOf('month') >= newRelatedMax.endOf('month');
+    if (isNeedChanges) {
+      const isMin = newRelatedMax.endOf('month') <= minDateTimestamp.value.plus({ month: 1 });
+      if (isMin) {
+        updateMonth(minDateTimestamp.value.month - 1, minDateTimestamp.value.year);
+      } else {
+        const newDate = newRelatedMax.minus({ month: 1 });
+        updateMonth(newDate.month - 1, newDate.year);
+      }
+    }
+  }
+});
 </script>
 
 <template lang="pug">
@@ -208,6 +303,7 @@ Align.calendar(column)
       Button.day(
         v-for='day in calendarGridDayNumbers',
         @click.stop='() => updateRange(day)',
+        @mouseover='() => { currentHovered = day; emit("hoverDay", day) }',
         :class="dayClasses(day)",
         :disabled='day > now',
         :label='day.day.toString()',
@@ -220,6 +316,7 @@ Align.calendar(column)
 <style lang="scss" scoped>
 @import '../../styles/colors.scss';
 @import '../../styles/spacing.scss';
+@import '../../styles/radius.scss';
 
 @include default-spacing;
 
@@ -254,49 +351,59 @@ Align.calendar(column)
 
       > .day {
         border-width: 0;
+        border-radius: 0;
         padding: $padding-size-small-2;
+        &:deep(.info) {
+          @include apply-color(color, text-normal);
+        }
 
-        &.in-range {
-          &:not(.range-end) {
-            border-bottom-right-radius: 0;
-            border-top-right-radius: 0;
-
-            &.this-month:not(.now):not(.range-start) {
-              @include apply-color(background-color, background-hover-accent);
+        &:not(.now):not(.disabled) {
+          &.in-range,
+          &.hovered,
+          &.hovered:hover {
+            @include apply-color(background-color, background-normal);
+            &.this-month {
+              @include apply-color(background-color, background-accent-lowered);
+              &:deep(.info) {
+                @include apply-color(color, white);
+              }
             }
           }
 
-          &:not(.range-start) {
-            border-bottom-left-radius: 0;
-            border-top-left-radius: 0;
+          &:not(.hovered):hover {
+            @include apply-color(background-color, background-normal);
+            &.this-month:deep(.info) {
+              @include apply-color(color, text-normal);
+            }
           }
+          &:not(.hovered):not(.in-range):hover {
+            border-radius: $border-radius-normal;
+          }
+        }
+
+        &.first-day,
+        &.first-selected-day {
+          border-bottom-left-radius: $border-radius-normal;
+          border-top-left-radius: $border-radius-normal;
+        }
+        &.last-day,
+        &.last-selected-day {
+          border-bottom-right-radius: $border-radius-normal;
+          border-top-right-radius: $border-radius-normal;
         }
 
         &.now {
-          @include apply-color(color, white);
-        }
-
-        &:not(.now) {
-          &.in-range.this-month {
-            &:deep(.info) {
-              @include apply-color(color, white);
-            }
+          &:deep(.info) {
+            @include apply-color(color, white);
           }
+        }
+        &.now:not(.in-range):not(.hovered) {
+          border-radius: $border-radius-normal;
         }
 
         &:not(.this-month) {
           &:deep(.info) {
-            @include apply-color(color, background-lowered-3);
-          }
-        }
-
-        &:hover:not(:active):not(.disabled) {
-          &.mood-border-neutral {
-            @include apply-color(background-color, background-lowered);
-
-            &:deep(.info) {
-              @include apply-color(color, text-normal);
-            }
+            @include apply-color(color, background-hover-inactive);
           }
         }
       }
