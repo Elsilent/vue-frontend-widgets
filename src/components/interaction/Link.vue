@@ -18,13 +18,15 @@ const { to } = toRefs(props);
 RouterLink.link(
   v-if="!props.isExternal && (typeof to === 'string' || 'name' in to)",
   :to='to',
+  @click="$emit('click')"
 )
   Info(mood='important-alt' v-bind="$attrs")
     slot(default)
 a.link(
   v-else,
   :href='to.toString()',
-  :target="props.isExternal ? '_blank' : '_self'"
+  :target="props.isExternal ? '_blank' : '_self'",
+  @click="$emit('click')"
 )
   Info(mood='important-alt' v-bind="$attrs")
     slot(default)
