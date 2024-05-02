@@ -408,7 +408,7 @@ Teleport(to="#app > .app-container")
 
     .scrollable {
       @include scrollbar();
-
+      scrollbar-gutter: stable both-edges;
       overflow-x: hidden;
       padding-bottom: math.div($padding-size-small-2, 2);
       transition-duration: $transition-duration-normal;

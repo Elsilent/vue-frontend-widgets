@@ -484,7 +484,7 @@ const Q = /* @__PURE__ */ x(Se, [["__scopeId", "data-v-e982b607"]]), Ie = /* @__
     };
   }
 });
-const Be = /* @__PURE__ */ x(Ie, [["__scopeId", "data-v-d52b95ab"]]), Ce = (c) => (X("data-v-ee824bbc"), c = c(), Y(), c), Te = { class: "brand" }, Me = { class: "items" }, Ve = /* @__PURE__ */ Ce(() => /* @__PURE__ */ F("div", { class: "pixel" }, " ", -1)), We = /* @__PURE__ */ g({
+const Be = /* @__PURE__ */ x(Ie, [["__scopeId", "data-v-d52b95ab"]]), Ce = (c) => (X("data-v-80badbf3"), c = c(), Y(), c), Te = { class: "brand" }, Me = { class: "items" }, Ve = /* @__PURE__ */ Ce(() => /* @__PURE__ */ F("div", { class: "pixel" }, " ", -1)), We = /* @__PURE__ */ g({
   __name: "SideMenu",
   props: {
     brandText: {},
@@ -547,7 +547,7 @@ const Be = /* @__PURE__ */ x(Ie, [["__scopeId", "data-v-d52b95ab"]]), Ce = (c) =
     ], 34));
   }
 });
-const tt = /* @__PURE__ */ x(We, [["__scopeId", "data-v-ee824bbc"]]), Ee = /* @__PURE__ */ g({
+const tt = /* @__PURE__ */ x(We, [["__scopeId", "data-v-80badbf3"]]), Ee = /* @__PURE__ */ g({
   __name: "ThemeToggle",
   props: {
     modelValue: {}

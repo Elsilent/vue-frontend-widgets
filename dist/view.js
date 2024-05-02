@@ -2953,7 +2953,7 @@ const $o = /* @__PURE__ */ Oe(go, [["__scopeId", "data-v-e9fcf336"]]), yo = { cl
     ], 64));
   }
 });
-const Ho = /* @__PURE__ */ Oe(Eo, [["__scopeId", "data-v-f6336c9a"]]);
+const Ho = /* @__PURE__ */ Oe(Eo, [["__scopeId", "data-v-f17a3bff"]]);
 export {
   $o as CommonTable,
   Ho as KpiSelector
