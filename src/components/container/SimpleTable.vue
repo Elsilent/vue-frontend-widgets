@@ -792,27 +792,30 @@ watch(
 
 updateColumnSizingInfo();
 
-defineSlots<{
-  columnRowNumber: (props: any) => any;
-  colorizeLabel: (props: { enabled: boolean }) => any;
-  column: (props: { columnKey: string; isGhost: boolean }) => any;
-  additionalHeader: (props: { additionalHeader: string; columnKey: string }) => any;
-  topTotal: (props: { columnKey: string; subcolumnKey?: string; values: any[] }) => any;
-  topTotalRowNumber: (props: any) => any;
-  secondaryColumn: (props: { columnKey: string; subcolumnKey?: string }) => any;
-  rowNumber: (props: { value: number | string }) => any;
-  row: (props: {
-    columnKey: string;
-    index: number;
-    row: Record<string, any>;
-    spanIndex?: number | string;
-    subcolumnKey?: string;
-    subindex: number;
-    value: any;
-  }) => any;
-  totalRowNumber: (props: any) => any;
-  total: (props: { columnKey: string; subcolumnKey?: string; values: any[] }) => any;
-}>();
+defineSlots<
+  {
+    [K in keyof typeof columns.value as K extends string ? `row-${K}` : never]?: (_: {
+      columnKey: string;
+      index: number;
+      row: Record<string, any>;
+      spanIndex?: number | string;
+      subcolumnKey?: string;
+      subindex: number;
+      value: any;
+    }) => any;
+  } & {
+    columnRowNumber: (props: any) => any;
+    colorizeLabel: (props: { enabled: boolean }) => any;
+    column: (props: { columnKey: string; isGhost: boolean }) => any;
+    additionalHeader: (props: { additionalHeader: string; columnKey: string }) => any;
+    topTotal: (props: { columnKey: string; subcolumnKey?: string; values: any[] }) => any;
+    topTotalRowNumber: (props: any) => any;
+    secondaryColumn: (props: { columnKey: string; subcolumnKey?: string }) => any;
+    rowNumber: (props: { value: number | string }) => any;
+    totalRowNumber: (props: any) => any;
+    total: (props: { columnKey: string; subcolumnKey?: string; values: any[] }) => any;
+  }
+>();
 </script>
 
 <template lang="pug">
@@ -932,7 +935,7 @@ defineSlots<{
           :data-primary-key="row[primaryColumn]",
         )
           slot(
-            name="row",
+            :name="`row-${columnKey}`",
             :columnKey="columnKey",
             :index="rowIndex",
             :row="row",
@@ -947,7 +950,7 @@ defineSlots<{
           :data-subcolumn-index="index - 1",
         )
           slot(
-            name="row",
+            :name="`row-${columnKey}`",
             :columnKey="columnKey",
             :index="rowIndex",
             :row="row",

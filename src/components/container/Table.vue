@@ -346,10 +346,13 @@ watch(columns, () => {
         )
       template(#rowNumber="{ value }")
         slot(name="rowNumber", :value="value")
-      template(#row="{ columnKey, index, row, spanIndex, subcolumnKey, subindex, value }")
+      //- use "_" before variable name because vue doesn't provide correct binding for v-for in templates
+      template(v-for="_columnId in Object.keys(fixedColumns)"
+        :key="_columnId"
+        v-slot:[`row-${_columnId}`]="{ columnKey, index, row, spanIndex, subcolumnKey, subindex, value }"
+      )
         slot(
-          v-if="columnKey in fixedColumns",
-          name="row",
+          :name="'row-' + columnKey",
           :columnKey="columnKey",
           :index="index",
           :row="row",
@@ -424,10 +427,14 @@ watch(columns, () => {
           :columnKey="columnKey",
           :subcolumnKey="subcolumnKey",
         )
-      template(#row="{ columnKey, index, row, spanIndex, subcolumnKey, subindex, value }")
+      //- use "_" before variable name because vue doesn't provide correct binding for v-for in templates
+      template(
+        v-for="_columnId in Object.keys(scrollableColumns)"
+        :key="_columnId"
+        v-slot:[`row-${_columnId}`]="{ columnKey, index, row, spanIndex, subcolumnKey, subindex, value }"
+      )
         slot(
-          v-if="columnKey in scrollableColumns",
-          name="row",
+          :name="'row-' + columnKey",
           :columnKey="columnKey",
           :index="index",
           :row="row",

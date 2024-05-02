@@ -1431,7 +1431,12 @@ if (request) {
           contrast,
           size="small",
         ) {{ comparisonColumns[subcolumnKey].label }}
-      template(#row="{ columnKey, index, row, spanIndex, subcolumnKey, subindex, value }")
+      //- use "_" before variable name because vue doesn't provide correct binding for v-for in templates
+      template(
+        v-for="_columnId in Object.keys(currentColumns)"
+        :key="_columnId"
+        v-slot:[`row-${_columnId}`]="{ columnKey, index, row, spanIndex, subcolumnKey, subindex, value }"
+      )
         slot(
           v-bind=`{
             columnKey,
@@ -1442,7 +1447,7 @@ if (request) {
             subindex,
             value,
           }`,
-          name="row",
+          :name="'row-' + columnKey",
         )
           TrendChart(
             v-if="subindex === undefined && columnKey === 'trend'",
@@ -1493,15 +1498,15 @@ if (request) {
             @click='() => toggleExpandColumn(columnKey)',
             :class="expandedColumns.includes(columnKey) ? 'fa-compress-alt' : 'fa-expand-alt'",
           )
-          template(v-if="detailsLabels && row.rowInfo.detailable && columnKey === detailsColumn")
-            Separator(v-if='!canShorten(columnKey, value)')
-            DetailsSelector(
-              @hideDetails="() => onHideDetails(row)",
-              @showDetails="(kind) => onShowDetails(kind, row)",
-              :labels="detailsLabels",
-              :open="detailsRows[row[primaryColumn]] !== undefined",
-              :title="detailsSelectorTitle",
-            )
+        template(v-if="detailsLabels && row.rowInfo.detailable && columnKey === detailsColumn")
+          Separator(v-if='!canShorten(columnKey, value)')
+          DetailsSelector(
+            @hideDetails="() => onHideDetails(row)",
+            @showDetails="(kind) => onShowDetails(kind, row)",
+            :labels="detailsLabels",
+            :open="detailsRows[row[primaryColumn]] !== undefined",
+            :title="detailsSelectorTitle",
+          )
       template(#additionalHeader="{ additionalHeader, columnKey }")
         .d-flex.inline-filter(
           v-if="additionalHeader === 'inline_filters' && hasInlineFilters(columnKey)",
@@ -1523,7 +1528,7 @@ if (request) {
           )
       template(#total="{ columnKey, subcolumnKey, values }")
         slot(
-          :name="total",
+          :name=`total`,
           :columnKey="columnKey",
           :subcolumnKey="subcolumnKey",
           :values="values",
