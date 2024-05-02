@@ -1,7 +1,7 @@
 <template lang="pug">
 .treeselect-container
   template(v-if="name !== undefined")
-    input(:name="`${name}[]`", type="hidden")
+    input(v-if="!values || values.length === 0", :name="`${name}[]`", type="hidden")
     input(
       v-for="value in values",
       :name="`${name}[]`",
@@ -28,6 +28,7 @@ export default {
       options: this.items,
       value: this.modelValue,
       appendToBody: true,
+      isGroupedValue: true,
       inputCallback: (modelValue) => {
         this.$emit('update:modelValue', modelValue);
 
