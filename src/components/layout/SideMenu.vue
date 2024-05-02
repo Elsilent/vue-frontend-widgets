@@ -128,14 +128,9 @@ watch(
   }
 
   > .items {
-    @include scrollbar;
-
+    scrollbar-gutter: stable;
     flex: 1;
     overflow-x: hidden;
-
-    &:deep(> *) {
-      margin-right: -10px;
-    }
 
     > .pixel {
       font-size: $font-size-large;
