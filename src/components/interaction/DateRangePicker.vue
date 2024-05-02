@@ -3,7 +3,6 @@ import { DateTime } from 'luxon';
 import { ref, toRefs, watch } from 'vue';
 import Align from '../container/Align.vue';
 import Button from './Button.vue';
-import type { CalendarMode } from '../../utils/type/component/interaction/calendar';
 import Calendar from './Calendar.vue';
 import Info from '../label/Info.vue';
 import Input from './Input.vue';
@@ -36,16 +35,31 @@ const active = ref(false);
 const dateRangePicker = ref<typeof Align | null>();
 const dateRangePickerInput = ref<typeof Input | null>();
 
+const leftCalendar = ref<InstanceType<typeof Calendar> | null>(null);
+const rightCalendar = ref<InstanceType<typeof Calendar> | null>(null);
+
 const getRangeMonths = (range: [string, string]) => {
   const dateFrom = DateTime.fromFormat(range[0], dateFormat.yearMonthDay);
   const dateTo = DateTime.fromFormat(range[1], dateFormat.yearMonthDay);
-  const monthFrom = dateFrom.toFormat(dateFormat.yearMonth);
-  const monthTo =
-    dateFrom.hasSame(dateTo, 'month') && dateTo.endOf('month') < DateTime.now()
-      ? dateTo.plus({ month: 1 }).toFormat(dateFormat.yearMonth)
-      : dateTo.toFormat(dateFormat.yearMonth);
 
-  return [monthFrom, monthTo];
+  const isSameMonths = dateFrom.hasSame(dateTo, 'month');
+  const isTodayMonths = dateTo.endOf('month') >= DateTime.now();
+
+  if (!isSameMonths) {
+    return [dateFrom.toFormat(dateFormat.yearMonth), dateTo.toFormat(dateFormat.yearMonth)];
+  }
+
+  if (isTodayMonths) {
+    return [
+      dateFrom.minus({ month: 1 }).toFormat(dateFormat.yearMonth),
+      dateTo.toFormat(dateFormat.yearMonth),
+    ];
+  }
+
+  return [
+    dateFrom.toFormat(dateFormat.yearMonth),
+    dateTo.plus({ month: 1 }).toFormat(dateFormat.yearMonth),
+  ];
 };
 
 const getTextValue = () => rangeToDisplayFormat(modelValue.value);
@@ -81,16 +95,9 @@ const isPresetActive = (preset: DateRangePreset) => {
   return dateFrom === modelValue.value[0] && dateTo === modelValue.value[1];
 };
 
-const calendarMode = ref<CalendarMode>('start');
-
 const updateModelValue = (modelValue: [string, string]) => {
   emit('update:modelValue', modelValue);
-
-  if (calendarMode.value === 'start') {
-    calendarMode.value = 'end';
-  } else {
-    whenBlurred();
-  }
+  whenBlurred();
 };
 
 watch(modelValue, () => {
@@ -101,8 +108,8 @@ const whenBlurred = (event?: FocusEvent) => {
   if (!event || !dateRangePicker.value?.$el.contains(event.relatedTarget)) {
     active.value = false;
 
-    calendarMode.value = 'start';
-
+    leftCalendar.value?.resetSelectedDay();
+    rightCalendar.value?.resetSelectedDay();
     dateRangePickerInput.value?.$el.blur();
 
     return;
@@ -165,20 +172,26 @@ Align.date-range-picker(
         ) {{ translator(preset.label) }}
       Align.calendars
         Calendar(
+          ref="leftCalendar",
           @update:range="(range) => updateModelValue(range)",
           v-model:yearMonth='leftCalendarYearMonth',
-          :mode='calendarMode',
+          @selectDay="rightCalendar?.setSelectedDay($event)",
+          @hoverDay="rightCalendar?.setHoveredDay($event)",
           :monthLabels='monthLabels',
           :range='modelValue',
           :weekLabels='weekLabels',
+          :relatedMaxDate="DateTime.fromFormat(rightCalendarYearMonth, dateFormat.yearMonth).endOf('month').toFormat(dateFormat.yearMonthDay)"
         )
         Calendar(
+          ref="rightCalendar",
           @update:range="(range) => updateModelValue(range)",
           v-model:yearMonth='rightCalendarYearMonth',
-          :mode='calendarMode',
+          @selectDay="leftCalendar?.setSelectedDay($event)",
+          @hoverDay="leftCalendar?.setHoveredDay($event)",
           :monthLabels='monthLabels',
           :range='modelValue',
           :weekLabels='weekLabels',
+          :relatedMinDate="DateTime.fromFormat(leftCalendarYearMonth, dateFormat.yearMonth).startOf('month').toFormat(dateFormat.yearMonthDay)"
         )
 </template>
 
@@ -225,12 +238,12 @@ Align.date-range-picker(
           transition-property: background-color, color;
 
           &.active {
-            @include apply-color(background-color, background-accent);
+            @include apply-color(background-color, background-list-accent);
             @include apply-color(color, white);
           }
 
           &:hover:not(.active) {
-            @include apply-color(background-color, background-lowered);
+            @include apply-color(background-color, background-normal);
 
             transition-duration: $transition-duration-fast;
           }
