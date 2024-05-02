@@ -424,7 +424,6 @@ Teleport(to="#app > .app-container")
         position: relative;
 
         > .item-container {
-          margin-right: -10px;
           > .item {
             padding-bottom: $padding-size-small-2;
             padding-left: $padding-size-large + $padding-size-small-2;
@@ -493,9 +492,7 @@ Teleport(to="#app > .app-container")
       > .item {
         border-radius: $border-radius-normal;
         cursor: pointer;
-        margin-bottom: $padding-size-small-2;
-        margin-left: $padding-size-small-2;
-        margin-right: 0;
+        margin: $padding-size-small-2;
         padding: $padding-size-small-2 $padding-size-large;
         position: relative;
 
