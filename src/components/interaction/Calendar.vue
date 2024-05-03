@@ -123,7 +123,7 @@ const belongsToCurrentMonth = (date: DateTime) => date.hasSame(yearMonthStart.va
 const dayClasses = (day: DateTime) => {
   return {
     'in-range': !currentSelected.value && day >= rangeStart.value && day <= rangeEnd.value,
-    now: now.hasSame(day, 'day'),
+    now: now.hasSame(day, 'day') && belongsToCurrentMonth(day),
     hovered:
       (day >= currentHovered.value! && day <= currentSelected.value!) ||
       (day <= currentHovered.value! && day >= currentSelected.value!),
@@ -146,7 +146,7 @@ const dayClasses = (day: DateTime) => {
   };
 };
 const dayMood = (day: DateTime): Mood => {
-  if (now.hasSame(day, 'day')) {
+  if (now.hasSame(day, 'day') && belongsToCurrentMonth(day)) {
     return 'important';
   }
   return 'neutral';
