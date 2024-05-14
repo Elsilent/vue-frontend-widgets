@@ -13,6 +13,7 @@ const props = defineProps<{
   applyLabel: string;
   columns: Record<string, Column>;
   defaultValue: string[];
+  disabled: boolean;
   filterLabel: string;
   groupNames: Record<string, string>;
   groupsTitle: string;
@@ -248,6 +249,7 @@ watch(filterValue, (value) => {
 <template lang="pug">
 Button(
     @click="() => show()",
+    :disabled="disabled",
     :label="showModalLabel",
     mood="neutral",
     tabindex="-1"

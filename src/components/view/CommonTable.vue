@@ -441,6 +441,7 @@ const visibleRows = computed(() => {
 
 const emit = defineEmits<{
   (e: 'move:column', _: { from: number; to: number }): void;
+  (e: 'update:loading', value: boolean): void;
   (e: 'update:orderBy', value: [string[], boolean]): void;
 }>();
 
@@ -1335,6 +1336,10 @@ watch(columns, () => {
   if (allComparisonRowsSrc) {
     updateComparisonRows();
   }
+});
+
+watch(loading, () => {
+  emit('update:loading', loading.value);
 });
 
 if (defaultOrderBy) {
