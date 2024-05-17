@@ -1,6 +1,6 @@
 @use 'sass:map';
 
-$-themes: (
+$themes: (
   dark: (
     brand-primary: white,
     brand-secondary: #626262,
@@ -66,6 +66,9 @@ $-themes: (
     border-hover-neutral: #4a4c5a,
     border-hover-neutral-alt: #5d15a0,
     border-hover-positive: #1e8460,
+    input-border: #D9D9D9,
+    input-border-hover: #A9BDFC,
+    input-border-active: #6274B7,
     chart-1: #ff9149,
     chart-2: #1e9ff2,
     chart-3: #28d094,
@@ -155,7 +158,7 @@ $-themes: (
     border-accent: #3a44e1,
     border-important: #ff7216,
     border-important-alt: #0c84d1,
-    border-inactive: #babfc7,
+    border-inactive: #D9D9D9,
     border-negative: #ff1635,
     border-neutral: #545766,
     border-neutral-alt: #7e29ce,
@@ -177,6 +180,9 @@ $-themes: (
     border-hover-neutral: #5f6374,
     border-hover-neutral-alt: #7e29ce,
     border-hover-positive: #24bb85,
+    input-border: #D9D9D9,
+    input-border-hover: #A9BDFC,
+    input-border-active: #6274B7,
     chart-1: #ff9149,
     chart-2: #1e9ff2,
     chart-3: #28d094,
@@ -205,7 +211,7 @@ $-themes: (
     line-chart-neutral: #6b6f82,
     line-chart-neutral-alt: #903ae1,
     line-chart-positive: #28d094,
-    placeholder: #babfc7,
+    placeholder: #CACFE7,
     shadow-normal: rgba(black, 10%),
     text-contrast: black,
     text-contrast-opposite: white,
@@ -233,7 +239,7 @@ $-themes: (
   $rule-postfix: '',
   $opacity: null
 ) {
-  @each $-theme, $-colors in $-themes {
+  @each $-theme, $-colors in $themes {
     body > #app > .app-container.theme-#{$-theme} &#{$rule-postfix} {
       $-value: map.get($-colors, $color);
 
