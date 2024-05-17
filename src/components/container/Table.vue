@@ -264,11 +264,14 @@ nextTick(() => {
   }
 });
 
-watch(rows, (newRows, oldRows) => {
+watch(rows, (_newRows, oldRows) => {
   updateKey.value = Math.random();
   if (!oldRows.length) {
     updateTableSize();
   }
+});
+watch(additionalHeaders, () => {
+  updateKey.value = Math.random();
 });
 watch(columns, () => {
   updateTableSize();

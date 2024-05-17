@@ -7,11 +7,13 @@ const props = withDefaults(
     modelValue?: string;
     password?: boolean;
     placeholder?: string;
+    size?: 'small' | 'normal';
   }>(),
   {
     disabled: false,
     modelValue: '',
     password: false,
+    size: 'normal',
   },
 );
 
@@ -52,6 +54,7 @@ input.input(
   @keydown="(event) => whenKeyDown(event)",
   @keyup="(event) => whenKeyUp(event)",
   @input="(event) => whenUpdated(event)",
+  :class='`size-${size}`',
   :disabled='disabled',
   :placeholder='placeholder',
   :type='inputType',
@@ -81,9 +84,16 @@ input.input(
   font-family: $font-family-normal;
   font-size: $font-size-normal;
   outline: none;
-  padding: $padding-size-small-2 $padding-size-normal;
   transition-duration: $transition-duration-normal;
   transition-property: background-color, border-color, color, opacity;
+
+  &.size-normal {
+    padding: $padding-size-small-2 $padding-size-normal;
+  }
+
+  &.size-small {
+    padding: $padding-size-small-3;
+  }
 
   &:disabled {
     cursor: default;

@@ -21,6 +21,8 @@ import {
   mergeComparisonData,
   mergeComparisonRow,
 } from '../../utils/type/component/container/table';
+import Align from '../container/Align.vue';
+import Button from '../interaction/Button.vue';
 import CellHint from './CellHint.vue';
 import ColumnHint from './ColumnHint.vue';
 import DetailsSelector from './DetailsSelector.vue';
@@ -88,7 +90,7 @@ const getGlobalRowsFromRequestInfo = async (
       ...request,
       params: {
         ...(request.params ?? {}),
-        filter: options.inlineFilters.value,
+        filter: options.inlineFilters,
         page_number: options.pageNumber,
         page_size: options.pageSize,
         order: options.orderBy,
@@ -1005,6 +1007,8 @@ const setInlineFilter = (
 
   inlineFilters.value[columnKey] = filter;
 
+  fetchedAllRows.value = false;
+
   setPageNumber(0);
 };
 
@@ -1379,11 +1383,12 @@ if (request) {
     @mouseout="() => hideActionButtons()",
   )
     .action-buttons(:class="{ active: displayActionButtons }")
-      button.btn.btn-small.btn-success(
+      Button(
         v-if="showInlineFilters",
         @click="() => toggleInlineFilters()",
+        :icon="displayInlineFilters ? 'trash' : 'filter-alt'",
+        mood='positive',
       )
-        .las(:class="displayInlineFilters ? 'la-trash' : 'la-filter'")
     Table(
       v-if='orderBy',
       ref="table",
@@ -1413,17 +1418,17 @@ if (request) {
           template(v-if="enabled") {{ uncolorizeLabel }}
           template(v-else) {{ colorizeLabel }}
       template(#columnRowNumber)
-        Info(contrast, size="small") #
+        Info.column-label(contrast, size="small") #
       template(#rowNumber="{ value }")
         Info(contrast, size="small") {{ value }}
       template(#totalRowNumber)
-        Info(contrast, size="small") #
+        Info.total-label(contrast, size="small") #
       template(#column="{ columnKey, isGhost }")
         .d-flex.align-items-center(
           @mouseover="() => setColumnHintVisible(columnKey, true)",
           @mouseout="() => setColumnHintVisible(columnKey, false)",
         )
-          Info(contrast, size="small") {{ columns[columnKey].label }}
+          Info.column-label(contrast, size="small") {{ columns[columnKey].label }}
           ColumnHint(
             v-if="!isGhost && columnHasTooltip(columns[columnKey])",
             :description="columns[columnKey].tooltipDescription",
@@ -1431,7 +1436,7 @@ if (request) {
             :visible="columnHintsVisible[columnKey]",
           )
       template(v-if="comparisonColumns", #secondaryColumn="{ subcolumnKey }")
-        Info(
+        Info.column-label(
           v-if="subcolumnKey",
           contrast,
           size="small",
@@ -1513,23 +1518,22 @@ if (request) {
             :title="detailsSelectorTitle",
           )
       template(#additionalHeader="{ additionalHeader, columnKey }")
-        .d-flex.inline-filter(
+        Align.inline-filter(
           v-if="additionalHeader === 'inline_filters' && hasInlineFilters(columnKey)",
           :class="getInlineFilterOperatorClasses(columnKey)",
         )
           Dropdown.inline-filter-dropdown(
             @update:modelValue="(operator) => setInlineFilter(columnKey, { operator: operator.toString() })",
-            :id="`additional_header_${columnKey}`",
             :items="getInlineFilterOperatorItems(columnKey)",
             :modelValue="getInlineFilterCurrentOperatorItem(columnKey)",
+            size='small',
           )
-            template(#item="{ item }")
-              Info(contrast, size="small") {{ item }}
-          Input.flex-grow-1.inline-filter-input(
+          Input.flex-grow-1.inline-filter-input.no-spacing(
             @blur="(event) => onInlineFilterBlur(event, columnKey)",
             @keyup="(event) => onInlineFilterKeyUp(event, columnKey)"
             :modelValue="getInlineFilterCurrentValue(columnKey)",
             :type="getInlineFilterValueType(columnKey)",
+            size='small',
           )
       template(#total="{ columnKey, subcolumnKey, values }")
         slot(
@@ -1539,7 +1543,7 @@ if (request) {
           :values="values",
         )
           template(v-if="totalTitle && columnKey === totalColumnKey")
-            Info(
+            Info.total-label(
               contrast,
               size="small",
             ) {{ totalTitle(rowCount ?? allRows.length) }}
@@ -1551,13 +1555,13 @@ if (request) {
               :title="columnDetails[columnKey].title",
               :url="getColumnDetailsTotalUrl(columnDetails[columnKey])",
             )
-            Info(
+            Info.total-label(
               v-else-if="subcolumnKey",
               :mood="differenceMood(totalRow[columnKey][subcolumnKey], columnKey, subcolumnKey)",
               contrast,
               size="small",
             ) {{ getRowFormattedValue(totalRow[columnKey][subcolumnKey], columnKey, subcolumnKey) }}
-            Info(
+            Info.total-label(
               v-else,
               :mood="differenceMood(totalRow[columnKey], columnKey, subcolumnKey)",
               contrast,
@@ -1579,7 +1583,7 @@ if (request) {
   left: 0;
   opacity: 0;
   pointer-events: none;
-  top: 0;
+  top: -1px;
   transition: opacity 0.3s;
   transform: translateX(-100%);
 
@@ -1590,10 +1594,15 @@ if (request) {
     transition-duration: 0.1s;
   }
 
-  > button {
+  > .button {
     border-bottom-right-radius: 0;
     border-top-right-radius: 0;
   }
+}
+
+.column-label,
+.total-label {
+    font-weight: 700;
 }
 
 .common-table {
@@ -1624,39 +1633,23 @@ if (request) {
 }
 
 .inline-filter {
-  &.size-small:deep(.inline-filter-dropdown + .select2) {
+  &.size-small > .inline-filter-dropdown {
     min-width: 40px;
   }
-  &.size-normal:deep(.inline-filter-dropdown + .select2) {
+
+  &.size-normal > .inline-filter-dropdown {
     min-width: 100px;
   }
 
-  &:deep(.inline-filter-dropdown + .select2) {
-    .select2-selection.select2-selection--single {
-      border-bottom-right-radius: 0;
-      border-top-right-radius: 0;
-      height: 30px !important;
-      position: relative;
-
-      .select2-selection__rendered {
-        line-height: initial;
-      }
-
-      .select2-selection__arrow {
-        right: 4px !important;
-        top: 1px !important;
-      }
-    }
+  .inline-filter-dropdown:deep(.dropdown) {
+    border-bottom-right-radius: 0;
+    border-top-right-radius: 0;
   }
 
   .inline-filter-input {
     border-bottom-left-radius: 0;
-    border-color: #d9d9d9;
     border-left-width: 0;
     border-top-left-radius: 0;
-    height: 30px;
-    min-width: 50px;
-    padding: 0 0.25rem;
   }
 }
 
