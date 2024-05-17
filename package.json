@@ -114,7 +114,6 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
-    "@fontsource/open-sans": "^5.0.3",
     "axios": "^1.6.1",
     "boxicons": "^2.1.4",
     "element-plus": "^2.7.3",

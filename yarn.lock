@@ -205,11 +205,6 @@
   resolved "https://registry.yarnpkg.com/@floating-ui/utils/-/utils-0.2.2.tgz#d8bae93ac8b815b2bd7a98078cf91e2724ef11e5"
   integrity sha512-J4yDIIthosAsRZ5CPYP/jQvUAQtlZTTD/4suA08/FEnlxqW3sKS9iAhgsa9VYLZ6vDHn/ixJgIqRQPotoBjxIw==
 
-"@fontsource/open-sans@^5.0.3":
-  version "5.0.3"
-  resolved "https://registry.npmjs.org/@fontsource/open-sans/-/open-sans-5.0.3.tgz"
-  integrity sha512-L86qrEfW7IWSGojCtiPpw2/M6qKjxDG+EV4k1xMVFCkhh6Z6gyZwevqCt0yOvd1BmjrtUAIAfSzFTjBn3DeZJw==
-
 "@humanwhocodes/config-array@^0.11.10":
   version "0.11.10"
   resolved "https://registry.npmjs.org/@humanwhocodes/config-array/-/config-array-0.11.10.tgz"
