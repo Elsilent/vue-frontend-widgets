@@ -1023,7 +1023,6 @@ defineSlots<
     &.column {
       @include apply-color(box-shadow, border-table, $value-prefix: 0 0 0 1px);
 
-      font-weight: 700;
       position: sticky;
       top: 0;
       transition: background-color 0.3s, box-shadow 0.3s, color 0.3s, opacity 0.3s;
@@ -1155,7 +1154,6 @@ defineSlots<
       @include apply-color(box-shadow, border-table, $value-prefix: 0 0 0 1px);
 
       bottom: 0;
-      font-weight: 700;
       padding: 1rem;
       position: sticky;
       transition: background-color 0.3s, box-shadow 0.3s;
