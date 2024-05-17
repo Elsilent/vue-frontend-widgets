@@ -1605,7 +1605,7 @@ if (request) {
 
 .column-label,
 .total-label {
-    font-weight: 700;
+  font-weight: 700;
 }
 
 .common-table {
