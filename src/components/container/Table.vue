@@ -274,6 +274,7 @@ watch(additionalHeaders, () => {
   updateKey.value = Math.random();
 });
 watch(columns, () => {
+  updateKey.value = Math.random();
   updateTableSize();
 });
 </script>
