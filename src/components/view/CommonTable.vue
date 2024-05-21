@@ -91,8 +91,9 @@ const getGlobalRowsFromRequestInfo = async (
       params: {
         ...(request.params ?? {}),
         filter: options.inlineFilters
-          ? Object.fromEntries(Object.entries(options.inlineFilters)
-            .filter(([_, filter]) => filter.value !== ''))
+          ? Object.fromEntries(
+              Object.entries(options.inlineFilters).filter(([_, filter]) => filter.value !== ''),
+            )
           : undefined,
         page_number: options.pageNumber,
         page_size: options.pageSize,
