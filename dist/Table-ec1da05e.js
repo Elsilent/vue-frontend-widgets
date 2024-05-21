@@ -1,4 +1,4 @@
-import { defineComponent as ye, toRefs as $e, computed as O, openBlock as d, createElementBlock as c, normalizeClass as U, unref as a, withModifiers as ve, createElementVNode as _e, normalizeStyle as re, ref as g, onUnmounted as Ne, onMounted as We, watch as pe, nextTick as Re, withMemo as je, renderSlot as m, createBlock as He, createCommentVNode as w, createTextVNode as we, Fragment as C, renderList as I, createVNode as Ce, toDisplayString as Ee, withCtx as S, createSlots as Oe } from "vue";
+import { defineComponent as ye, toRefs as $e, computed as B, openBlock as d, createElementBlock as c, normalizeClass as U, unref as a, withModifiers as ve, createElementVNode as _e, normalizeStyle as re, ref as g, onUnmounted as Ne, onMounted as We, watch as pe, nextTick as Re, withMemo as je, renderSlot as m, createBlock as He, createCommentVNode as w, createTextVNode as we, Fragment as C, renderList as I, createVNode as Ce, toDisplayString as Ee, withCtx as S, createSlots as Oe } from "vue";
 import { _ as Me } from "./_plugin-vue_export-helper-dad06003.js";
 import { D as Pe } from "./datetime-31a2b505.js";
 import { I as Fe } from "./Icon-8f2ed8ba.js";
@@ -12,7 +12,7 @@ const Ie = { class: "scrollbar" }, Ue = /* @__PURE__ */ ye({
   },
   emits: ["mousedown"],
   setup(ue, { emit: Q }) {
-    const te = ue, { active: Z, mode: G, thumbOffset: oe, thumbSize: X } = $e(te), p = O(() => {
+    const te = ue, { active: Z, mode: G, thumbOffset: oe, thumbSize: X } = $e(te), p = B(() => {
       const [i, z] = G.value === "vertical" ? ["top", "height"] : ["left", "width"];
       return {
         [i]: `calc(3px + ${oe.value} * (100% - ${X.value} - 6px))`,
@@ -47,11 +47,11 @@ const Se = /* @__PURE__ */ Me(Ue, [["__scopeId", "data-v-56aba386"]]), Xe = /* @
   },
   emits: ["update:scrollPosition"],
   setup(ue, { emit: Q }) {
-    const te = ue, { mode: Z, relativeTo: G, scrollPosition: oe, scrollHeightDelta: X, scrollWidthDelta: p, staticPosition: i } = $e(te), z = g(!1), _ = g(0), B = g(0), A = g(0), M = g(0), k = g(), x = g(), K = g(), le = g(), W = g(), j = g(0), H = g(0), b = g(), N = O(() => j.value / (M.value - B.value)), q = O(
-      () => `max(56px, (100% - 14px) * ${B.value / M.value})`
-    ), Y = O(
+    const te = ue, { mode: Z, relativeTo: G, scrollPosition: oe, scrollHeightDelta: X, scrollWidthDelta: p, staticPosition: i } = $e(te), z = g(!1), _ = g(0), N = g(0), A = g(0), M = g(0), k = g(), x = g(), K = g(), le = g(), W = g(), j = g(0), H = g(0), b = g(), O = B(() => j.value / (M.value - N.value)), q = B(
+      () => `max(56px, (100% - 14px) * ${N.value / M.value})`
+    ), Y = B(
       () => `max(56px, (100% - 14px) * ${_.value / A.value})`
-    ), ne = O(() => H.value / (A.value - _.value)), D = g();
+    ), ne = B(() => H.value / (A.value - _.value)), D = g();
     Ne(() => {
       L.disconnect(), ce.disconnect();
     });
@@ -62,7 +62,7 @@ const Se = /* @__PURE__ */ Me(Ue, [["__scopeId", "data-v-56aba386"]]), Xe = /* @
       P && P.scrollTo(u);
     }, ie = (u) => {
       V({
-        left: ((le == null ? void 0 : le.value) ?? 0) + u * M.value / (B.value - p.value)
+        left: ((le == null ? void 0 : le.value) ?? 0) + u * M.value / (N.value - p.value)
       });
     }, de = (u) => {
       V({
@@ -97,7 +97,7 @@ const Se = /* @__PURE__ */ Me(Ue, [["__scopeId", "data-v-56aba386"]]), Xe = /* @
     }, o = (u) => {
       _.value !== u.clientHeight && (_.value = u.clientHeight);
     }, f = (u) => {
-      B.value !== u.clientWidth && (B.value = u.clientWidth);
+      N.value !== u.clientWidth && (N.value = u.clientWidth);
     }, $ = (u) => {
       A.value !== u.scrollHeight && (A.value = u.scrollHeight);
     }, E = (u) => {
@@ -165,18 +165,18 @@ const Se = /* @__PURE__ */ Me(Ue, [["__scopeId", "data-v-56aba386"]]), Xe = /* @
       a(Z) !== "vertical" ? (d(), He(Se, {
         key: 2,
         onMousedown: P[1] || (P[1] = ve((F) => v(F, "horizontal"), ["stop"])),
-        active: M.value > B.value && (z.value || k.value === "horizontal"),
-        class: U({ "scrollbar-visible": M.value > B.value }),
-        thumbOffset: N.value,
+        active: M.value > N.value && (z.value || k.value === "horizontal"),
+        class: U({ "scrollbar-visible": M.value > N.value }),
+        thumbOffset: O.value,
         thumbSize: q.value,
         mode: "horizontal"
       }, null, 8, ["active", "class", "thumbOffset", "thumbSize"])) : w("", !0),
       a(Z) === "both-top" ? (d(), He(Se, {
         key: 3,
         onMousedown: P[2] || (P[2] = ve((F) => v(F, "horizontal"), ["stop"])),
-        active: M.value > B.value && (z.value || k.value === "horizontal"),
-        class: U({ "scrollbar-visible": M.value > B.value }),
-        thumbOffset: N.value,
+        active: M.value > N.value && (z.value || k.value === "horizontal"),
+        class: U({ "scrollbar-visible": M.value > N.value }),
+        thumbOffset: O.value,
         thumbSize: q.value,
         mode: "horizontal-top"
       }, null, 8, ["active", "class", "thumbOffset", "thumbSize"])) : w("", !0),
@@ -234,7 +234,7 @@ const Ae = /* @__PURE__ */ Me(Xe, [["__scopeId", "data-v-21092b38"]]), qe = ["on
       comparisonColumnKeys: i,
       detailsRows: z,
       dragColumns: _,
-      inversedKpis: B,
+      inversedKpis: N,
       noDataMessage: A,
       orderBy: M,
       orderColumnType: k,
@@ -244,11 +244,11 @@ const Ae = /* @__PURE__ */ Me(Xe, [["__scopeId", "data-v-21092b38"]]), qe = ["on
       showRowNumber: W,
       showTotal: j,
       showTopTotal: H
-    } = $e(te), b = g(), N = g(), q = g(0), Y = g(0), ne = g(0), D = g({}), y = O(
+    } = $e(te), b = g(), O = g(), q = g(0), Y = g(0), ne = g(0), D = g({}), y = B(
       () => Object.entries(p.value).filter(([t, { visible: l }]) => l).map(([t, l]) => t)
-    ), ae = O(
+    ), ae = B(
       () => y.value.length + (W.value ? 1 : 0)
-    ), V = O(() => q.value > 3), ie = O(
+    ), V = B(() => q.value > 3), ie = B(
       () => Object.values(K.value).reduce((t, l) => {
         for (const [e, r] of Object.entries(p.value))
           if (r.type !== "string")
@@ -260,7 +260,7 @@ const Ae = /* @__PURE__ */ Me(Xe, [["__scopeId", "data-v-21092b38"]]), qe = ["on
               (!(e in t) || t[e] > l[e]) && (t[e] = parseFloat(l[e]));
         return t;
       }, {})
-    ), de = O(
+    ), de = B(
       () => Object.values(K.value).reduce((t, l) => {
         for (const [e, r] of Object.entries(p.value))
           if (r.type !== "string")
@@ -272,7 +272,7 @@ const Ae = /* @__PURE__ */ Me(Xe, [["__scopeId", "data-v-21092b38"]]), qe = ["on
               (!(e in t) || t[e] < l[e]) && (t[e] = parseFloat(l[e]));
         return t;
       }, {})
-    ), se = O(() => i != null && i.value ? y.value.map((t) => p.value[t].rowspan ?? 1).reduce((t, l) => t > l ? t : l) : 1), n = O(
+    ), se = B(() => i != null && i.value ? y.value.map((t) => p.value[t].rowspan ?? 1).reduce((t, l) => t > l ? t : l) : 1), n = B(
       () => Object.values(K.value).sort((t, l) => {
         const e = (() => {
           const r = L(
@@ -303,7 +303,7 @@ const Ae = /* @__PURE__ */ Me(Xe, [["__scopeId", "data-v-21092b38"]]), qe = ["on
           })
         )
       ), t), [])
-    ), v = O(() => {
+    ), v = B(() => {
       let t = 0;
       for (const e of y.value) {
         const r = p.value[e];
@@ -319,7 +319,7 @@ const Ae = /* @__PURE__ */ Me(Xe, [["__scopeId", "data-v-21092b38"]]), qe = ["on
         even: l % 2 === 0
       };
       if (oe.value) {
-        const h = (() => !B || !B.value ? "positive" : B.value.includes(e) ? "negative" : "positive")();
+        const h = (() => !N || !N.value ? "positive" : N.value.includes(e) ? "negative" : "positive")();
         s[`color-intensity-${$(t[e], e, r)}`] = !0, s[`color-${h}`] = !0, r !== void 0 && i && i.value && i.value[r] === "difference" ? s.colored = !1 : s.colored = fe(e) >= 0;
       }
       return s;
@@ -351,12 +351,12 @@ const Ae = /* @__PURE__ */ Me(Xe, [["__scopeId", "data-v-21092b38"]]), qe = ["on
         } else {
           const e = y.value.indexOf(t);
           let r = (() => {
-            if (b.value === void 0 || N.value === void 0)
+            if (b.value === void 0 || O.value === void 0)
               return 0;
             if (b.value < e) {
-              if (N.value >= e)
+              if (O.value >= e)
                 return -D.value[y.value[b.value]].width;
-            } else if (N.value <= e)
+            } else if (O.value <= e)
               return D.value[y.value[b.value]].width;
             return 0;
           })();
@@ -391,7 +391,7 @@ const Ae = /* @__PURE__ */ Me(Xe, [["__scopeId", "data-v-21092b38"]]), qe = ["on
       ), s = (() => r ? !M.value[1] : p.value[t].type !== "string")();
       Q("update:orderBy", [e, s]);
     }, u = (t, l) => {
-      _.value && (b.value = y.value.indexOf(t), N.value = b.value, q.value = 0, Y.value = l.clientX, ne.value = l.clientX, window.addEventListener("mousemove", P), window.addEventListener("mouseup", F));
+      _.value && (b.value = y.value.indexOf(t), O.value = b.value, q.value = 0, Y.value = l.clientX, ne.value = l.clientX, window.addEventListener("mousemove", P), window.addEventListener("mouseup", F));
     }, P = (t) => {
       if (b.value === void 0)
         return;
@@ -400,19 +400,19 @@ const Ae = /* @__PURE__ */ Me(Xe, [["__scopeId", "data-v-21092b38"]]), qe = ["on
         columnIndex: parseInt(me.toString()),
         sizing: D.value[T]
       })), e = l[b.value].sizing, r = e.width / 2, h = e.left + ne.value - Y.value;
-      N.value = (() => {
+      O.value = (() => {
         for (const { columnIndex: T, sizing: me } of l)
           if (h + r - me.left - me.width < 0)
             return T;
         return l.length;
       })();
     }, F = (t) => {
-      if (b.value === void 0 || N.value === void 0)
+      if (b.value === void 0 || O.value === void 0)
         return;
-      V.value && N.value !== b.value && Q("move:column", {
+      V.value && O.value !== b.value && Q("move:column", {
         from: b.value,
-        to: N.value
-      }), N.value = void 0, q.value = 0, b.value = void 0, window.removeEventListener("mousemove", P), window.removeEventListener("mouseup", F);
+        to: O.value
+      }), O.value = void 0, q.value = 0, b.value = void 0, window.removeEventListener("mousemove", P), window.removeEventListener("mouseup", F);
     }, De = (t) => {
       fe(t) >= 0 ? Q("removeColoredMetric", t) : Q("addColoredMetric", t);
     }, ge = g({}), Le = (t, l) => {
@@ -682,7 +682,7 @@ const Be = /* @__PURE__ */ Me(rt, [["__scopeId", "data-v-ef883ea1"]]), nt = /* @
       detailsRows: i,
       dragColumns: z,
       fixedColumnNumber: _,
-      inversedKpis: B,
+      inversedKpis: N,
       orderBy: A,
       primaryColumn: M,
       rows: k,
@@ -690,18 +690,18 @@ const Be = /* @__PURE__ */ Me(rt, [["__scopeId", "data-v-ef883ea1"]]), nt = /* @
       showRowNumber: K,
       showTopTotal: le,
       showTotal: W
-    } = $e(Q), j = g(0), H = g(), b = g(0), N = g(0);
+    } = $e(Q), j = g(0), H = g(), b = g(0), O = g(0);
     Ne(() => de.disconnect());
-    const q = O(
+    const q = B(
       () => Object.keys(X.value).slice(0, _.value).reduce((n, v) => (n[v] = X.value[v], n), {})
-    ), Y = O(
+    ), Y = B(
       () => Object.keys(X.value).slice(_.value).reduce((n, v) => (n[v] = X.value[v], n), {})
-    ), ne = O(
+    ), ne = B(
       () => Object.keys(i.value).reduce(
         (n, v) => n + v.length,
         Object.values(k.value).length
       )
-    ), D = O(() => {
+    ), D = B(() => {
       var v, o, f;
       const n = {};
       return (v = H.value) != null && v.main && (n["--header-main-height"] = `${H.value.main}px`), (o = H.value) != null && o.secondary && (n["--header-secondary-height"] = `${H.value.secondary}px`), j.value && (n["--fixed-width"] = `${j.value}px`), (f = H.value) != null && f.total && (n["--header-total-height"] = `${H.value.total}px`), b.value ? (n["--total-height"] = `${b.value}px`, n["--bottom-height"] = n["--total-height"]) : (ne.value === 1 ? n["--total-scrollbar-display"] = "none" : n["--total-height"] = "20px", n["--bottom-height"] = "0px"), n;
@@ -752,11 +752,11 @@ const Be = /* @__PURE__ */ Me(rt, [["__scopeId", "data-v-ef883ea1"]]), nt = /* @
     return Re(() => {
       de.disconnect(), se.value && de.observe(se.value);
     }), pe(k, (n, v) => {
-      N.value = Math.random(), v.length || ie();
+      O.value = Math.random(), v.length || ie();
     }), pe(te, () => {
-      N.value = Math.random();
+      O.value = Math.random();
     }), pe(X, () => {
-      ie();
+      O.value = Math.random(), ie();
     }), (n, v) => (d(), c("div", {
       class: "table-container",
       ref_key: "tableContainer",
@@ -768,7 +768,7 @@ const Be = /* @__PURE__ */ Me(rt, [["__scopeId", "data-v-ef883ea1"]]), nt = /* @
         scrollPosition: a(x),
         scrollWidthDelta: j.value,
         style: re(D.value),
-        updateKey: N.value,
+        updateKey: O.value,
         mode: "both-top",
         optimized: ""
       }, {
@@ -788,7 +788,7 @@ const Be = /* @__PURE__ */ Me(rt, [["__scopeId", "data-v-ef883ea1"]]), nt = /* @
             comparisonColumnKeys: a(p),
             detailsRows: a(i),
             dragColumns: !1,
-            inversedKpis: a(B),
+            inversedKpis: a(N),
             orderBy: a(A),
             orderColumnType: a(X)[a(A)[0][0]].type,
             primaryColumn: a(M),
@@ -884,7 +884,7 @@ const Be = /* @__PURE__ */ Me(rt, [["__scopeId", "data-v-ef883ea1"]]), nt = /* @
             columns: Y.value,
             comparisonColumnKeys: a(p),
             detailsRows: a(i),
-            inversedKpis: a(B),
+            inversedKpis: a(N),
             dragColumns: a(z),
             orderBy: a(A),
             orderColumnType: a(X)[a(A)[0][0]].type,
@@ -959,7 +959,7 @@ const Be = /* @__PURE__ */ Me(rt, [["__scopeId", "data-v-ef883ea1"]]), nt = /* @
     ], 512));
   }
 });
-const ct = /* @__PURE__ */ Me(nt, [["__scopeId", "data-v-71bb480e"]]);
+const ct = /* @__PURE__ */ Me(nt, [["__scopeId", "data-v-5fa2cde1"]]);
 export {
   Ae as S,
   ct as T,
