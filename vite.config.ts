@@ -4,6 +4,7 @@ import { fileURLToPath, URL } from 'node:url';
 import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
 import vue from '@vitejs/plugin-vue';
+import ElementPlus from 'unplugin-element-plus/vite';
 
 const srcDir = resolve(__dirname, 'src');
 
@@ -39,19 +40,7 @@ export default defineConfig({
 
         return entryMap;
       }, {} as Record<string, string>),
-      fileName: (format: string, entry: string) => {
-        const extension = (() => {
-          switch (format) {
-            case 'cjs':
-              return 'cjs';
-            case 'es':
-            default:
-              return 'js';
-          }
-        })();
-
-        return `${entry}.${extension}`;
-      },
+      formats: ['es'],
     },
     rollupOptions: {
       external: ['numeral', 'vue', 'vue-router'],
@@ -62,11 +51,21 @@ export default defineConfig({
       },
     },
   },
+  css: {
+    preprocessorOptions: {
+      scss: {
+        additionalData: '@use "@/styles/element/index.scss" as *;',
+      },
+    },
+  },
   plugins: [
     dts({
       insertTypesEntry: true,
     }),
     vue(),
+    ElementPlus({
+      useSource: true,
+    }),
   ],
   resolve: {
     alias: {

@@ -114,9 +114,9 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
-    "@fontsource/open-sans": "^5.0.3",
     "axios": "^1.6.1",
     "boxicons": "^2.1.4",
+    "element-plus": "^2.7.3",
     "flag-icons": "^6.7.0",
     "luxon": "^3.3.0",
     "numeral": "^2.0.6",
@@ -148,6 +148,7 @@
     "typescript": "~5.0.4",
     "vite": "^4.3.9",
     "vitest": "^0.32.0",
-    "vue-tsc": "^1.6.5"
+    "vue-tsc": "^1.6.5",
+    "unplugin-element-plus": "^0.8.0"
   }
 }

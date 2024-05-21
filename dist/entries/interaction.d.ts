@@ -9,4 +9,6 @@ import MultiSelect from '../components/interaction/MultiSelect.vue';
 import PopoverMenu from '../components/interaction/PopoverMenu.vue';
 import Toast from '../components/interaction/Toast.vue';
 import Toggle from '../components/interaction/Toggle.vue';
-export { Button, Calendar, DateRangePicker, Dropdown, DropdownButton, Input, Link, MultiSelect, PopoverMenu, Toast, Toggle, };
+import Select from '../components/interaction/Select/Select.vue';
+import Option from '../components/interaction/Select/Option.vue';
+export { Button, Calendar, DateRangePicker, Dropdown, DropdownButton, Input, Link, MultiSelect, PopoverMenu, Toast, Toggle, Select, Option, };

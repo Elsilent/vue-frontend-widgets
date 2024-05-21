@@ -1,1 +1,0 @@
-"use strict";Object.defineProperty(exports,Symbol.toStringTag,{value:"Module"});const e=require("../undefined_theme-019f6866.cjs");require("./error.cjs");const r=["dark","light"];exports.UndefinedThemeError=e.UndefinedThemeError;exports.themes=r;
