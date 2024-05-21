@@ -365,8 +365,13 @@ const getCellClasses = (
       return inversedKpis.value.includes(columnKey) ? 'negative' : 'positive';
     })();
 
-    classes[`color-intensity-${getColorIntensity(row[columnKey], columnKey, subcolumnIndex)}`] =
-      true;
+    classes[
+      `color-intensity-${
+        row.rowInfo.detailable
+          ? getColorIntensity(row[columnKey], columnKey, subcolumnIndex)
+          : 'none'
+      }`
+    ] = true;
     classes[`color-${colorMood}`] = true;
 
     if (
@@ -405,8 +410,8 @@ const getColorIntensity = (value: any, columnKey: string, subcolumnIndex?: numbe
   if (maxValue === minValue) {
     return 0;
   }
-
-  return Math.round(((currentValue - minValue) * 10) / (maxValue - minValue));
+  const fractionId = Math.round(((currentValue - minValue) * 10) / (maxValue - minValue));
+  return fractionId > 10 ? 10 : fractionId < 1 ? 0 : fractionId;
 };
 
 /**
@@ -1177,8 +1182,21 @@ defineSlots<
 
           $-negative-base-intensity-color: mix(#ff4961, transparent, 60%);
           $-positive-base-intensity-color: mix(#28d094, transparent, 60%);
-
-          @for $-index from 0 through 10 {
+          &.color-intensity-none {
+            background-color: white;
+            @include apply-color(box-shadow, border-table, $value-prefix: 0 0 0 1px);
+          }
+          &.color-intensity-0 {
+            &.color-negative {
+              background-color: rgba($-negative-base-intensity-color, 0.05);
+              @include apply-color(box-shadow, border-table, $value-prefix: 0 0 0 1px);
+            }
+            &.color-positive {
+              background-color: rgba($-positive-base-intensity-color, 0.05);
+              @include apply-color(box-shadow, border-table, $value-prefix: 0 0 0 1px);
+            }
+          }
+          @for $-index from 1 through 10 {
             &.color-intensity-#{$-index} {
               z-index: $-index + 1;
 
