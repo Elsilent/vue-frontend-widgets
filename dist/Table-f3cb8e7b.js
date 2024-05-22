@@ -1,8 +1,8 @@
-import { defineComponent as ye, toRefs as $e, computed as B, openBlock as d, createElementBlock as c, normalizeClass as U, unref as a, withModifiers as ve, createElementVNode as _e, normalizeStyle as re, ref as g, onUnmounted as Ne, onMounted as We, watch as pe, nextTick as Re, withMemo as je, renderSlot as m, createBlock as He, createCommentVNode as w, createTextVNode as we, Fragment as C, renderList as I, createVNode as Ce, toDisplayString as Ee, withCtx as S, createSlots as Oe } from "vue";
+import { defineComponent as ye, toRefs as $e, computed as B, openBlock as d, createElementBlock as c, normalizeClass as U, unref as a, withModifiers as ve, createElementVNode as _e, normalizeStyle as re, ref as g, onUnmounted as Ne, onMounted as We, watch as pe, nextTick as Re, withMemo as je, renderSlot as m, createBlock as He, createCommentVNode as w, createTextVNode as we, Fragment as C, renderList as F, createVNode as Ce, toDisplayString as Ee, withCtx as S, createSlots as Oe } from "vue";
 import { _ as Me } from "./_plugin-vue_export-helper-dad06003.js";
 import { D as Pe } from "./datetime-31a2b505.js";
-import { I as Fe } from "./Icon-8f2ed8ba.js";
-const Ie = { class: "scrollbar" }, Ue = /* @__PURE__ */ ye({
+import { I as Ie } from "./Icon-8f2ed8ba.js";
+const Fe = { class: "scrollbar" }, Ue = /* @__PURE__ */ ye({
   __name: "ScrollableArea",
   props: {
     active: { type: Boolean },
@@ -23,7 +23,7 @@ const Ie = { class: "scrollbar" }, Ue = /* @__PURE__ */ ye({
       class: U(["scrollable-area", { active: a(Z), [a(G)]: !0 }]),
       onMousedown: z[0] || (z[0] = ve((_) => Q("mousedown", _), ["stop"]))
     }, [
-      _e("div", Ie, [
+      _e("div", Fe, [
         _e("div", {
           class: "thumb",
           style: re(p.value)
@@ -47,8 +47,8 @@ const Se = /* @__PURE__ */ Me(Ue, [["__scopeId", "data-v-56aba386"]]), Xe = /* @
   },
   emits: ["update:scrollPosition"],
   setup(ue, { emit: Q }) {
-    const te = ue, { mode: Z, relativeTo: G, scrollPosition: oe, scrollHeightDelta: X, scrollWidthDelta: p, staticPosition: i } = $e(te), z = g(!1), _ = g(0), N = g(0), A = g(0), M = g(0), k = g(), x = g(), K = g(), le = g(), W = g(), j = g(0), H = g(0), b = g(), O = B(() => j.value / (M.value - N.value)), q = B(
-      () => `max(56px, (100% - 14px) * ${N.value / M.value})`
+    const te = ue, { mode: Z, relativeTo: G, scrollPosition: oe, scrollHeightDelta: X, scrollWidthDelta: p, staticPosition: i } = $e(te), z = g(!1), _ = g(0), N = g(0), A = g(0), T = g(0), k = g(), x = g(), K = g(), le = g(), W = g(), j = g(0), H = g(0), b = g(), O = B(() => j.value / (T.value - N.value)), q = B(
+      () => `max(56px, (100% - 14px) * ${N.value / T.value})`
     ), Y = B(
       () => `max(56px, (100% - 14px) * ${_.value / A.value})`
     ), ne = B(() => H.value / (A.value - _.value)), D = g();
@@ -62,7 +62,7 @@ const Se = /* @__PURE__ */ Me(Ue, [["__scopeId", "data-v-56aba386"]]), Xe = /* @
       P && P.scrollTo(u);
     }, ie = (u) => {
       V({
-        left: ((le == null ? void 0 : le.value) ?? 0) + u * M.value / (N.value - p.value)
+        left: ((le == null ? void 0 : le.value) ?? 0) + u * T.value / (N.value - p.value)
       });
     }, de = (u) => {
       V({
@@ -84,13 +84,13 @@ const Se = /* @__PURE__ */ Me(Ue, [["__scopeId", "data-v-56aba386"]]), Xe = /* @
       k.value = void 0, he(), window.removeEventListener("mousemove", se), window.removeEventListener("mouseup", n);
     }, v = (u, P) => {
       y(), z.value = !0, k.value = P;
-      const F = ae();
+      const I = ae();
       switch (k.value) {
         case "horizontal":
-          x.value = u.clientX, le.value = (F == null ? void 0 : F.scrollLeft) ?? 0;
+          x.value = u.clientX, le.value = (I == null ? void 0 : I.scrollLeft) ?? 0;
           break;
         case "vertical":
-          K.value = u.clientY, W.value = (F == null ? void 0 : F.scrollTop) ?? 0;
+          K.value = u.clientY, W.value = (I == null ? void 0 : I.scrollTop) ?? 0;
           break;
       }
       window.addEventListener("mousemove", se), window.addEventListener("mouseup", n);
@@ -98,10 +98,10 @@ const Se = /* @__PURE__ */ Me(Ue, [["__scopeId", "data-v-56aba386"]]), Xe = /* @
       _.value !== u.clientHeight && (_.value = u.clientHeight);
     }, f = (u) => {
       N.value !== u.clientWidth && (N.value = u.clientWidth);
-    }, $ = (u) => {
+    }, M = (u) => {
       A.value !== u.scrollHeight && (A.value = u.scrollHeight);
     }, E = (u) => {
-      M.value !== u.scrollWidth && (M.value = u.scrollWidth);
+      T.value !== u.scrollWidth && (T.value = u.scrollWidth);
     }, ee = (u) => {
       j.value = u.scrollLeft, Q("update:scrollPosition", {
         left: j.value,
@@ -114,7 +114,7 @@ const Se = /* @__PURE__ */ Me(Ue, [["__scopeId", "data-v-56aba386"]]), Xe = /* @
       });
     }, R = () => {
       const u = ae();
-      u && (o(u), f(u), $(u), E(u));
+      u && (o(u), f(u), M(u), E(u));
     }, L = new MutationObserver(() => R()), ce = new ResizeObserver(() => R()), fe = (u) => {
       ee(u.target), J(u.target);
     }, he = () => {
@@ -164,25 +164,25 @@ const Se = /* @__PURE__ */ Me(Ue, [["__scopeId", "data-v-56aba386"]]), Xe = /* @
       ], 34)),
       a(Z) !== "vertical" ? (d(), He(Se, {
         key: 2,
-        onMousedown: P[1] || (P[1] = ve((F) => v(F, "horizontal"), ["stop"])),
-        active: M.value > N.value && (z.value || k.value === "horizontal"),
-        class: U({ "scrollbar-visible": M.value > N.value }),
+        onMousedown: P[1] || (P[1] = ve((I) => v(I, "horizontal"), ["stop"])),
+        active: T.value > N.value && (z.value || k.value === "horizontal"),
+        class: U({ "scrollbar-visible": T.value > N.value }),
         thumbOffset: O.value,
         thumbSize: q.value,
         mode: "horizontal"
       }, null, 8, ["active", "class", "thumbOffset", "thumbSize"])) : w("", !0),
       a(Z) === "both-top" ? (d(), He(Se, {
         key: 3,
-        onMousedown: P[2] || (P[2] = ve((F) => v(F, "horizontal"), ["stop"])),
-        active: M.value > N.value && (z.value || k.value === "horizontal"),
-        class: U({ "scrollbar-visible": M.value > N.value }),
+        onMousedown: P[2] || (P[2] = ve((I) => v(I, "horizontal"), ["stop"])),
+        active: T.value > N.value && (z.value || k.value === "horizontal"),
+        class: U({ "scrollbar-visible": T.value > N.value }),
         thumbOffset: O.value,
         thumbSize: q.value,
         mode: "horizontal-top"
       }, null, 8, ["active", "class", "thumbOffset", "thumbSize"])) : w("", !0),
       a(Z) !== "horizontal" ? (d(), He(Se, {
         key: 4,
-        onMousedown: P[3] || (P[3] = ve((F) => v(F, "vertical"), ["stop"])),
+        onMousedown: P[3] || (P[3] = ve((I) => v(I, "vertical"), ["stop"])),
         active: A.value > _.value && (z.value || k.value === "vertical"),
         class: U({ "scrollbar-visible": A.value > _.value }),
         thumbOffset: ne.value,
@@ -236,7 +236,7 @@ const Ae = /* @__PURE__ */ Me(Xe, [["__scopeId", "data-v-21092b38"]]), qe = ["on
       dragColumns: _,
       inversedKpis: N,
       noDataMessage: A,
-      orderBy: M,
+      orderBy: T,
       orderColumnType: k,
       primaryColumn: x,
       rows: K,
@@ -253,7 +253,7 @@ const Ae = /* @__PURE__ */ Me(Xe, [["__scopeId", "data-v-21092b38"]]), qe = ["on
         for (const [e, r] of Object.entries(p.value))
           if (r.type !== "string")
             if (i != null && i.value && (r.colspan ?? 0) > 1) {
-              e in t || (t[e] = Object.entries(l[e]).reduce((s, [h, T]) => (s[h] = parseFloat(T), s), {}));
+              e in t || (t[e] = Object.entries(l[e]).reduce((s, [h, $]) => (s[h] = parseFloat($), s), {}));
               for (const s in t[e])
                 t[e][s] > l[e][s] && (t[e][s] = parseFloat(l[e][s]));
             } else
@@ -265,7 +265,7 @@ const Ae = /* @__PURE__ */ Me(Xe, [["__scopeId", "data-v-21092b38"]]), qe = ["on
         for (const [e, r] of Object.entries(p.value))
           if (r.type !== "string")
             if (i != null && i.value && (r.colspan ?? 0) > 1) {
-              e in t || (t[e] = Object.entries(l[e]).reduce((s, [h, T]) => (s[h] = parseFloat(T), s), {}));
+              e in t || (t[e] = Object.entries(l[e]).reduce((s, [h, $]) => (s[h] = parseFloat($), s), {}));
               for (const s in t[e])
                 t[e][s] < l[e][s] && (t[e][s] = parseFloat(l[e][s]));
             } else
@@ -276,15 +276,15 @@ const Ae = /* @__PURE__ */ Me(Xe, [["__scopeId", "data-v-21092b38"]]), qe = ["on
       () => Object.values(K.value).sort((t, l) => {
         const e = (() => {
           const r = L(
-            M.value[0].reduce((h, T) => h[T], t),
+            T.value[0].reduce((h, $) => h[$], t),
             k.value
           ), s = L(
-            M.value[0].reduce((h, T) => h[T], l),
+            T.value[0].reduce((h, $) => h[$], l),
             k.value
           );
           return r > s ? 1 : r < s ? -1 : 0;
         })();
-        return M.value[1] ? -e : e;
+        return T.value[1] ? -e : e;
       }).reduce((t, l, e) => (t.push({
         ...l,
         rowInfo: {
@@ -320,19 +320,22 @@ const Ae = /* @__PURE__ */ Me(Xe, [["__scopeId", "data-v-21092b38"]]), qe = ["on
       };
       if (oe.value) {
         const h = (() => !N || !N.value ? "positive" : N.value.includes(e) ? "negative" : "positive")();
-        s[`color-intensity-${$(t[e], e, r)}`] = !0, s[`color-${h}`] = !0, r !== void 0 && i && i.value && i.value[r] === "difference" ? s.colored = !1 : s.colored = fe(e) >= 0;
+        s[`color-intensity-${t.rowInfo.detailable ? M(t[e], e, r) : "none"}`] = !0, s[`color-${h}`] = !0, r !== void 0 && i && i.value && i.value[r] === "difference" ? s.colored = !1 : s.colored = fe(e) >= 0;
       }
       return s;
-    }, $ = (t, l, e) => {
+    }, M = (t, l, e) => {
       if (p.value[l].type === "string")
         return;
       let r = t, s = de.value[l], h = ie.value[l];
-      return i && i.value && e !== void 0 && (r = r[i.value[e]], s = s[i.value[e]], h = h[i.value[e]]), s === h ? 0 : Math.round((r - h) * 10 / (s - h));
+      if (i && i.value && e !== void 0 && (r = r[i.value[e]], s = s[i.value[e]], h = h[i.value[e]]), s === h)
+        return 0;
+      const $ = Math.round((r - h) * 10 / (s - h));
+      return $ > 10 ? 10 : $ < 1 ? 0 : $;
     }, E = (t, l) => {
       const e = p.value[t], r = [t];
       l !== void 0 && (i && i.value ? r.push(i.value[l]) : r.push(l.toString()));
-      const s = M.value[0] ? M.value[0].every(
-        (h, T) => h === r[T]
+      const s = T.value[0] ? T.value[0].every(
+        (h, $) => h === r[$]
       ) : !1;
       return {
         "column-main-extended": l === void 0 && (e.rowspan ?? 0) > 1,
@@ -340,7 +343,7 @@ const Ae = /* @__PURE__ */ Me(Xe, [["__scopeId", "data-v-21092b38"]]), qe = ["on
         "drag-mode": V.value,
         orderable: !(i && i.value) || (e.colspan ?? 1) === 1 || l !== void 0,
         "ordered-by": s,
-        [`order-direction-${M.value[1] ? "desc" : "asc"}`]: s
+        [`order-direction-${T.value[1] ? "desc" : "asc"}`]: s
       };
     }, ee = (t) => {
       const l = {};
@@ -360,8 +363,8 @@ const Ae = /* @__PURE__ */ Me(Xe, [["__scopeId", "data-v-21092b38"]]), qe = ["on
               return D.value[y.value[b.value]].width;
             return 0;
           })();
-          const { height: s, left: h, width: T } = D.value[t];
-          l.left = `${Math.floor(h + r)}px`, l.height = `${s + 1}px`, l.width = `${Math.floor(T)}px`;
+          const { height: s, left: h, width: $ } = D.value[t];
+          l.left = `${Math.floor(h + r)}px`, l.height = `${s + 1}px`, l.width = `${Math.floor($)}px`;
         }
       return l;
     }, J = (t) => {
@@ -387,32 +390,32 @@ const Ae = /* @__PURE__ */ Me(Xe, [["__scopeId", "data-v-21092b38"]]), qe = ["on
       const e = [t];
       l !== void 0 && (i && i.value ? e.push(i.value[l]) : e.push(l.toString()));
       const r = e.every(
-        (h, T) => h === M.value[0][T]
-      ), s = (() => r ? !M.value[1] : p.value[t].type !== "string")();
+        (h, $) => h === T.value[0][$]
+      ), s = (() => r ? !T.value[1] : p.value[t].type !== "string")();
       Q("update:orderBy", [e, s]);
     }, u = (t, l) => {
-      _.value && (b.value = y.value.indexOf(t), O.value = b.value, q.value = 0, Y.value = l.clientX, ne.value = l.clientX, window.addEventListener("mousemove", P), window.addEventListener("mouseup", F));
+      _.value && (b.value = y.value.indexOf(t), O.value = b.value, q.value = 0, Y.value = l.clientX, ne.value = l.clientX, window.addEventListener("mousemove", P), window.addEventListener("mouseup", I));
     }, P = (t) => {
       if (b.value === void 0)
         return;
       q.value++, ne.value = t.clientX;
-      const l = Object.entries(p.value).filter(([T, me]) => me.visible).map(([T]) => T).map((T, me) => ({
+      const l = Object.entries(p.value).filter(([$, me]) => me.visible).map(([$]) => $).map(($, me) => ({
         columnIndex: parseInt(me.toString()),
-        sizing: D.value[T]
+        sizing: D.value[$]
       })), e = l[b.value].sizing, r = e.width / 2, h = e.left + ne.value - Y.value;
       O.value = (() => {
-        for (const { columnIndex: T, sizing: me } of l)
+        for (const { columnIndex: $, sizing: me } of l)
           if (h + r - me.left - me.width < 0)
-            return T;
+            return $;
         return l.length;
       })();
-    }, F = (t) => {
+    }, I = (t) => {
       if (b.value === void 0 || O.value === void 0)
         return;
       V.value && O.value !== b.value && Q("move:column", {
         from: b.value,
         to: O.value
-      }), O.value = void 0, q.value = 0, b.value = void 0, window.removeEventListener("mousemove", P), window.removeEventListener("mouseup", F);
+      }), O.value = void 0, q.value = 0, b.value = void 0, window.removeEventListener("mousemove", P), window.removeEventListener("mouseup", I);
     }, De = (t) => {
       fe(t) >= 0 ? Q("removeColoredMetric", t) : Q("addColoredMetric", t);
     }, ge = g({}), Le = (t, l) => {
@@ -467,7 +470,7 @@ const Ae = /* @__PURE__ */ Me(Xe, [["__scopeId", "data-v-21092b38"]]), qe = ["on
           we("#")
         ], !0)
       ], 4)) : w("", !0),
-      (d(!0), c(C, null, I(y.value, (e) => (d(), c(C, null, [
+      (d(!0), c(C, null, F(y.value, (e) => (d(), c(C, null, [
         a(p)[e].visible ? (d(), c("div", {
           key: 0,
           class: U(["cell column column-main", E(e)]),
@@ -494,7 +497,7 @@ const Ae = /* @__PURE__ */ Me(Xe, [["__scopeId", "data-v-21092b38"]]), qe = ["on
           ], 12, Ge)) : w("", !0)
         ], 46, qe)) : w("", !0)
       ], 64))), 256)),
-      a(_) ? (d(!0), c(C, { key: 1 }, I(y.value, (e) => (d(), c(C, null, [
+      a(_) ? (d(!0), c(C, { key: 1 }, F(y.value, (e) => (d(), c(C, null, [
         a(p)[e].visible ? (d(), c("div", {
           key: 0,
           class: U(["cell column column-main column-ghost", E(e)]),
@@ -507,13 +510,13 @@ const Ae = /* @__PURE__ */ Me(Xe, [["__scopeId", "data-v-21092b38"]]), qe = ["on
           }, void 0, !0)
         ], 14, Ye)) : w("", !0)
       ], 64))), 256)) : w("", !0),
-      (d(!0), c(C, null, I(a(Z), (e, r) => (d(), c(C, null, [
+      (d(!0), c(C, null, F(a(Z), (e, r) => (d(), c(C, null, [
         a(W) ? (d(), c("div", Je, [
-          Ce(Fe, {
+          Ce(Ie, {
             value: e.icon
           }, null, 8, ["value"])
         ])) : w("", !0),
-        (d(!0), c(C, null, I(y.value, (s) => (d(), c("div", {
+        (d(!0), c(C, null, F(y.value, (s) => (d(), c("div", {
           class: U(["cell column cell-additional-header", [`cell-additional-header-${s}`]]),
           "data-additionalHeader": r,
           "data-column": s
@@ -528,9 +531,9 @@ const Ae = /* @__PURE__ */ Me(Xe, [["__scopeId", "data-v-21092b38"]]), qe = ["on
         a(W) ? (d(), c("div", Ze, [
           m(t.$slots, "topTotalRowNumber", {}, void 0, !0)
         ])) : w("", !0),
-        (d(!0), c(C, null, I(y.value, (e) => (d(), c(C, null, [
+        (d(!0), c(C, null, F(y.value, (e) => (d(), c(C, null, [
           a(p)[e].visible ? (d(), c(C, { key: 0 }, [
-            a(i) && (a(p)[e].colspan || 1) !== 1 ? (d(!0), c(C, { key: 0 }, I(a(p)[e].colspan, (r) => (d(), c("div", {
+            a(i) && (a(p)[e].colspan || 1) !== 1 ? (d(!0), c(C, { key: 0 }, F(a(p)[e].colspan, (r) => (d(), c("div", {
               class: "cell total top-total",
               "data-column": e,
               "data-subcolumn-index": r - 1
@@ -553,8 +556,8 @@ const Ae = /* @__PURE__ */ Me(Xe, [["__scopeId", "data-v-21092b38"]]), qe = ["on
           ], 64)) : w("", !0)
         ], 64))), 256))
       ], 64)) : w("", !0),
-      a(i) ? (d(!0), c(C, { key: 3 }, I(y.value, (e) => (d(), c(C, null, [
-        a(p)[e].visible && a(p)[e].colspan ? (d(!0), c(C, { key: 0 }, I(a(p)[e].colspan, (r) => (d(), c("div", {
+      a(i) ? (d(!0), c(C, { key: 3 }, F(y.value, (e) => (d(), c(C, null, [
+        a(p)[e].visible && a(p)[e].colspan ? (d(!0), c(C, { key: 0 }, F(a(p)[e].colspan, (r) => (d(), c("div", {
           class: U(["cell column column-secondary", E(e, r - 1)]),
           onClick: ve(() => be(e, r - 1), ["stop"]),
           "data-column": e,
@@ -566,7 +569,7 @@ const Ae = /* @__PURE__ */ Me(Xe, [["__scopeId", "data-v-21092b38"]]), qe = ["on
           }, void 0, !0)
         ], 10, Ke))), 256)) : w("", !0)
       ], 64))), 256)) : w("", !0),
-      (d(!0), c(C, null, I(n.value, (e, r) => (d(), c(C, null, [
+      (d(!0), c(C, null, F(n.value, (e, r) => (d(), c(C, null, [
         a(W) ? (d(), c("div", {
           key: 0,
           class: U(["cell row-number", { even: r % 2 === 0 }])
@@ -577,7 +580,7 @@ const Ae = /* @__PURE__ */ Me(Xe, [["__scopeId", "data-v-21092b38"]]), qe = ["on
             we(Ee(ce(e.rowInfo)), 1)
           ], !0)
         ], 2)) : w("", !0),
-        (d(!0), c(C, null, I(y.value, (s) => (d(), c(C, null, [
+        (d(!0), c(C, null, F(y.value, (s) => (d(), c(C, null, [
           !a(i) || (a(p)[s].colspan || 1) === 1 ? (d(), c("div", {
             key: 0,
             class: U(["cell", f(e, r, s)]),
@@ -591,7 +594,7 @@ const Ae = /* @__PURE__ */ Me(Xe, [["__scopeId", "data-v-21092b38"]]), qe = ["on
               subindex: e.rowInfo.subindex,
               value: e[s]
             }, void 0, !0)
-          ], 10, et)) : (d(!0), c(C, { key: 1 }, I(a(p)[s].colspan, (h) => (d(), c("div", {
+          ], 10, et)) : (d(!0), c(C, { key: 1 }, F(a(p)[s].colspan, (h) => (d(), c("div", {
             class: U(["cell", f(e, r, s, h - 1)]),
             "data-column": s,
             "data-primary-key": e[a(x)],
@@ -621,9 +624,9 @@ const Ae = /* @__PURE__ */ Me(Xe, [["__scopeId", "data-v-21092b38"]]), qe = ["on
             we("#")
           ], !0)
         ])) : w("", !0),
-        (d(!0), c(C, null, I(y.value, (e) => (d(), c(C, null, [
+        (d(!0), c(C, null, F(y.value, (e) => (d(), c(C, null, [
           a(p)[e].visible ? (d(), c(C, { key: 0 }, [
-            a(i) && (a(p)[e].colspan || 1) !== 1 ? (d(!0), c(C, { key: 0 }, I(a(p)[e].colspan, (r) => (d(), c("div", {
+            a(i) && (a(p)[e].colspan || 1) !== 1 ? (d(!0), c(C, { key: 0 }, F(a(p)[e].colspan, (r) => (d(), c("div", {
               class: "cell total",
               "data-column": e,
               "data-subcolumn-index": r - 1
@@ -649,7 +652,7 @@ const Ae = /* @__PURE__ */ Me(Xe, [["__scopeId", "data-v-21092b38"]]), qe = ["on
     ], 6));
   }
 });
-const Be = /* @__PURE__ */ Me(rt, [["__scopeId", "data-v-ef883ea1"]]), nt = /* @__PURE__ */ ye({
+const Be = /* @__PURE__ */ Me(rt, [["__scopeId", "data-v-f178390f"]]), nt = /* @__PURE__ */ ye({
   __name: "Table",
   props: {
     additionalHeaders: { default: () => ({}) },
@@ -684,7 +687,7 @@ const Be = /* @__PURE__ */ Me(rt, [["__scopeId", "data-v-ef883ea1"]]), nt = /* @
       fixedColumnNumber: _,
       inversedKpis: N,
       orderBy: A,
-      primaryColumn: M,
+      primaryColumn: T,
       rows: k,
       scrollPosition: x,
       showRowNumber: K,
@@ -722,14 +725,14 @@ const Be = /* @__PURE__ */ Me(rt, [["__scopeId", "data-v-ef883ea1"]]), nt = /* @
           return o;
         const f = [
           ...v.querySelectorAll(".cell.column-main:not(.column-main-extended)")
-        ], $ = [
+        ], M = [
           ...v.querySelectorAll(".cell.column-main.column-main-extended")
         ], E = v.querySelector(".cell.column-secondary"), ee = v.querySelector(".cell.total"), J = [];
-        return f.length > 0 && (o.mainColumnHeight = f[0].offsetHeight, o.width = f.reduce((R, { offsetWidth: L }) => R + L, 0), J.push(o.mainColumnHeight)), E && (o.hasSecondary = !0, o.secondaryColumnHeight = E.offsetHeight, J.push(o.secondaryColumnHeight)), $.length > 0 && (o.width = $.reduce((R, { offsetWidth: L }) => R + L, 0), f.length === 0 && (o.mainColumnHeight = $[0].offsetHeight, J.push(o.mainColumnHeight))), o.totalColumnHeight = J.reduce((R, L) => R + L + 1, -1), ee && (o.totalHeight = ee.offsetHeight), o;
+        return f.length > 0 && (o.mainColumnHeight = f[0].offsetHeight, o.width = f.reduce((R, { offsetWidth: L }) => R + L, 0), J.push(o.mainColumnHeight)), E && (o.hasSecondary = !0, o.secondaryColumnHeight = E.offsetHeight, J.push(o.secondaryColumnHeight)), M.length > 0 && (o.width = M.reduce((R, { offsetWidth: L }) => R + L, 0), f.length === 0 && (o.mainColumnHeight = M[0].offsetHeight, J.push(o.mainColumnHeight))), o.totalColumnHeight = J.reduce((R, L) => R + L + 1, -1), ee && (o.totalHeight = ee.offsetHeight), o;
       };
       Re(() => {
-        var f, $;
-        const v = n((f = y.value) == null ? void 0 : f.$el), o = n(($ = ae.value) == null ? void 0 : $.$el);
+        var f, M;
+        const v = n((f = y.value) == null ? void 0 : f.$el), o = n((M = ae.value) == null ? void 0 : M.$el);
         if (o.hasSecondary)
           j.value = v.width, H.value = {
             main: o.mainColumnHeight,
@@ -791,7 +794,7 @@ const Be = /* @__PURE__ */ Me(rt, [["__scopeId", "data-v-ef883ea1"]]), nt = /* @
             inversedKpis: a(N),
             orderBy: a(A),
             orderColumnType: a(X)[a(A)[0][0]].type,
-            primaryColumn: a(M),
+            primaryColumn: a(T),
             rows: a(k),
             showNoDataMessage: !0,
             showRowNumber: a(K),
@@ -819,12 +822,12 @@ const Be = /* @__PURE__ */ Me(rt, [["__scopeId", "data-v-ef883ea1"]]), nt = /* @
                 columnKey: f
               }, void 0, !0)
             ]),
-            topTotal: S(({ columnKey: o, subcolumnKey: f, values: $ }) => [
+            topTotal: S(({ columnKey: o, subcolumnKey: f, values: M }) => [
               o in q.value ? m(n.$slots, "topTotal", {
                 key: 0,
                 columnKey: o,
                 subcolumnKey: f,
-                values: $
+                values: M
               }, void 0, !0) : w("", !0)
             ]),
             topTotalRowNumber: S(() => [
@@ -845,22 +848,22 @@ const Be = /* @__PURE__ */ Me(rt, [["__scopeId", "data-v-ef883ea1"]]), nt = /* @
                 we("#")
               ], !0)
             ]),
-            total: S(({ columnKey: o, subcolumnKey: f, values: $ }) => [
+            total: S(({ columnKey: o, subcolumnKey: f, values: M }) => [
               o in q.value ? m(n.$slots, "total", {
                 key: 0,
                 columnKey: o,
                 subcolumnKey: f,
-                values: $
+                values: M
               }, void 0, !0) : w("", !0)
             ]),
             _: 2
           }, [
-            I(Object.keys(q.value), (o) => ({
+            F(Object.keys(q.value), (o) => ({
               name: `row-${o}`,
-              fn: S(({ columnKey: f, index: $, row: E, spanIndex: ee, subcolumnKey: J, subindex: R, value: L }) => [
+              fn: S(({ columnKey: f, index: M, row: E, spanIndex: ee, subcolumnKey: J, subindex: R, value: L }) => [
                 m(n.$slots, "row-" + f, {
                   columnKey: f,
-                  index: $,
+                  index: M,
                   row: E,
                   spanIndex: ee,
                   subcolumnKey: J,
@@ -888,7 +891,7 @@ const Be = /* @__PURE__ */ Me(rt, [["__scopeId", "data-v-ef883ea1"]]), nt = /* @
             dragColumns: a(z),
             orderBy: a(A),
             orderColumnType: a(X)[a(A)[0][0]].type,
-            primaryColumn: a(M),
+            primaryColumn: a(T),
             rows: a(k),
             showRowNumber: !1,
             showTopTotal: a(le),
@@ -913,12 +916,12 @@ const Be = /* @__PURE__ */ Me(rt, [["__scopeId", "data-v-ef883ea1"]]), nt = /* @
                 columnKey: f
               }, void 0, !0)
             ]),
-            topTotal: S(({ columnKey: o, subcolumnKey: f, values: $ }) => [
+            topTotal: S(({ columnKey: o, subcolumnKey: f, values: M }) => [
               o in Y.value ? m(n.$slots, "topTotal", {
                 key: 0,
                 columnKey: o,
                 subcolumnKey: f,
-                values: $
+                values: M
               }, void 0, !0) : w("", !0)
             ]),
             secondaryColumn: S(({ columnKey: o, subcolumnKey: f }) => [
@@ -928,22 +931,22 @@ const Be = /* @__PURE__ */ Me(rt, [["__scopeId", "data-v-ef883ea1"]]), nt = /* @
                 subcolumnKey: f
               }, void 0, !0) : w("", !0)
             ]),
-            total: S(({ columnKey: o, subcolumnKey: f, values: $ }) => [
+            total: S(({ columnKey: o, subcolumnKey: f, values: M }) => [
               o in Y.value ? m(n.$slots, "total", {
                 key: 0,
                 columnKey: o,
                 subcolumnKey: f,
-                values: $
+                values: M
               }, void 0, !0) : w("", !0)
             ]),
             _: 2
           }, [
-            I(Object.keys(Y.value), (o) => ({
+            F(Object.keys(Y.value), (o) => ({
               name: `row-${o}`,
-              fn: S(({ columnKey: f, index: $, row: E, spanIndex: ee, subcolumnKey: J, subindex: R, value: L }) => [
+              fn: S(({ columnKey: f, index: M, row: E, spanIndex: ee, subcolumnKey: J, subindex: R, value: L }) => [
                 m(n.$slots, "row-" + f, {
                   columnKey: f,
-                  index: $,
+                  index: M,
                   row: E,
                   spanIndex: ee,
                   subcolumnKey: J,
