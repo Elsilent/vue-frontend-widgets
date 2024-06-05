@@ -71,7 +71,7 @@ const getDetailsRowsFromRequestInfo = async (
       ...request,
       params: {
         ...request.params,
-        ...options,
+        [options.primaryColumn]: options.primaryColumnValue,
       },
     })
   ).data;
@@ -255,7 +255,7 @@ const props = withDefaults(
     /**
      * Label to display in the total
      */
-    totalTitle?: (rowCount: number) => string;
+    totalTitle?: string | ((rowCount: number) => string);
     /**
      * Column where to show Total
      */
@@ -435,7 +435,7 @@ const orderedRows = computed(() => {
  * Slices rows to current page
  */
 const visibleRows = computed(() => {
-  if (!request?.value || fetchedAllRows.value) {
+  if (!request?.value || !fetchedAllRows.value) {
     return orderedRows.value;
   }
 
@@ -474,7 +474,7 @@ const canShorten = (columnKey: string, value: string) => {
   return value.length > SHORTEN_THRESHOLD;
 };
 
-const columnHasTooltip = (column: Column) => !!column.tooltipTitle && !!column.tooltipDescription;
+const columnHasTooltip = (column: Column) => !!column.tooltipTitle && !!column.tooltipContent;
 
 const differenceMood = (
   value: number,
@@ -560,7 +560,7 @@ const formatValue = (value: any, type: ColumnType, format?: 'difference'): strin
         'int',
       )}s`;
     default:
-      return rawValue.toString();
+      return rawValue?.toString();
   }
 };
 
@@ -1181,8 +1181,8 @@ const setRowsFromRequest = async (
     allRows.value = Object.values(response.rows);
   }
 
-  fetchedAllRows.value = response.paginated !== true;
-  rowCount.value = response.rowCount;
+  fetchedAllRows.value = response.paginated === false;
+  rowCount.value = response.row_count;
 
   if (response.detailedRows) {
     detailsRows.value = response.detailedRows;
@@ -1265,7 +1265,7 @@ const setRows = async (
   loading.value = true;
 
   if (!setRowsFromStatic()) {
-    await setRowsFromRequest(pageNumber.value, pageSize.value, orderBy.value!);
+    await setRowsFromRequest(newPageNumber, newPageSize, newOrderBy!);
   }
 
   loading.value = false;
@@ -1435,7 +1435,7 @@ if (request) {
           Info.column-label(contrast, size="small") {{ columns[columnKey].label }}
           ColumnHint(
             v-if="!isGhost && columnHasTooltip(columns[columnKey])",
-            :description="columns[columnKey].tooltipDescription",
+            :description="columns[columnKey].tooltipContent",
             :title="columns[columnKey].tooltipTitle",
             :visible="columnHintsVisible[columnKey]",
           )
@@ -1550,7 +1550,9 @@ if (request) {
             Info.total-label(
               contrast,
               size="small",
-            ) {{ totalTitle(rowCount ?? allRows.length) }}
+            )
+              template(v-if="typeof totalTitle === 'function'") {{ totalTitle(rowCount ?? allRows.length) }}
+              template(v-else) {{ totalTitle }}: {{ rowCount ?? allRows.length }}
           template(v-else-if="totalRow")
             CellHint(
               v-if="totalRow && totalRow[columnKey] >= 0.01 && columnKey in columnDetails",

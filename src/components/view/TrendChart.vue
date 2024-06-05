@@ -83,7 +83,7 @@ const trendValues = computed(() => {
 });
 
 const fetchValues = async () => {
-  if (!values.value) {
+  if (values.value) {
     return;
   }
 
