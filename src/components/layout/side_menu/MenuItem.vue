@@ -99,7 +99,7 @@ component.menu-item(
 
     &.full-width {
       > .item-icon,
-      > .info {
+      > .info-text {
         transform: translateX($padding-size-menu-small-2 * 2);
       }
 
@@ -133,7 +133,7 @@ component.menu-item(
   &:hover {
     &.full-width {
       > .item-icon,
-      > .info {
+      > .info-text {
         transform: translateX($padding-size-menu-small-2 * 2);
       }
     }
@@ -143,11 +143,11 @@ component.menu-item(
     margin-right: $padding-size-menu-large;
   }
 
-  > .item-icon + .info {
+  > .item-icon + .info-text {
     margin-left: $padding-size-menu-large;
   }
 
-  > .info {
+  > .info-text {
     flex: 1;
     margin-right: $padding-size-menu-large;
     overflow: hidden;
@@ -156,7 +156,7 @@ component.menu-item(
   }
 
   > .icon,
-  > .info {
+  > .info-text {
     transform: translateX($padding-size-menu-small-2);
     transition: transform 0.2s;
   }

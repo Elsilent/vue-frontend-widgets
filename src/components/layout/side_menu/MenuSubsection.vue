@@ -111,7 +111,7 @@ Collapse(:expanded='level === 0 || expandedPrefix.startsWith(prefix)')
 <style lang="scss" scoped>
 @import '../../../styles/spacing.scss';
 
-.info {
+.info-text {
   &.section {
     padding: $padding-size-menu-large-2 $padding-size-menu-large-2 $padding-size-menu-small
       $padding-size-menu-large;

@@ -353,7 +353,7 @@ Align.calendar(column)
         border-width: 0;
         border-radius: 0;
         padding: $padding-size-small-2;
-        &:deep(.info) {
+        &:deep(.info-text) {
           @include apply-color(color, text-normal);
         }
 
@@ -364,7 +364,7 @@ Align.calendar(column)
             @include apply-color(background-color, background-normal);
             &.this-month {
               @include apply-color(background-color, background-accent-lowered);
-              &:deep(.info) {
+              &:deep(.info-text) {
                 @include apply-color(color, white);
               }
             }
@@ -372,7 +372,7 @@ Align.calendar(column)
 
           &:not(.hovered):hover {
             @include apply-color(background-color, background-normal);
-            &.this-month:deep(.info) {
+            &.this-month:deep(.info-text) {
               @include apply-color(color, text-normal);
             }
           }
@@ -393,7 +393,7 @@ Align.calendar(column)
         }
 
         &.now {
-          &:deep(.info) {
+          &:deep(.info-text) {
             @include apply-color(color, white);
           }
         }
@@ -402,7 +402,7 @@ Align.calendar(column)
         }
 
         &:not(.this-month) {
-          &:deep(.info) {
+          &:deep(.info-text) {
             @include apply-color(color, background-hover-inactive);
           }
         }

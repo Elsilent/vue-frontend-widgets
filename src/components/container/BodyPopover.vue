@@ -27,6 +27,10 @@ const { autoPosition, parentNode, popoverClass, visible, placementY, placementX 
 const left = ref<number | undefined>();
 const popover = ref<typeof Card | undefined>();
 const top = ref<number | undefined>();
+const containerSelector = '#app > .app-container';
+const container: DOMRect | undefined = document.body
+  .querySelector(containerSelector)
+  ?.getBoundingClientRect();
 
 const popoverClasses = computed(() => ({
   [popoverClass?.value ?? '']: !!popoverClass,
@@ -81,7 +85,7 @@ const getXPosition = (parentRect: DOMRect) => {
 };
 
 const getYPosition = (parentRect: DOMRect) => {
-  const scrollTop = parentRect.top + document.documentElement.scrollTop;
+  const scrollTop = parentRect.top + document.documentElement.scrollTop - (container?.top || 0);
   const popoverHeight = popover.value!.$el.offsetHeight;
 
   if (
@@ -120,7 +124,7 @@ watch(
 </script>
 
 <template lang="pug">
-Teleport(to='#app > .app-container')
+Teleport(:to='containerSelector')
   Card.no-spacing.popover(
     ref='popover',
     :class='popoverClasses',

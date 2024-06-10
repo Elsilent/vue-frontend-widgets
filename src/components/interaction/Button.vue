@@ -85,7 +85,7 @@ button.button(
 
   &.mood-background-inactive {
     > .icon,
-    > .info {
+    > .info-text {
       @include apply-color(color, text-normal);
     }
   }
@@ -101,7 +101,7 @@ button.button(
     position: relative;
 
     > .icon,
-    > .info {
+    > .info-text {
       position: absolute;
     }
   }
@@ -205,7 +205,7 @@ button.button(
         }
       }
 
-      > .info {
+      > .info-text {
         @include apply-color(color, white);
       }
     }

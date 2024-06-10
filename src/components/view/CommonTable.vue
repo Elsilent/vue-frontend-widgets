@@ -893,6 +893,10 @@ const shortenValue = (value: string, columnKey: string) => {
     return value;
   }
 
+  if (expandedColumns.value.includes(columnKey)) {
+    return value;
+  }
+
   if (value.length <= SHORTEN_THRESHOLD) {
     return value;
   }
@@ -1430,7 +1434,7 @@ if (request) {
       template(#column="{ columnKey, isGhost }")
         .d-flex.align-items-center(
           @mouseover="() => setColumnHintVisible(columnKey, true)",
-          @mouseout="() => setColumnHintVisible(columnKey, false)",
+          @mouseleave="() => setColumnHintVisible(columnKey, false)",
         )
           Info.column-label(contrast, size="small") {{ columns[columnKey].label }}
           ColumnHint(

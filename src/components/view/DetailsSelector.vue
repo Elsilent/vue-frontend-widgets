@@ -122,13 +122,13 @@ onUnmounted(() => {
 @import '../../styles/colors.scss';
 
 .dropdown-item {
+  transition: background-color 0.3s;
   &:active {
     @include apply-color(background-color, background-accent);
   }
 
   &:not(:active):hover {
     @include apply-color(background-color, background-lowered);
-    @include apply-color(color, white);
   }
 }
 
@@ -139,7 +139,7 @@ onUnmounted(() => {
     cursor: pointer;
     text-decoration: none;
 
-    > .info {
+    > .info-text {
       margin-right: 0.25rem;
       user-select: none;
     }

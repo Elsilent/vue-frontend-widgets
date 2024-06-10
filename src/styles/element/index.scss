@@ -53,4 +53,8 @@
   $popper: (
     'border-radius': $border-radius-normal,
   ),
+  $popover: (
+    'border-radius': $border-radius-normal,
+    'title-font-size': $font-size-normal,
+  ),
 );

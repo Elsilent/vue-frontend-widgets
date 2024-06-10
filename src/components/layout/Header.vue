@@ -95,7 +95,7 @@ Align.header(vertical='center')
     width: min-content;
     white-space: nowrap;
 
-    > .info {
+    > .info-text {
       align-items: center;
       display: flex;
       height: 100%;
