@@ -1,11 +1,11 @@
-import { defineComponent as k, toRefs as B, computed as y, ref as I, onUnmounted as H, openBlock as d, createBlock as h, withCtx as b, createVNode as w, withKeys as L, withModifiers as U, unref as u, createTextVNode as z, toDisplayString as P, createCommentVNode as M, renderSlot as D, pushScopeId as X, popScopeId as Y, createElementVNode as F, Transition as ne, createElementBlock as S, resolveDynamicComponent as oe, normalizeClass as R, resolveComponent as le, Fragment as V, renderList as G, watch as Z } from "vue";
+import { defineComponent as k, toRefs as B, computed as b, ref as I, onUnmounted as H, openBlock as d, createBlock as h, withCtx as y, createVNode as w, withKeys as L, withModifiers as U, unref as u, createTextVNode as z, toDisplayString as P, createCommentVNode as M, renderSlot as D, pushScopeId as X, popScopeId as Y, createElementVNode as F, Transition as ne, createElementBlock as S, resolveDynamicComponent as oe, normalizeClass as R, resolveComponent as le, Fragment as V, renderList as G, watch as Z } from "vue";
 import { A as W, I as K } from "./Icon-8f2ed8ba.js";
-import { A as ae, L as se, B as ue } from "./BrandText-bbfcb065.js";
-import { P as O, T as ie } from "./Toast-9422356d.js";
+import { A as ae, L as se, B as ue } from "./BrandText-b43b5694.js";
+import { P as O, T as ie } from "./Toast-1db99abc.js";
 import { _ as x } from "./_plugin-vue_export-helper-dad06003.js";
-import { B as j, D as re, I as de } from "./Input-a4b31ab2.js";
+import { B as j, D as re, I as de } from "./Input-f0b3af8d.js";
 import { G as ce } from "./Form-f36966a3.js";
-import { I as E } from "./Info-54758b60.js";
+import { I as E } from "./Info-1836ec0c.js";
 import { Separator as ve } from "./marker.js";
 import { BaseError as me } from "./utils/error.js";
 import { m as A } from "./match-b8889c93.js";
@@ -18,13 +18,13 @@ const pe = /* @__PURE__ */ k({
     menuItems: {}
   },
   setup(c) {
-    const m = c, { avatar: l, menuItems: s } = B(m), _ = y(
+    const m = c, { avatar: l, menuItems: s } = B(m), _ = b(
       () => l && l.value && "icon" in l.value ? l.value.icon : void 0
-    ), i = y(
+    ), i = b(
       () => l && l.value && "iconBackend" in l.value ? l.value.iconBackend : void 0
-    ), a = y(
+    ), a = b(
       () => l && l.value && "label" in l.value ? l.value.label : void 0
-    ), t = y(
+    ), t = b(
       () => l && l.value && "source" in l.value ? l.value.source : void 0
     ), e = I(), o = I(!1), p = (n) => {
       var r;
@@ -41,7 +41,7 @@ const pe = /* @__PURE__ */ k({
       ref_key: "accountMenu",
       ref: e
     }, {
-      default: b(() => [
+      default: y(() => [
         w(ae, {
           onClick: r[0] || (r[0] = (g) => f()),
           onFocus: r[1] || (r[1] = (g) => f()),
@@ -73,11 +73,11 @@ const je = /* @__PURE__ */ x(pe, [["__scopeId", "data-v-6b125e88"]]), _e = /* @_
   },
   emits: ["update:modelValue"],
   setup(c, { emit: m }) {
-    const l = c, { currencies: s, modelValue: _ } = B(l), i = I(), a = I(!1), t = y(
+    const l = c, { currencies: s, modelValue: _ } = B(l), i = I(), a = I(!1), t = b(
       () => s.value.reduce((v, n) => (v[n.code] = {
         label: n.label
       }, v), {}) ?? {}
-    ), e = y(
+    ), e = b(
       () => s.value.find(({ code: v }) => _.value === v)
     ), o = (v) => {
       var n, r;
@@ -95,7 +95,7 @@ const je = /* @__PURE__ */ x(pe, [["__scopeId", "data-v-6b125e88"]]), _e = /* @_
       ref: i,
       horizontal: "center"
     }, {
-      default: b(() => {
+      default: y(() => {
         var r;
         return [
           w(j, {
@@ -136,12 +136,12 @@ const Je = /* @__PURE__ */ x(_e, [["__scopeId", "data-v-0cb2d935"]]), fe = /* @_
       fields: u(l),
       values: s.values
     }, {
-      "field(dropdown)": b(({ code: i, label: a, options: t, value: e }) => [
+      "field(dropdown)": y(({ code: i, label: a, options: t, value: e }) => [
         a ? (d(), h(E, {
           key: 0,
           class: "label"
         }, {
-          default: b(() => [
+          default: y(() => [
             z(P(a), 1)
           ]),
           _: 2
@@ -152,20 +152,20 @@ const Je = /* @__PURE__ */ x(_e, [["__scopeId", "data-v-0cb2d935"]]), fe = /* @_
           modelValue: e
         }, null, 8, ["onUpdate:modelValue", "items", "modelValue"])
       ]),
-      "field(info)": b(({ label: i }) => [
+      "field(info)": y(({ label: i }) => [
         w(E, null, {
-          default: b(() => [
+          default: y(() => [
             z(P(i), 1)
           ]),
           _: 2
         }, 1024)
       ]),
-      "field(input)": b(({ code: i, label: a, value: t }) => [
+      "field(input)": y(({ code: i, label: a, value: t }) => [
         a ? (d(), h(E, {
           key: 0,
           class: "label"
         }, {
-          default: b(() => [
+          default: y(() => [
             z(P(a), 1)
           ]),
           _: 2
@@ -179,7 +179,7 @@ const Je = /* @__PURE__ */ x(_e, [["__scopeId", "data-v-0cb2d935"]]), fe = /* @_
     }, 8, ["fields", "values"]));
   }
 });
-const Qe = /* @__PURE__ */ x(fe, [["__scopeId", "data-v-39d44946"]]), he = (c) => (X("data-v-85b21410"), c = c(), Y(), c), be = /* @__PURE__ */ he(() => /* @__PURE__ */ F("div", { class: "menu-button-lines" }, null, -1)), ye = /* @__PURE__ */ k({
+const Qe = /* @__PURE__ */ x(fe, [["__scopeId", "data-v-39d44946"]]), he = (c) => (X("data-v-5e23deb0"), c = c(), Y(), c), ye = /* @__PURE__ */ he(() => /* @__PURE__ */ F("div", { class: "menu-button-lines" }, null, -1)), be = /* @__PURE__ */ k({
   __name: "Header",
   emits: ["menuToggle"],
   setup(c, { emit: m }) {
@@ -193,14 +193,14 @@ const Qe = /* @__PURE__ */ x(fe, [["__scopeId", "data-v-39d44946"]]), he = (c) =
       class: "header",
       vertical: "center"
     }, {
-      default: b(() => [
+      default: y(() => [
         w(W, {
           class: "menu-button",
           onClick: _[0] || (_[0] = () => m("menuToggle")),
           vertical: "center"
         }, {
-          default: b(() => [
-            be
+          default: y(() => [
+            ye
           ]),
           _: 1
         }),
@@ -209,9 +209,9 @@ const Qe = /* @__PURE__ */ x(fe, [["__scopeId", "data-v-39d44946"]]), he = (c) =
           onClick: _[1] || (_[1] = () => l()),
           vertical: "center"
         }, {
-          default: b(() => [
+          default: y(() => [
             w(E, { size: "large-2" }, {
-              default: b(() => [
+              default: y(() => [
                 D(s.$slots, "title", {}, void 0, !0)
               ]),
               _: 3
@@ -226,7 +226,7 @@ const Qe = /* @__PURE__ */ x(fe, [["__scopeId", "data-v-39d44946"]]), he = (c) =
     }));
   }
 });
-const Xe = /* @__PURE__ */ x(ye, [["__scopeId", "data-v-85b21410"]]), we = /* @__PURE__ */ k({
+const Xe = /* @__PURE__ */ x(be, [["__scopeId", "data-v-5e23deb0"]]), we = /* @__PURE__ */ k({
   __name: "LocaleSelector",
   props: {
     locales: {},
@@ -234,12 +234,12 @@ const Xe = /* @__PURE__ */ x(ye, [["__scopeId", "data-v-85b21410"]]), we = /* @_
   },
   emits: ["update:modelValue"],
   setup(c, { emit: m }) {
-    const l = c, { locales: s, modelValue: _ } = B(l), i = I(), a = I(!1), t = y(
+    const l = c, { locales: s, modelValue: _ } = B(l), i = I(), a = I(!1), t = b(
       () => s.value.reduce((v, n) => (v[n.code] = {
         icon: n.icon,
         iconBackend: "flag-icons"
       }, v), {})
-    ), e = y(
+    ), e = b(
       () => s.value.find((v) => v.code === _.value).icon
     ), o = (v) => {
       var n, r;
@@ -257,7 +257,7 @@ const Xe = /* @__PURE__ */ x(ye, [["__scopeId", "data-v-85b21410"]]), we = /* @_
       ref: i,
       horizontal: "center"
     }, {
-      default: b(() => [
+      default: y(() => [
         w(j, {
           class: "locale-button",
           onClick: n[0] || (n[0] = (r) => p()),
@@ -315,7 +315,7 @@ const Ye = /* @__PURE__ */ x(we, [["__scopeId", "data-v-dd1fb6f5"]]), ge = {
       onEnter: _,
       onLeave: i
     }, {
-      default: b(() => [
+      default: y(() => [
         u(l) ? (d(), S("div", ge, [
           D(a.$slots, "default", {}, void 0, !0)
         ])) : M("", !0)
@@ -343,15 +343,15 @@ const $e = /* @__PURE__ */ k({
     link: {}
   },
   setup(c) {
-    const m = c, { active: l, fullWidth: s, icon: _, iconBackend: i, label: a, level: t, withSublevel: e } = B(m), o = y(
+    const m = c, { active: l, fullWidth: s, icon: _, iconBackend: i, label: a, level: t, withSublevel: e } = B(m), o = b(
       () => A(t.value).when(1, () => "large-3").whenAny([2, 3], () => "large").or((n) => {
         throw new J(n);
       }).done
-    ), p = y(() => l.value ? "elevated-2" : "elevated"), f = y(
+    ), p = b(() => l.value ? "elevated-2" : "elevated"), f = b(
       () => A(t.value).when(1, () => "large").whenAny([2, 3], () => "normal").or((n) => {
         throw new J(n);
       }).done
-    ), v = y(() => ({
+    ), v = b(() => ({
       active: l.value,
       "full-width": s.value,
       [`level-${t.value}`]: !0,
@@ -361,7 +361,7 @@ const $e = /* @__PURE__ */ k({
       class: R(["menu-item", v.value]),
       href: n.link ? n.link : void 0
     }, {
-      default: b(() => [
+      default: y(() => [
         u(_) ? (d(), h(K, {
           key: 0,
           class: "item-icon",
@@ -375,7 +375,7 @@ const $e = /* @__PURE__ */ k({
           elevation: p.value,
           size: f.value
         }, {
-          default: b(() => [
+          default: y(() => [
             z(P(u(a)), 1)
           ]),
           _: 1
@@ -392,7 +392,7 @@ const $e = /* @__PURE__ */ k({
     }, 8, ["class", "href"]));
   }
 });
-const Q = /* @__PURE__ */ x($e, [["__scopeId", "data-v-e982b607"]]), Se = /* @__PURE__ */ k({
+const Q = /* @__PURE__ */ x($e, [["__scopeId", "data-v-a5f24d92"]]), Se = /* @__PURE__ */ k({
   __name: "MenuSubsection",
   props: {
     fullWidth: { type: Boolean },
@@ -408,7 +408,7 @@ const Q = /* @__PURE__ */ x($e, [["__scopeId", "data-v-e982b607"]]), Se = /* @__
   },
   emits: ["update:expandedPrefix"],
   setup(c, { emit: m }) {
-    const l = c, { expandedPrefix: s, icon: _, iconBackend: i, items: a, label: t, level: e, prefix: o, router: p, translator: f } = B(l), v = y(() => p.value.currentRoute.value.meta.menuItem), n = y(() => e.value + 1), r = y(() => e.value + 1), g = (C) => {
+    const l = c, { expandedPrefix: s, icon: _, iconBackend: i, items: a, label: t, level: e, prefix: o, router: p, translator: f } = B(l), v = b(() => p.value.currentRoute.value.meta.menuItem), n = b(() => e.value + 1), r = b(() => e.value + 1), g = (C) => {
       m("update:expandedPrefix", o.value);
       const T = a.value[C];
       "items" in T || p.value.push(T.route);
@@ -423,7 +423,7 @@ const Q = /* @__PURE__ */ x($e, [["__scopeId", "data-v-e982b607"]]), Se = /* @__
               class: "section",
               elevation: "elevated"
             }, {
-              default: b(() => [
+              default: y(() => [
                 z(P(u(f)(u(t)).toUpperCase()), 1)
               ]),
               _: 1
@@ -449,7 +449,7 @@ const Q = /* @__PURE__ */ x($e, [["__scopeId", "data-v-e982b607"]]), Se = /* @__
         w(xe, {
           expanded: u(e) === 0 || u(s).startsWith(u(o))
         }, {
-          default: b(() => [
+          default: y(() => [
             (d(!0), S(V, null, G(u(a), ($, q) => (d(), S(V, null, [
               "items" in $ ? (d(), h(ee, {
                 key: 0,
@@ -483,7 +483,7 @@ const Q = /* @__PURE__ */ x($e, [["__scopeId", "data-v-e982b607"]]), Se = /* @__
     };
   }
 });
-const Ie = /* @__PURE__ */ x(Se, [["__scopeId", "data-v-d52b95ab"]]), Be = (c) => (X("data-v-e1da8b51"), c = c(), Y(), c), Ce = { class: "brand" }, Me = { class: "items" }, Te = /* @__PURE__ */ Be(() => /* @__PURE__ */ F("div", { class: "pixel" }, " ", -1)), Ve = /* @__PURE__ */ k({
+const Ie = /* @__PURE__ */ x(Se, [["__scopeId", "data-v-977f0334"]]), Be = (c) => (X("data-v-e1da8b51"), c = c(), Y(), c), Ce = { class: "brand" }, Me = { class: "items" }, Te = /* @__PURE__ */ Be(() => /* @__PURE__ */ F("div", { class: "pixel" }, " ", -1)), Ve = /* @__PURE__ */ k({
   __name: "SideMenu",
   props: {
     fullWidth: { type: Boolean },
@@ -492,7 +492,7 @@ const Ie = /* @__PURE__ */ x(Se, [["__scopeId", "data-v-d52b95ab"]]), Be = (c) =
     translator: { type: Function }
   },
   setup(c) {
-    const m = c, l = I(""), s = I(!1), { fullWidth: _, router: i } = B(m), a = y(() => _.value || s.value);
+    const m = c, l = I(""), s = I(!1), { fullWidth: _, router: i } = B(m), a = b(() => _.value || s.value);
     return Z(
       i.value.currentRoute,
       (t) => {
@@ -542,11 +542,11 @@ const Ze = /* @__PURE__ */ x(Ve, [["__scopeId", "data-v-e1da8b51"]]), We = /* @_
   },
   emits: ["update:modelValue"],
   setup(c, { emit: m }) {
-    const l = c, { modelValue: s } = B(l), _ = y(
+    const l = c, { modelValue: s } = B(l), _ = b(
       () => A(s.value).when("dark", () => "moon").when("light", () => "sun").or((t) => {
         throw new N(t);
       }).done
-    ), i = y(
+    ), i = b(
       () => A(s.value).when("dark", () => "accent").when("light", () => "important").or((t) => {
         throw new N(t);
       }).done
@@ -557,7 +557,7 @@ const Ze = /* @__PURE__ */ x(Ve, [["__scopeId", "data-v-e1da8b51"]]), We = /* @_
       m("update:modelValue", t);
     };
     return (t, e) => (d(), h(W, { class: "theme-toggle" }, {
-      default: b(() => [
+      default: y(() => [
         w(j, {
           onClick: e[0] || (e[0] = () => a()),
           icon: _.value,
@@ -578,7 +578,7 @@ const et = /* @__PURE__ */ x(We, [["__scopeId", "data-v-8832a6ee"]]), Ee = { cla
   },
   emits: ["removeToast"],
   setup(c, { emit: m }) {
-    const l = c, { toasts: s } = B(l), _ = y(
+    const l = c, { toasts: s } = B(l), _ = b(
       () => Object.entries(s.value).reverse().map(([e, o]) => [Number(e), o])
     ), i = I([]), a = I([]), t = (e) => {
       i.value.includes(e) || (i.value.push(e), clearTimeout(a.value[e]), delete a.value[e], window.setTimeout(() => {

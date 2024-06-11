@@ -8,7 +8,7 @@ export interface Column {
     label: string;
     rowspan?: number;
     tooltipTitle?: string;
-    tooltipDescription?: string;
+    tooltipContent?: string;
     totalUrl?: string;
     type: ColumnType;
     visible: boolean;
@@ -63,7 +63,7 @@ export interface GlobalRequestOptions {
 export interface GlobalResponse {
     detailedRows: Record<string, Record<string, any>>;
     paginated?: boolean;
-    rowCount: number;
+    row_count: number;
     rows: Record<string, Record<string, any>> | Record<string, any>[];
     total: Record<string, any>;
 }
