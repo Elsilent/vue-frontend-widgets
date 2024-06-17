@@ -634,6 +634,7 @@ $-chart-colors: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 
 
 .line-chart {
   display: flex;
+  width: 100%;
 
   &.min-height {
     height: calc(100% - 2rem);
@@ -708,6 +709,7 @@ $-chart-colors: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 
     flex: 1;
     margin-bottom: 2rem;
     position: relative;
+    box-sizing: content-box;
 
     &::before {
       @include apply-color(background-color, background-neutral);
@@ -758,6 +760,7 @@ $-chart-colors: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 
       pointer-events: none;
       position: absolute;
       top: 0;
+      width: 100%;
 
       > svg {
         overflow: visible;
@@ -790,6 +793,7 @@ $-chart-colors: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 
     > .chart-popovers {
       display: flex;
       height: 100%;
+      width: 100%;
       pointer-events: none;
       position: absolute;
       top: 0;
@@ -862,7 +866,7 @@ $-chart-colors: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 
             display: flex;
             width: 100%;
 
-            > .info {
+            > .info-text {
               align-items: center;
               display: flex;
               flex: 1;
@@ -991,7 +995,7 @@ $-chart-colors: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 
           flex: 0.5;
         }
 
-        > .info {
+        > .info-text {
           font-size: 0.875rem;
           white-space: nowrap;
         }
@@ -999,6 +1003,7 @@ $-chart-colors: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 
     }
 
     > .chart-points {
+      width: 100%;
       height: 100%;
       margin-bottom: 2rem;
       pointer-events: none;

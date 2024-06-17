@@ -31,7 +31,7 @@ const classes = computed(() => ({
 </script>
 
 <template lang="pug">
-.info(:class='classes')
+.info-text(:class='classes')
   slot(default)
 </template>
 
@@ -40,7 +40,7 @@ const classes = computed(() => ({
 @import '../../styles/mood.scss';
 @import '../../styles/transition.scss';
 
-.info {
+.info-text {
   @import '../../styles/elevation.scss';
   @import '../../styles/size.scss';
 

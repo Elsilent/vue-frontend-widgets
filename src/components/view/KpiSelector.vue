@@ -446,7 +446,7 @@ Teleport(to="#app > .app-container")
               z-index: 2;
             }
 
-            > .info.fixed {
+            > .info-text.fixed {
               opacity: 0.5;
             }
 

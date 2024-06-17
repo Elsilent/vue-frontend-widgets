@@ -98,7 +98,7 @@ const updatePageSize = (newPageSize: number) => {
       mood="important-alt",
     ) {{ pageCount }}
     Info.page-size-label {{ pageSizeLabel }}
-  Dropdown.page-size-selector(
+  Dropdown.page-size-selector.no-spacing(
     v-if="rowCount > minPageSize",
     @update:modelValue="(value) => updatePageSize(parseInt(value.toString()))",
     :id="id",
@@ -116,6 +116,7 @@ const updatePageSize = (newPageSize: number) => {
   display: flex;
 
   > .page {
+    @include apply-color(color, text-important-alt);
     align-items: center;
     border: 1px solid transparent;
     border-radius: 3px;

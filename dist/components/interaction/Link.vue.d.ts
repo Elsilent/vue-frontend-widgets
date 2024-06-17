@@ -1,6 +1,5 @@
-import { type RouteLocationRaw } from 'vue-router';
 export interface Props {
-    to: RouteLocationRaw | URL;
+    to: string | URL;
     isExternal?: boolean;
 }
 declare const _default: any;

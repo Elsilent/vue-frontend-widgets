@@ -413,7 +413,7 @@ $-item-height: $font-size-normal * 1.5 + $padding-size-small-2 * 2 - 2;
   height: max-content;
   padding: 0;
   transform: translateY(-10px);
-  .info {
+  .info-text {
     margin: $padding-size-small-2;
   }
 }

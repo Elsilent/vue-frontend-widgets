@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import { toRefs } from 'vue';
-import Popover from '../container/Popover.vue';
+import { toRefs, ref } from 'vue';
+import Tooltip from '../container/Tooltip.vue';
 
 const props = withDefaults(
   defineProps<{
@@ -14,25 +14,24 @@ const props = withDefaults(
 );
 
 const { description, title, visible } = toRefs(props);
+const iconRef = ref<HTMLElement | undefined>();
 </script>
 
 <template lang="pug">
 .column-hint
-  i.la.la-question-circle
-  Popover(
-    :visible="visible",
-    parentClass="cell",
-    popoverClass="column-hint-popover",
+  i.la.la-question-circle(ref="iconRef")
+  Tooltip(
+    :title="title"
+    :content="description"
+    :show-arrow="false"
+    :persistent="false"
+    :offset="0"
+    :visible="visible"
+    :virtual-ref="iconRef?.closest('.cell')"
+    virtual-triggering
+    width="15rem"
   )
-    .popover-header {{ title }}
-    .popover-body {{ description }}
 </template>
-
-<style lang="scss">
-.column-hint-popover {
-  max-width: 15rem;
-}
-</style>
 
 <style lang="scss" scoped>
 .column-hint {

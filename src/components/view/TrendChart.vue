@@ -4,7 +4,7 @@ import { computed, ref, toRefs } from 'vue';
 import Header from '../label/Header.vue';
 import LineBarChart from '../image/LineBarChart.vue';
 import Loader from '../image/Loader.vue';
-import Popover from '../container/Popover.vue';
+import Tooltip from '../container/Tooltip.vue';
 
 const props = defineProps<{
   formatter: (value: number) => string;
@@ -14,7 +14,7 @@ const props = defineProps<{
 
 const { formatter, title, url } = toRefs(props);
 
-const visible = ref(false);
+const iconRef = ref<HTMLElement | undefined>();
 const valueKeys = ref<string[]>([]);
 const values = ref<number[] | undefined>();
 
@@ -83,7 +83,7 @@ const trendValues = computed(() => {
 });
 
 const fetchValues = async () => {
-  if (!values.value) {
+  if (values.value) {
     return;
   }
 
@@ -93,60 +93,61 @@ const fetchValues = async () => {
   values.value = Object.values(fetchedValues);
 };
 
-const onSelectorBlur = () => {
-  visible.value = false;
-
-  window.removeEventListener('mouseup', onSelectorBlur);
-};
-
-const onSelectorFocus = async () => {
-  visible.value = true;
-
-  window.addEventListener('mouseup', onSelectorBlur);
-
+const onShow = async () => {
   await fetchValues();
 };
 </script>
 
 <template lang="pug">
-.trend-chart-container(@click.stop='() => onSelectorFocus()')
-  i.la.la-eye.secondary
-  Popover(
-    :visible="visible",
-    parentClass="cell",
-    popoverClass="trend-chart-popover",
+.trend-chart-container
+  i.la.la-eye.secondary(ref="iconRef")
+  Tooltip(
+    width="500"
+    trigger="click"
+    :persistent="false"
+    :show-arrow="false"
+    popper-class="trend-chart-popover"
+    :virtual-ref="iconRef"
+    virtual-triggering
+    append-to=".app-container"
+    :popper-options="{ modifiers: [{ name: 'eventListeners', options: { scroll: false } }], 'strategy': 'fixed' }"
+    @show="onShow"
   )
-    Header(v-if="title", size="small-3") {{ title }}
-    LineBarChart(
-      v-if="values",
-      :activeLines="['values']",
-      :formatters="{ trend: formatter, values: formatter }",
-      :moods="{ trend: { mood: trendMood }, values: { mood: 'important' } }",
-      :styles="{ trend: 'line', values: 'line' }",
-      :values="{ trend: trendValues, values: chartValues }",
-    )
-      template(#x-axis-label="{ index }") {{ valueKeys[index] }}
-    Loader(v-else)
+    Header(v-if="title", size="large-2") {{ title }}
+    .trend-chart-content
+      LineBarChart(
+        v-if="values",
+        :activeLines="['values']",
+        :formatters="{ trend: formatter, values: formatter }",
+        :moods="{ trend: { mood: trendMood }, values: { mood: 'important' } }",
+        :styles="{ trend: 'line', values: 'line' }",
+        :values="{ trend: trendValues, values: chartValues }",
+        :no-x-axis-labels="true",
+      )
+      Loader(v-else)
 </template>
 
 <style lang="scss">
-.popover-container.trend-chart-popover {
+.el-popover.trend-chart-popover {
   flex-direction: column;
   padding: 1rem 3rem;
   width: 500px;
+  > .trend-chart-content {
+    min-height: 300px;
+    display: flex;
+
+    > .line-chart {
+      margin: 0 -1rem;
+    }
+
+    > .loader {
+      margin: auto;
+    }
+  }
 
   > .header {
     margin-top: 0.5rem;
     margin-bottom: 3rem;
-  }
-
-  > .line-chart {
-    margin: 0 -1rem;
-  }
-
-  > .loader-wrapper {
-    height: 300px;
-    margin-bottom: 2rem;
   }
 }
 </style>

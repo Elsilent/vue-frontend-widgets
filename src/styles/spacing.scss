@@ -86,16 +86,16 @@ $side-menu-width-collapsed: 60px;
   );
   @include reasonable-spacing('*', '.card:not(.no-spacing)', $padding-size-large-2);
   @include reasonable-spacing('*', '.header:not(.no-spacing)', $padding-size-large-3);
-  @include reasonable-spacing('*', '.info:not(.no-spacing)', $padding-size-large);
-  @include reasonable-spacing('.dot', '.info:not(.no-spacing)', $padding-size-small-3);
-  @include reasonable-spacing('.icon', '.info:not(.no-spacing)', $padding-size-small-3);
+  @include reasonable-spacing('*', '.info-text:not(.no-spacing)', $padding-size-large);
+  @include reasonable-spacing('.dot', '.info-text:not(.no-spacing)', $padding-size-small-3);
+  @include reasonable-spacing('.icon', '.info-text:not(.no-spacing)', $padding-size-small-3);
   @include reasonable-spacing(
-    '.info:not(.spacing-regular)',
+    '.info-text:not(.spacing-regular)',
     ':not(.no-spacing)',
     $padding-size-small-2
   );
   @include reasonable-spacing(
-    '.info:not(.spacing-regular)',
+    '.info-text:not(.spacing-regular)',
     '.align:not(.no-spacing)',
     $padding-size-small-2
   );

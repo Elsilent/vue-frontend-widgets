@@ -37,7 +37,7 @@ const props = withDefaults(
     cellClasses: () => ({}),
     colorMetrics: false,
     coloredMetrics: () => [],
-    comparisonColumnKeys: () => [],
+    comparisonColumnKeys: undefined,
     dragColumns: false,
     fixedColumnNumber: 1,
     inversedKpis: () => [],

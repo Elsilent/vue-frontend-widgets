@@ -4,7 +4,7 @@ import { ref, toRefs } from 'vue';
 import numeral from '../../utils/numeral';
 import type { ColumnDetailsFormat } from '../../utils/type/component/container/table';
 import Loader from '../image/Loader.vue';
-import Popover from '../container/Popover.vue';
+import Tooltip from '../container/Tooltip.vue';
 
 interface DistributionData {
   name: string;
@@ -37,18 +37,6 @@ const lines = ref<Line[] | undefined>();
 const visible = ref(false);
 const root = ref<HTMLElement | undefined>();
 
-const onPopoverBlur = (event?: MouseEvent) => {
-  if (event) {
-    if (!event.target || root.value?.contains(event.target as HTMLElement)) {
-      return;
-    }
-  }
-
-  visible.value = false;
-
-  window.removeEventListener('mouseup', onPopoverBlur);
-};
-
 const getLinesFromDistributionData = (data: DistributionData[]): Line[] =>
   data.map(({ name, valueFormatted }) => ({
     label: name,
@@ -73,8 +61,6 @@ const getLinesFromData = (data: RawData[]): Line[] => {
 };
 
 const fetchLines = async () => {
-  window.addEventListener('mouseup', onPopoverBlur);
-
   if (lines.value) {
     return;
   }
@@ -93,39 +79,45 @@ const showData = async () => {
 
 <template lang="pug">
 .cell-hint(
-  ref="root",
-  @mouseover="() => showData()",
-  @mouseout="() => onPopoverBlur()",
+  ref="root"
+  @mouseover="showData",
+  @mouseleave="visible = false",
   :class="{ visible }",
 )
-  span.label(
-    @click.stop="() => showData()",
-  ) {{ label }}
-  Popover(
-    :visible="visible",
-    parentClass="cell",
-    popoverClass="cell-hint-popover",
+  span.label {{ label }}
+  Tooltip(
+    :title="title"
+    :show-arrow="false"
+    :persistent="false"
+    :offset="0"
+    virtual-triggering
+    :visible="visible"
+    :virtual-ref="root?.closest('.cell')"
+    width="15rem"
+    popper-class="cell-hint-popover"
   )
-    .popover-header(v-if="title") {{ title }}
     template(v-if="lines")
-      .popover-body
-        div(
-          v-for='({ label, value }, lineIndex) in lines',
-          :key='`line-${lineIndex}`',
-        )
-          b(
-            important,
-            size='small',
-          ) {{ label }}:&nbsp;
-          span(
-            size='small',
-          ) {{ value }}
+      div(
+        v-for='({ label, value }, lineIndex) in lines',
+        :key='`line-${lineIndex}`',
+      )
+        b(
+          important,
+          size='small',
+        ) {{ label }}:&nbsp;
+        span(
+          size='small',
+        ) {{ value }}
     Loader(v-else)
 </template>
 
 <style lang="scss">
 .cell-hint-popover {
-  max-width: 15rem;
+  display: flex;
+  flex-direction: column;
+  > .loader {
+    align-self: center;
+  }
 }
 </style>
 
