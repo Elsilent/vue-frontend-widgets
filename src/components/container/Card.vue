@@ -1,5 +1,11 @@
+<script lang="ts" setup>
+defineProps<{
+  kind?: 'super' | 'widget';
+}>();
+</script>
+
 <template lang="pug">
-.card
+.card(:class="[kind ? kind : '']")
   slot(default)
 </template>
 
@@ -18,5 +24,12 @@
   padding: $padding-size-large;
   transition-duration: $transition-duration-normal;
   transition-property: background-color;
+  &.super {
+    @include apply-color(background-color, white, $opacity: 0.4);
+  }
+
+  &.widget {
+    @include apply-color(background-color, background-neutral, $opacity: 0.05);
+  }
 }
 </style>
