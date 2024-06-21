@@ -24,6 +24,7 @@ const props = withDefaults(
     activeLines?: (number | string | symbol)[];
     axis?: number;
     barSumValues?: Record<number | string | symbol, number>;
+    columnsWithIntegers?: string[];
     formatters: Record<number | string | symbol, (value: number) => string>;
     minHeight?: boolean;
     moods: Record<number | string | symbol, { chart: number } | { mood: Mood }>;
@@ -37,6 +38,7 @@ const props = withDefaults(
   }>(),
   {
     axis: 4,
+    columnsWithIntegers: () => [],
     minHeight: false,
     noXAxisLabels: false,
     normalize: false,
@@ -59,14 +61,17 @@ const {
   styles,
   values,
   yAxisTitles,
+  columnsWithIntegers,
 } = toRefs(props);
 
 const lineLabels = computed(() => Object.values(values.value).map((line) => Object.keys(line)));
 
 const axisLabels = computed(() => {
-  const axisValues: Record<Style, number[]> = {
+  const axisLineCount = valueKeys.value.filter((key) => styles.value[key] === 'line').length;
+
+  const axisValues: Record<Style, number[] | number[][]> = {
     bar: [],
-    line: [],
+    line: new Array(axisLineCount).fill(0).map(() => []),
   };
 
   const barAxisValues: Record<number | string | symbol, number> = {};
@@ -83,20 +88,14 @@ const axisLabels = computed(() => {
         }
         break;
       case 'line':
-        axisValues.line.push(...Object.values(values.value[valueKeys.value[index]]));
+        (axisValues.line[index % axisLineCount] as number[]).push(
+          ...Object.values(values.value[valueKeys.value[index]]),
+        );
         break;
     }
   }
 
   axisValues.bar = Object.values(barAxisValues);
-
-  for (let index = 0; index < lineCount.value; index++) {
-    if (styles.value[valueKeys.value[index]] !== 'line') {
-      continue;
-    }
-
-    axisValues.line.push(...Object.values(values.value[valueKeys.value[index]]));
-  }
 
   const axisLabels: Record<Style, Record<number | string | symbol, number[]>> = {
     bar: {},
@@ -108,11 +107,22 @@ const axisLabels = computed(() => {
   for (const style of labelStyles) {
     axisLabels[style] = valueKeys.value
       .filter((key) => styles.value[key] === style)
-      .reduce((axisLabels, key) => {
-        const values = axisValues[style];
-        const min = Math.min(...values, 0);
-        const max = Math.max(...values);
-        const scope = max - min;
+      .reduce((axisLabels, key, index) => {
+        const values =
+          style === 'bar' ? axisValues[style] : axisValues[style][index % axisLineCount];
+        const min = Math.min(...(values as number[]), 0);
+        const max = Math.max(...(values as number[]));
+        let scope = max - min;
+        // for small integer values set yAxis to min integer value.
+        const minScope = axis.value * 2;
+        if (
+          axis.value > 2 &&
+          scope < minScope &&
+          columnsWithIntegers.value.includes(key.toString())
+        ) {
+          scope = minScope;
+        }
+
         const scaleCoef = Math.pow(10, Math.ceil(Math.abs(scope)).toString().length - 2);
         const firstAxisRawValue = scope / (axis.value - 1);
         const scale = Math.ceil(firstAxisRawValue / scaleCoef) * scaleCoef;
@@ -239,9 +249,10 @@ const chartPath = (
 
     const length = line.length * smoothing.value;
 
+    // limited max top for control point by 100 for cutting line under x-axis
     return {
       left: currentPoint.left + Math.cos(angle) * length,
-      top: currentPoint.top + Math.sin(angle) * length,
+      top: Math.min(currentPoint.top + Math.sin(angle) * length, 100),
     };
   };
 
@@ -264,10 +275,14 @@ const linesStyle = computed(() => {
 
   const barOffset = `${barSize / 2}%`;
 
-  return {
-    left: barOffset,
-    right: barOffset,
-  };
+  if (barCount) {
+    return {
+      left: barOffset,
+      right: barOffset,
+    };
+  } else {
+    return { width: '100%' };
+  }
 });
 
 const xAxisLabelsHeight = ref<number | undefined>();
@@ -368,25 +383,21 @@ const getMoodClasses = (key: number | string | symbol, attributes?: string[]) =>
 };
 
 const getMoodComponents = (mood: { mood: Mood } | { chart: number }) => {
-  let hasAttributes = false;
   let normalMood = 'mood' in mood ? mood.mood : undefined;
   let normalChart = 'chart' in mood ? mood.chart.toString() : undefined;
   const attributes: string[] = [];
 
-  do {
-    for (const attribute of supportedMoodAttributes) {
-      if ((normalMood ?? normalChart)!.endsWith(`-${attribute}`)) {
-        attributes.push(attribute);
+  for (const attribute of supportedMoodAttributes) {
+    if ((normalMood ?? normalChart)!.endsWith(`-${attribute}`)) {
+      attributes.push(attribute);
 
-        if (normalMood) {
-          normalMood = normalMood.substring(0, normalMood.length - attribute.length - 1) as Mood;
-        } else if (normalChart) {
-          normalChart = normalChart.substring(0, normalChart.length - attribute.length - 1);
-        }
-        hasAttributes = true;
+      if (normalMood) {
+        normalMood = normalMood.substring(0, normalMood.length - attribute.length - 1) as Mood;
+      } else if (normalChart) {
+        normalChart = normalChart.substring(0, normalChart.length - attribute.length - 1);
       }
     }
-  } while (hasAttributes);
+  }
 
   return {
     attributes,
@@ -396,8 +407,7 @@ const getMoodComponents = (mood: { mood: Mood } | { chart: number }) => {
 };
 
 const getPointLeftPosition = (key: number | symbol | string) => {
-  const index = Object.keys(Object.values(values.value)[0]).indexOf(key as string);
-
+  const index = Object.keys(Object.values(values.value)[0]).indexOf(key.toString());
   return totalValueCount.value === 1 ? 50 : (index * 100) / (totalValueCount.value - 1);
 };
 
@@ -567,9 +577,7 @@ onUnmounted(() => {
     .chart-points.no-spacing(:style='linesStyle')
       template(v-for="(lineValues, lineLabel) in values")
         template(v-if="styles[lineLabel] === 'line' && (!activeLines || activeLines.includes(lineLabel))")
-          template(
-            v-for="(value, index) in lineValues"
-          )
+          template(v-for="(value, index) in lineValues")
             .chart-point(
               :class="{ ...getMoodClasses(lineLabel), visible: hovers.includes(index) }",
               :style="{ left: `${getPointLeftPosition(index)}%`, top: `${getPointTopPosition(value, lineLabel)}%` }",
@@ -589,9 +597,10 @@ onUnmounted(() => {
         :class="{ active: hovers.includes(key) }",
         :style="{ left: `${getPointLeftPosition(key)}%` }",
       )
+        //- translateX is calculated by special formula, depending on angle, to place whole labels, but only under the x-axis
         .x-axis-label-group.no-spacing(
           :ref='(element) => setXAxisLabelGroup(index, element)',
-          :style="{ transform: `rotate(-${xAxisLabelRotate}deg) translateX(-${xAxisLabelRotate * 50 / 90}%)` }",
+          :style="{ transform: `rotate(-${xAxisLabelRotate}deg) translateX(-${ Math.trunc(8.3 * Math.pow(xAxisLabelRotate, 0.4)) }%)` }",
         )
           slot(name="xAxis", :valueKey="key")
             template(v-for="lineIndex in lineCount")
@@ -760,7 +769,6 @@ $-chart-colors: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 
       pointer-events: none;
       position: absolute;
       top: 0;
-      width: 100%;
 
       > svg {
         overflow: visible;
@@ -793,7 +801,6 @@ $-chart-colors: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 
     > .chart-popovers {
       display: flex;
       height: 100%;
-      width: 100%;
       pointer-events: none;
       position: absolute;
       top: 0;
@@ -1003,7 +1010,6 @@ $-chart-colors: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 
     }
 
     > .chart-points {
-      width: 100%;
       height: 100%;
       margin-bottom: 2rem;
       pointer-events: none;
@@ -1013,6 +1019,7 @@ $-chart-colors: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 
       > .chart-point {
         @include apply-color(background-color, white);
 
+        box-sizing: content-box;
         border: 2px solid;
         border-radius: 16px;
         height: 8px;
