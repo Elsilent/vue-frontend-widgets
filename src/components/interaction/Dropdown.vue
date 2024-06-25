@@ -103,6 +103,7 @@ Align(
         v-for='(item, itemCode, index) in items',
         :class='{ current: modelValue === itemCode, selected: selectedItem === index }',
         @click.stop="updateValue(itemCode)",
+        @mouseover="selectedItem = index",
       ) {{ item }}
 </template>
 
