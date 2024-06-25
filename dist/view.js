@@ -1,7 +1,7 @@
 import { defineComponent as Se, toRefs as Ce, ref as k, openBlock as w, createElementBlock as j, normalizeClass as X, createElementVNode as G, toDisplayString as F, unref as y, createVNode as R, withCtx as S, Fragment as J, renderList as _e, createBlock as B, onUnmounted as fr, withModifiers as wt, createTextVNode as P, createCommentVNode as $, computed as I, onMounted as dr, watch as Ue, createSlots as pr, renderSlot as Gt, normalizeProps as vr, guardReactiveProps as mr, nextTick as Xt, Teleport as hr, normalizeStyle as br } from "vue";
 import he from "numeral";
 import { A as Y, I as Me, C as gr } from "./Icon-1e0f2d3b.js";
-import { D as cn, B as _t, I as fn } from "./Input-3a8ba06b.js";
+import { D as cn, B as _t, I as fn } from "./Input-d1741c6c.js";
 import { L as Rt, a as yr } from "./LineBarChart-00a63364.js";
 import { _ as Tt, T as wr } from "./Tooltip.vue_vue_type_style_index_0_lang-1e595bae.js";
 import { _ as Oe } from "./_plugin-vue_export-helper-dad06003.js";
@@ -1986,7 +1986,7 @@ const oo = /* @__PURE__ */ Oe(so, [["__scopeId", "data-v-c57a26a4"]]), ao = { cl
       (ye.value + 1) * Ae.value
     )), Bn = (a) => {
       E.value.includes(a) || E.value.push(a);
-    }, We = (a, i) => !Z.value || !Z.value.includes(a) ? !1 : i.length > yt, jn = (a) => !!a.tooltipTitle && !!a.tooltipContent, Ge = (a, i, u) => {
+    }, We = (a, i) => !Z.value || !Z.value.includes(a) ? !1 : String(i || "").length > yt, jn = (a) => !!a.tooltipTitle && !!a.tooltipContent, Ge = (a, i, u) => {
       var x;
       if (!u || !(C != null && C.value) || !(u in C.value) || C.value[u].format !== "difference")
         return;
@@ -2123,7 +2123,7 @@ const oo = /* @__PURE__ */ Oe(so, [["__scopeId", "data-v-c57a26a4"]]), ao = { cl
       i < 0 || E.value.splice(i, 1);
     }, $t = (a, i) => {
       D.value[a] = i;
-    }, Ht = (a, i) => !Z.value || !Z.value.includes(i) || Be.value.includes(i) || a.length <= yt ? a : `${a.substring(0, yt - 3)}...`, Kn = (a) => {
+    }, Ht = (a, i) => !Z.value || !Z.value.includes(i) || Be.value.includes(i) || String(a || "").length <= yt ? a : `${a.substring(0, yt - 3)}...`, Kn = (a) => {
       if (!fe.value)
         return;
       const i = {
@@ -2620,7 +2620,7 @@ const oo = /* @__PURE__ */ Oe(so, [["__scopeId", "data-v-c57a26a4"]]), ao = { cl
     ]));
   }
 });
-const Do = /* @__PURE__ */ Oe(co, [["__scopeId", "data-v-b48456c6"]]), fo = { class: "scrollable flex-max no-spacing" }, po = ["onClick"], vo = { class: "scrollable flex-max no-spacing" }, mo = ["onClick"], ho = { class: "scrollable" }, bo = { class: "items flex-max no-spacing" }, go = /* @__PURE__ */ Se({
+const Do = /* @__PURE__ */ Oe(co, [["__scopeId", "data-v-d740b620"]]), fo = { class: "scrollable flex-max no-spacing" }, po = ["onClick"], vo = { class: "scrollable flex-max no-spacing" }, mo = ["onClick"], ho = { class: "scrollable" }, bo = { class: "items flex-max no-spacing" }, go = /* @__PURE__ */ Se({
   __name: "KpiSelector",
   props: {
     applyLabel: {},
