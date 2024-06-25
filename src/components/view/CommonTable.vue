@@ -471,7 +471,7 @@ const canShorten = (columnKey: string, value: string) => {
     return false;
   }
 
-  return value.length > SHORTEN_THRESHOLD;
+  return String(value || '').length > SHORTEN_THRESHOLD;
 };
 
 const columnHasTooltip = (column: Column) => !!column.tooltipTitle && !!column.tooltipContent;
@@ -897,7 +897,7 @@ const shortenValue = (value: string, columnKey: string) => {
     return value;
   }
 
-  if (value.length <= SHORTEN_THRESHOLD) {
+  if (String(value || '').length <= SHORTEN_THRESHOLD) {
     return value;
   }
 
