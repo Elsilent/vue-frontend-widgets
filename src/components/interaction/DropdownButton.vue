@@ -39,8 +39,21 @@ onUnmounted(() => {
   window.removeEventListener('click', windowClickHandler);
 });
 
-const itemClickHandler = (itemHandler: Function) => {
+/**
+ * Handles click on item (e.g. "Excel" label).
+ * Unlike subitem, it may not have handler.
+ */
+const itemClickHandler = (itemHandler: Function | undefined) => {
+  if (itemHandler === undefined) {
+    return;
+  }
+
   itemHandler();
+  hideDropdown();
+};
+
+const subItemClickHandler = (subItemHandler: Function) => {
+  subItemHandler();
   hideDropdown();
 };
 
@@ -77,7 +90,10 @@ const windowClickHandler = (e: Event) => {
     column
     style="margin: 0"
   )
-    .exportBtn-menu_item(v-for="item in list")
+    .exportBtn-menu_item(
+      v-for="item in list"
+      @click="itemClickHandler(item.handler)"
+    )
       Icon.chevron.no-spacing(
         size='large-3',
         :value="item.submenu ? 'chevron-left' : ''"
@@ -86,7 +102,7 @@ const windowClickHandler = (e: Event) => {
       Align.exportBtn-subMenu( column, v-if="item.submenu")
         .exportBtn-subMenu_item(
           v-for="subItem in item.submenu"
-          @click="itemClickHandler(subItem.handler)"
+          @click="subItemClickHandler(subItem.handler)"
         )
           Info {{ subItem.name }}
 </template>
