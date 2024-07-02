@@ -397,9 +397,9 @@ const getColorIntensity = (value: any, columnKey: string, subcolumnIndex?: numbe
     return undefined;
   }
 
-  let currentValue = value;
-  let maxValue = maxValues.value[columnKey];
-  let minValue = minValues.value[columnKey];
+  let currentValue = value || 0;
+  let maxValue = maxValues.value[columnKey] || 0;
+  let minValue = minValues.value[columnKey] || 0;
 
   if (comparisonColumnKeys && comparisonColumnKeys.value && subcolumnIndex !== undefined) {
     currentValue = currentValue[comparisonColumnKeys.value[subcolumnIndex]];
@@ -1005,7 +1005,6 @@ defineSlots<
 
 .table {
   @include apply-color(background-color, background-elevated-3);
-  @include apply-color(box-shadow, border-table, $value-prefix: inset 0 0 0 1px);
 
   display: grid;
   gap: 1px;
@@ -1201,7 +1200,7 @@ defineSlots<
               z-index: $-index + 1;
 
               &.color-negative {
-                $-color: mix($-negative-base-intensity-color, transparent, $-index * 10%);
+                $-color: rgba($-negative-base-intensity-color, $-index * 10%);
                 $-border-color: darken($-color, 15%);
                 $-border-color: mix($-border-color, #7f999999, $-index * 10%);
 
@@ -1210,7 +1209,7 @@ defineSlots<
               }
 
               &.color-positive {
-                $-color: mix($-positive-base-intensity-color, transparent, $-index * 10%);
+                $-color: rgba($-positive-base-intensity-color, $-index * 10%);
                 $-border-color: darken($-color, 15%);
                 $-border-color: mix($-border-color, #7f999999, $-index * 10%);
 

@@ -435,7 +435,7 @@ const orderedRows = computed(() => {
  * Slices rows to current page
  */
 const visibleRows = computed(() => {
-  if (!request?.value || !fetchedAllRows.value || !showPagination.value) {
+  if ((request?.value && !fetchedAllRows.value) || !showPagination.value) {
     return orderedRows.value;
   }
 

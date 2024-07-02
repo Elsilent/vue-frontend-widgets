@@ -327,7 +327,7 @@ const it = /* @__PURE__ */ Se(nt, [["__scopeId", "data-v-21092b38"]]), ut = ["on
     }, E = (t, a, e) => {
       if (h.value[a].type === "string")
         return;
-      let r = t, s = ve.value[a], g = ce.value[a];
+      let r = t || 0, s = ve.value[a] || 0, g = ce.value[a] || 0;
       if (i && i.value && e !== void 0 && (r = r[i.value[e]], s = s[i.value[e]], g = g[i.value[e]]), s === g)
         return 0;
       const N = Math.round((r - g) * 10 / (s - g));
@@ -653,7 +653,7 @@ const it = /* @__PURE__ */ Se(nt, [["__scopeId", "data-v-21092b38"]]), ut = ["on
     ], 6));
   }
 });
-const je = /* @__PURE__ */ Se(Mt, [["__scopeId", "data-v-f178390f"]]), _t = /* @__PURE__ */ ue({
+const je = /* @__PURE__ */ Se(Mt, [["__scopeId", "data-v-1939b8c0"]]), _t = /* @__PURE__ */ ue({
   __name: "Table",
   props: {
     additionalHeaders: { default: () => ({}) },

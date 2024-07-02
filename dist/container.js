@@ -3,7 +3,7 @@ import { B as b } from "./Badge-ed00f7df.js";
 import { G as T } from "./Form-48967b8c.js";
 import { G as A } from "./Grid-f3d84a6a.js";
 import { P as c } from "./Popover-57fd7fff.js";
-import { S as B, a as C, b as P, T as n, _ as v } from "./Tooltip.vue_vue_type_style_index_0_lang-1e595bae.js";
+import { S as B, a as C, b as P, T as n, _ as v } from "./Tooltip.vue_vue_type_style_index_0_lang-5a4bc14e.js";
 import "vue";
 import "./_plugin-vue_export-helper-dad06003.js";
 import "./utils/error.js";
