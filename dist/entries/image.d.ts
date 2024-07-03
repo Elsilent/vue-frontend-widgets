@@ -6,7 +6,5 @@ import KpiCard from '../components/image/KpiCard.vue';
 import KpiDistributionTable from '../components/image/KpiDistributionTable.vue';
 import LineBarChart from '../components/image/LineBarChart.vue';
 import Loader from '../components/image/Loader.vue';
-import Logo from '../components/image/Logo.vue';
 import ProgressBar from '../components/image/ProgressBar.vue';
-import BrandTextImage from '../components/image/BrandText.vue';
-export { Avatar, ComparisonKpiCard, Dot, Icon, KpiCard, KpiDistributionTable, LineBarChart, Loader, Logo, ProgressBar, BrandTextImage, };
+export { Avatar, ComparisonKpiCard, Dot, Icon, KpiCard, KpiDistributionTable, LineBarChart, Loader, ProgressBar, };
