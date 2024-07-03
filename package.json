@@ -1,5 +1,5 @@
 {
-  "name": "trackad-frontend-widgets",
+  "name": "vue-frontend-widgets",
   "exports": {
     "./*": "./dist/*.js"
   },

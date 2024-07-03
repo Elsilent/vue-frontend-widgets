@@ -275,7 +275,7 @@ import TrendChart from './TrendChart.vue';
  * Use Table component instead if you wish to have fixed columns
  * but wish to fulfill table contents by yourself
  * 
- * Reference: https://trackad.atlassian.net/wiki/spaces/TRACKADPRO/pages/239829034/Vue+tables
+ * Reference: see the article 'Vue+tables' in your Wiki or Confluence
  */
 export default {
   components: {
