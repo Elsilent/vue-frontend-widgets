@@ -1,8 +1,6 @@
 <script lang="ts" setup>
 import { computed, ref, toRefs, watch } from 'vue';
 import type { Router } from 'vue-router';
-import BrandTextImage from '../../components/image/BrandText.vue';
-import Logo from '../../components/image/Logo.vue';
 import MenuSubsection from './side_menu/MenuSubsection.vue';
 import type { Menu } from '../../utils/menu';
 
@@ -40,8 +38,7 @@ watch(
 )
   .brand-container(@click="router.push({ name: 'default' })")
     .brand
-      Logo(force-dark-mode)
-      BrandTextImage(full force-dark-mode)
+      slot(name="header")
   .items
     template(v-for="(section, code) in menu")
       MenuSubsection(
@@ -82,7 +79,7 @@ watch(
 
     > .brand-container {
       > .brand {
-        > .brand-text {
+        &:deep(> .brand-text) {
           opacity: 1;
         }
       }
@@ -106,7 +103,7 @@ watch(
       align-items: flex-end;
       margin-bottom: $padding-size-small-3 * 2;
 
-      > .brand-text {
+      &:deep(> .brand-text) {
         flex: 1;
         opacity: 0;
         transition-duration: $transition-duration-normal;
@@ -114,7 +111,7 @@ watch(
         white-space: nowrap;
       }
 
-      > .logo + .brand-text {
+      &:deep(> .logo + .brand-text) {
         margin-left: 1rem;
       }
     }

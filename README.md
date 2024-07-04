@@ -1,6 +1,6 @@
-# trackad-frontend-widgets
+# vue-frontend-widgets
 
-Frontend widgets which can be used across Vue 3 TrackAd projects.
+Frontend widgets which can be used across Vue 3 projects.
 
 ## Recommended IDE Setup
 
@@ -10,8 +10,8 @@ Frontend widgets which can be used across Vue 3 TrackAd projects.
 
 ```vue
 <script lang="ts" setup>
-import { Align } from 'trackad-frontend-widgets/container';
-import { Header, Info } from 'trackad-frontend-widgets/label';
+import { Align } from 'vue-frontend-widgets/container';
+import { Header, Info } from 'vue-frontend-widgets/label';
 </script>
 
 <template lang="pug">
