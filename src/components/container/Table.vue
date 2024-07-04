@@ -109,7 +109,7 @@ import SimpleTable from './SimpleTable.vue';
  * Use CommonTable component instead if you wish table contents to be fetched
  * and formatted automatically
  * 
- * Reference: https://trackad.atlassian.net/wiki/spaces/TRACKADPRO/pages/239829034/Vue+tables
+ * Reference: see the article 'Vue+tables' in your Wiki or Confluence
  */
 export default {
   beforeDestroy() {
