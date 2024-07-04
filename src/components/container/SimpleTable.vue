@@ -378,7 +378,7 @@ const getCellClasses = (
       subcolumnIndex !== undefined &&
       comparisonColumnKeys &&
       comparisonColumnKeys.value &&
-      comparisonColumnKeys.value[subcolumnIndex] === 'difference'
+      comparisonColumnKeys.value[subcolumnIndex].includes('difference')
     ) {
       classes.colored = false;
     } else {

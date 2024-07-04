@@ -321,7 +321,7 @@ const it = /* @__PURE__ */ Se(nt, [["__scopeId", "data-v-21092b38"]]), ut = ["on
       };
       if (W.value) {
         const g = (() => !T || !T.value ? "positive" : T.value.includes(e) ? "negative" : "positive")();
-        s[`color-intensity-${t.rowInfo.detailable ? E(t[e], e, r) : "none"}`] = !0, s[`color-${g}`] = !0, r !== void 0 && i && i.value && i.value[r] === "difference" ? s.colored = !1 : s.colored = he(e) >= 0;
+        s[`color-intensity-${t.rowInfo.detailable ? E(t[e], e, r) : "none"}`] = !0, s[`color-${g}`] = !0, r !== void 0 && i && i.value && i.value[r].includes("difference") ? s.colored = !1 : s.colored = he(e) >= 0;
       }
       return s;
     }, E = (t, a, e) => {
@@ -653,7 +653,7 @@ const it = /* @__PURE__ */ Se(nt, [["__scopeId", "data-v-21092b38"]]), ut = ["on
     ], 6));
   }
 });
-const je = /* @__PURE__ */ Se(Mt, [["__scopeId", "data-v-0bd1fff1"]]), _t = /* @__PURE__ */ ue({
+const je = /* @__PURE__ */ Se(Mt, [["__scopeId", "data-v-457354a2"]]), _t = /* @__PURE__ */ ue({
   __name: "Table",
   props: {
     additionalHeaders: { default: () => ({}) },
