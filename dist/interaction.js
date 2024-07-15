@@ -1,16 +1,16 @@
-import { B as ht, D as On, I as Ja, u as Qa } from "./Input-d1741c6c.js";
+import { B as ht, D as On, I as Ja, u as Qa } from "./Input-67b6bfb1.js";
 import { computed as v, getCurrentInstance as Ze, watch as oe, unref as c, inject as ve, ref as I, isRef as Za, shallowRef as Dt, defineComponent as ee, openBlock as y, createElementBlock as _, mergeProps as At, renderSlot as te, onMounted as st, toRef as Pt, onUnmounted as ea, useAttrs as el, useSlots as tl, nextTick as fe, createCommentVNode as F, Fragment as ue, normalizeClass as $, createElementVNode as W, createBlock as V, withCtx as D, resolveDynamicComponent as He, withModifiers as Z, createVNode as N, toDisplayString as Q, normalizeStyle as be, onBeforeUnmount as ta, Transition as na, withDirectives as Qe, vShow as xt, provide as rn, reactive as bt, onUpdated as nl, toRaw as aa, toRefs as rt, watchEffect as al, resolveComponent as Xe, resolveDirective as ll, renderList as Be, withKeys as Ae, vModelText as la, createTextVNode as ge } from "vue";
 import { D as pe, a as ol } from "./datetime-31a2b505.js";
-import { A as ye, I as _t } from "./Icon-1e0f2d3b.js";
+import { A as ye, I as _t } from "./Icon-53e685d0.js";
 import { G as sl } from "./Grid-f3d84a6a.js";
-import { I as he } from "./Info-1836ec0c.js";
+import { I as he } from "./Info-38a17291.js";
 import { dateFormat as J, normalizeRange as rl, tryRangeFromDisplayFormat as il, rangeToDisplayFormat as ul, rangeFromPreset as In } from "./utils/date.js";
 import { _ as We } from "./_plugin-vue_export-helper-dad06003.js";
-import { P as cl } from "./Popover-57fd7fff.js";
-import { L as Cu } from "./Link-194344f3.js";
+import { P as cl } from "./Popover-2a15620c.js";
+import { L as Cu } from "./Link-882cf82b.js";
 import { sort as Gt } from "./utils/sort.js";
-import { B as dl } from "./BodyPopover-a7c12394.js";
-import { P as Ou, T as Iu } from "./Toast-62e7e0a7.js";
+import { B as dl } from "./BodyPopover-fa09f5de.js";
+import { P as Ou, T as Iu } from "./Toast-2cabbf64.js";
 import { h as it, j as fl, k as Rt, l as Ht, r as et, m as oa, n as pl, o as Qt, p as un, q as vl, s as ot, t as ml, v as gl, x as sa, L as cn, M as Vt, y as ra, z as hl, A as ut, S as $n, B as yl, C as ia, D as ua, F as bl, G as Sl, H as Re, I as wl, J as Cl, K as Bt, N as $e, b as Ue, d as Pe, e as Ce, O as ca, f as Zt, _ as Ee, g as St, P as dn, Q as da, R as fn, T as Ke, i as Ft, U as pn, V as Lt, W as fa, X as Tl, Y as Ol, Z as Il, $ as ke, a0 as $l, a1 as pa, a2 as _e, a3 as El, a4 as Ml, a5 as En, a6 as De, a7 as Yt, a8 as kl, a as Dl, a9 as Al, aa as Ll, E as Pl, ab as _l, ac as va } from "./popper-1247c27c.js";
 import "./match-b8889c93.js";
 import "./utils/error.js";
@@ -2962,7 +2962,7 @@ const Ri = 7 * 6, Vi = /* @__PURE__ */ ee({
               icon: "chevron-left",
               mood: "neutral",
               outline: "",
-              size: "large-4"
+              size: "small-2"
             }, null, 8, ["disabled"]),
             N(On, {
               class: "flex-max spacing-small",
@@ -2988,7 +2988,7 @@ const Ri = 7 * 6, Vi = /* @__PURE__ */ ee({
               icon: "chevron-right",
               mood: "neutral",
               outline: "",
-              size: "large-4"
+              size: "small-2"
             }, null, 8, ["disabled"])
           ]),
           _: 1
@@ -3036,7 +3036,7 @@ const Ri = 7 * 6, Vi = /* @__PURE__ */ ee({
     }));
   }
 });
-const Zn = /* @__PURE__ */ We(Vi, [["__scopeId", "data-v-fc72fbe7"]]), Bi = /* @__PURE__ */ ee({
+const Zn = /* @__PURE__ */ We(Vi, [["__scopeId", "data-v-626ee9e9"]]), Bi = /* @__PURE__ */ ee({
   __name: "DateRangePicker",
   props: {
     dateRangePresets: {},
@@ -3106,7 +3106,7 @@ const Zn = /* @__PURE__ */ We(Vi, [["__scopeId", "data-v-fc72fbe7"]]), Bi = /* @
         N(ht, {
           class: "no-spacing",
           disabled: c(o),
-          icon: "calendar",
+          icon: "calendar-days",
           mood: "inactive",
           tabindex: "-1"
         }, null, 8, ["disabled"]),
@@ -3189,7 +3189,7 @@ const Zn = /* @__PURE__ */ We(Vi, [["__scopeId", "data-v-fc72fbe7"]]), Bi = /* @
     }, 512));
   }
 });
-const vu = /* @__PURE__ */ We(Bi, [["__scopeId", "data-v-d7d80c88"]]), Fi = { class: "loader" };
+const vu = /* @__PURE__ */ We(Bi, [["__scopeId", "data-v-fe346977"]]), Fi = { class: "loader" };
 function zi(e, t) {
   return y(), _("div", Fi);
 }
@@ -3237,7 +3237,7 @@ const Ni = {}, xi = /* @__PURE__ */ We(Ni, [["render", zi], ["__scopeId", "data-
             key: 1,
             class: "chevron no-spacing",
             mood: "accent",
-            size: "large-3",
+            size: "small-2",
             value: "chevron-down",
             style: be(t.value ? { transform: "rotate(180deg)" } : "")
           }, null, 8, ["style"]))
@@ -3257,7 +3257,7 @@ const Ni = {}, xi = /* @__PURE__ */ We(Ni, [["render", zi], ["__scopeId", "data-
           }, [
             N(_t, {
               class: "chevron no-spacing",
-              size: "large-3",
+              size: "small-2",
               value: g.submenu ? "chevron-left" : ""
             }, null, 8, ["value"]),
             N(he, null, {
@@ -3293,7 +3293,7 @@ const Ni = {}, xi = /* @__PURE__ */ We(Ni, [["render", zi], ["__scopeId", "data-
     ]));
   }
 });
-const mu = /* @__PURE__ */ We(Ui, [["__scopeId", "data-v-3d6b9c19"]]), ji = ["disabled"], Gi = /* @__PURE__ */ ee({
+const mu = /* @__PURE__ */ We(Ui, [["__scopeId", "data-v-6cde896d"]]), ji = ["disabled"], Gi = /* @__PURE__ */ ee({
   __name: "MultiSelect",
   props: {
     allItemsLabel: {},
@@ -3466,11 +3466,7 @@ const mu = /* @__PURE__ */ We(Ui, [["__scopeId", "data-v-3d6b9c19"]]), ji = ["di
               }, null, 40, ji), [
                 [la, d.value]
               ]),
-              N(_t, {
-                backend: "boxicons-solid",
-                size: "small-2",
-                value: "down-arrow"
-              })
+              N(_t, { value: "caret-down" })
             ]),
             _: 1
           }),
@@ -3512,7 +3508,7 @@ const mu = /* @__PURE__ */ We(Ui, [["__scopeId", "data-v-3d6b9c19"]]), ji = ["di
     }, 8, ["inline"]));
   }
 });
-const gu = /* @__PURE__ */ We(Gi, [["__scopeId", "data-v-f6b56fb8"]]), Yi = ["id", "value"], qi = ["for"], Xi = /* @__PURE__ */ ee({
+const gu = /* @__PURE__ */ We(Gi, [["__scopeId", "data-v-1bf51b8e"]]), Yi = ["id", "value"], qi = ["for"], Xi = /* @__PURE__ */ ee({
   __name: "Toggle",
   props: {
     mood: { default: "positive" },
@@ -3548,15 +3544,11 @@ const gu = /* @__PURE__ */ We(Gi, [["__scopeId", "data-v-f6b56fb8"]]), Yi = ["id
     ], 64));
   }
 });
-const hu = /* @__PURE__ */ We(Xi, [["__scopeId", "data-v-8aa21e20"]]);
+const hu = /* @__PURE__ */ We(Xi, [["__scopeId", "data-v-62094a82"]]);
 const Ji = /* @__PURE__ */ ee({
   __name: "SelectSuffixIcon",
   setup(e) {
-    return (t, n) => (y(), V(_t, {
-      backend: "boxicons-solid",
-      size: "small-2",
-      value: "down-arrow"
-    }));
+    return (t, n) => (y(), V(_t, { value: "caret-down" }));
   }
 }), Qi = /* @__PURE__ */ ee({
   __name: "Select",

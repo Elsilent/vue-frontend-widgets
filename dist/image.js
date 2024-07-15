@@ -1,14 +1,14 @@
-import { A as me } from "./Avatar-681f3a53.js";
-import { defineComponent as x, toRefs as B, computed as p, openBlock as v, createBlock as I, normalizeClass as $, withCtx as a, createVNode as t, createTextVNode as g, toDisplayString as b, unref as i, createCommentVNode as q, createElementBlock as y, normalizeStyle as S, ref as N, watch as j, Fragment as z, renderList as L, renderSlot as E } from "vue";
-import { C as T, A as f, I as A } from "./Icon-1e0f2d3b.js";
-import { I as k } from "./Info-1836ec0c.js";
-import { L as P } from "./LineBarChart-00a63364.js";
-import { a as be } from "./LineBarChart-00a63364.js";
+import { A as me } from "./Avatar-1ceb631f.js";
+import { defineComponent as x, toRefs as B, computed as p, openBlock as f, createBlock as I, normalizeClass as $, withCtx as a, createVNode as t, createTextVNode as g, toDisplayString as b, unref as i, createCommentVNode as q, createElementBlock as y, normalizeStyle as S, ref as N, watch as j, Fragment as w, renderList as L, renderSlot as E } from "vue";
+import { C as T, A as v, I as A } from "./Icon-53e685d0.js";
+import { I as k } from "./Info-38a17291.js";
+import { L as P } from "./LineBarChart-594cb504.js";
+import { a as be } from "./LineBarChart-594cb504.js";
 import { Separator as F } from "./marker.js";
 import { f as R } from "./format-d2aab685.js";
 import { _ as C } from "./_plugin-vue_export-helper-dad06003.js";
-import { B as W } from "./Badge-ed00f7df.js";
-import { L as G } from "./Link-194344f3.js";
+import { B as W } from "./Badge-17fbe620.js";
+import { L as G } from "./Link-882cf82b.js";
 import "./utils/error.js";
 import "./match-b8889c93.js";
 import "numeral";
@@ -32,7 +32,7 @@ const M = 0.01, H = (d, s) => {
     const s = d, { comparisonValue: e, inversed: c, value: l } = B(s), m = p(
       () => l === void 0 || l.value === void 0 || e === void 0 || e.value === void 0
     ), n = p(() => m.value ? "equal" : H(l.value, e.value)), D = p(() => {
-      const o = "minus", r = "up-arrow-alt", u = "down-arrow-alt";
+      const o = "minus", r = "arrow-up", u = "arrow-down";
       switch (n.value) {
         case "equal":
           return o;
@@ -63,16 +63,16 @@ const M = 0.01, H = (d, s) => {
           return u;
       }
       return "less" in n.value ? u : r;
-    }), w = p(() => ({
+    }), z = p(() => ({
       loading: m.value
     }));
-    return (o, r) => (v(), I(T, {
-      class: $(["kpi-card", w.value])
+    return (o, r) => (f(), I(T, {
+      class: $(["kpi-card", z.value])
     }, {
       default: a(() => [
-        t(f, { column: "" }, {
+        t(v, { column: "" }, {
           default: a(() => [
-            t(f, { vertical: "center" }, {
+            t(v, { vertical: "center" }, {
               default: a(() => [
                 t(k, {
                   class: "flex-max",
@@ -95,14 +95,15 @@ const M = 0.01, H = (d, s) => {
               ]),
               _: 1
             }),
-            t(f, {
+            t(v, {
               class: "spacing-small",
               vertical: "center"
             }, {
               default: a(() => [
                 t(A, {
                   mood: _.value,
-                  value: D.value
+                  value: D.value,
+                  size: "small"
                 }, null, 8, ["mood", "value"]),
                 t(k, { mood: _.value }, {
                   default: a(() => [
@@ -123,7 +124,7 @@ const M = 0.01, H = (d, s) => {
           ]),
           _: 1
         }),
-        i(l) === void 0 || i(e) === void 0 ? (v(), I(f, {
+        i(l) === void 0 || i(e) === void 0 ? (f(), I(v, {
           key: 0,
           class: "loader-container no-spacing",
           horizontal: "center",
@@ -139,7 +140,7 @@ const M = 0.01, H = (d, s) => {
     }, 8, ["class"]));
   }
 });
-const ie = /* @__PURE__ */ C(J, [["__scopeId", "data-v-2721093f"]]), de = /* @__PURE__ */ x({
+const ie = /* @__PURE__ */ C(J, [["__scopeId", "data-v-78f79f36"]]), de = /* @__PURE__ */ x({
   __name: "Dot",
   props: {
     mood: { default: () => ({ mood: "accent" }) }
@@ -149,7 +150,7 @@ const ie = /* @__PURE__ */ C(J, [["__scopeId", "data-v-2721093f"]]), de = /* @__
       const l = {};
       return "mood" in e.value ? l[`mood-background-${e.value.mood}`] = !0 : "chart" in e.value && (l[`chart-${e.value.chart}`] = !0), l;
     });
-    return (l, m) => (v(), y("div", {
+    return (l, m) => (f(), y("div", {
       class: $(["dot", c.value])
     }, null, 2));
   }
@@ -167,13 +168,13 @@ const Q = /* @__PURE__ */ x({
     const s = d, { value: e } = B(s), c = p(() => ({
       loading: e === void 0 || e.value === void 0
     }));
-    return (l, m) => (v(), I(T, {
+    return (l, m) => (f(), I(T, {
       class: $(["kpi-card", c.value])
     }, {
       default: a(() => [
-        t(f, { vertical: "center" }, {
+        t(v, { vertical: "center" }, {
           default: a(() => [
-            t(f, {
+            t(v, {
               class: "flex-max",
               column: ""
             }, {
@@ -204,7 +205,7 @@ const Q = /* @__PURE__ */ x({
           ]),
           _: 1
         }),
-        i(e) === void 0 ? (v(), I(f, {
+        i(e) === void 0 ? (f(), I(v, {
           key: 0,
           class: "loader-container no-spacing",
           horizontal: "center",
@@ -220,7 +221,7 @@ const Q = /* @__PURE__ */ x({
     }, 8, ["class"]));
   }
 });
-const ve = /* @__PURE__ */ C(Q, [["__scopeId", "data-v-e84b3f2e"]]), U = /* @__PURE__ */ x({
+const fe = /* @__PURE__ */ C(Q, [["__scopeId", "data-v-e84b3f2e"]]), U = /* @__PURE__ */ x({
   __name: "ProgressBar",
   props: {
     mood: {},
@@ -232,7 +233,7 @@ const ve = /* @__PURE__ */ C(Q, [["__scopeId", "data-v-e84b3f2e"]]), U = /* @__P
       "--width": `${e.value * 100}%`,
       "--height": c.value === "large" ? "30px" : "auto"
     }));
-    return (m, n) => (v(), y("div", {
+    return (m, n) => (f(), y("div", {
       class: $(["progress-bar", [`mood-background-${m.mood}`]]),
       style: S(l.value)
     }, null, 6));
@@ -250,12 +251,12 @@ const X = /* @__PURE__ */ C(U, [["__scopeId", "data-v-ac82b9ec"]]), O = "140px",
       const _ = Object.keys(e.value);
       return _[_.length - 1];
     }), m = (_ = !1) => {
-      const w = {};
+      const z = {};
       for (const o of Object.values(c.value))
         for (const [r, u] of Object.entries(o))
-          r in w || (w[r] = 0), _ || (w[r] += +u);
+          r in z || (z[r] = 0), _ || (z[r] += +u);
       return Object.keys(c.value).reduce((o, r) => (o[r] = Object.keys(e.value).reduce(
-        (u, h) => (u[h] = w[h] === 0 ? 0 : c.value[r][h] / w[h], u),
+        (u, h) => (u[h] = z[h] === 0 ? 0 : c.value[r][h] / z[h], u),
         {}
       ), o), {});
     }, n = N(m(!0));
@@ -280,11 +281,11 @@ const X = /* @__PURE__ */ C(U, [["__scopeId", "data-v-ac82b9ec"]]), O = "140px",
       "--alignment": `max-content ${D.value}`,
       "--progressBarWidth": O
     }));
-    return (_, w) => (v(), y("div", {
+    return (_, z) => (f(), y("div", {
       class: "kpi-distribution-table",
       style: S(K.value)
     }, [
-      t(f, {
+      t(v, {
         class: "cell header-cell row-first",
         vertical: "center"
       }, {
@@ -298,13 +299,13 @@ const X = /* @__PURE__ */ C(U, [["__scopeId", "data-v-ac82b9ec"]]), O = "140px",
         ]),
         _: 1
       }),
-      (v(!0), y(z, null, L(i(e), (o, r) => (v(), y(z, null, [
-        t(f, {
+      (f(!0), y(w, null, L(i(e), (o, r) => (f(), y(w, null, [
+        t(v, {
           class: "cell header-cell",
           horizontal: "center",
           vertical: "center"
         }),
-        t(f, {
+        t(v, {
           class: $(["cell header-cell metric", { "row-last": r === l.value }]),
           horizontal: "left",
           vertical: "center"
@@ -320,8 +321,8 @@ const X = /* @__PURE__ */ C(U, [["__scopeId", "data-v-ac82b9ec"]]), O = "140px",
           _: 2
         }, 1032, ["class"])
       ], 64))), 256)),
-      (v(!0), y(z, null, L(i(c), (o, r) => (v(), y(z, null, [
-        t(f, {
+      (f(!0), y(w, null, L(i(c), (o, r) => (f(), y(w, null, [
+        t(v, {
           class: "cell row-first",
           vertical: "center"
         }, {
@@ -341,8 +342,8 @@ const X = /* @__PURE__ */ C(U, [["__scopeId", "data-v-ac82b9ec"]]), O = "140px",
           ]),
           _: 2
         }, 1024),
-        (v(!0), y(z, null, L(i(e), (u, h) => (v(), y(z, null, [
-          t(f, {
+        (f(!0), y(w, null, L(i(e), (u, h) => (f(), y(w, null, [
+          t(v, {
             class: "cell",
             horizontal: u.align ?? "center",
             vertical: "center"
@@ -357,7 +358,7 @@ const X = /* @__PURE__ */ C(U, [["__scopeId", "data-v-ac82b9ec"]]), O = "140px",
             ]),
             _: 2
           }, 1032, ["horizontal"]),
-          t(f, {
+          t(v, {
             class: $(["cell metric", { "row-last": h === l.value }]),
             column: !0,
             horizontal: "center",
@@ -385,14 +386,14 @@ const X = /* @__PURE__ */ C(U, [["__scopeId", "data-v-ac82b9ec"]]), O = "140px",
     ], 4));
   }
 });
-const fe = /* @__PURE__ */ C(Y, [["__scopeId", "data-v-707c5df7"]]);
+const ve = /* @__PURE__ */ C(Y, [["__scopeId", "data-v-707c5df7"]]);
 export {
   me as Avatar,
   ie as ComparisonKpiCard,
   de as Dot,
   A as Icon,
-  ve as KpiCard,
-  fe as KpiDistributionTable,
+  fe as KpiCard,
+  ve as KpiDistributionTable,
   be as LineBarChart,
   P as Loader,
   X as ProgressBar
