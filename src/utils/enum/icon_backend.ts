@@ -1,6 +1,1 @@
-export type IconBackend =
-  | 'boxicons'
-  | 'boxicons-logo'
-  | 'boxicons-solid'
-  | 'flag-icons'
-  | 'flag-icons-square';
+export type IconBackend = 'solid' | 'regular' | 'brands' | 'flag-icons' | 'flag-icons-square';

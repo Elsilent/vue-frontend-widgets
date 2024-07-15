@@ -57,7 +57,7 @@ watch(
 
 <style lang="scss" scoped>
 @import '../../styles/colors.scss';
-@import '../../styles/fonts.scss';
+@import '../../styles/fonts/base.scss';
 @import '../../styles/shadows.scss';
 @import '../../styles/spacing.scss';
 @import '../../styles/transition.scss';

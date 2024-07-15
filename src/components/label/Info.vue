@@ -36,13 +36,13 @@ const classes = computed(() => ({
 </template>
 
 <style lang="scss" scoped>
-@import '../../styles/fonts.scss';
+@import '../../styles/fonts/base.scss';
 @import '../../styles/mood.scss';
 @import '../../styles/transition.scss';
 
 .info-text {
   @import '../../styles/elevation.scss';
-  @import '../../styles/size.scss';
+  @import '../../styles/fonts/size.scss';
 
   @include apply-mood;
 

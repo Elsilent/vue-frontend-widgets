@@ -78,7 +78,7 @@ component.menu-item(
   Icon.chevron(
     v-if='fullWidth && withSublevel',
     :elevation='itemElevation',
-    size='large-3',
+    size='small-2',
     value='chevron-right',
   )
 </template>

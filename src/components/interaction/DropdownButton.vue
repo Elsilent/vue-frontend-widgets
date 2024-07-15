@@ -81,7 +81,7 @@ const windowClickHandler = (e: Event) => {
     Icon.chevron.no-spacing(
       v-else,
       mood="accent",
-      size='large-3',
+      size="small-2",
       value='chevron-down',
       :style="dropdownVisibility ? {transform: 'rotate(180deg)'} : ''"
     )
@@ -95,7 +95,7 @@ const windowClickHandler = (e: Event) => {
       @click="itemClickHandler(item.handler)"
     )
       Icon.chevron.no-spacing(
-        size='large-3',
+        size="small-2",
         :value="item.submenu ? 'chevron-left' : ''"
       )
       Info {{ item.name }}
@@ -110,7 +110,7 @@ const windowClickHandler = (e: Event) => {
 <style scoped lang="scss">
 @import '../../styles/colors.scss';
 @import '../../styles/radius.scss';
-@import '../../styles/fonts.scss';
+@import '../../styles/fonts/base.scss';
 @import '../../styles/spacing.scss';
 @import '../../styles/transition.scss';
 
@@ -125,6 +125,7 @@ const windowClickHandler = (e: Event) => {
   .loader,
   .chevron {
     margin-left: $padding-size-small;
+    margin-right: $padding-size-small;
     transition-duration: $transition-duration-normal;
     transition-property: background-color, border-color, opacity;
   }
@@ -152,11 +153,9 @@ const windowClickHandler = (e: Event) => {
       cursor: pointer;
       padding: $padding-size-small-2 $padding-size-normal $padding-size-small-2 0;
       display: flex;
+      align-items: center;
 
       & .chevron {
-        min-width: 21px;
-        min-height: 21px;
-        margin-left: 0;
         visibility: hidden;
       }
 

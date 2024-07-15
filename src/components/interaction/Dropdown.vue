@@ -38,8 +38,8 @@ const classes = computed(() => ({
 const iconSize = computed(
   () =>
     match<'normal' | 'small', Size>(size.value)
-      .when('small', () => 'small-3')
-      .when('normal', () => 'small-2').done!,
+      .when('small', () => 'small')
+      .when('normal', () => 'normal').done!,
 );
 
 const selectionOffset = computed(() => {
@@ -93,11 +93,7 @@ Align(
   )
     Align.item.current(vertical='center')
       Info.flex-max {{ modelValue === undefined ? '&nbsp;' : items[modelValue] }}
-      Icon(
-        :size='iconSize',
-        backend='boxicons-solid',
-        value='down-arrow',
-      )
+      Icon(:size="iconSize", value='caret-down')
     Align.dropdown-menu.no-spacing(column)
       Info.item.no-spacing(
         v-for='(item, itemCode, index) in items',
@@ -111,7 +107,7 @@ Align(
 @use 'sass:math';
 
 @import '../../styles/colors.scss';
-@import '../../styles/fonts.scss';
+@import '../../styles/fonts/base.scss';
 @import '../../styles/radius.scss';
 @import '../../styles/spacing.scss';
 @import '../../styles/transition.scss';

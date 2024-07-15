@@ -5,6 +5,8 @@ import { defineConfig } from 'vite';
 import dts from 'vite-plugin-dts';
 import vue from '@vitejs/plugin-vue';
 import ElementPlus from 'unplugin-element-plus/vite';
+import { viteStaticCopy } from 'vite-plugin-static-copy';
+import { normalizePath } from 'vite';
 
 const srcDir = resolve(__dirname, 'src');
 
@@ -65,6 +67,14 @@ export default defineConfig({
     vue(),
     ElementPlus({
       useSource: true,
+    }),
+    viteStaticCopy({
+      targets: [
+        {
+          src: normalizePath('./src/styles/fonts/fonts.css'),
+          dest: normalizePath('./'),
+        },
+      ],
     }),
   ],
   resolve: {

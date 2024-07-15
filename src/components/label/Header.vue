@@ -32,13 +32,13 @@ const classes = computed(() => ({
 
 <style lang="scss" scoped>
 @import '../../styles/colors.scss';
-@import '../../styles/fonts.scss';
+@import '../../styles/fonts/base.scss';
 
 .header {
   font-family: $font-family-normal;
 
   @import '../../styles/elevation.scss';
-  @import '../../styles/size.scss';
+  @import '../../styles/fonts/size.scss';
 
   &.important {
     font-weight: 700;

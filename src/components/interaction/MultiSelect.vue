@@ -221,11 +221,7 @@ Align.multiselect-container(
         @focus='activate()'
         :disabled='disabled',
       )
-      Icon(
-        backend='boxicons-solid',
-        size='small-2',
-        value='down-arrow',
-      )
+      Icon(value='caret-down')
     Align.dropdown-menu.no-spacing(column)
       Info.item(
         v-if="showAllItemsItem",
@@ -245,7 +241,7 @@ Align.multiselect-container(
 @use 'sass:math';
 
 @import '../../styles/colors.scss';
-@import '../../styles/fonts.scss';
+@import '../../styles/fonts/base.scss';
 @import '../../styles/radius.scss';
 @import '../../styles/spacing.scss';
 @import '../../styles/transition.scss';

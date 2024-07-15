@@ -1394,7 +1394,7 @@ if (request) {
       Button(
         v-if="showInlineFilters",
         @click="() => toggleInlineFilters()",
-        :icon="displayInlineFilters ? 'trash' : 'filter-alt'",
+        :icon="displayInlineFilters ? 'trash-can' : 'filter'",
         mood='positive',
       )
     Table(

@@ -157,7 +157,7 @@ Align.date-range-picker(
   )
   Button.no-spacing(
     :disabled='disabled',
-    icon='calendar',
+    icon='calendar-days',
     mood='inactive',
     tabindex="-1",
   )
