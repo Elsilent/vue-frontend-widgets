@@ -12,6 +12,7 @@ withDefaults(
     label: string;
     loading: boolean;
     disabled: boolean;
+    icon?: typeof Icon;
   }>(),
   {
     loading: false,
@@ -98,6 +99,12 @@ const windowClickHandler = (e: Event) => {
         size="small-2",
         :value="item.submenu ? 'chevron-left' : ''"
       )
+      Icon.itemIcon.no-spacing(
+        size="large-4",
+        v-if="item.icon"
+        :value="item.icon.value"
+        :backend="item.icon.backend"
+      )
       Info {{ item.name }}
       Align.exportBtn-subMenu( column, v-if="item.submenu")
         .exportBtn-subMenu_item(
@@ -119,15 +126,22 @@ const windowClickHandler = (e: Event) => {
 
   &:deep(.button) {
     padding-left: $padding-size-large;
-    padding-right: $padding-size-small-3;
+    padding-right: $padding-size-menu-normal;
+    min-width: 100px;
+    display: flex;
+    justify-content: space-between;
+    .info-text {
+      margin-right: $padding-size-small-2;
+    }
   }
 
   .loader,
   .chevron {
-    margin-left: $padding-size-small;
-    margin-right: $padding-size-small;
     transition-duration: $transition-duration-normal;
     transition-property: background-color, border-color, opacity;
+  }
+  .itemIcon {
+    margin-right: $padding-size-small-2;
   }
   &:hover,
   &:active {
@@ -151,12 +165,15 @@ const windowClickHandler = (e: Event) => {
 
     &_item {
       cursor: pointer;
-      padding: $padding-size-small-2 $padding-size-normal $padding-size-small-2 0;
+      padding: $padding-size-small-2 $padding-size-normal $padding-size-small-2
+        $padding-size-menu-small-2;
       display: flex;
       align-items: center;
 
       & .chevron {
         visibility: hidden;
+        margin-right: $padding-size-small-2;
+        min-width: $padding-size-menu-small-2;
       }
 
       & .exportBtn-subMenu {
