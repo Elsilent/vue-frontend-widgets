@@ -1,0 +1,12 @@
+@import './colors.scss';
+@import './radius.scss';
+
+@mixin scrollbar {
+  overflow-y: hidden;
+  scrollbar-gutter: stable;
+
+  &:hover {
+    overflow-y: auto;
+  }
+
+}

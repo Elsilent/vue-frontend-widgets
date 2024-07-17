@@ -1,0 +1,160 @@
+{
+  "name": "vue-frontend-widgets",
+  "type": "module",
+  "exports": {
+    "./src/*": "./src/*",
+    "./style.css": "./dist/style.css",
+    "./fonts.css": "./dist/fonts.css",
+    "./styles/*.scss": "./src/styles/*.scss",
+    "./container": {
+      "types": "./dist/container.d.ts",
+      "import": "./dist/container.js",
+      "require": "./dist/container.cjs"
+    },
+    "./image": {
+      "types": "./dist/image.d.ts",
+      "import": "./dist/image.js",
+      "require": "./dist/image.cjs"
+    },
+    "./interaction": {
+      "types": "./dist/interaction.d.ts",
+      "import": "./dist/interaction.js",
+      "require": "./dist/interaction.cjs"
+    },
+    "./label": {
+      "types": "./dist/label.d.ts",
+      "import": "./dist/label.js",
+      "require": "./dist/label.cjs"
+    },
+    "./layout": {
+      "types": "./dist/layout.d.ts",
+      "import": "./dist/layout.js",
+      "require": "./dist/layout.cjs"
+    },
+    "./marker": {
+      "types": "./dist/marker.d.ts",
+      "import": "./dist/marker.js",
+      "require": "./dist/marker.cjs"
+    },
+    "./view": {
+      "types": "./dist/view.d.ts",
+      "import": "./dist/view.js",
+      "require": "./dist/view.cjs"
+    },
+    "./utils/currency": {
+      "types": "./dist/utils/currency.d.ts",
+      "import": "./dist/utils/currency.js",
+      "require": "./dist/utils/currency.cjs"
+    },
+    "./utils/date": {
+      "types": "./dist/utils/date.d.ts",
+      "import": "./dist/utils/date.js",
+      "require": "./dist/utils/date.cjs"
+    },
+    "./utils/error": {
+      "types": "./dist/utils/error.d.ts",
+      "import": "./dist/utils/error.js",
+      "require": "./dist/utils/error.cjs"
+    },
+    "./utils/format": {
+      "types": "./dist/utils/format.d.ts",
+      "import": "./dist/utils/format.js",
+      "require": "./dist/utils/format.cjs"
+    },
+    "./utils/layout_header": {
+      "types": "./dist/utils/layout_header.d.ts",
+      "import": "./dist/utils/layout_header.js",
+      "require": "./dist/utils/layout_header.cjs"
+    },
+    "./utils/line_bar_chart": {
+      "types": "./dist/utils/line_bar_chart.d.ts",
+      "import": "./dist/utils/line_bar_chart.js",
+      "require": "./dist/utils/line_bar_chart.cjs"
+    },
+    "./utils/match": {
+      "types": "./dist/utils/match.d.ts",
+      "import": "./dist/utils/match.js",
+      "require": "./dist/utils/match.cjs"
+    },
+    "./utils/menu": {
+      "types": "./dist/utils/menu.d.ts",
+      "import": "./dist/utils/menu.js",
+      "require": "./dist/utils/menu.cjs"
+    },
+    "./utils/mood": {
+      "types": "./dist/utils/mood.d.ts",
+      "import": "./dist/utils/mood.js",
+      "require": "./dist/utils/mood.cjs"
+    },
+    "./utils/sort": {
+      "types": "./dist/utils/sort.d.ts",
+      "import": "./dist/utils/sort.js",
+      "require": "./dist/utils/sort.cjs"
+    },
+    "./utils/table": {
+      "types": "./dist/utils/table.d.ts",
+      "import": "./dist/utils/table.js",
+      "require": "./dist/utils/table.cjs"
+    },
+    "./utils/theme": {
+      "types": "./dist/utils/theme.d.ts",
+      "import": "./dist/utils/theme.js",
+      "require": "./dist/utils/theme.cjs"
+    }
+  },
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "vite",
+    "build": "run-p type-check build-only",
+    "preview": "vite preview",
+    "test:unit": "vitest",
+    "build-only": "vite build",
+    "type-check": "vue-tsc --noEmit -p tsconfig.vitest.json --composite false",
+    "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
+    "format": "prettier --write src/"
+  },
+  "dependencies": {
+    "@fontsource/open-sans": "5.0.28",
+    "@fortawesome/fontawesome-free": "6.5.2",
+    "axios": "^1.6.1",
+    "element-plus": "^2.7.3",
+    "flag-icons": "6.7.0",
+    "luxon": "^3.3.0",
+    "numeral": "^2.0.6",
+    "vite-plugin-dts": "^3.6.3",
+    "vue": "^3.3.4",
+    "vue-router": "^4.2.5"
+  },
+  "devDependencies": {
+    "@rushstack/eslint-patch": "^1.2.0",
+    "@tsconfig/node18": "^2.0.1",
+    "@types/jsdom": "^21.1.1",
+    "@types/luxon": "^3.3.0",
+    "@types/node": "^18.16.17",
+    "@types/numeral": "^2.0.2",
+    "@vitejs/plugin-vue": "^4.2.3",
+    "@volar/vue-language-plugin-pug": "^1.6.5",
+    "@vue/eslint-config-prettier": "^7.1.0",
+    "@vue/eslint-config-typescript": "^11.0.3",
+    "@vue/language-plugin-pug": "^1.8.1",
+    "@vue/test-utils": "^2.3.2",
+    "@vue/tsconfig": "^0.4.0",
+    "eslint": "^8.39.0",
+    "eslint-plugin-vue": "^9.11.0",
+    "jsdom": "^22.1.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^2.8.8",
+    "pug": "^3.0.2",
+    "sass": "^1.63.4",
+    "typescript": "~5.0.4",
+    "unplugin-element-plus": "^0.8.0",
+    "vite": "^4.3.9",
+    "vite-plugin-static-copy": "1.0.6",
+    "vitest": "^0.32.0",
+    "vue-tsc": "^1.6.5"
+  },
+  "resolutions": {
+    "@vue/*/braces": "3.0.3"
+  }
+}
