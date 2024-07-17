@@ -39,7 +39,7 @@ const classes = computed(() => ({
 @import '../../styles/transition.scss';
 
 .badge {
-  @import '../../styles/size.scss';
+  @import '../../styles/fonts/size.scss';
 
   border-radius: $border-radius-round;
   border-style: solid;

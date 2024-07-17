@@ -12,8 +12,8 @@ const props = withDefaults(
     source?: string;
   }>(),
   {
-    icon: 'user-circle',
-    iconBackend: 'boxicons',
+    icon: 'circle-user',
+    iconBackend: 'regular',
   },
 );
 
@@ -40,7 +40,7 @@ const { icon, iconBackend, label, source } = toRefs(props);
 
 <style lang="scss" scoped>
 @import '../../styles/colors.scss';
-@import '../../styles/fonts.scss';
+@import '../../styles/fonts/base.scss';
 @import '../../styles/spacing.scss';
 @import '../../styles/transition.scss';
 

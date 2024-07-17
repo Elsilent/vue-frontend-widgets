@@ -12,6 +12,7 @@ withDefaults(
     label: string;
     loading: boolean;
     disabled: boolean;
+    icon?: typeof Icon;
   }>(),
   {
     loading: false,
@@ -81,7 +82,7 @@ const windowClickHandler = (e: Event) => {
     Icon.chevron.no-spacing(
       v-else,
       mood="accent",
-      size='large-3',
+      size="small-2",
       value='chevron-down',
       :style="dropdownVisibility ? {transform: 'rotate(180deg)'} : ''"
     )
@@ -95,8 +96,14 @@ const windowClickHandler = (e: Event) => {
       @click="itemClickHandler(item.handler)"
     )
       Icon.chevron.no-spacing(
-        size='large-3',
+        size="small-2",
         :value="item.submenu ? 'chevron-left' : ''"
+      )
+      Icon.itemIcon.no-spacing(
+        size="large-4",
+        v-if="item.icon"
+        :value="item.icon.value"
+        :backend="item.icon.backend"
       )
       Info {{ item.name }}
       Align.exportBtn-subMenu( column, v-if="item.submenu")
@@ -110,7 +117,7 @@ const windowClickHandler = (e: Event) => {
 <style scoped lang="scss">
 @import '../../styles/colors.scss';
 @import '../../styles/radius.scss';
-@import '../../styles/fonts.scss';
+@import '../../styles/fonts/base.scss';
 @import '../../styles/spacing.scss';
 @import '../../styles/transition.scss';
 
@@ -119,14 +126,22 @@ const windowClickHandler = (e: Event) => {
 
   &:deep(.button) {
     padding-left: $padding-size-large;
-    padding-right: $padding-size-small-3;
+    padding-right: $padding-size-menu-normal;
+    min-width: 100px;
+    display: flex;
+    justify-content: space-between;
+    .info-text {
+      margin-right: $padding-size-small-2;
+    }
   }
 
   .loader,
   .chevron {
-    margin-left: $padding-size-small;
     transition-duration: $transition-duration-normal;
     transition-property: background-color, border-color, opacity;
+  }
+  .itemIcon {
+    margin-right: $padding-size-small-2;
   }
   &:hover,
   &:active {
@@ -150,14 +165,15 @@ const windowClickHandler = (e: Event) => {
 
     &_item {
       cursor: pointer;
-      padding: $padding-size-small-2 $padding-size-normal $padding-size-small-2 0;
+      padding: $padding-size-small-2 $padding-size-normal $padding-size-small-2
+        $padding-size-menu-small-2;
       display: flex;
+      align-items: center;
 
       & .chevron {
-        min-width: 21px;
-        min-height: 21px;
-        margin-left: 0;
         visibility: hidden;
+        margin-right: $padding-size-small-2;
+        min-width: $padding-size-menu-small-2;
       }
 
       & .exportBtn-subMenu {

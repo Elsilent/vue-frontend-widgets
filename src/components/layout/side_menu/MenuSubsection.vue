@@ -66,7 +66,7 @@ template(v-if='label')
       v-else,
       elevation='elevated',
       size='large-3',
-      value='dots-horizontal-rounded',
+      value='ellipsis',
     )
   MenuItem(
     v-else,

@@ -90,7 +90,7 @@ onUnmounted(() => {
     Icon(
       :value="open ? 'chevron-up' : 'chevron-down'",
       mood='important-alt',
-      size='large-2',
+      size="small-2",
     )
   BodyPopover(
     ref='popover',

@@ -59,7 +59,7 @@ label.toggle(
 </template>
 
 <style lang="scss" scoped>
-@import '../../styles/fonts.scss';
+@import '../../styles/fonts/base.scss';
 @import '../../styles/mood.scss';
 @import '../../styles/radius.scss';
 @import '../../styles/spacing.scss';

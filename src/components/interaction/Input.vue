@@ -64,7 +64,7 @@ input.input(
 
 <style lang="scss" scoped>
 @import '../../styles/colors.scss';
-@import '../../styles/fonts.scss';
+@import '../../styles/fonts/base.scss';
 @import '../../styles/radius.scss';
 @import '../../styles/spacing.scss';
 @import '../../styles/transition.scss';

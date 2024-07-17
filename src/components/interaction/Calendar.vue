@@ -268,7 +268,7 @@ Align.calendar(column)
       icon='chevron-left',
       mood='neutral',
       outline,
-      size='large-4',
+      size="small-2",
     )
     Dropdown.flex-max.spacing-small(
       @update:modelValue='(index) => updateMonth(index)',
@@ -291,7 +291,7 @@ Align.calendar(column)
       icon='chevron-right',
       mood='neutral',
       outline,
-      size='large-4',
+      size="small-2",
     )
   Align.calendar-grid-container.flex-max(horizontal='center', vertical='center')
     Grid.calendar-grid.no-spacing(:columns='7')
@@ -335,6 +335,9 @@ Align.calendar(column)
         &.mood-border-neutral {
           @include apply-color(background-color, background-lowered);
         }
+      }
+      &.month-picker {
+        padding: $padding-size-menu-small-2;
       }
     }
   }

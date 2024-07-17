@@ -1,5 +1,5 @@
-import { defineComponent as l, toRefs as u, computed as c, openBlock as _, createElementBlock as m, normalizeClass as f, createVNode as p, unref as t, withCtx as i, renderSlot as v } from "vue";
-import { I as B } from "./Info-1836ec0c.js";
+import { defineComponent as l, toRefs as c, computed as u, openBlock as _, createElementBlock as m, normalizeClass as f, createVNode as p, unref as t, withCtx as i, renderSlot as v } from "vue";
+import { I as B } from "./Info-38a17291.js";
 import { _ as g } from "./_plugin-vue_export-helper-dad06003.js";
 const x = /* @__PURE__ */ l({
   __name: "Badge",
@@ -9,7 +9,7 @@ const x = /* @__PURE__ */ l({
     size: { default: "normal" }
   },
   setup(a) {
-    const s = a, { mood: e, outline: o, size: d } = u(s), n = c(() => ({
+    const s = a, { mood: e, outline: o, size: d } = c(s), n = u(() => ({
       [`mood-background-${e.value}`]: !o.value,
       [`mood-border-${e.value}`]: !0,
       [`size-${d.value}`]: !0
@@ -28,7 +28,7 @@ const x = /* @__PURE__ */ l({
     ], 2));
   }
 });
-const k = /* @__PURE__ */ g(x, [["__scopeId", "data-v-341e23f3"]]);
+const k = /* @__PURE__ */ g(x, [["__scopeId", "data-v-197f8c36"]]);
 export {
   k as B
 };

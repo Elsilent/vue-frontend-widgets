@@ -54,6 +54,7 @@ Align.theme-toggle
   Button(
     @click='() => toggleTheme()',
     :icon='themeIcon',
+    iconBackend="regular"
     :mood='themeMood',
     outline,
     size='large-2',

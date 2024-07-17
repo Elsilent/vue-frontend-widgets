@@ -16,7 +16,7 @@ const props = withDefaults(
     value: String;
   }>(),
   {
-    backend: 'boxicons',
+    backend: 'solid',
     elevation: 'normal',
     size: 'normal',
   },
@@ -27,9 +27,9 @@ const { backend, elevation, mood, size, value } = toRefs(props);
 const iconClasses = computed(
   () =>
     match<IconBackend, Record<string, boolean>>(backend.value)
-      .when('boxicons', () => ({ bx: true, [`bx-${value.value}`]: true }))
-      .when('boxicons-logo', () => ({ bx: true, [`bxl-${value.value}`]: true }))
-      .when('boxicons-solid', () => ({ bx: true, [`bxs-${value.value}`]: true }))
+      .when('solid', () => ({ 'fa-solid': true, [`fa-${value.value}`]: true }))
+      .when('regular', () => ({ 'fa-regular': true, [`fa-${value.value}`]: true }))
+      .when('brands', () => ({ 'fa-brands': true, [`fa-${value.value}`]: true }))
       .when('flag-icons', () => ({ fi: true, [`fi-${value.value}`]: true }))
       .when('flag-icons-square', () => ({ fi: true, fis: true, [`fi-${value.value}`]: true }))
       .or((backend) => {
@@ -50,13 +50,11 @@ i.icon(:class='classes')
 </template>
 
 <style lang="scss" scoped>
-@import 'boxicons/css/boxicons.css';
-@import 'flag-icons/css/flag-icons.css';
 @import '../../styles/mood.scss';
 
 .icon {
   @import '../../styles/elevation.scss';
-  @import '../../styles/size.scss';
+  @import '../../styles/fonts/size.scss';
 
   @include apply-mood;
 

@@ -44,8 +44,8 @@ const difference = computed<Difference>(() => {
 
 const icon = computed(() => {
   const equalIcon = 'minus';
-  const greaterIcon = 'up-arrow-alt';
-  const lessIcon = 'down-arrow-alt';
+  const greaterIcon = 'arrow-up';
+  const lessIcon = 'arrow-down';
 
   switch (difference.value) {
     case 'equal':
@@ -113,6 +113,7 @@ Card.kpi-card(:class='classes')
       Icon(
         :mood='mood',
         :value='icon',
+        size="small"
       )
       Info(
         :mood='mood',

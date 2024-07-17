@@ -271,13 +271,12 @@ Teleport(to="#app > .app-container")
                         :placeholder="filterLabel",
                     )
                     Icon.no-spacing(
-                        value="search-alt-2",
+                        value="magnifying-glass",
                     )
                 Align.close-container.flex-max.no-spacing(horizontal="right")
                     Icon.close(
                         @click="() => hide(true)",
-                        size="large-3",
-                        value="x",
+                        value="xmark",
                     )
             Align.body.flex-max.no-spacing
                 template(v-if="currentGroup !== undefined && currentGroupColumns !== undefined")
@@ -333,14 +332,15 @@ Teleport(to="#app > .app-container")
                                         template(v-else)
                                             Icon.move(
                                                 @mousedown="(e) => whenDragStarted(e, columnKey)",
-                                                value="dots-vertical-rounded",
+                                                value="ellipsis-vertical",
                                             )
                                             Info.flex-max.no-spacing(
                                                 size="small",
                                             ) {{ columns[columnKey].label }}
                                             Icon.no-spacing.remove(
                                                 @click="() => removeColumn(columnKey)",
-                                                value="trash",
+                                                value="trash-can",
+                                                backend="regular"
                                             )
                                     .separator-bottom.no-spacing(
                                         :class="{ 'place-after': dragPlaceAfterIndex !== undefined && draggedColumnKey !== undefined && columnKey === currentValue[dragPlaceAfterIndex] && dragPlaceAfterIndex >= currentValue.indexOf(draggedColumnKey) }",
@@ -365,7 +365,7 @@ Teleport(to="#app > .app-container")
 @use 'sass:math';
 
 @import '../../styles/colors.scss';
-@import '../../styles/fonts.scss';
+@import '../../styles/fonts/base.scss';
 @import '../../styles/radius.scss';
 @import '../../styles/shadows.scss';
 @import '../../styles/spacing.scss';
