@@ -10,6 +10,8 @@ const isOpened = ref(false);
 <template lang="pug">
 ElSelect(
   size="large"
+  tag-type="primary"
+  tag-effect="dark"
   :class="{opened: isOpened}"
   :teleported="false"
   :suffix-icon="SelectSuffixIcon"
@@ -51,6 +53,10 @@ ElSelect(
     :deep(.el-select__popper .el-popper__arrow::before) {
       display: none;
     }
+  }
+  :deep(.el-tag--dark.el-tag--primary) {
+    --el-tag-bg-color: #{map.get(map.get($themes, 'light'), 'background-accent')};
+    --el-tag-border-color: #{map.get(map.get($themes, 'light'), 'border-accent')};
   }
 }
 </style>
