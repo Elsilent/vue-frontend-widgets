@@ -57,4 +57,12 @@
     'border-radius': $border-radius-normal,
     'title-font-size': $font-size-normal,
   ),
+
+// Dialog
+  $dialog: (
+    'title-font-size': $font-size-large-4,
+    'content-font-size': $font-size-normal,
+    'padding-primary': 0,
+    'border-radius': $border-radius-normal,
+  ),
 );
