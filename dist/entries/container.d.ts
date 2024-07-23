@@ -9,4 +9,5 @@ import ScrollableArea from '../components/container/ScrollableArea.vue';
 import SimpleTable from '../components/container/SimpleTable.vue';
 import Table from '../components/container/Table.vue';
 import Tooltip from '../components/container/Tooltip.vue';
-export { Align, Badge, Card, Form, Grid, Popover, Scrollable, ScrollableArea, SimpleTable, Table, Tooltip, };
+import Dialog from '../components/container/Dialog/Dialog.vue';
+export { Align, Badge, Card, Form, Grid, Popover, Scrollable, ScrollableArea, SimpleTable, Table, Tooltip, Dialog, };
