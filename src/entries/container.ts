@@ -9,6 +9,7 @@ import ScrollableArea from '../components/container/ScrollableArea.vue';
 import SimpleTable from '../components/container/SimpleTable.vue';
 import Table from '../components/container/Table.vue';
 import Tooltip from '../components/container/Tooltip.vue';
+import Dialog from '../components/container/Dialog/Dialog.vue';
 
 export {
   Align,
@@ -22,4 +23,5 @@ export {
   SimpleTable,
   Table,
   Tooltip,
+  Dialog,
 };
