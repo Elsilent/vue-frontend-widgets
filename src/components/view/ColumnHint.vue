@@ -1,32 +1,39 @@
 <script lang="ts" setup>
 import { toRefs, ref } from 'vue';
 import Tooltip from '../container/Tooltip.vue';
+import Icon from '../image/Icon.vue';
+import type { IconBackend } from '../../utils/enum/icon_backend';
 
 const props = withDefaults(
   defineProps<{
     description?: string;
     title?: string;
     visible?: boolean;
+    iconValue?: string;
+    iconBackend?: IconBackend;
   }>(),
   {
     visible: false,
+    iconValue: 'circle-question',
+    iconBackend: 'solid',
   },
 );
+const { description, title, visible, iconValue, iconBackend } = toRefs(props);
 
-const { description, title, visible } = toRefs(props);
+const manualVisible = ref(false);
 const iconRef = ref<HTMLElement | undefined>();
 </script>
 
 <template lang="pug">
 .column-hint
-  i.la.la-question-circle(ref="iconRef")
+  Icon(:value="iconValue" :backend="iconBackend" ref="iconRef" @mouseover="manualVisible = true" @mouseout="manualVisible = false")
   Tooltip(
     :title="title"
     :content="description"
     :show-arrow="false"
     :persistent="false"
     :offset="0"
-    :visible="visible"
+    :visible="manualVisible || visible"
     :virtual-ref="iconRef?.closest('.cell')"
     virtual-triggering
     width="15rem"

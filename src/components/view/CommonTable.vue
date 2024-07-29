@@ -1432,6 +1432,11 @@ if (request) {
       template(#totalRowNumber)
         Info.total-label(contrast, size="small") #
       template(#column="{ columnKey, isGhost }")
+        slot(
+          name="columnAdditional",
+          :columnKey="columnKey",
+          :isGhost="isGhost",
+        )
         .d-flex.align-items-center(
           @mouseover="() => setColumnHintVisible(columnKey, true)",
           @mouseleave="() => setColumnHintVisible(columnKey, false)",
