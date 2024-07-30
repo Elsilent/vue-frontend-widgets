@@ -18,6 +18,7 @@ ElSelect(
   :fallback-placements="['bottom-start', 'top-start']"
   :popper-options="{modifiers: [{ name: 'offset', options: { offset: [0, 0] } }]}"
   @visible-change =" (visible) => isOpened = visible"
+  :fit-input-width="true"
 )
   slot
 </template>

@@ -2,6 +2,7 @@
 @use '../fonts/base.scss' as *;
 @use '../colors.scss' as *;
 @use '../radius.scss' as *;
+@use '../spacing.scss' as *;
 
 @forward 'element-plus/theme-chalk/src/common/var.scss' with (
 
@@ -47,6 +48,9 @@
   ),
   $select-group: (
     'font-size': $font-size-normal,
+  ),
+  $select-wrapper-padding:(
+    'default': $padding-size-menu-small-3 $padding-size-small-2,
   ),
 
 // Tooltip

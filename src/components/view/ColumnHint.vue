@@ -3,6 +3,7 @@ import { toRefs, ref } from 'vue';
 import Tooltip from '../container/Tooltip.vue';
 import Icon from '../image/Icon.vue';
 import type { IconBackend } from '../../utils/enum/icon_backend';
+import type { Elevation } from '../../utils/enum/elevation';
 
 const props = withDefaults(
   defineProps<{
@@ -11,46 +12,45 @@ const props = withDefaults(
     visible?: boolean;
     iconValue?: string;
     iconBackend?: IconBackend;
+    iconElevation?: Elevation;
   }>(),
   {
-    visible: false,
+    visible: undefined,
     iconValue: 'circle-question',
     iconBackend: 'solid',
+    iconElevation: 'normal',
   },
 );
 const { description, title, visible, iconValue, iconBackend } = toRefs(props);
 
-const manualVisible = ref(false);
-const iconRef = ref<HTMLElement | undefined>();
+const iconRef = ref<typeof Icon>();
 </script>
 
 <template lang="pug">
 .column-hint
-  Icon(:value="iconValue" :backend="iconBackend" ref="iconRef" @mouseover="manualVisible = true" @mouseout="manualVisible = false")
+  Icon(:value="iconValue" :backend="iconBackend" :elevation="iconElevation" ref="iconRef" size="small" )
   Tooltip(
     :title="title"
     :content="description"
     :show-arrow="false"
     :persistent="false"
     :offset="0"
-    :visible="manualVisible || visible"
-    :virtual-ref="iconRef?.closest('.cell')"
-    virtual-triggering
+    :virtual-ref="iconRef"
+    trigger="hover"
+    :visible="visible"
+    virtual-triggering= visible === undefined
     width="15rem"
   )
 </template>
 
 <style lang="scss" scoped>
+@import '../../styles/spacing.scss';
 .column-hint {
   cursor: pointer;
   display: flex;
   max-width: 30rem;
   padding: 0;
   text-decoration: none;
-
-  > span {
-    margin-right: 0.5rem;
-    user-select: none;
-  }
+  margin-left: $padding-size-small-4;
 }
 </style>
