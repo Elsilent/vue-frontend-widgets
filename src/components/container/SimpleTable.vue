@@ -1023,7 +1023,9 @@ defineSlots<
     position: relative;
     text-align: center;
     transition: background-color 0.3s;
-
+    &.cell-additional-header {
+      z-index: 21;
+    }
     &.column {
       @include apply-color(box-shadow, border-table, $value-prefix: 0 0 0 1px);
 

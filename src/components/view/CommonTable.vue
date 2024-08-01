@@ -21,14 +21,12 @@ import {
   mergeComparisonData,
   mergeComparisonRow,
 } from '../../utils/type/component/container/table';
-import Align from '../container/Align.vue';
 import Button from '../interaction/Button.vue';
 import CellHint from './CellHint.vue';
 import ColumnHint from './ColumnHint.vue';
 import DetailsSelector from './DetailsSelector.vue';
-import Dropdown from '../interaction/Dropdown.vue';
 import Info from '../label/Info.vue';
-import Input from '../interaction/Input.vue';
+import InputWithSelect from '../interaction/InputWithSelect.vue';
 import Link from '../interaction/Link.vue';
 import Loader from '../image/Loader.vue';
 import Pagination from './Pagination.vue';
@@ -678,28 +676,16 @@ const getInlineFilterCurrentValue = (columnKey: string) => {
 
 const getInlineFilterOperators = (columnKey: string) => inlineFilterOperators.value[columnKey];
 
-const getInlineFilterOperatorClasses = (columnKey: string) => {
+const getInlineFilterOperatorWidth = (columnKey: string) => {
   const operators = getInlineFilterOperators(columnKey);
 
   if (!operators) {
     return undefined;
   }
 
-  const sizes = ['normal', 'small'];
-
-  let maxSizeIndex = 0;
-
-  for (const operatorInfo of Object.values(operators)) {
-    const sizeIndex = sizes.indexOf(operatorInfo.size ?? 'normal');
-
-    if (sizeIndex > maxSizeIndex) {
-      maxSizeIndex = sizeIndex;
-    }
-  }
-
-  return {
-    [`size-${sizes[maxSizeIndex]}`]: true,
-  };
+  return Object.values(operators).some((operatorInfo) => operatorInfo.size === 'small')
+    ? 'small'
+    : 'normal';
 };
 
 const getInlineFilterOperatorItems = (columnKey: string): Record<string, string> => {
@@ -924,18 +910,6 @@ const onHideDetails = (row: Record<string, any>) => {
   });
 };
 
-const onInlineFilterBlur = (event: FocusEvent, columnKey: string) => {
-  const value = (event.target! as HTMLInputElement).value;
-
-  setInlineFilter(columnKey, { value });
-};
-
-const onInlineFilterKeyUp = (event: KeyboardEvent, columnKey: string) => {
-  if (event.key === 'Enter') {
-    (event.target! as HTMLElement).blur();
-  }
-};
-
 const onShowDetails = async (kind: string, row: Record<string, any>) => {
   if (!table.value) {
     return;
@@ -993,31 +967,18 @@ const setPageSize = async (newPageSize?: number) => {
 
 const setInlineFilter = (
   columnKey: string,
-  { operator, value }: { operator?: string; value?: string },
+  { operator, value }: { operator: string; value: string },
 ) => {
-  if (!operator) {
-    operator = Object.keys(getInlineFilterOperators(columnKey))[0];
+  const needUpdate =
+    inlineFilters.value[columnKey].value !== value ||
+    (inlineFilters.value[columnKey].operator !== operator && inlineFilters.value[columnKey].value);
+
+  inlineFilters.value[columnKey] = { operator, value };
+
+  if (needUpdate) {
+    fetchedAllRows.value = false;
+    setPageNumber(0);
   }
-
-  if (!operator) {
-    // Inline filters are deactivated for the column
-    return;
-  }
-
-  const filter = {
-    ...inlineFilters.value[columnKey],
-    operator,
-  };
-
-  if (value !== undefined) {
-    filter.value = value;
-  }
-
-  inlineFilters.value[columnKey] = filter;
-
-  fetchedAllRows.value = false;
-
-  setPageNumber(0);
 };
 
 /**
@@ -1432,6 +1393,11 @@ if (request) {
       template(#totalRowNumber)
         Info.total-label(contrast, size="small") #
       template(#column="{ columnKey, isGhost }")
+        slot(
+          name="columnAdditional",
+          :columnKey="columnKey",
+          :isGhost="isGhost",
+        )
         .d-flex.align-items-center(
           @mouseover="() => setColumnHintVisible(columnKey, true)",
           @mouseleave="() => setColumnHintVisible(columnKey, false)",
@@ -1442,6 +1408,7 @@ if (request) {
             :description="columns[columnKey].tooltipContent",
             :title="columns[columnKey].tooltipTitle",
             :visible="columnHintsVisible[columnKey]",
+            icon-backend="regular"
           )
       template(v-if="comparisonColumns", #secondaryColumn="{ subcolumnKey }")
         Info.column-label(
@@ -1526,22 +1493,15 @@ if (request) {
             :title="detailsSelectorTitle",
           )
       template(#additionalHeader="{ additionalHeader, columnKey }")
-        Align.inline-filter(
-          v-if="additionalHeader === 'inline_filters' && hasInlineFilters(columnKey)",
-          :class="getInlineFilterOperatorClasses(columnKey)",
-        )
-          Dropdown.inline-filter-dropdown(
-            @update:modelValue="(operator) => setInlineFilter(columnKey, { operator: operator.toString() })",
-            :items="getInlineFilterOperatorItems(columnKey)",
-            :modelValue="getInlineFilterCurrentOperatorItem(columnKey)",
-            size='small',
-          )
-          Input.flex-grow-1.inline-filter-input.no-spacing(
-            @blur="(event) => onInlineFilterBlur(event, columnKey)",
-            @keyup="(event) => onInlineFilterKeyUp(event, columnKey)"
-            :modelValue="getInlineFilterCurrentValue(columnKey)",
+        template(v-if="additionalHeader === 'inline_filters' && hasInlineFilters(columnKey)")
+          InputWithSelect(
+            :value="getInlineFilterCurrentValue(columnKey)",
+            @update:value="(value) => setInlineFilter(columnKey, value)",
             :type="getInlineFilterValueType(columnKey)",
-            size='small',
+            :select="getInlineFilterCurrentOperatorItem(columnKey)"
+            @update:select="(value) => setInlineFilter(columnKey, value)"
+            :items="getInlineFilterOperatorItems(columnKey)",
+            :width="getInlineFilterOperatorWidth(columnKey)"
           )
       template(#total="{ columnKey, subcolumnKey, values }")
         slot(
@@ -1640,27 +1600,6 @@ if (request) {
 
   cursor: pointer;
   margin-left: 0.5rem;
-}
-
-.inline-filter {
-  &.size-small > .inline-filter-dropdown {
-    min-width: 40px;
-  }
-
-  &.size-normal > .inline-filter-dropdown {
-    min-width: 100px;
-  }
-
-  .inline-filter-dropdown:deep(.dropdown) {
-    border-bottom-right-radius: 0;
-    border-top-right-radius: 0;
-  }
-
-  .inline-filter-input {
-    border-bottom-left-radius: 0;
-    border-left-width: 0;
-    border-top-left-radius: 0;
-  }
 }
 
 .loading-overlay {
