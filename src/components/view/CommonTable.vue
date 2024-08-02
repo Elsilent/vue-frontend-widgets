@@ -532,7 +532,9 @@ const formatValue = (value: any, type: ColumnType, format?: 'difference'): strin
         const formattedValue =
           clientCurrencyDecimal.value === 0
             ? 1
-            : parseFloat('0.' + '0'.repeat(clientCurrencyDecimal.value - 1) + '1');
+            : numeral(parseFloat('0.' + '0'.repeat(clientCurrencyDecimal.value - 1) + '1')).format(
+                '0.0' + clientCurrencyDecimal.value,
+              );
 
         return clientCurrencySymbolPrefix.value
           ? `< ${clientCurrencySymbol.value} ${formattedValue}`
