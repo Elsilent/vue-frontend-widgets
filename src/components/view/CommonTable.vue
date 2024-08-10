@@ -775,12 +775,11 @@ const getRowTrendUrl = (row: Record<string, any>, urlKey?: string) => {
   }
 
   const url = new URL(
-    urlKey ? (trendUrl.value! as Record<string, string>)[urlKey] : (trendUrl.value! as string),
+    urlKey ? (trendUrl!.value as Record<string, string>)[urlKey] : (trendUrl!.value as string),
     location.origin,
   );
 
-  url.searchParams.set(primaryColumnAlias?.value ?? primaryColumn.value, row[primaryColumn.value]);
-
+  url.searchParams.set(primaryColumnAlias?.value || primaryColumn.value, row[primaryColumn.value]);
   return url.toString();
 };
 
@@ -1437,7 +1436,7 @@ if (request) {
           :name="'row-' + columnKey",
         )
           TrendChart(
-            v-if="subindex === undefined && columnKey === 'trend'",
+            v-if="subindex === undefined && columnKey === 'trend' && trendUrl",
             :class="getValueClass(columnKey, value, row.rowInfo.detailable)",
             :formatter="(value) => formatValue(value, 'int')",
             :title="trendChartTitle",
@@ -1529,10 +1528,10 @@ if (request) {
             )
             Info.total-label(
               v-else-if="subcolumnKey",
-              :mood="differenceMood(totalRow[columnKey][subcolumnKey], columnKey, subcolumnKey)",
+              :mood="differenceMood(totalRow[columnKey]?.[subcolumnKey], columnKey, subcolumnKey)",
               contrast,
               size="small",
-            ) {{ getRowFormattedValue(totalRow[columnKey][subcolumnKey], columnKey, subcolumnKey) }}
+            ) {{ getRowFormattedValue(totalRow[columnKey]?.[subcolumnKey], columnKey, subcolumnKey) }}
             Info.total-label(
               v-else,
               :mood="differenceMood(totalRow[columnKey], columnKey, subcolumnKey)",
