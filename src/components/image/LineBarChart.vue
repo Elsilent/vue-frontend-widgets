@@ -66,6 +66,13 @@ const {
 
 const lineLabels = computed(() => Object.values(values.value).map((line) => Object.keys(line)));
 
+const maxLineLabels = computed(() => {
+  return lineLabels.value.reduce(
+    (maxArray, currentArray) => (currentArray.length > maxArray.length ? currentArray : maxArray),
+    [],
+  );
+});
+
 const axisLabels = computed(() => {
   const axisLineCount = valueKeys.value.filter((key) => styles.value[key] === 'line').length;
 
@@ -270,19 +277,12 @@ const chartPath = (
 
 const linesStyle = computed(() => {
   const barCount = Object.keys(barValues.value).length;
-
-  const barSize = 100 / barCount;
-
-  const barOffset = `${barSize / 2}%`;
-
-  if (barCount) {
-    return {
-      left: barOffset,
-      right: barOffset,
-    };
-  } else {
-    return { width: '100%' };
-  }
+  const count = barCount || totalValueCount.value;
+  const offset = `${100 / count / 2}%`;
+  return {
+    left: offset,
+    right: offset,
+  };
 });
 
 const xAxisLabelsHeight = ref<number | undefined>();
@@ -314,30 +314,25 @@ const updateXAxisLabelsStyle = () => {
   } else {
     // Treat full label width as a hypot, chart width as one of the sides
     const hypot = totalValueCount.value * maxWidth;
-    xAxisLabelRotate.value = (Math.cos(chartContents.value.clientWidth / hypot) * 180) / Math.PI;
+    xAxisLabelRotate.value = Math.acos(chartContents.value.clientWidth / hypot) * 100;
   }
-
-  const rotateRad = (xAxisLabelRotate.value * Math.PI) / 180;
-
-  xAxisLabelsHeight.value = maxWidth * Math.sin(rotateRad) + maxHeight * Math.cos(rotateRad);
+  xAxisLabelsHeight.value = maxWidth * Math.cos((90 - xAxisLabelRotate.value) / 100);
 };
 
 const lineChartStyle = computed(() => ({
+  // 3 rem equals padding + margin
   'margin-bottom':
-    xAxisLabelsHeight.value === undefined ? undefined : `${xAxisLabelsHeight.value}px`,
+    xAxisLabelsHeight.value === undefined ? undefined : `calc(${xAxisLabelsHeight.value}px - 3rem)`,
 }));
 
 const xAxisLabelsStyle = computed(() => {
   const barCount = Object.keys(barValues.value).length;
-
-  const barSize = 100 / barCount;
-
-  const barOffset = `${barSize / 2}%`;
-
+  const count = barCount || totalValueCount.value;
+  const offset = `${100 / count / 2}%`;
   return {
     height: xAxisLabelsHeight.value === undefined ? undefined : `${xAxisLabelsHeight.value}px`,
-    'margin-left': barOffset,
-    'margin-right': barOffset,
+    'margin-left': offset,
+    'margin-right': offset,
   };
 });
 
@@ -407,7 +402,12 @@ const getMoodComponents = (mood: { mood: Mood } | { chart: number }) => {
 };
 
 const getPointLeftPosition = (key: number | symbol | string) => {
-  const index = Object.keys(Object.values(values.value)[0]).indexOf(key.toString());
+  let index;
+  if (typeof key !== 'symbol' && !isNaN(+key)) {
+    index = +key;
+  } else {
+    index = Object.keys(Object.values(values.value)[0]).indexOf(key.toString());
+  }
   return totalValueCount.value === 1 ? 50 : (index * 100) / (totalValueCount.value - 1);
 };
 
@@ -530,7 +530,7 @@ onUnmounted(() => {
       )
         Info {{ barFormatter(value) }}
     .chart-popovers.no-spacing(:style='linesStyle')
-      template(v-for="(key, index) in lineLabels[0]")
+      template(v-for="(key, index) in maxLineLabels")
         .chart-popover-separator.no-spacing(
           v-if="index > 0",
         )
@@ -584,7 +584,7 @@ onUnmounted(() => {
             )
     .chart-hover-sections.no-spacing
       .chart-hover-section.no-spacing(
-        v-for="key in lineLabels[0]",
+        v-for="key in maxLineLabels",
         @mouseover="setHover(key, true)",
         @mouseout="setHover(key, false)",
       )
@@ -593,7 +593,7 @@ onUnmounted(() => {
       :style='xAxisLabelsStyle',
     )
       .x-axis-label-group-container.no-spacing(
-        v-for="(key, index) in lineLabels[0]",
+        v-for="(key, index) in maxLineLabels",
         :class="{ active: hovers.includes(key) }",
         :style="{ left: `${getPointLeftPosition(key)}%` }",
       )
@@ -606,7 +606,7 @@ onUnmounted(() => {
             template(v-for="lineIndex in lineCount")
               Info.x-axis-label.no-spacing(
                 v-if="!activeLines || activeLines.includes(valueKeys[lineIndex - 1])",
-                :class="{ ...getMoodClasses(valueKeys[lineIndex - 1]), 'has-label': index <= lineLabels[lineIndex - 1].length }",
+                :class="{ ...getMoodClasses(valueKeys[lineIndex - 1]), 'has-label': index < lineLabels[lineIndex - 1].length }",
                 important,
                 size="small",
               )
