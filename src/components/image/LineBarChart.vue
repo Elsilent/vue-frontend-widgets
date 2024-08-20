@@ -314,15 +314,14 @@ const updateXAxisLabelsStyle = () => {
   } else {
     // Treat full label width as a hypot, chart width as one of the sides
     const hypot = totalValueCount.value * maxWidth;
-    xAxisLabelRotate.value = Math.acos(chartContents.value.clientWidth / hypot) * 100;
+    xAxisLabelRotate.value = Math.min(Math.acos(chartContents.value.clientWidth / hypot) * 100, 90);
   }
   xAxisLabelsHeight.value = maxWidth * Math.cos((90 - xAxisLabelRotate.value) / 100);
 };
 
 const lineChartStyle = computed(() => ({
-  // 3 rem equals padding + margin
   'margin-bottom':
-    xAxisLabelsHeight.value === undefined ? undefined : `calc(${xAxisLabelsHeight.value}px - 3rem)`,
+    xAxisLabelsHeight.value === undefined ? undefined : `${xAxisLabelsHeight.value}px`,
 }));
 
 const xAxisLabelsStyle = computed(() => {
@@ -487,7 +486,7 @@ onUnmounted(() => {
 
 <template lang="pug">
 .line-chart.no-spacing(
-  :class="{ 'min-height': minHeight }",
+  :class="{ 'min-height': minHeight, 'noXAxis': noXAxisLabels}",
   :style="lineChartStyle",
 )
   .y-axis-title-container(v-if="yAxisLabels")
@@ -658,10 +657,13 @@ $-chart-colors: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 
     height: 300px;
   }
 
+  &.noXAxis > .y-axis-labels {
+    margin-bottom: 2rem;
+  }
+
   > .y-axis-labels {
     display: flex;
     flex-direction: column;
-    margin-bottom: 2rem;
     position: relative;
 
     &:nth-child(2) {
@@ -714,9 +716,12 @@ $-chart-colors: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 
     }
   }
 
+  &.noXAxis > .chart-contents {
+    margin-bottom: 2rem;
+  }
+
   > .chart-contents {
     flex: 1;
-    margin-bottom: 2rem;
     position: relative;
     box-sizing: content-box;
 
@@ -1111,6 +1116,7 @@ $-chart-colors: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 
         }
 
         &.active {
+          z-index: 1001;
           > .x-axis-label-group {
             @include apply-color(background-color, background-lowered);
             @include apply-shadow(card);
