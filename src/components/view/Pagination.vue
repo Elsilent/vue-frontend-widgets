@@ -85,7 +85,7 @@ const updatePageSize = (newPageSize: number) => {
       mood="important-alt",
     ) 1
     Info.page-separator(v-if="pageNumber > pageRadius") …
-    .page(
+    Info.page(
       v-for="pageIndex in visiblePageIndexes",
       @click="() => emit('update:pageNumber', pageIndex)",
       :class="{ current: pageIndex === pageNumber }",
@@ -124,6 +124,7 @@ const updatePageSize = (newPageSize: number) => {
     display: flex;
     height: 100%;
     padding: 0.5rem 0.75rem;
+    box-sizing: border-box;
 
     &.current {
       @include apply-color(border-color, text-important-alt);
