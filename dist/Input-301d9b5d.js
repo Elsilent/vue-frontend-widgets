@@ -148,7 +148,7 @@ const Y = ["tabindex"], Z = /* @__PURE__ */ S({
     }, 8, ["inline"]));
   }
 });
-const de = /* @__PURE__ */ h(Z, [["__scopeId", "data-v-4908a42f"]]), ee = ["disabled", "placeholder", "type", "value"], oe = /* @__PURE__ */ S({
+const de = /* @__PURE__ */ h(Z, [["__scopeId", "data-v-d012bb95"]]), ee = ["disabled", "placeholder", "type", "value"], oe = /* @__PURE__ */ S({
   __name: "Input",
   props: {
     disabled: { type: Boolean, default: !1 },
