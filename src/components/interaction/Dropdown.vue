@@ -201,7 +201,7 @@ Align(
     left: -1px;
     margin-top: -1px;
     opacity: 0;
-    overflow: hidden;
+    overflow-y: auto;
     padding-top: 1px;
     pointer-events: none;
     position: absolute;
