@@ -599,7 +599,7 @@ onUnmounted(() => {
         //- translateX is calculated by special formula, depending on angle, to place whole labels, but only under the x-axis
         .x-axis-label-group.no-spacing(
           :ref='(element) => setXAxisLabelGroup(index, element)',
-          :style="{ transform: `rotate(-${xAxisLabelRotate}deg) translateX(-${ Math.trunc(8.3 * Math.pow(xAxisLabelRotate, 0.4)) }%)` }",
+          :style="{ transform: `rotate(-${xAxisLabelRotate}deg) translateX(-${ Math.trunc(9 * Math.pow(xAxisLabelRotate, 0.4)) }%) translateY(-${xAxisLabelRotate > 70 ? 50 : 0}%)` }",
         )
           slot(name="xAxis", :valueKey="key")
             template(v-for="lineIndex in lineCount")
@@ -1134,6 +1134,7 @@ $-chart-colors: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 
           position: relative;
           transition-duration: $transition-duration-normal;
           transition-property: background-color, box-shadow;
+          transform-origin: center top;
 
           > .x-axis-label {
             @include apply-color(color, background-neutral);
