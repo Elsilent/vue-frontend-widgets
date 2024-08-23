@@ -1,11 +1,12 @@
-import { A as ko, C as Bo } from "./Icon-53e685d0.js";
-import { B as _o } from "./Badge-17fbe620.js";
-import { G as No } from "./Form-41926cc5.js";
-import { G as Ro } from "./Grid-f3d84a6a.js";
-import { P as zo } from "./Popover-2a15620c.js";
-import { S as Uo, a as Go, b as Ko, T as Vo, _ as Xo } from "./Tooltip.vue_vue_type_style_index_0_lang-405ad385.js";
+import { A as Bo, C as Io } from "./Icon-53e685d0.js";
+import { B as Oo } from "./Badge-17fbe620.js";
+import { G as $o } from "./Form-41926cc5.js";
+import { G as Yo } from "./Grid-f3d84a6a.js";
+import { P as Ho } from "./Popover-2a15620c.js";
+import { S as Go, a as Ko, b as Vo, T as Xo, _ as Po } from "./Tooltip.vue_vue_type_style_index_0_lang-31d651af.js";
 import { onMounted as te, watchEffect as ve, onBeforeUnmount as pe, isRef as ye, computed as h, watch as F, onScopeDispose as Ce, ref as D, getCurrentInstance as ne, inject as x, defineComponent as $, createVNode as H, renderSlot as E, h as be, openBlock as I, createElementBlock as X, unref as o, normalizeClass as A, normalizeStyle as le, createElementVNode as U, toDisplayString as Ee, withCtx as S, createBlock as K, resolveDynamicComponent as ge, createCommentVNode as W, nextTick as Te, useSlots as Se, provide as we, Teleport as he, Transition as Ae, withDirectives as De, mergeProps as Le, createSlots as se, vShow as Me } from "vue";
-import { i as ke, a as j, t as Be, u as q, b as ae, h as J, g as Ie, c as _e, d as Oe, r as Ne, N as P, e as Z, f as V, j as $e, k as Re, F as Ye, E as ze, _ as re, C as He, U as ie, l as Ue, m as Ge, n as Q, o as Ke, p as Ve, q as ee, s as Xe, v as Pe, w as Fe } from "./popper-d5aadcf3.js";
+import { i as ke, e as j, t as Be, u as q, g as ae, h as J, j as Ie, k as _e, r as Oe, N as P, c as Z, l as V, E as Ne, _ as re, m as $e, n as Re, o as Q, w as Ye } from "./base-0f57cfb6.js";
+import { g as ze, i as He, u as Ue, F as Ge, C as Ke, U as ie, a as Ve, b as ee, c as Xe, d as Pe, E as Fe } from "./popper-9374bdf9.js";
 import "./_plugin-vue_export-helper-dad06003.js";
 import "./utils/error.js";
 import "./match-b8889c93.js";
@@ -53,7 +54,7 @@ const We = (e, t, l, d) => {
   let s = 0, u = !1, r = "0";
   const a = () => {
     setTimeout(() => {
-      Ne(document == null ? void 0 : document.body, d.value), u && document && (document.body.style.width = r);
+      Oe(document == null ? void 0 : document.body, d.value), u && document && (document.body.style.width = r);
     }, 200);
   };
   F(e, (m) => {
@@ -61,9 +62,9 @@ const We = (e, t, l, d) => {
       a();
       return;
     }
-    u = !J(document.body, d.value), u && (r = document.body.style.width), s = Ie(l.namespace.value);
-    const c = document.documentElement.clientHeight < document.body.scrollHeight, p = _e(document.body, "overflowY");
-    s > 0 && (c || p === "scroll") && u && (document.body.style.width = `calc(100% - ${s}px)`), Oe(document.body, d.value);
+    u = !J(document.body, d.value), u && (r = document.body.style.width), s = ze(l.namespace.value);
+    const c = document.documentElement.clientHeight < document.body.scrollHeight, p = Ie(document.body, "overflowY");
+    s > 0 && (c || p === "scroll") && u && (document.body.style.width = `calc(100% - ${s}px)`), _e(document.body, d.value);
   }), Ce(() => a());
 }, ue = (e) => {
   if (!e)
@@ -139,7 +140,7 @@ const to = oo, de = Symbol("dialogInjectionKey"), ce = Z({
   center: Boolean,
   alignCenter: Boolean,
   closeIcon: {
-    type: $e
+    type: He
   },
   draggable: Boolean,
   overflow: Boolean,
@@ -163,7 +164,7 @@ const to = oo, de = Symbol("dialogInjectionKey"), ce = Z({
   props: ce,
   emits: no,
   setup(e) {
-    const t = e, { t: l } = Re(), { Close: d } = He, { dialogRef: s, headerRef: u, bodyId: r, ns: a, style: m } = x(de), { focusTrapRef: c } = x(Ye), p = h(() => [
+    const t = e, { t: l } = Ue(), { Close: d } = Ke, { dialogRef: s, headerRef: u, bodyId: r, ns: a, style: m } = x(de), { focusTrapRef: c } = x(Ge), p = h(() => [
       a.b(),
       a.is("fullscreen", t.fullscreen),
       a.is("draggable", t.draggable),
@@ -195,7 +196,7 @@ const to = oo, de = Symbol("dialogInjectionKey"), ce = Z({
           type: "button",
           onClick: w[0] || (w[0] = (_) => i.$emit("close"))
         }, [
-          H(o(ze), {
+          H(o(Ne), {
             class: A(o(a).e("close"))
           }, {
             default: S(() => [
@@ -280,16 +281,16 @@ const co = Z({
   opened: () => !0,
   close: () => !0,
   closed: () => !0,
-  [ie]: (e) => Ue(e),
+  [ie]: (e) => $e(e),
   openAutoFocus: () => !0,
   closeAutoFocus: () => !0
 }, mo = (e, t) => {
   var l;
-  const s = ne().emit, { nextZIndex: u } = Ge();
+  const s = ne().emit, { nextZIndex: u } = Ve();
   let r = "";
-  const a = Q(), m = Q(), c = D(!1), p = D(!1), y = D(!1), g = D((l = e.zIndex) != null ? l : u());
+  const a = ee(), m = ee(), c = D(!1), p = D(!1), y = D(!1), g = D((l = e.zIndex) != null ? l : u());
   let f, i;
-  const w = Ze("namespace", Ve), _ = h(() => {
+  const w = Ze("namespace", Re), _ = h(() => {
     const b = {}, B = `--${w.value}-dialog`;
     return e.fullscreen || (e.top && (b[`${B}-margin-top`] = e.top), e.width && (b[`${B}-width`] = j(e.width))), b;
   }), R = h(() => e.alignCenter ? { display: "flex" } : {});
@@ -303,10 +304,10 @@ const co = Z({
     s("close");
   }
   function N() {
-    i == null || i(), f == null || f(), e.openDelay && e.openDelay > 0 ? { stop: f } = ee(() => k(), e.openDelay) : k();
+    i == null || i(), f == null || f(), e.openDelay && e.openDelay > 0 ? { stop: f } = Q(() => k(), e.openDelay) : k();
   }
   function L() {
-    f == null || f(), i == null || i(), e.closeDelay && e.closeDelay > 0 ? { stop: i } = ee(() => n(), e.closeDelay) : n();
+    f == null || f(), i == null || i(), e.closeDelay && e.closeDelay > 0 ? { stop: i } = Q(() => n(), e.closeDelay) : n();
   }
   function M() {
     function b(B) {
@@ -338,7 +339,7 @@ const co = Z({
     e.closeOnPressEscape && M();
   }
   return F(() => e.modelValue, (b) => {
-    b ? (p.value = !1, N(), y.value = !0, g.value = Ke(e.zIndex) ? u() : g.value++, Te(() => {
+    b ? (p.value = !1, N(), y.value = !0, g.value = Xe(e.zIndex) ? u() : g.value++, Te(() => {
       s("open"), t.value && (t.value.scrollTop = 0);
     })) : c.value && L();
   }), F(() => e.fullscreen, (b) => {
@@ -375,7 +376,7 @@ const co = Z({
   emits: fo,
   setup(e, { expose: t }) {
     const l = e, d = Se();
-    Xe({
+    Pe({
       scope: "el-dialog",
       from: "the title slot",
       replacement: "the header slot",
@@ -443,7 +444,7 @@ const co = Z({
                 onMousedown: v[1] || (v[1] = (...C) => o(T).onMousedown && o(T).onMousedown(...C)),
                 onMouseup: v[2] || (v[2] = (...C) => o(T).onMouseup && o(T).onMouseup(...C))
               }, [
-                H(o(Pe), {
+                H(o(Fe), {
                   loop: "",
                   trapped: o(m),
                   "focus-start-el": "container",
@@ -505,8 +506,8 @@ const co = Z({
   }
 });
 var Co = /* @__PURE__ */ re(yo, [["__file", "dialog.vue"]]);
-const bo = Fe(Co);
-const Do = /* @__PURE__ */ $({
+const bo = Ye(Co);
+const Lo = /* @__PURE__ */ $({
   __name: "Dialog",
   setup(e) {
     return (t, l) => (I(), K(o(bo), {
@@ -536,16 +537,16 @@ const Do = /* @__PURE__ */ $({
   }
 });
 export {
-  ko as Align,
-  _o as Badge,
-  Bo as Card,
-  Do as Dialog,
-  No as Form,
-  Ro as Grid,
-  zo as Popover,
-  Uo as Scrollable,
-  Go as ScrollableArea,
-  Ko as SimpleTable,
-  Vo as Table,
-  Xo as Tooltip
+  Bo as Align,
+  Oo as Badge,
+  Io as Card,
+  Lo as Dialog,
+  $o as Form,
+  Yo as Grid,
+  Ho as Popover,
+  Go as Scrollable,
+  Ko as ScrollableArea,
+  Vo as SimpleTable,
+  Xo as Table,
+  Po as Tooltip
 };
