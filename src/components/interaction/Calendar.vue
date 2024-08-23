@@ -13,25 +13,40 @@ import type { CalendarMode } from '../../utils/type/component/interaction/calend
 const props = withDefaults(
   defineProps<{
     minDate?: string;
+    maxDate?: string;
     monthLabels: string[];
     range: [string, string];
     weekLabels?: string[];
     yearMonth: string;
     relatedMaxDate?: string;
     relatedMinDate?: string;
+    isSingleSelect?: boolean;
   }>(),
   {
     minDate: '2020-01-01',
+    isSingleSelect: false,
   },
 );
 
+const {
+  minDate,
+  maxDate,
+  monthLabels,
+  range,
+  weekLabels,
+  yearMonth,
+  relatedMinDate,
+  relatedMaxDate,
+  isSingleSelect,
+} = toRefs(props);
+
 const now = DateTime.now();
-const maxYear = now.year;
-
-const { minDate, monthLabels, range, weekLabels, yearMonth, relatedMinDate, relatedMaxDate } =
-  toRefs(props);
-
 const mode = ref<CalendarMode>('start');
+
+const maxDateTimestamp = computed(() =>
+  maxDate?.value ? DateTime.fromFormat(maxDate.value, dateFormat.yearMonthDay) : now,
+);
+const maxYear = maxDateTimestamp.value.year;
 
 const minDateTimestamp = computed(() =>
   DateTime.fromFormat(minDate.value, dateFormat.yearMonthDay),
@@ -128,6 +143,7 @@ const dayClasses = (day: DateTime) => {
       (day >= currentHovered.value! && day <= currentSelected.value!) ||
       (day <= currentHovered.value! && day >= currentSelected.value!),
     'selected-day': currentSelected.value?.hasSame(day, 'day'),
+    'single-selected-day': isSingleSelect.value && rangeStart.value.hasSame(day, 'day'),
     'first-day': !currentSelected.value && day.hasSame(rangeStart.value, 'day'),
     'first-selected-day':
       currentSelected.value &&
@@ -154,7 +170,7 @@ const dayMood = (day: DateTime): Mood => {
 const hasNextMonth = computed(
   () =>
     yearMonthStart.value.endOf('month') <
-    (relatedMaxDateTimestamp.value?.minus({ month: 1 }) ?? now),
+    (relatedMaxDateTimestamp.value?.minus({ month: 1 }) ?? maxDateTimestamp.value).endOf('month'),
 );
 const hasPreviousMonth = computed(
   () =>
@@ -182,7 +198,9 @@ const updateMonth = (monthIndex: number | string | symbol, year?: number) => {
   emit('update:yearMonth', newYearMonth);
 };
 const updateRange = (day: DateTime) => {
-  if (mode.value === 'start') {
+  if (isSingleSelect.value) {
+    emit('update:range', [day.toFormat(dateFormat.yearMonthDay), '']);
+  } else if (mode.value === 'start') {
     currentSelected.value = day;
     mode.value = 'end';
     emit('selectDay', currentSelected.value);
@@ -305,7 +323,7 @@ Align.calendar(column)
         @click.stop='() => updateRange(day)',
         @mouseover='() => { currentHovered = day; emit("hoverDay", day) }',
         :class="dayClasses(day)",
-        :disabled='day > now',
+        :disabled='day < minDateTimestamp || day > maxDateTimestamp',
         :label='day.day.toString()',
         :mood='dayMood(day)',
         :outline="dayMood(day) === 'neutral'",
@@ -362,6 +380,7 @@ Align.calendar(column)
 
         &:not(.now):not(.disabled) {
           &.in-range,
+          &.single-selected-day,
           &.hovered,
           &.hovered:hover {
             @include apply-color(background-color, background-normal);
@@ -385,12 +404,14 @@ Align.calendar(column)
         }
 
         &.first-day,
-        &.first-selected-day {
+        &.first-selected-day,
+        &.single-selected-day {
           border-bottom-left-radius: $border-radius-normal;
           border-top-left-radius: $border-radius-normal;
         }
         &.last-day,
-        &.last-selected-day {
+        &.last-selected-day,
+        &.single-selected-day {
           border-bottom-right-radius: $border-radius-normal;
           border-top-right-radius: $border-radius-normal;
         }

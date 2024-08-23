@@ -31,6 +31,7 @@ const containerSelector = '#app > .app-container';
 const container: DOMRect | undefined = document.body
   .querySelector(containerSelector)
   ?.getBoundingClientRect();
+const offsetY = container ? window.scrollY + container.top : 0;
 
 const popoverClasses = computed(() => ({
   [popoverClass?.value ?? '']: !!popoverClass,
@@ -85,16 +86,18 @@ const getXPosition = (parentRect: DOMRect) => {
 };
 
 const getYPosition = (parentRect: DOMRect) => {
-  const scrollTop = parentRect.top + document.documentElement.scrollTop - (container?.top || 0);
+  const scrollTop = parentRect.top + document.documentElement.scrollTop - offsetY;
   const popoverHeight = popover.value!.$el.offsetHeight;
 
   if (
-    placementY.value === 'top' ||
+    placementY.value === 'bottom' &&
     parentRect.bottom + popoverHeight > document.body.clientHeight
   ) {
-    top.value = scrollTop - popoverHeight;
+    top.value = Math.max(scrollTop - popoverHeight, 0);
+  } else if (placementY.value === 'top') {
+    top.value = Math.max(scrollTop - popoverHeight, 0);
   } else {
-    top.value = scrollTop + parentRect.height;
+    top.value = parentRect.bottom + document.documentElement.scrollTop - offsetY;
   }
 };
 

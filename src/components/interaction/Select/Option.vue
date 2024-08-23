@@ -33,3 +33,11 @@ ElOption(:value="value" :class="size")
   }
 }
 </style>
+
+<style>
+.selectPopover.teleported.el-popper {
+  .el-select-dropdown__item {
+    margin: 0 1px;
+  }
+}
+</style>

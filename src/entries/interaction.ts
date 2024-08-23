@@ -1,5 +1,6 @@
 import Button from '../components/interaction/Button.vue';
 import Calendar from '../components/interaction/Calendar.vue';
+import DatePicker from '../components/interaction/DatePicker.vue';
 import DateRangePicker from '../components/interaction/DateRangePicker.vue';
 import Dropdown from '../components/interaction/Dropdown.vue';
 import DropdownButton from '../components/interaction/DropdownButton.vue';
@@ -15,6 +16,7 @@ import Option from '../components/interaction/Select/Option.vue';
 export {
   Button,
   Calendar,
+  DatePicker,
   DateRangePicker,
   Dropdown,
   DropdownButton,
