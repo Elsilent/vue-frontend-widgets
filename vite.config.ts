@@ -18,6 +18,7 @@ const entries = [
   'layout',
   'marker',
   'view',
+  'utils/clone',
   'utils/currency',
   'utils/date',
   'utils/error',
