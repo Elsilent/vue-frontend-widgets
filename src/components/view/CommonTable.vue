@@ -1339,7 +1339,7 @@ if (request) {
 
 <template lang="pug">
 .common-table
-  .controls.d-flex.justify-content-end.mb-1(v-if='showPagination')
+  .controls(v-if='showPagination')
     Pagination(
       @update:pageNumber="(pageNumber) => setPageNumber(pageNumber)",
       @update:currentPageSize="(pageSize) => setPageSize(pageSize)",
@@ -1544,6 +1544,7 @@ if (request) {
 
 <style lang="scss" scoped>
 @import '../../styles/colors.scss';
+@import '../../styles/spacing.scss';
 
 .table-container {
   position: relative;
@@ -1578,6 +1579,11 @@ if (request) {
 
 .common-table {
   position: relative;
+  .controls {
+    display: flex;
+    margin-bottom: $padding-size-normal;
+    justify-content: flex-end;
+  }
 }
 
 .table {
