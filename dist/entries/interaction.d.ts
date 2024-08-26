@@ -12,4 +12,5 @@ import Toast from '../components/interaction/Toast.vue';
 import Toggle from '../components/interaction/Toggle.vue';
 import Select from '../components/interaction/Select/Select.vue';
 import Option from '../components/interaction/Select/Option.vue';
-export { Button, Calendar, DatePicker, DateRangePicker, Dropdown, DropdownButton, Input, Link, MultiSelect, PopoverMenu, Toast, Toggle, Select, Option, };
+import OptionGroup from '../components/interaction/Select/OptionGroup.vue';
+export { Button, Calendar, DatePicker, DateRangePicker, Dropdown, DropdownButton, Input, Link, MultiSelect, PopoverMenu, Toast, Toggle, Select, Option, OptionGroup, };
