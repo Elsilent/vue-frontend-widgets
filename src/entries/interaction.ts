@@ -12,6 +12,7 @@ import Toast from '../components/interaction/Toast.vue';
 import Toggle from '../components/interaction/Toggle.vue';
 import Select from '../components/interaction/Select/Select.vue';
 import Option from '../components/interaction/Select/Option.vue';
+import OptionGroup from '../components/interaction/Select/OptionGroup.vue';
 
 export {
   Button,
@@ -28,4 +29,5 @@ export {
   Toggle,
   Select,
   Option,
+  OptionGroup,
 };

@@ -41,6 +41,11 @@
       "import": "./dist/view.js",
       "require": "./dist/view.cjs"
     },
+    "./utils/clone": {
+      "types": "./dist/utils/clone.d.ts",
+      "import": "./dist/utils/clone.js",
+      "require": "./dist/utils/clone.cjs"
+    },
     "./utils/currency": {
       "types": "./dist/utils/currency.d.ts",
       "import": "./dist/utils/currency.js",
