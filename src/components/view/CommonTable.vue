@@ -503,6 +503,10 @@ const differenceMood = (
  * Formats a value based on its column type
  */
 const formatValue = (value: any, type: ColumnType, format?: 'difference'): string => {
+  if (value === null) {
+    return '';
+  }
+
   let rawValue = getRawValue(value, type);
 
   switch (type) {
