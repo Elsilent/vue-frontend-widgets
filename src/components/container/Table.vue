@@ -205,11 +205,17 @@ const updateTableSize = () => {
     }
 
     if (mainExtendedColumns.length > 0) {
-      info.width = mainExtendedColumns.reduce((sum, { offsetWidth }) => sum + offsetWidth, 0);
+      const extendedColumnsWidth = mainExtendedColumns.reduce(
+        (sum, { offsetWidth }) => sum + offsetWidth,
+        0,
+      );
 
       if (mainColumns.length === 0) {
+        info.width = extendedColumnsWidth;
         info.mainColumnHeight = mainExtendedColumns[0].offsetHeight;
         totalColumnHeights.push(info.mainColumnHeight);
+      } else {
+        info.width += extendedColumnsWidth;
       }
     }
 
@@ -477,7 +483,7 @@ watch(columns, () => {
 
     &:deep(.scrollable-area) {
       &.horizontal {
-        bottom: calc(var(--total-height));
+        bottom: calc(var(--total-height) - 20px);
         display: var(--total-scrollbar-display);
         left: var(--fixed-width);
       }

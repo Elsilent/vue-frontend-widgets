@@ -3,6 +3,7 @@ import { computed, ref, toRefs, watch } from 'vue';
 import type { Router } from 'vue-router';
 import MenuSubsection from './side_menu/MenuSubsection.vue';
 import type { Menu } from '../../utils/menu';
+import Scrollable from '../container/Scrollable.vue';
 
 const props = defineProps<{
   fullWidth: boolean;
@@ -18,6 +19,8 @@ const forceFullWidth = ref(false);
 const { fullWidth, router } = toRefs(props);
 
 const isFullWidth = computed(() => fullWidth.value || forceFullWidth.value);
+
+const enabledColumnsScrollPosition = ref<{ left: number; top: number }>({ left: 0, top: 0 });
 
 watch(
   router.value.currentRoute,
@@ -39,20 +42,26 @@ watch(
   .brand-container(@click="router.push({ name: 'default' })")
     .brand
       slot(name="header")
-  .items
-    template(v-for="(section, code) in menu")
-      MenuSubsection(
-        v-model:expandedPrefix='expandedPrefix',
-        :fullWidth='isFullWidth',
-        :icon='section.icon',
-        :iconBackend='section.iconBackend',
-        :items='section.items',
-        :label="section.label ?? ''",
-        :prefix='`${code}.`',
-        :router='router',
-        :translator='translator',
-      )
-    .pixel &nbsp;
+  Scrollable.flex-max.no-spacing(
+    @update:scrollPosition="(scrollPosition) => enabledColumnsScrollPosition = scrollPosition",
+    :scrollPosition="enabledColumnsScrollPosition",
+    size="small"
+    theme="dark"
+  )
+    .items
+      template(v-for="(section, code) in menu")
+        MenuSubsection(
+          v-model:expandedPrefix='expandedPrefix',
+          :fullWidth='isFullWidth',
+          :icon='section.icon',
+          :iconBackend='section.iconBackend',
+          :items='section.items',
+          :label="section.label ?? ''",
+          :prefix='`${code}.`',
+          :router='router',
+          :translator='translator',
+        )
+      .pixel &nbsp;
 </template>
 
 <style lang="scss" scoped>
@@ -61,7 +70,6 @@ watch(
 @import '../../styles/shadows.scss';
 @import '../../styles/spacing.scss';
 @import '../../styles/transition.scss';
-@import '../../styles/scrollbar.scss';
 
 .side-menu {
   @include apply-color(background-color, background-menu);
@@ -118,7 +126,6 @@ watch(
   }
 
   > .items {
-    scrollbar-gutter: stable;
     flex: 1;
     overflow-x: hidden;
 
