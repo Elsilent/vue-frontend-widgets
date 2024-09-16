@@ -57,8 +57,10 @@ const emit = defineEmits<{
   position: absolute;
 
   &:hover {
-    > .scrollbar {
+    &.light > .scrollbar {
       @include apply-color(background-color, background-elevated-3, $opacity: 0.25);
+    }
+    > .scrollbar {
       box-shadow: 0 0 1px rgba(black, 0.25);
 
       > .thumb {
@@ -68,9 +70,10 @@ const emit = defineEmits<{
   }
 
   &:active {
-    > .scrollbar {
+    &.light > .scrollbar {
       @include apply-color(background-color, background-elevated-3, $opacity: 0.75);
-
+    }
+    > .scrollbar {
       box-shadow: 0 0 1px rgba(black, 0.25);
 
       > .thumb {
@@ -188,6 +191,9 @@ const emit = defineEmits<{
       position: absolute;
       transition: background-color 0.3s, box-shadow 0.3s, opacity 0.3s;
     }
+  }
+  &.dark .thumb {
+    opacity: 0.5;
   }
 }
 </style>
