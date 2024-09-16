@@ -1,14 +1,22 @@
 <script lang="ts" setup>
 import { computed, toRefs } from 'vue';
 
-const props = defineProps<{
-  active: boolean;
-  mode: 'horizontal' | 'horizontal-top' | 'vertical';
-  thumbOffset: number;
-  thumbSize: string;
-}>();
+const props = withDefaults(
+  defineProps<{
+    active: boolean;
+    mode: 'horizontal' | 'horizontal-top' | 'vertical';
+    thumbOffset: number;
+    thumbSize: string;
+    size?: 'small' | 'normal';
+    theme?: 'dark' | 'light';
+  }>(),
+  {
+    size: 'normal',
+    theme: 'light',
+  },
+);
 
-const { active, mode, thumbOffset, thumbSize } = toRefs(props);
+const { active, mode, thumbOffset, thumbSize, size, theme } = toRefs(props);
 
 const thumbStyle = computed(() => {
   const [offsetProp, sizeProp] = mode.value === 'vertical' ? ['top', 'height'] : ['left', 'width'];
@@ -19,6 +27,13 @@ const thumbStyle = computed(() => {
   };
 });
 
+const isSmall = computed(() => size.value === 'small');
+
+const scrollbarStyle = computed(() => ({
+  '--scrollbar-margin': isSmall.value ? '1px' : '3px',
+  '--scrollbar-size': isSmall.value ? '12px' : '14px',
+}));
+
 const emit = defineEmits<{
   (e: 'mousedown', event: MouseEvent): void;
 }>();
@@ -27,7 +42,8 @@ const emit = defineEmits<{
 <template lang="pug">
 .scrollable-area(
   @mousedown.stop="(event) => emit('mousedown', event)",
-  :class="{ active, [mode]: true }",
+  :class="{ active, [mode]: true, [theme]: true}",
+  :style="scrollbarStyle",
 )
   .scrollbar
     .thumb(:style="thumbStyle")
@@ -41,8 +57,10 @@ const emit = defineEmits<{
   position: absolute;
 
   &:hover {
-    > .scrollbar {
+    &.light > .scrollbar {
       @include apply-color(background-color, background-elevated-3, $opacity: 0.25);
+    }
+    > .scrollbar {
       box-shadow: 0 0 1px rgba(black, 0.25);
 
       > .thumb {
@@ -52,9 +70,10 @@ const emit = defineEmits<{
   }
 
   &:active {
-    > .scrollbar {
+    &.light > .scrollbar {
       @include apply-color(background-color, background-elevated-3, $opacity: 0.75);
-
+    }
+    > .scrollbar {
       box-shadow: 0 0 1px rgba(black, 0.25);
 
       > .thumb {
@@ -79,11 +98,11 @@ const emit = defineEmits<{
     right: 0;
 
     > .scrollbar {
-      bottom: 3px;
-      left: 3px;
-      height: 14px;
+      bottom: var(--scrollbar-margin);
+      left: var(--scrollbar-margin);
+      height: var(--scrollbar-size);
       margin: 3px;
-      right: 3px;
+      right: var(--scrollbar-margin);
 
       > .thumb {
         bottom: 3px;
@@ -112,11 +131,11 @@ const emit = defineEmits<{
     top: 0;
 
     > .scrollbar {
-      left: 3px;
-      height: 14px;
+      left: var(--scrollbar-margin);
+      height: var(--scrollbar-size);
       margin: 3px;
-      right: 3px;
-      top: 3px;
+      right: var(--scrollbar-margin);
+      top: var(--scrollbar-margin);
 
       > .thumb {
         bottom: 3px;
@@ -145,10 +164,10 @@ const emit = defineEmits<{
     width: 20px;
 
     > .scrollbar {
-      bottom: 3px;
-      right: 3px;
-      top: 3px;
-      width: 14px;
+      bottom: var(--scrollbar-margin);
+      right: var(--scrollbar-margin);
+      top: var(--scrollbar-margin);
+      width: var(--scrollbar-size);
 
       > .thumb {
         min-height: 42px;
@@ -166,11 +185,15 @@ const emit = defineEmits<{
 
     > .thumb {
       @include apply-color(background-color, background-neutral);
+      cursor: pointer;
       border-radius: 4px;
       opacity: 0.35;
       position: absolute;
       transition: background-color 0.3s, box-shadow 0.3s, opacity 0.3s;
     }
+  }
+  &.dark .thumb {
+    opacity: 0.5;
   }
 }
 </style>

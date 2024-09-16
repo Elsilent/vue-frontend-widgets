@@ -1510,7 +1510,7 @@ if (request) {
           )
       template(#total="{ columnKey, subcolumnKey, values }")
         slot(
-          :name=`total`,
+          name="total",
           :columnKey="columnKey",
           :subcolumnKey="subcolumnKey",
           :values="values",

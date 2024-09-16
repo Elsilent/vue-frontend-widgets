@@ -19,6 +19,8 @@ const props = withDefaults(
     scrollWidthDelta?: number;
     staticPosition?: boolean;
     updateKey?: any;
+    size?: 'small' | 'normal';
+    theme?: 'light' | 'dark';
   }>(),
   {
     mode: 'vertical',
@@ -27,13 +29,14 @@ const props = withDefaults(
     scrollHeightDelta: 0,
     scrollWidthDelta: 0,
     staticPosition: false,
+    size: 'normal',
+    theme: 'light',
   },
 );
 
 const { mode, relativeTo, scrollPosition, scrollHeightDelta, scrollWidthDelta, staticPosition } =
   toRefs(props);
 
-const active = ref(false);
 const containerHeight = ref(0);
 const containerWidth = ref(0);
 const contentHeight = ref(0);
@@ -45,7 +48,7 @@ const forceActiveInitialScrollLeft = ref<number | undefined>();
 const forceActiveInitialScrollTop = ref<number | undefined>();
 const scrollLeft = ref(0);
 const scrollTop = ref(0);
-const touchTimeout = ref<number | undefined>();
+const isHovered = ref(false);
 
 const leftRatio = computed(() => scrollLeft.value / (contentWidth.value - containerWidth.value));
 const thumbWidth = computed(
@@ -57,30 +60,21 @@ const thumbHeight = computed(
 const topRatio = computed(() => scrollTop.value / (contentHeight.value - containerHeight.value));
 
 const content = ref<HTMLElement | undefined>();
+const area = ref<HTMLElement>();
 
 const emit = defineEmits<{
   (e: 'update:scrollPosition', position: { left: number; top: number }): void;
 }>();
 
+const onMouseMove = (event: MouseEvent) => {
+  isHovered.value = area.value?.contains(event.target as HTMLElement) || false;
+};
+
 onUnmounted(() => {
+  window.removeEventListener('mousemove', onMouseMove);
   mutationObserver.disconnect();
   resizeObserver.disconnect();
 });
-
-const cancelTouchTimeout = () => {
-  if (!forceActiveMode.value) {
-    return;
-  }
-
-  if (touchTimeout.value !== undefined) {
-    clearTimeout(touchTimeout.value);
-
-    touchTimeout.value = undefined;
-  }
-
-  active.value = false;
-  forceActiveMode.value = undefined;
-};
 
 const getRelativeElement = () => {
   if (!relativeTo?.value) {
@@ -136,16 +130,11 @@ const whenScrolledManually = (event: MouseEvent) => {
 const unforceActive = () => {
   forceActiveMode.value = undefined;
 
-  startTouchTimeout();
-
   window.removeEventListener('mousemove', whenScrolledManually);
   window.removeEventListener('mouseup', unforceActive);
 };
 
 const forceActive = (event: MouseEvent, newForceActiveMode: 'horizontal' | 'vertical') => {
-  cancelTouchTimeout();
-
-  active.value = true;
   forceActiveMode.value = newForceActiveMode;
 
   const relativeElement = getRelativeElement();
@@ -236,22 +225,6 @@ const whenScrolled = (event: Event) => {
   setScrollTopWith(event.target! as HTMLElement);
 };
 
-const startTouchTimeout = () => {
-  whenResized();
-
-  if (forceActiveMode.value) {
-    return;
-  }
-
-  cancelTouchTimeout();
-
-  active.value = true;
-
-  touchTimeout.value = window.setTimeout(() => {
-    active.value = false;
-  }, 2500);
-};
-
 const updateObservers = () => {
   mutationObserver.disconnect();
   resizeObserver.disconnect();
@@ -270,6 +243,9 @@ const updateObservers = () => {
 };
 
 onMounted(() => {
+  if (area.value) {
+    window.addEventListener('mousemove', onMouseMove);
+  }
   updateObservers();
 });
 
@@ -287,16 +263,20 @@ watch(
     immediate: true,
   },
 );
+
+watch(isHovered, () => whenResized());
 </script>
 
 <template lang="pug">
-.scrollable(:class="{ [`mode-${mode}`]: true, static: staticPosition }")
+.scrollable(
+  :class="{ [`mode-${mode}`]: true, static: staticPosition }"
+  ref="area"
+)
   .scrollable-content(
     v-if="optimized",
     v-memo="[updateKey]",
     ref="content",
     :key="updateKey",
-    @mousemove="startTouchTimeout",
     @scroll="whenScrolled",
     :class="contentClass",
   )
@@ -304,7 +284,6 @@ watch(
   .scrollable-content(
     v-else,
     ref="content",
-    @mousemove="startTouchTimeout",
     @scroll="whenScrolled",
     :class="contentClass",
   )
@@ -312,29 +291,35 @@ watch(
   ScrollableArea(
     v-if="mode !== 'vertical'",
     @mousedown.stop="(event) => forceActive(event, 'horizontal')",
-    :active="contentWidth > containerWidth && (active || forceActiveMode === 'horizontal')",
+    :active="contentWidth > containerWidth && (isHovered || forceActiveMode === 'horizontal')",
     :class="{ 'scrollbar-visible': contentWidth > containerWidth }",
     :thumbOffset='leftRatio',
     :thumbSize='thumbWidth',
     mode='horizontal',
+    :size="size",
+    :theme="theme",
   )
   ScrollableArea(
     v-if="mode === 'both-top'",
     @mousedown.stop="(event) => forceActive(event, 'horizontal')",
-    :active="contentWidth > containerWidth && (active || forceActiveMode === 'horizontal')",
+    :active="contentWidth > containerWidth && (isHovered || forceActiveMode === 'horizontal')",
     :class="{ 'scrollbar-visible': contentWidth > containerWidth }",
     :thumbOffset='leftRatio',
     :thumbSize='thumbWidth',
     mode='horizontal-top',
+    :size="size",
+    :theme="theme",
   )
   ScrollableArea(
     v-if="mode !== 'horizontal'",
     @mousedown.stop="(event) => forceActive(event, 'vertical')",
-    :active="contentHeight > containerHeight && (active || forceActiveMode === 'vertical')",
+    :active="contentHeight > containerHeight && (isHovered || forceActiveMode === 'vertical')",
     :class="{ 'scrollbar-visible': contentHeight > containerHeight }",
     :thumbOffset='topRatio',
     :thumbSize='thumbHeight',
     mode='vertical',
+    :size="size",
+    :theme="theme",
   )
 </template>
 
