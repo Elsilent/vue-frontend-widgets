@@ -36,7 +36,7 @@ const pe = { class: "scrollbar" }, be = /* @__PURE__ */ I({
     ], 38));
   }
 });
-const V = /* @__PURE__ */ te(be, [["__scopeId", "data-v-ee2b7021"]]), ze = /* @__PURE__ */ I({
+const V = /* @__PURE__ */ te(be, [["__scopeId", "data-v-e4641e82"]]), ze = /* @__PURE__ */ I({
   __name: "Scrollable",
   props: {
     contentClass: {},
