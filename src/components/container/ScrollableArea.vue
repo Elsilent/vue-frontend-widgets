@@ -42,7 +42,7 @@ const emit = defineEmits<{
 <template lang="pug">
 .scrollable-area(
   @mousedown.stop="(event) => emit('mousedown', event)",
-  :class="{ active, [mode]: true}",
+  :class="{ active, [mode]: true, [theme]: true}",
   :style="scrollbarStyle",
 )
   .scrollbar

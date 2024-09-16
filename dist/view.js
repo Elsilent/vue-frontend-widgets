@@ -1,5 +1,5 @@
 import { defineComponent as ge, toRefs as Ce, ref as k, openBlock as w, createElementBlock as j, createVNode as R, unref as g, normalizeClass as X, createElementVNode as G, toDisplayString as L, withCtx as _, Fragment as H, renderList as be, createBlock as F, withDirectives as ir, createTextVNode as P, createCommentVNode as $, withModifiers as cn, computed as I, normalizeStyle as Xe, onMounted as ur, watch as Ve, createSlots as cr, renderSlot as mt, normalizeProps as dr, guardReactiveProps as fr, nextTick as Xt, Teleport as pr } from "vue";
-import { _ as xt, E as vr, T as mr } from "./Tooltip.vue_vue_type_style_index_0_lang-ab4e97de.js";
+import { _ as xt, E as vr, T as mr } from "./Tooltip.vue_vue_type_style_index_0_lang-fd2cc0cf.js";
 import { I as Fe, A as Z, C as hr } from "./Icon-53e685d0.js";
 import { _ as Oe } from "./_plugin-vue_export-helper-dad06003.js";
 import fe from "numeral";
@@ -7,16 +7,17 @@ import { cloneObject as br } from "./utils/clone.js";
 import { D as gr, B as _t, I as yr } from "./Input-301d9b5d.js";
 import { L as Tt, a as wr } from "./LineBarChart-1567db97.js";
 import { I as z } from "./Info-38a17291.js";
-import "./base-23b650f4.js";
-import "./popper-34338ba4.js";
-import { C as _r, a as Sr, S as Cr, O as Or } from "./Option-5b46ea23.js";
+import "./base-9150843e.js";
+import "./popper-b0eadffa.js";
+import { C as _r, a as Sr, S as Cr, O as Or } from "./Option-713ed426.js";
 import { L as Yt } from "./Link-882cf82b.js";
 import { Separator as Er } from "./marker.js";
 import { H as Me } from "./Header-37ffd1ab.js";
+import "./Scrollable-7d720d06.js";
 import "./datetime-31a2b505.js";
 import "./utils/error.js";
 import "./match-b8889c93.js";
-import "./tag-6ad926ff.js";
+import "./tag-6b860096.js";
 const Rr = { class: "column-hint" }, xr = /* @__PURE__ */ ge({
   __name: "ColumnHint",
   props: {
@@ -2647,7 +2648,7 @@ const oa = /* @__PURE__ */ Oe(aa, [["__scopeId", "data-v-c57a26a4"]]), la = { cl
     ]));
   }
 });
-const za = /* @__PURE__ */ Oe(da, [["__scopeId", "data-v-96c8c66c"]]), fa = { class: "scrollable flex-max no-spacing" }, pa = ["onClick"], va = { class: "scrollable flex-max no-spacing" }, ma = ["onClick"], ha = { class: "scrollable" }, ba = { class: "items flex-max no-spacing" }, ga = /* @__PURE__ */ ge({
+const Ia = /* @__PURE__ */ Oe(da, [["__scopeId", "data-v-96c8c66c"]]), fa = { class: "scrollable flex-max no-spacing" }, pa = ["onClick"], va = { class: "scrollable flex-max no-spacing" }, ma = ["onClick"], ha = { class: "scrollable" }, ba = { class: "items flex-max no-spacing" }, ga = /* @__PURE__ */ ge({
   __name: "KpiSelector",
   props: {
     applyLabel: {},
@@ -2989,9 +2990,9 @@ const za = /* @__PURE__ */ Oe(da, [["__scopeId", "data-v-96c8c66c"]]), fa = { cl
     ], 64));
   }
 });
-const Ia = /* @__PURE__ */ Oe(ga, [["__scopeId", "data-v-f095228a"]]);
+const Ua = /* @__PURE__ */ Oe(ga, [["__scopeId", "data-v-f095228a"]]);
 export {
   Tr as ColumnHint,
-  za as CommonTable,
-  Ia as KpiSelector
+  Ia as CommonTable,
+  Ua as KpiSelector
 };
