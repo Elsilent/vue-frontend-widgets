@@ -83,8 +83,9 @@ const leftAxisGroupValue = computed(
 );
 
 const leftAxisGroupFormatter = computed(() => {
-  const valueGroupEntry = Object.entries(groupsValue.value)
-    .find(([, groupKey]) => groupKey === leftAxisGroupValue.value);
+  const valueGroupEntry = Object.entries(groupsValue.value).find(
+    ([, groupKey]) => groupKey === leftAxisGroupValue.value,
+  );
 
   if (!valueGroupEntry) {
     return undefined;
@@ -100,8 +101,9 @@ const rightAxisGroupFormatter = computed(() => {
     return undefined;
   }
 
-  const valueGroupEntry = Object.entries(groupsValue.value)
-    .find(([, groupKey]) => groupKey === rightAxisGroup.value);
+  const valueGroupEntry = Object.entries(groupsValue.value).find(
+    ([, groupKey]) => groupKey === rightAxisGroup.value,
+  );
 
   if (!valueGroupEntry) {
     return undefined;
@@ -118,8 +120,9 @@ const axisLabels = computed(() => {
   );
 
   for (let index = 0; index < lineCount.value; index++) {
-    axisValues[groupsValue.value[valueKeys.value[index]]]
-      .push(...Object.values(values.value[valueKeys.value[index]]));
+    axisValues[groupsValue.value[valueKeys.value[index]]].push(
+      ...Object.values(values.value[valueKeys.value[index]]),
+    );
   }
 
   const axisLabels: Record<number | string, number[]> = Object.fromEntries(
@@ -170,10 +173,7 @@ const barFormatter = computed(() => {
 });
 
 const barValues = computed(() => {
-  const invertedValues: Record<
-    number | string,
-    Record<number | string, number>
-  > = {};
+  const invertedValues: Record<number | string, Record<number | string, number>> = {};
 
   for (const [key, row] of Object.entries(values.value)) {
     if (styles.value[key] === 'bar') {
@@ -202,10 +202,7 @@ const yAxisLabels = computed(() =>
   yAxisTitles?.value ? Object.values(yAxisTitles.value) : undefined,
 );
 
-const chartPath = (
-  values: Record<number | string, number>,
-  lineLabel: number | string,
-) => {
+const chartPath = (values: Record<number | string, number>, lineLabel: number | string) => {
   if (values.length === 0) {
     return '';
   }
@@ -390,10 +387,7 @@ const getPointLeftPosition = (key: number | string) => {
   return totalValueCount.value === 1 ? 50 : (index * 100) / (totalValueCount.value - 1);
 };
 
-const getPointTopPosition = (
-  value: number,
-  lineLabel: number | string,
-) => {
+const getPointTopPosition = (value: number, lineLabel: number | string) => {
   const valueAxisLabels = axisLabels.value[groupsValue.value[lineLabel]];
 
   const minValue = valueAxisLabels[valueAxisLabels.length - 1];

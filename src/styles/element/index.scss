@@ -1,72 +1,56 @@
-@use "sass:map";
+@use 'sass:map';
 @use '../fonts/base.scss' as *;
 @use '../colors.scss' as *;
 @use '../radius.scss' as *;
 @use '../spacing.scss' as *;
 
 @forward 'element-plus/theme-chalk/src/common/var.scss' with (
-
-// Colors
-  $colors: (
-    'primary': (
-      'base': map.get(map.get($themes, 'light'),'background-active-accent'),
+  // Colors
+  $colors:
+    (
+      'primary': (
+        'base': map.get(map.get($themes, 'light'), 'background-active-accent'),
+      )
     ),
+  $fill-color: (
+    '': map.get(map.get($themes, 'light'), 'background-list-lowered'),
+    'light': map.get(map.get($themes, 'light'), 'background-list-lowered')
   ),
-  $fill-color:(
-    '': map.get(map.get($themes, 'light'),'background-list-lowered'),
-    'light': map.get(map.get($themes, 'light'),'background-list-lowered'),
-  ),
-  $text-color:(
-    'regular': map.get(map.get($themes, 'light'),'text-neutral'),
-    'placeholder': map.get(map.get($themes, 'light'),'placeholder'),
-    'disabled': map.get(map.get($themes, 'light'),'text-elevated'),
+  $text-color: (
+    'regular': map.get(map.get($themes, 'light'), 'text-neutral'),
+    'placeholder': map.get(map.get($themes, 'light'), 'placeholder'),
+    'disabled': map.get(map.get($themes, 'light'), 'text-elevated')
   ),
   $border-color: (
-    '': map.get(map.get($themes, 'light'),'input-border'),
-    'light': map.get(map.get($themes, 'light'),'input-border'),
-    'lighter': map.get(map.get($themes, 'light'),'input-border'),
+    '': map.get(map.get($themes, 'light'), 'input-border'),
+    'light': map.get(map.get($themes, 'light'), 'input-border'),
+    'lighter': map.get(map.get($themes, 'light'), 'input-border')
   ),
-  $border-color-hover: map.get(map.get($themes, 'light'),'input-border-hover'),
-  $box-shadow:(
-    '': 'none',
-    'light': 'none',
-    'lighter': 'none',
-    'dark': 'none',
-  ),
+  $border-color-hover: map.get(map.get($themes, 'light'), 'input-border-hover'),
+  $box-shadow: ('': 'none', 'light': 'none', 'lighter': 'none', 'dark': 'none'),
 
-// Fonts
+  // Fonts
   $font-family: ('': $font-family-normal),
   $font-size: ('base': $font-size-normal),
-
-// Select
-  $select:(
-    'input-color': var(--el-text-color-regular),
-  ),
-  $select-option:(
+  // Select
+  $select: ('input-color': var(--el-text-color-regular)),
+  $select-option: (
     'hover-background': var(--el-fill-color-light),
-    'selected-text-color': map.get(map.get($themes, 'light'), white),
+    'selected-text-color': map.get(map.get($themes, 'light'), white)
   ),
-  $select-group: (
-    'font-size': $font-size-normal,
-  ),
-  $select-wrapper-padding:(
-    'default': $padding-size-menu-small-3 $padding-size-small-2,
-  ),
+  $select-group: ('font-size': $font-size-normal),
+  $select-wrapper-padding: ('default': $padding-size-menu-small-3 $padding-size-small-2),
 
-// Tooltip
-  $popper: (
-    'border-radius': $border-radius-normal,
-  ),
-  $popover: (
-    'border-radius': $border-radius-normal,
-    'title-font-size': $font-size-normal,
-  ),
+  // Tooltip
+  $popper: ('border-radius': $border-radius-normal),
+  $popover: ('border-radius': $border-radius-normal, 'title-font-size': $font-size-normal),
 
-// Dialog
-  $dialog: (
-    'title-font-size': $font-size-large-4,
-    'content-font-size': $font-size-normal,
-    'padding-primary': 0,
-    'border-radius': $border-radius-normal,
-  ),
+  // Dialog
+  $dialog:
+    (
+      'title-font-size': $font-size-large-4,
+      'content-font-size': $font-size-normal,
+      'padding-primary': 0,
+      'border-radius': $border-radius-normal
+    )
 );
