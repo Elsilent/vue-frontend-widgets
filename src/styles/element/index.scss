@@ -52,5 +52,16 @@
       'content-font-size': $font-size-normal,
       'padding-primary': 0,
       'border-radius': $border-radius-normal
-    )
+    ),
+
+  // Checkbox
+  $checkbox:
+    (
+      'border-radius': $border-radius-normal,
+      'input-height': 20px,
+      'input-width': 20px,
+      'input-border': none,
+      'checked-bg-color': map.get(map.get($themes, 'light'), 'background-positive'),
+      'bg-color': map.get(map.get($themes, 'light'), 'background-lowered-3'),
+    ),
 );
