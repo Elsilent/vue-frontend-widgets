@@ -1,8 +1,8 @@
 import { H as g } from "./Header-37ffd1ab.js";
 import { I as h } from "./Info-38a17291.js";
 import { defineComponent as o, openBlock as r, createBlock as t, unref as a, withCtx as n, renderSlot as p } from "vue";
-import "./base-9150843e.js";
-import { E as m } from "./tag-6b860096.js";
+import "./base-fd1fc9c4.js";
+import { E as m } from "./tag-fa681c03.js";
 import "./_plugin-vue_export-helper-dad06003.js";
 const u = /* @__PURE__ */ o({
   __name: "Tag",
