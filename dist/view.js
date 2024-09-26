@@ -1,6 +1,6 @@
 import { defineComponent as ge, toRefs as Ce, ref as k, openBlock as w, createElementBlock as j, createVNode as R, unref as g, normalizeClass as X, createElementVNode as G, toDisplayString as L, withCtx as _, Fragment as H, renderList as be, createBlock as F, withDirectives as ir, createTextVNode as P, createCommentVNode as $, withModifiers as cn, computed as I, normalizeStyle as Xe, onMounted as ur, watch as Ve, createSlots as cr, renderSlot as mt, normalizeProps as dr, guardReactiveProps as fr, nextTick as Xt, Teleport as pr } from "vue";
 import { _ as xt, E as vr } from "./Tooltip.vue_vue_type_style_index_0_lang-f467a343.js";
-import { I as Pe, A as Z, C as mr } from "./Icon-53e685d0.js";
+import { I as Pe, A as K, C as mr } from "./Icon-53e685d0.js";
 import { _ as Oe } from "./_plugin-vue_export-helper-dad06003.js";
 import fe from "numeral";
 import { cloneObject as hr } from "./utils/clone.js";
@@ -1631,7 +1631,7 @@ const un = /* @__PURE__ */ Oe(Ys, [["__scopeId", "data-v-23cadab0"]]), Qs = /* @
         ref: u
       }, {
         reference: _(() => [
-          ir((w(), F(Z, {
+          ir((w(), F(K, {
             class: "details-selector",
             vertical: "center"
           }, {
@@ -1989,7 +1989,7 @@ const oa = /* @__PURE__ */ Oe(aa, [["__scopeId", "data-v-c57a26a4"]]), la = { cl
       primaryColumnAlias: ve,
       request: J,
       rows: Ee,
-      shortenColumns: K,
+      shortenColumns: ee,
       showInlineFilters: ye,
       showRowNumber: ot,
       showPagination: Je,
@@ -2005,7 +2005,7 @@ const oa = /* @__PURE__ */ Oe(aa, [["__scopeId", "data-v-c57a26a4"]]), la = { cl
           value: ""
         });
       return l;
-    }, ie = k([]), Te = k(void 0), C = k({}), E = k([]), B = k({}), W = k([]), me = k({}), Be = k(!1), ue = k(!1), je = k([]), ze = k(!1), Y = k(xe()), we = k(!0), ce = k(), _e = k(0), ke = k(20), Ie = k(0), ee = k(), de = k(), Fn = I(() => {
+    }, ie = k([]), Te = k(void 0), C = k({}), E = k([]), B = k({}), W = k([]), me = k({}), Be = k(!1), ue = k(!1), je = k([]), ze = k(!1), Y = k(xe()), we = k(!0), ce = k(), _e = k(0), ke = k(20), Ie = k(0), Q = k(), de = k(), Fn = I(() => {
       const l = {};
       return ue.value && (l.inline_filters = {
         icon: "filter"
@@ -2034,7 +2034,7 @@ const oa = /* @__PURE__ */ Oe(aa, [["__scopeId", "data-v-c57a26a4"]]), la = { cl
       (_e.value + 1) * ke.value
     )), Dn = (l) => {
       E.value.includes(l) || E.value.push(l);
-    }, We = (l, i) => !K.value || !K.value.includes(l) ? !1 : String(i || "").length > wt, Bn = (l) => !!l.tooltipTitle && !!l.tooltipContent, Ge = (l, i, d) => {
+    }, We = (l, i) => !ee.value || !ee.value.includes(l) ? !1 : String(i || "").length > wt, Bn = (l) => !!l.tooltipTitle && !!l.tooltipContent, Ge = (l, i, d) => {
       var T;
       if (!d || !(O != null && O.value) || !(d in O.value) || O.value[d].format !== "difference")
         return;
@@ -2111,7 +2111,7 @@ const oa = /* @__PURE__ */ Oe(aa, [["__scopeId", "data-v-c57a26a4"]]), la = { cl
         return new URL(l.totalUrl).toString();
       const i = new URL(l.baseUrl);
       return i.searchParams.set("total", "true"), i.toString();
-    }, Un = (l) => !K.value || !K.value.includes(l) ? -1 : je.value.indexOf(l), Vn = (l) => {
+    }, Un = (l) => !ee.value || !ee.value.includes(l) ? -1 : je.value.indexOf(l), Vn = (l) => {
       if (l in Y.value)
         return Y.value[l].operator;
     }, Mn = (l) => {
@@ -2151,7 +2151,7 @@ const oa = /* @__PURE__ */ Oe(aa, [["__scopeId", "data-v-c57a26a4"]]), la = { cl
         location.origin
       );
       return d.searchParams.set((ve == null ? void 0 : ve.value) || M.value, l[M.value]), d.toString();
-    }, Mt = (l, i, d) => We(l, i) ? [] : d ? (S == null ? void 0 : S.value) === l ? ["flex-grow-1", "text-left"] : K.value && K.value.includes(l) && zt.value.some((p) => We(l, p[l])) ? ["flex-grow-1", "text-left"] : ["flex-grow-1"] : ["flew-grow-1"], Gn = (l) => l in se.value, Xn = () => {
+    }, Mt = (l, i, d) => We(l, i) ? [] : d ? (S == null ? void 0 : S.value) === l ? ["flex-grow-1", "text-left"] : ee.value && ee.value.includes(l) && zt.value.some((p) => We(l, p[l])) ? ["flex-grow-1", "text-left"] : ["flex-grow-1"] : ["flew-grow-1"], Gn = (l) => l in se.value, Xn = () => {
       ye.value && (Be.value = !1);
     }, $t = (l, i) => {
       if (!(A != null && A.value) || !(i in A.value))
@@ -2166,7 +2166,7 @@ const oa = /* @__PURE__ */ Oe(aa, [["__scopeId", "data-v-c57a26a4"]]), la = { cl
       i < 0 || E.value.splice(i, 1);
     }, Ht = (l, i) => {
       B.value[l] = i;
-    }, qt = (l, i) => !K.value || !K.value.includes(i) || je.value.includes(i) || String(l || "").length <= wt ? l : `${l.substring(0, wt - 3)}...`, Zn = (l) => {
+    }, qt = (l, i) => !ee.value || !ee.value.includes(i) || je.value.includes(i) || String(l || "").length <= wt ? l : `${l.substring(0, wt - 3)}...`, Zn = (l) => {
       if (!de.value)
         return;
       const i = {
@@ -2285,14 +2285,14 @@ const oa = /* @__PURE__ */ Oe(aa, [["__scopeId", "data-v-c57a26a4"]]), la = { cl
           throw new Error("Paginated fetching is not supported for separate comparison requests.");
         return U;
       })();
-      return T ? (Te.value = [p, T], Gt()) : ie.value = Object.values(p.rows), ze.value = p.paginated === !1, Ie.value = p.row_count, p.detailedRows ? me.value = p.detailedRows : me.value = {}, p.total && !T && (ee.value = p.total), !0;
+      return T ? (Te.value = [p, T], Gt()) : ie.value = Object.values(p.rows), ze.value = p.paginated === !1, Ie.value = p.row_count, p.detailedRows ? me.value = p.detailedRows : me.value = {}, p.total && !T && (Q.value = p.total), !0;
     }, Gt = () => {
       if (!Te.value)
         return;
       const [l, i] = Te.value;
       ie.value = Object.values(
         Js(l.rows, i.rows, c.value, M.value)
-      ), l.total && (ee.value = Pn(l.total, i.total, c.value));
+      ), l.total && (Q.value = Pn(l.total, i.total, c.value));
     }, sr = () => {
       if (!(Ee != null && Ee.value))
         return !1;
@@ -2310,7 +2310,7 @@ const oa = /* @__PURE__ */ Oe(aa, [["__scopeId", "data-v-c57a26a4"]]), la = { cl
     }, ar = () => {
       ye.value && (Be.value = !0);
     }, or = (l) => {
-      if (!K.value || !K.value.includes(l))
+      if (!ee.value || !ee.value.includes(l))
         return;
       const i = Un(l);
       i >= 0 ? je.value.splice(i, 1) : je.value.push(l);
@@ -2320,7 +2320,7 @@ const oa = /* @__PURE__ */ Oe(aa, [["__scopeId", "data-v-c57a26a4"]]), la = { cl
       _e.value = 0, ce.value = l, d && await ft(void 0, void 0, l), i && localStorage.setItem(Vt(), JSON.stringify(l)), t("update:orderBy", l);
     };
     return ur(() => {
-      W.value = Object.keys(c.value), ee.value = De == null ? void 0 : De.value, Promise.all([dt(!1), Jt()]).then(() => er(!0));
+      W.value = Object.keys(c.value), Q.value = De == null ? void 0 : De.value, Promise.all([dt(!1), Jt()]).then(() => er(!0));
     }), Ve(c, () => {
       W.value = Object.keys(c.value), Y.value = xe(), Te && Gt();
     }), Ve(we, () => {
@@ -2381,7 +2381,7 @@ const oa = /* @__PURE__ */ Oe(aa, [["__scopeId", "data-v-c57a26a4"]]), la = { cl
           primaryColumn: g(M),
           rows: zt.value,
           showRowNumber: g(ot),
-          showTotal: !!ee.value,
+          showTotal: !!Q.value,
           showTopTotal: g(lt)
         }, cr({
           colorizeLabel: _(({ enabled: d }) => [
@@ -2479,7 +2479,8 @@ const oa = /* @__PURE__ */ Oe(aa, [["__scopeId", "data-v-c57a26a4"]]), la = { cl
             mt(l.$slots, "total", {
               columnKey: d,
               subcolumnKey: p,
-              values: T
+              values: T,
+              row: Q.value
             }, () => {
               var N;
               return [
@@ -2497,36 +2498,36 @@ const oa = /* @__PURE__ */ Oe(aa, [["__scopeId", "data-v-c57a26a4"]]), la = { cl
                     ], 64))
                   ]),
                   _: 1
-                })) : ee.value ? (w(), j(H, { key: 1 }, [
-                  ee.value && ee.value[d] >= 0.01 && d in g(y) ? (w(), F(un, {
+                })) : Q.value ? (w(), j(H, { key: 1 }, [
+                  Q.value && Q.value[d] >= 0.01 && d in g(y) ? (w(), F(un, {
                     key: 0,
                     format: g(y)[d].format,
-                    label: qt(Ae(ee.value[d], g(c)[d].type, g(O) && p ? g(O)[p].format : void 0), d),
+                    label: qt(Ae(Q.value[d], g(c)[d].type, g(O) && p ? g(O)[p].format : void 0), d),
                     title: g(y)[d].title,
                     url: In(g(y)[d])
                   }, null, 8, ["format", "label", "title", "url"])) : p ? (w(), F(z, {
                     key: 1,
                     class: "total-label",
-                    mood: Ge((N = ee.value[d]) == null ? void 0 : N[p], d, p),
+                    mood: Ge((N = Q.value[d]) == null ? void 0 : N[p], d, p),
                     contrast: "",
                     size: "small"
                   }, {
                     default: _(() => {
                       var U;
                       return [
-                        P(L(Se((U = ee.value[d]) == null ? void 0 : U[p], d, p)), 1)
+                        P(L(Se((U = Q.value[d]) == null ? void 0 : U[p], d, p)), 1)
                       ];
                     }),
                     _: 2
                   }, 1032, ["mood"])) : (w(), F(z, {
                     key: 2,
                     class: "total-label",
-                    mood: Ge(ee.value[d], d, p),
+                    mood: Ge(Q.value[d], d, p),
                     contrast: "",
                     size: "small"
                   }, {
                     default: _(() => [
-                      P(L(Se(ee.value[d], d)), 1)
+                      P(L(Se(Q.value[d], d)), 1)
                     ]),
                     _: 2
                   }, 1032, ["mood"]))
@@ -2555,7 +2556,7 @@ const oa = /* @__PURE__ */ Oe(aa, [["__scopeId", "data-v-c57a26a4"]]), la = { cl
           } : void 0,
           be(Object.keys(Dt.value), (d) => ({
             name: `row-${d}`,
-            fn: _(({ columnKey: p, index: T, row: N, spanIndex: U, subcolumnKey: ne, subindex: pt, value: Q }) => [
+            fn: _(({ columnKey: p, index: T, row: N, spanIndex: U, subcolumnKey: ne, subindex: pt, value: Z }) => [
               mt(l.$slots, "row-" + p, dr(fr({
                 columnKey: p,
                 index: T,
@@ -2563,11 +2564,11 @@ const oa = /* @__PURE__ */ Oe(aa, [["__scopeId", "data-v-c57a26a4"]]), la = { cl
                 spanIndex: U,
                 subcolumnKey: ne,
                 subindex: pt,
-                value: Q
+                value: Z
               })), () => [
                 pt === void 0 && p === "trend" && g(Re) ? (w(), F(oa, {
                   key: 0,
-                  class: X(Mt(p, Q, N.rowInfo.detailable)),
+                  class: X(Mt(p, Z, N.rowInfo.detailable)),
                   formatter: (vt) => Ae(vt, "int"),
                   title: l.trendChartTitle,
                   url: Wn(N, ne)
@@ -2580,17 +2581,17 @@ const oa = /* @__PURE__ */ Oe(aa, [["__scopeId", "data-v-c57a26a4"]]), la = { cl
                     size: "small"
                   }, {
                     default: _(() => [
-                      P(L(Se(Q, p, ne, !0)), 1)
+                      P(L(Se(Z, p, ne, !0)), 1)
                     ]),
                     _: 2
                   }, 1032, ["to", "is-external"])) : (w(), F(z, {
                     key: 1,
-                    mood: Ge(Q, p, ne),
+                    mood: Ge(Z, p, ne),
                     contrast: "",
                     size: "small"
                   }, {
                     default: _(() => [
-                      P(L(Se(Q, p, ne)), 1)
+                      P(L(Se(Z, p, ne)), 1)
                     ]),
                     _: 2
                   }, 1032, ["mood"]))
@@ -2602,35 +2603,35 @@ const oa = /* @__PURE__ */ Oe(aa, [["__scopeId", "data-v-c57a26a4"]]), la = { cl
                   size: "small"
                 }, {
                   default: _(() => [
-                    P(L(Se(Q, p, ne, !0)), 1)
+                    P(L(Se(Z, p, ne, !0)), 1)
                   ]),
                   _: 2
-                }, 1032, ["to", "is-external"])) : pt === void 0 && Q >= 0.01 && p in g(y) ? (w(), F(un, {
+                }, 1032, ["to", "is-external"])) : pt === void 0 && Z >= 0.01 && p in g(y) ? (w(), F(un, {
                   key: 3,
                   format: g(y)[p].format,
-                  label: Se(Q, p, ne, !0),
+                  label: Se(Z, p, ne, !0),
                   title: g(y)[p].title,
                   url: zn(p, N)
                 }, null, 8, ["format", "label", "title", "url"])) : (w(), F(z, {
                   key: 4,
-                  class: X(Mt(p, Q, N.rowInfo.detailable)),
-                  mood: Ge(Q, p, ne),
+                  class: X(Mt(p, Z, N.rowInfo.detailable)),
+                  mood: Ge(Z, p, ne),
                   contrast: "",
                   size: "small"
                 }, {
                   default: _(() => [
-                    P(L(Se(Q, p, ne, !0)), 1)
+                    P(L(Se(Z, p, ne, !0)), 1)
                   ]),
                   _: 2
                 }, 1032, ["class", "mood"])),
-                We(p, Q) ? (w(), j("i", {
+                We(p, Z) ? (w(), j("i", {
                   key: 5,
                   class: X(["flex-grow-1 expand-column fa", je.value.includes(p) ? "fa-compress-alt" : "fa-expand-alt"]),
                   onClick: () => or(p)
                 }, null, 10, ca)) : $("", !0)
               ], !0),
               Bt.value && N.rowInfo.detailable && p === g(S) ? (w(), j(H, { key: 0 }, [
-                We(p, Q) ? $("", !0) : (w(), F(Or, { key: 0 })),
+                We(p, Z) ? $("", !0) : (w(), F(Or, { key: 0 })),
                 R(Qs, {
                   onHideDetails: () => Zn(N),
                   onShowDetails: (vt) => Kn(vt, N),
@@ -2651,7 +2652,7 @@ const oa = /* @__PURE__ */ Oe(aa, [["__scopeId", "data-v-c57a26a4"]]), la = { cl
     ]));
   }
 });
-const Ma = /* @__PURE__ */ Oe(da, [["__scopeId", "data-v-9c213fb6"]]), fa = { class: "scrollable flex-max no-spacing" }, pa = ["onClick"], va = { class: "scrollable flex-max no-spacing" }, ma = ["onClick"], ha = { class: "scrollable" }, ba = { class: "items flex-max no-spacing" }, ga = /* @__PURE__ */ ge({
+const Ma = /* @__PURE__ */ Oe(da, [["__scopeId", "data-v-31bfbbe2"]]), fa = { class: "scrollable flex-max no-spacing" }, pa = ["onClick"], va = { class: "scrollable flex-max no-spacing" }, ma = ["onClick"], ha = { class: "scrollable" }, ba = { class: "items flex-max no-spacing" }, ga = /* @__PURE__ */ ge({
   __name: "KpiSelector",
   props: {
     applyLabel: {},
@@ -2699,7 +2700,7 @@ const Ma = /* @__PURE__ */ Oe(da, [["__scopeId", "data-v-9c213fb6"]]), fa = { cl
         B - E - 1
       );
       return E + Be + 1;
-    }), Ee = (C) => y.value[m.value.indexOf(C)], K = (C) => c.value[m.value.indexOf(C)], ye = (C = !1, E) => {
+    }), Ee = (C) => y.value[m.value.indexOf(C)], ee = (C) => c.value[m.value.indexOf(C)], ye = (C = !1, E) => {
       E && E.target !== E.currentTarget || (C && (m.value = [...o.value]), O.value = !1, b.value = Object.keys(a.value)[0]);
     }, ot = (C) => {
       const E = m.value.indexOf(C);
@@ -2726,7 +2727,7 @@ const Ma = /* @__PURE__ */ Oe(da, [["__scopeId", "data-v-9c213fb6"]]), fa = { cl
       }
       v.value = void 0, h.value = void 0, S.value = void 0, x.value = void 0, window.removeEventListener("mousemove", xe), window.removeEventListener("mouseup", ie);
     }, Te = (C, E) => {
-      v.value = E, h.value = K(E).$el.offsetTop, S.value = C.clientY, x.value = C.clientY, window.addEventListener("mousemove", xe), window.addEventListener("mouseup", ie);
+      v.value = E, h.value = ee(E).$el.offsetTop, S.value = C.clientY, x.value = C.clientY, window.addEventListener("mousemove", xe), window.addEventListener("mouseup", ie);
     };
     return Ve(A, (C) => {
       C ? (!b.value || !(b.value in le.value)) && (b.value = Object.keys(le.value)[0]) : b.value || (b.value = Object.keys(le.value)[0]);
@@ -2739,7 +2740,7 @@ const Ma = /* @__PURE__ */ Oe(da, [["__scopeId", "data-v-9c213fb6"]]), fa = { cl
         tabindex: "-1"
       }, null, 8, ["disabled", "label"]),
       (w(), F(pr, { to: "#app > .app-container" }, [
-        R(Z, {
+        R(K, {
           class: X(["kpi-selector-container no-spacing", { visible: O.value, hidden: O.value === !1 }]),
           onClick: E[5] || (E[5] = cn((B) => ye(!0, B), ["stop"])),
           column: "",
@@ -2749,7 +2750,7 @@ const Ma = /* @__PURE__ */ Oe(da, [["__scopeId", "data-v-9c213fb6"]]), fa = { cl
           default: _(() => [
             R(mr, { class: "kpi-selector" }, {
               default: _(() => [
-                R(Z, {
+                R(K, {
                   class: "title",
                   vertical: "center"
                 }, {
@@ -2763,7 +2764,7 @@ const Ma = /* @__PURE__ */ Oe(da, [["__scopeId", "data-v-9c213fb6"]]), fa = { cl
                       ]),
                       _: 1
                     }),
-                    R(Z, {
+                    R(K, {
                       class: "flex-max no-spacing search-container",
                       vertical: "center"
                     }, {
@@ -2781,7 +2782,7 @@ const Ma = /* @__PURE__ */ Oe(da, [["__scopeId", "data-v-9c213fb6"]]), fa = { cl
                       ]),
                       _: 1
                     }),
-                    R(Z, {
+                    R(K, {
                       class: "close-container flex-max no-spacing",
                       horizontal: "right"
                     }, {
@@ -2797,10 +2798,10 @@ const Ma = /* @__PURE__ */ Oe(da, [["__scopeId", "data-v-9c213fb6"]]), fa = { cl
                   ]),
                   _: 1
                 }),
-                R(Z, { class: "body flex-max no-spacing" }, {
+                R(K, { class: "body flex-max no-spacing" }, {
                   default: _(() => [
                     b.value !== void 0 && se.value !== void 0 ? (w(), j(H, { key: 0 }, [
-                      R(Z, {
+                      R(K, {
                         class: "groups flex-max",
                         column: ""
                       }, {
@@ -2827,7 +2828,7 @@ const Ma = /* @__PURE__ */ Oe(da, [["__scopeId", "data-v-9c213fb6"]]), fa = { cl
                         ]),
                         _: 1
                       }),
-                      R(Z, {
+                      R(K, {
                         class: "group-columns flex-max no-spacing",
                         column: ""
                       }, {
@@ -2855,12 +2856,12 @@ const Ma = /* @__PURE__ */ Oe(da, [["__scopeId", "data-v-9c213fb6"]]), fa = { cl
                         ]),
                         _: 1
                       }),
-                      R(Z, {
+                      R(K, {
                         class: "enabled-columns flex-max no-spacing",
                         column: ""
                       }, {
                         default: _(() => [
-                          R(Z, {
+                          R(K, {
                             class: "header",
                             vertical: "center"
                           }, {
@@ -2899,7 +2900,7 @@ const Ma = /* @__PURE__ */ Oe(da, [["__scopeId", "data-v-9c213fb6"]]), fa = { cl
                                 G("div", {
                                   class: X(["separator-top no-spacing", { "place-after": J.value !== void 0 && v.value !== void 0 && B === m.value[J.value] && J.value < m.value.indexOf(v.value) }])
                                 }, null, 2),
-                                R(Z, {
+                                R(K, {
                                   class: X(["item no-spacing", { dragged: B === v.value }]),
                                   ref_for: !0,
                                   ref_key: "enabledColumnElements",
@@ -2951,7 +2952,7 @@ const Ma = /* @__PURE__ */ Oe(da, [["__scopeId", "data-v-9c213fb6"]]), fa = { cl
                         ]),
                         _: 1
                       })
-                    ], 64)) : (w(), F(Z, {
+                    ], 64)) : (w(), F(K, {
                       key: 1,
                       class: "flex-max",
                       horizontal: "center",
@@ -2970,7 +2971,7 @@ const Ma = /* @__PURE__ */ Oe(da, [["__scopeId", "data-v-9c213fb6"]]), fa = { cl
                   ]),
                   _: 1
                 }),
-                R(Z, {
+                R(K, {
                   class: "controls no-spacing",
                   horizontal: "right"
                 }, {
