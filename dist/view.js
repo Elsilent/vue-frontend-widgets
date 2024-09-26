@@ -1,23 +1,26 @@
 import { defineComponent as ge, toRefs as Ce, ref as k, openBlock as w, createElementBlock as j, createVNode as R, unref as g, normalizeClass as X, createElementVNode as G, toDisplayString as L, withCtx as _, Fragment as H, renderList as be, createBlock as F, withDirectives as ir, createTextVNode as P, createCommentVNode as $, withModifiers as cn, computed as I, normalizeStyle as Xe, onMounted as ur, watch as Ve, createSlots as cr, renderSlot as mt, normalizeProps as dr, guardReactiveProps as fr, nextTick as Xt, Teleport as pr } from "vue";
-import { _ as xt, E as vr, T as mr } from "./Tooltip.vue_vue_type_style_index_0_lang-4b835369.js";
-import { I as Pe, A as Z, C as hr } from "./Icon-53e685d0.js";
+import { _ as xt, E as vr } from "./Tooltip.vue_vue_type_style_index_0_lang-f467a343.js";
+import { I as Pe, A as Z, C as mr } from "./Icon-53e685d0.js";
 import { _ as Oe } from "./_plugin-vue_export-helper-dad06003.js";
 import fe from "numeral";
-import { cloneObject as br } from "./utils/clone.js";
-import { D as gr, B as _t, I as yr } from "./Input-301d9b5d.js";
-import { L as Tt, a as wr } from "./LineBarChart-08a988f6.js";
+import { cloneObject as hr } from "./utils/clone.js";
+import { D as br, B as _t, I as gr } from "./Input-301d9b5d.js";
+import { L as Tt, a as yr } from "./LineBarChart-08a988f6.js";
 import { I as z } from "./Info-38a17291.js";
-import "./base-fd1fc9c4.js";
-import "./popper-141be11c.js";
-import { C as _r, b as Sr, S as Cr, O as Or } from "./Option-24012cea.js";
+import "./base-d7e543b4.js";
+import "./popper-6624aaae.js";
+import { C as wr, b as _r, S as Sr, O as Cr } from "./Option-ded28426.js";
 import { L as Yt } from "./Link-882cf82b.js";
-import { Separator as Er } from "./marker.js";
+import { Separator as Or } from "./marker.js";
+import { T as Er } from "./Table-43dc684b.js";
 import { H as Me } from "./Header-37ffd1ab.js";
-import "./Scrollable-055852b4.js";
-import "./datetime-31a2b505.js";
 import "./utils/error.js";
 import "./match-b8889c93.js";
-import "./tag-fa681c03.js";
+import "./tag-b8863cf8.js";
+import "./index-98677358.js";
+import "./index-30067d50.js";
+import "./Scrollable-055852b4.js";
+import "./datetime-31a2b505.js";
 const Rr = { class: "column-hint" }, xr = /* @__PURE__ */ ge({
   __name: "ColumnHint",
   props: {
@@ -1651,7 +1654,7 @@ const un = /* @__PURE__ */ Oe(Ys, [["__scopeId", "data-v-23cadab0"]]), Qs = /* @
             ]),
             _: 1
           })), [
-            [g(_r), c]
+            [g(wr), c]
           ])
         ]),
         default: _(() => [
@@ -1677,7 +1680,7 @@ const Zs = /* @__PURE__ */ ge({
   emits: ["update:value", "update:select"],
   setup(e) {
     const t = e, n = k(t.value), r = k(t.select), s = I(() => t.width === "small" ? 50 : 100);
-    return (a, o) => (w(), F(g(Sr), {
+    return (a, o) => (w(), F(g(_r), {
       modelValue: n.value,
       "onUpdate:modelValue": o[2] || (o[2] = (u) => n.value = u),
       onChange: o[3] || (o[3] = (u) => a.$emit("update:value", { value: u, operator: r.value })),
@@ -1688,7 +1691,7 @@ const Zs = /* @__PURE__ */ ge({
       style: Xe({ minWidth: `${80 + s.value}px` })
     }, {
       prepend: _(() => [
-        R(Cr, {
+        R(Sr, {
           modelValue: r.value,
           "onUpdate:modelValue": o[0] || (o[0] = (u) => r.value = u),
           onChange: o[1] || (o[1] = (u) => a.$emit("update:select", { operator: u, value: n.value })),
@@ -1696,7 +1699,7 @@ const Zs = /* @__PURE__ */ ge({
           size: "default"
         }, {
           default: _(() => [
-            (w(!0), j(H, null, be(e.items, (u, b) => (w(), F(Or, {
+            (w(!0), j(H, null, be(e.items, (u, b) => (w(), F(Cr, {
               key: b,
               value: b,
               label: u,
@@ -1796,7 +1799,7 @@ const Ks = /* @__PURE__ */ Oe(Zs, [["__scopeId", "data-v-e2be7f01"]]), ea = { cl
           _: 1
         })
       ], 64)) : $("", !0),
-      g(m) > c.value ? (w(), F(gr, {
+      g(m) > c.value ? (w(), F(br, {
         key: 1,
         class: "page-size-selector no-spacing",
         "onUpdate:modelValue": S[2] || (S[2] = (x) => v(parseInt(x.toString()))),
@@ -1886,7 +1889,7 @@ const na = /* @__PURE__ */ Oe(ta, [["__scopeId", "data-v-c7e19feb"]]), ra = { cl
             _: 1
           })) : $("", !0),
           G("div", sa, [
-            u.value ? (w(), F(wr, {
+            u.value ? (w(), F(yr, {
               key: 0,
               activeLines: ["values"],
               formatters: { trend: g(n), values: g(n) },
@@ -2010,7 +2013,7 @@ const oa = /* @__PURE__ */ Oe(aa, [["__scopeId", "data-v-c57a26a4"]]), la = { cl
     }), Ln = I(
       () => O != null && O.value ? Object.keys(O.value) : void 0
     ), Dt = I(
-      () => W.value.reduce((l, i) => (l[i] = br(c.value[i]), l), {})
+      () => W.value.reduce((l, i) => (l[i] = hr(c.value[i]), l), {})
     ), Bt = I(() => {
       if (x != null && x.value)
         return Object.entries(x.value).reduce((l, [i, { label: d }]) => (l[i] = d, l), {});
@@ -2356,7 +2359,7 @@ const oa = /* @__PURE__ */ Oe(aa, [["__scopeId", "data-v-c57a26a4"]]), la = { cl
             mood: "positive"
           }, null, 8, ["icon"])) : $("", !0)
         ], 2),
-        ce.value ? (w(), F(mr, {
+        ce.value ? (w(), F(Er, {
           key: 0,
           ref_key: "table",
           ref: de,
@@ -2627,7 +2630,7 @@ const oa = /* @__PURE__ */ Oe(aa, [["__scopeId", "data-v-c57a26a4"]]), la = { cl
                 }, null, 10, ca)) : $("", !0)
               ], !0),
               Bt.value && N.rowInfo.detailable && p === g(S) ? (w(), j(H, { key: 0 }, [
-                We(p, Q) ? $("", !0) : (w(), F(Er, { key: 0 })),
+                We(p, Q) ? $("", !0) : (w(), F(Or, { key: 0 })),
                 R(Qs, {
                   onHideDetails: () => Zn(N),
                   onShowDetails: (vt) => Kn(vt, N),
@@ -2648,7 +2651,7 @@ const oa = /* @__PURE__ */ Oe(aa, [["__scopeId", "data-v-c57a26a4"]]), la = { cl
     ]));
   }
 });
-const Ia = /* @__PURE__ */ Oe(da, [["__scopeId", "data-v-9c213fb6"]]), fa = { class: "scrollable flex-max no-spacing" }, pa = ["onClick"], va = { class: "scrollable flex-max no-spacing" }, ma = ["onClick"], ha = { class: "scrollable" }, ba = { class: "items flex-max no-spacing" }, ga = /* @__PURE__ */ ge({
+const Ma = /* @__PURE__ */ Oe(da, [["__scopeId", "data-v-9c213fb6"]]), fa = { class: "scrollable flex-max no-spacing" }, pa = ["onClick"], va = { class: "scrollable flex-max no-spacing" }, ma = ["onClick"], ha = { class: "scrollable" }, ba = { class: "items flex-max no-spacing" }, ga = /* @__PURE__ */ ge({
   __name: "KpiSelector",
   props: {
     applyLabel: {},
@@ -2744,7 +2747,7 @@ const Ia = /* @__PURE__ */ Oe(da, [["__scopeId", "data-v-9c213fb6"]]), fa = { cl
           vertical: "center"
         }, {
           default: _(() => [
-            R(hr, { class: "kpi-selector" }, {
+            R(mr, { class: "kpi-selector" }, {
               default: _(() => [
                 R(Z, {
                   class: "title",
@@ -2765,7 +2768,7 @@ const Ia = /* @__PURE__ */ Oe(da, [["__scopeId", "data-v-9c213fb6"]]), fa = { cl
                       vertical: "center"
                     }, {
                       default: _(() => [
-                        R(yr, {
+                        R(gr, {
                           class: "flex-max search",
                           modelValue: A.value,
                           "onUpdate:modelValue": E[1] || (E[1] = (B) => A.value = B),
@@ -2990,9 +2993,9 @@ const Ia = /* @__PURE__ */ Oe(da, [["__scopeId", "data-v-9c213fb6"]]), fa = { cl
     ], 64));
   }
 });
-const Ua = /* @__PURE__ */ Oe(ga, [["__scopeId", "data-v-f095228a"]]);
+const $a = /* @__PURE__ */ Oe(ga, [["__scopeId", "data-v-f095228a"]]);
 export {
   Tr as ColumnHint,
-  Ia as CommonTable,
-  Ua as KpiSelector
+  Ma as CommonTable,
+  $a as KpiSelector
 };
