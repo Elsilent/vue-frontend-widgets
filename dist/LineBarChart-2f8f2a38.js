@@ -7,7 +7,7 @@ function Ge(V, re) {
     (l(), n(c, null, p(5, (J) => f("div", ze)), 64))
   ]);
 }
-const He = {}, lt = /* @__PURE__ */ $e(He, [["render", Ge], ["__scopeId", "data-v-b467514e"]]), Ie = (V) => (Be("data-v-2a04ce85"), V = V(), Ee(), V), Ne = {
+const He = {}, lt = /* @__PURE__ */ $e(He, [["render", Ge], ["__scopeId", "data-v-b467514e"]]), Ie = (V) => (Be("data-v-bc37fa28"), V = V(), Ee(), V), Ne = {
   key: 0,
   class: "y-axis-title-container"
 }, Xe = {
@@ -248,7 +248,7 @@ const He = {}, lt = /* @__PURE__ */ $e(He, [["render", Ge], ["__scopeId", "data-
           _: 1
         })
       ])) : b("", !0),
-      K.value && he.value ? (l(), n("div", Xe, [
+      K.value !== void 0 && he.value ? (l(), n("div", Xe, [
         (l(!0), n(c, null, p(T.value[K.value], (e) => (l(), U(A, { class: "axis-label" }, {
           default: k(() => [
             B(E(he.value(e)), 1)
@@ -420,7 +420,7 @@ const He = {}, lt = /* @__PURE__ */ $e(He, [["render", Ge], ["__scopeId", "data-
           ], 6))), 256))
         ], 4))
       ], 512),
-      r(S) && de.value ? (l(), n("div", Qe, [
+      r(S) !== void 0 && de.value ? (l(), n("div", Qe, [
         (l(!0), n(c, null, p(T.value[r(S)], (e) => (l(), U(A, { class: "axis-label" }, {
           default: k(() => [
             B(E(de.value(e)), 1)
@@ -443,7 +443,7 @@ const He = {}, lt = /* @__PURE__ */ $e(He, [["render", Ge], ["__scopeId", "data-
     ], 6));
   }
 });
-const ot = /* @__PURE__ */ $e(et, [["__scopeId", "data-v-2a04ce85"]]);
+const ot = /* @__PURE__ */ $e(et, [["__scopeId", "data-v-bc37fa28"]]);
 export {
   lt as L,
   ot as a

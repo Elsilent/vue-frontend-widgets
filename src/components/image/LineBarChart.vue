@@ -452,7 +452,7 @@ onUnmounted(() => {
       important,
       size="small",
     ) {{ yAxisLabels[0] }}
-  .y-axis-labels(v-if="leftAxisGroupValue && leftAxisGroupFormatter")
+  .y-axis-labels(v-if="leftAxisGroupValue !== undefined && leftAxisGroupFormatter")
     Info.axis-label(
       v-for="label in axisLabels[leftAxisGroupValue]",
     ) {{ leftAxisGroupFormatter(label) }}
@@ -569,7 +569,7 @@ onUnmounted(() => {
                   :lineIndex="lineIndex - 1",
                   :valueKey="key",
                 )
-  .y-axis-labels(v-if="rightAxisGroup && rightAxisGroupFormatter")
+  .y-axis-labels(v-if="rightAxisGroup !== undefined && rightAxisGroupFormatter")
     Info.axis-label(
       v-for="label in axisLabels[rightAxisGroup]",
     ) {{ rightAxisGroupFormatter(label) }}
