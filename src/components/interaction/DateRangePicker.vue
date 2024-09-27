@@ -21,10 +21,11 @@ const props = withDefaults(
     disabled?: boolean;
     modelValue: [string, string];
     monthLabels: string[];
-    translator: (code: string) => string;
     weekLabels: string[];
+    minDate?: string;
   }>(),
   {
+    minDate: undefined,
     disabled: false,
   },
 );
@@ -169,7 +170,7 @@ Align.date-range-picker(
           @click.stop="() => whenPresetSelected(presetCode)",
           :class='{ active: isPresetActive(preset) }',
           size='small',
-        ) {{ translator(preset.label) }}
+        ) {{ preset.label }}
       Align.calendars
         Calendar(
           ref="leftCalendar",
@@ -181,6 +182,7 @@ Align.date-range-picker(
           :range='modelValue',
           :weekLabels='weekLabels',
           :relatedMaxDate="DateTime.fromFormat(rightCalendarYearMonth, dateFormat.yearMonth).endOf('month').toFormat(dateFormat.yearMonthDay)"
+          :minDate="minDate"
         )
         Calendar(
           ref="rightCalendar",
@@ -192,6 +194,7 @@ Align.date-range-picker(
           :range='modelValue',
           :weekLabels='weekLabels',
           :relatedMinDate="DateTime.fromFormat(leftCalendarYearMonth, dateFormat.yearMonth).startOf('month').toFormat(dateFormat.yearMonthDay)"
+          :minDate="minDate"
         )
 </template>
 
@@ -227,6 +230,7 @@ Align.date-range-picker(
     left: 0;
     padding: 0;
     top: calc(100% + $padding-size-small-2);
+    max-width: none;
 
     > .sections {
       > .presets {

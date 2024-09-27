@@ -1514,6 +1514,7 @@ if (request) {
           :columnKey="columnKey",
           :subcolumnKey="subcolumnKey",
           :values="values",
+          :row="totalRow"
         )
           template(v-if="totalTitle && columnKey === totalColumnKey")
             Info.total-label(
