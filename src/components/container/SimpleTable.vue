@@ -157,9 +157,18 @@ const visibleColumnKeys = computed(() =>
     .map(([key, _]) => key),
 );
 
-const columnCountDisplayed = computed(
-  () => visibleColumnKeys.value.length + (showRowNumber.value ? 1 : 0),
-);
+const columnCountDisplayed = computed(() => {
+  let result = showRowNumber.value ? 1 : 0;
+
+  if (comparisonColumnKeys?.value) {
+    visibleColumnKeys.value.forEach((columnKey) => {
+      result += columns.value[columnKey]?.colspan || 1;
+    });
+    return result;
+  } else {
+    return result + visibleColumnKeys.value.length;
+  }
+});
 
 const dragModeEnabled = computed(() => {
   // Prevent drag mode from being triggered
@@ -1164,6 +1173,9 @@ defineSlots<
       position: sticky;
       transition: background-color 0.3s, box-shadow 0.3s;
       z-index: 20;
+      &:first-child {
+        grid-column-start: 1;
+      }
     }
 
     &:not(.column) {

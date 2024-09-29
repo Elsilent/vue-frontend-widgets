@@ -267,6 +267,7 @@ const props = withDefaults(
      */
     trendUrl?: string | Record<string, string>;
     uncolorizeLabel: string;
+    noDataMessage?: string;
   }>(),
   {
     cellClasses: () => ({}),
@@ -317,6 +318,7 @@ const {
   total,
   totalColumnKey,
   trendUrl,
+  noDataMessage,
 } = toRefs(props);
 
 const makeInlineFilters = () => {
@@ -1386,6 +1388,7 @@ if (request) {
       :showRowNumber="showRowNumber",
       :showTotal="!!totalRow",
       :showTopTotal="showTopTotal",
+      :noDataMessage="noDataMessage"
     )
       template(#colorizeLabel="{ enabled }")
         Info(mood="white", size="small")
