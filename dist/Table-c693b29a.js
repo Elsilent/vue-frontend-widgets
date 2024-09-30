@@ -57,9 +57,13 @@ const Ie = ["onClick", "onMousedown", "data-column"], Fe = ["onClick"], Ee = ["d
       showTopTotal: R
     } = He(x), h = M(), H = M(), _ = M(0), j = M(0), Y = M(0), S = M({}), w = N(
       () => Object.entries(p.value).filter(([t, { visible: l }]) => l).map(([t, l]) => t)
-    ), ie = N(
-      () => w.value.length + (D.value ? 1 : 0)
-    ), q = N(() => _.value > 3), te = N(
+    ), ie = N(() => {
+      let t = D.value ? 1 : 0;
+      return u != null && u.value ? (w.value.forEach((l) => {
+        var e;
+        t += ((e = p.value[l]) == null ? void 0 : e.colspan) || 1;
+      }), t) : t + w.value.length;
+    }), q = N(() => _.value > 3), te = N(
       () => Object.values(ee.value).reduce((t, l) => {
         for (const [e, r] of Object.entries(p.value))
           if (r.type !== "string")
@@ -131,7 +135,7 @@ const Ie = ["onClick", "onMousedown", "data-column"], Fe = ["onClick"], Ee = ["d
       };
       if (K.value) {
         const m = (() => !G || !G.value ? "positive" : G.value.includes(e) ? "negative" : "positive")();
-        s[`color-intensity-${t.rowInfo.detailable ? y(t[e], e, r) : "none"}`] = !0, s[`color-${m}`] = !0, r !== void 0 && u && u.value && u.value[r].includes("difference") ? s.colored = !1 : s.colored = me(e) >= 0;
+        s[`color-intensity-${t.rowInfo.detailable ? y(t[e], e, r) : "none"}`] = !0, s[`color-${m}`] = !0, r !== void 0 && u && u.value && u.value[r].includes("difference") ? s.colored = !1 : s.colored = pe(e) >= 0;
       }
       return s;
     }, y = (t, l, e) => {
@@ -195,7 +199,7 @@ const Ie = ["onClick", "onMousedown", "data-column"], Fe = ["onClick"], Ee = ["d
         default:
           return t;
       }
-    }, de = (t) => t.subindex === void 0 ? t.index + 1 : `${t.index + 1}.${t.subindex + 1}`, me = (t) => I.value.findIndex((l) => l === t), Be = (t) => K.value && !["date", "string"].includes(p.value[t].type), Ce = (t, l) => {
+    }, de = (t) => t.subindex === void 0 ? t.index + 1 : `${t.index + 1}.${t.subindex + 1}`, pe = (t) => I.value.findIndex((l) => l === t), Be = (t) => K.value && !["date", "string"].includes(p.value[t].type), Ce = (t, l) => {
       if (u && u.value && p.value[t].colspan && l === void 0 || h.value !== void 0 && q.value && w.value[h.value] === t)
         return;
       const e = [t];
@@ -228,13 +232,13 @@ const Ie = ["onClick", "onMousedown", "data-column"], Fe = ["onClick"], Ee = ["d
         to: H.value
       }), H.value = void 0, _.value = 0, h.value = void 0, window.removeEventListener("mousemove", be), window.removeEventListener("mouseup", we);
     }, Oe = (t) => {
-      me(t) >= 0 ? A("removeColoredMetric", t) : A("addColoredMetric", t);
+      pe(t) >= 0 ? A("removeColoredMetric", t) : A("addColoredMetric", t);
     }, le = M({}), Ne = (t, l) => {
       l && (le.value[t] = l);
-    }, pe = M(), he = () => {
-      if (!pe.value)
+    }, me = M(), he = () => {
+      if (!me.value)
         return;
-      const t = pe.value.getBoundingClientRect();
+      const t = me.value.getBoundingClientRect();
       S.value = Object.entries(p.value).reduce(
         (l, [e, r]) => {
           if (r.visible && le.value[e]) {
@@ -269,7 +273,7 @@ const Ie = ["onClick", "onMousedown", "data-column"], Fe = ["onClick"], Ee = ["d
         "with-secondary": !!a(u) && w.value.some((e) => (a(p)[e].colspan || 1) !== 1)
       }]),
       ref_key: "table",
-      ref: pe,
+      ref: me,
       style: P(i.value)
     }, [
       a(D) ? (d(), v("div", {
@@ -303,7 +307,7 @@ const Ie = ["onClick", "onMousedown", "data-column"], Fe = ["onClick"], Ee = ["d
             style: P({ top: `${o(e)}px` })
           }, [
             f(t.$slots, "colorizeLabel", {
-              enabled: me(e) >= 0
+              enabled: pe(e) >= 0
             }, void 0, !0)
           ], 12, Fe)) : b("", !0)
         ], 46, Ie)) : b("", !0)
@@ -463,7 +467,7 @@ const Ie = ["onClick", "onMousedown", "data-column"], Fe = ["onClick"], Ee = ["d
     ], 6));
   }
 });
-const Te = /* @__PURE__ */ Re(xe, [["__scopeId", "data-v-b3158389"]]), Ke = /* @__PURE__ */ ke({
+const Te = /* @__PURE__ */ Re(xe, [["__scopeId", "data-v-0e65b67e"]]), Ke = /* @__PURE__ */ ke({
   __name: "Table",
   props: {
     additionalHeaders: { default: () => ({}) },
