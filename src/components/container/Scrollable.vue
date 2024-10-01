@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { computed, nextTick, onMounted, onUnmounted, ref, toRefs, watch } from 'vue';
 import ScrollableArea from './ScrollableArea.vue';
+import { throttle } from '../../utils/throttle';
 
 const props = withDefaults(
   defineProps<{
@@ -123,18 +124,21 @@ const whenScrolledManually = (event: MouseEvent) => {
       setManualScrollTopWith(event.clientY - (forceActiveInitialPositionTop?.value ?? 0));
       break;
   }
-
-  event.preventDefault();
 };
+
+const throttledScroll = throttle(whenScrolledManually, 80);
 
 const unforceActive = () => {
   forceActiveMode.value = undefined;
 
-  window.removeEventListener('mousemove', whenScrolledManually);
+  window.removeEventListener('mousemove', throttledScroll);
   window.removeEventListener('mouseup', unforceActive);
 };
 
 const forceActive = (event: MouseEvent, newForceActiveMode: 'horizontal' | 'vertical') => {
+  event.preventDefault();
+  event.stopPropagation();
+
   forceActiveMode.value = newForceActiveMode;
 
   const relativeElement = getRelativeElement();
@@ -150,7 +154,7 @@ const forceActive = (event: MouseEvent, newForceActiveMode: 'horizontal' | 'vert
       break;
   }
 
-  window.addEventListener('mousemove', whenScrolledManually);
+  window.addEventListener('mousemove', throttledScroll);
   window.addEventListener('mouseup', unforceActive);
 };
 
