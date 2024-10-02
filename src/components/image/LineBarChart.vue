@@ -28,10 +28,12 @@ const props = withDefaults(
     formatters: Record<number | string, (value: number) => string>;
     groups?: Record<number | string, number | string>;
     leftAxisGroup?: number | string;
+    leftAxisStyle?: Style;
     minHeight?: boolean;
     moods: Record<number | string, { chart: number } | { mood: Mood }>;
     noXAxisLabels?: boolean;
     rightAxisGroup?: number | string;
+    rightAxisStyle?: Style;
     smoothing?: number;
     styles: Record<number | string, Style>;
     values: Record<number | string, Record<number | string, number>>;
@@ -53,10 +55,12 @@ const {
   groups,
   formatters,
   leftAxisGroup,
+  leftAxisStyle,
   minHeight,
   moods,
   noXAxisLabels,
   rightAxisGroup,
+  rightAxisStyle,
   smoothing,
   styles,
   values,
@@ -64,10 +68,32 @@ const {
   columnsWithIntegers,
 } = toRefs(props);
 
-// If groups are not defined, just group everything into a single "0" group
-const groupsValue = computed(
-  () => groups?.value ?? Object.fromEntries(valueKeys.value.map((key) => [key, 0])),
-);
+const groupsByStyleAndKey = computed(() => {
+  const groupsByStyleAndKey: Record<Style, Record<string, number | string>> = {
+    bar: {},
+    line: {},
+  };
+  const defaultGroup = {
+    line: '__line__',
+    bar: '__bar__',
+  };
+
+  for (const key of valueKeys.value) {
+    const group = groups?.value?.[key];
+
+    switch (styles.value[key]) {
+      case 'bar':
+        groupsByStyleAndKey.bar[key] = group ?? defaultGroup.bar;
+        break;
+      case 'line':
+      default:
+        groupsByStyleAndKey.line[key] = group ?? defaultGroup.line;
+        break;
+    }
+  }
+
+  return groupsByStyleAndKey;
+});
 
 const lineLabels = computed(() => Object.values(values.value).map((line) => Object.keys(line)));
 
@@ -78,86 +104,174 @@ const maxLineLabels = computed(() => {
   );
 });
 
-const leftAxisGroupValue = computed(
-  () => leftAxisGroup?.value ?? groupsValue.value[valueKeys.value[0]],
-);
-
-const leftAxisGroupFormatter = computed(() => {
-  const valueGroupEntry = Object.entries(groupsValue.value).find(
-    ([, groupKey]) => groupKey === leftAxisGroupValue.value,
-  );
-
-  if (!valueGroupEntry) {
-    return undefined;
+const leftAxisStyleValue = computed(() => {
+  if (leftAxisStyle?.value !== undefined) {
+    return leftAxisStyle.value;
   }
 
-  const [valueKey] = valueGroupEntry;
+  // If there are any bars in values, display bar values by default
+  if (Object.values(styles.value).some((style) => style === 'bar')) {
+    return 'bar';
+  }
+
+  return 'line';
+});
+
+const rightAxisStyleValue = computed(() => {
+  if (rightAxisStyle?.value !== undefined) {
+    return rightAxisStyle.value;
+  }
+
+  // If there are any lines in values, display line values by default
+  if (Object.values(styles.value).some((style) => style === 'line')) {
+    return 'line';
+  }
+
+  return 'bar';
+});
+
+const leftAxisGroupValue = computed(() => {
+  if (leftAxisGroup?.value !== undefined) {
+    return leftAxisGroup.value;
+  }
+
+  // If group is not defined by default use the first group of the style
+  return Object.values(groupsByStyleAndKey.value[leftAxisStyleValue.value])[0];
+});
+
+const rightAxisGroupValue = computed(() => {
+  if (rightAxisGroup?.value !== undefined) {
+    return rightAxisGroup.value;
+  }
+
+  // If left axis shows bar data and right axis shows line data use the first line group
+  if (leftAxisStyleValue.value === 'bar' && rightAxisStyleValue.value === 'line') {
+    return Object.values(groupsByStyleAndKey.value[rightAxisStyleValue.value])[0];
+  }
+
+  return undefined;
+});
+
+const leftAxisGroupFormatter = computed(() => {
+  let valueKey: string | number | undefined = undefined;
+
+  for (const [groupValueKey, group] of Object.entries(groupsByStyleAndKey.value[leftAxisStyleValue.value])) {
+    if (group === leftAxisGroupValue.value) {
+      valueKey = groupValueKey;
+
+      break;
+    }
+  }
+
+  if (!valueKey) {
+    return undefined;
+  }
 
   return formatters.value[valueKey];
 });
 
 const rightAxisGroupFormatter = computed(() => {
-  if (!rightAxisGroup?.value) {
+  if (rightAxisGroupValue.value === undefined) {
     return undefined;
   }
 
-  const valueGroupEntry = Object.entries(groupsValue.value).find(
-    ([, groupKey]) => groupKey === rightAxisGroup.value,
-  );
+  let valueKey: string | number | undefined = undefined;
 
-  if (!valueGroupEntry) {
-    return undefined;
+  for (const [groupValueKey, group] of Object.entries(groupsByStyleAndKey.value[rightAxisStyleValue.value])) {
+    if (group === rightAxisGroupValue.value) {
+      valueKey = groupValueKey;
+
+      break;
+    }
   }
 
-  const [valueKey] = valueGroupEntry;
+  if (!valueKey) {
+    return undefined;
+  }
 
   return formatters.value[valueKey];
 });
 
 const axisLabels = computed(() => {
-  const axisValues: Record<number | string, number[]> = Object.fromEntries(
-    Object.values(groupsValue.value).map((groupKey) => [groupKey, []]),
-  );
+  const axisValues: Record<Style, Record<number | string, number[]>> = {
+    line: Object.fromEntries(
+      Object.values(groupsByStyleAndKey.value.line).map((groupKey) => [groupKey, []]),
+    ),
+    bar: Object.fromEntries(
+      Object.values(groupsByStyleAndKey.value.bar).map((groupKey) => [
+        groupKey,
+        Array.from({ length: Object.values(Object.values(values.value)[0]).length }, () => 0),
+      ]),
+    )
+  };
 
-  for (let index = 0; index < lineCount.value; index++) {
-    axisValues[groupsValue.value[valueKeys.value[index]]].push(
-      ...Object.values(values.value[valueKeys.value[index]]),
-    );
+  for (const [key, lineValues] of Object.entries(values.value)) {
+    const style = styles.value[key];
+    const group = groupsByStyleAndKey.value[style][key];
+
+    switch (style) {
+      case 'bar':
+        let valueIndex = 0;
+
+        for (const value of Object.values(lineValues)) {
+          axisValues[style][group][valueIndex] += value;
+
+          valueIndex++;
+        }
+        break;
+      case 'line':
+      default:
+        axisValues[style][group].push(...Object.values(values.value[key]));
+    }
   }
 
-  const axisLabels: Record<number | string, number[]> = Object.fromEntries(
-    Object.values(groupsValue.value).map((groupKey) => {
-      const groupValues = axisValues[groupKey];
+  const axisLabels: Record<Style, Record<number | string, number[]>> = {
+    bar: {},
+    line: {},
+  };
 
-      const min = Math.min(...groupValues, 0);
-      const max = Math.max(...groupValues);
+  const fillAxisLabels = (
+    axisLabels: Record<Style, Record<number | string, number[]>>,
+    style: Style,
+    values: Record<number | string, number[]>,
+  ) => {
+    axisLabels[style] = Object.fromEntries(
+      Object.values(groupsByStyleAndKey.value[style]).map((groupKey) => {
+        const groupValues = values[groupKey];
 
-      let scope = max - min;
+        const min = Math.min(...groupValues, 0);
+        const max = Math.max(...groupValues);
 
-      // for small integer values set yAxis to min integer value.
-      const minScope = axis.value * 2;
+        let scope = max - min;
 
-      if (
-        axis.value > 2 &&
-        scope < minScope &&
-        columnsWithIntegers.value.includes(groupKey.toString())
-      ) {
-        scope = minScope;
-      }
+        // for small integer values set yAxis to min integer value.
+        const minScope = axis.value * 2;
 
-      const scaleCoef = Math.pow(10, Math.ceil(Math.abs(scope)).toString().length - 2);
-      const firstAxisRawValue = scope / (axis.value - 1);
-      const scale = Math.ceil(firstAxisRawValue / scaleCoef) * scaleCoef;
+        if (
+          axis.value > 2 &&
+          scope < minScope &&
+          columnsWithIntegers.value.includes(groupKey.toString())
+        ) {
+          scope = minScope;
+        }
 
-      const labels = [min];
+        const scaleCoef = Math.pow(10, Math.ceil(Math.abs(scope)).toString().length - 2);
+        const firstAxisRawValue = scope / (axis.value - 1);
+        const scale = Math.ceil(firstAxisRawValue / scaleCoef) * scaleCoef;
 
-      for (let i = 1; i < axis.value; i++) {
-        labels.push(labels[labels.length - 1] + scale);
-      }
+        const labels = [min];
 
-      return [groupKey, labels.reverse()];
-    }),
-  );
+        for (let i = 1; i < axis.value; i++) {
+          labels.push(labels[labels.length - 1] + scale);
+        }
+
+        return [groupKey, labels.reverse()];
+      }),
+    );
+  };
+
+  fillAxisLabels(axisLabels, 'bar', axisValues.bar);
+  fillAxisLabels(axisLabels, 'line', axisValues.line);
 
   return axisLabels;
 });
@@ -387,8 +501,8 @@ const getPointLeftPosition = (key: number | string) => {
   return totalValueCount.value === 1 ? 50 : (index * 100) / (totalValueCount.value - 1);
 };
 
-const getPointTopPosition = (value: number, lineLabel: number | string) => {
-  const valueAxisLabels = axisLabels.value[groupsValue.value[lineLabel]];
+const getTopPositionByStyleAndGroup = (value: number, style: Style, group: number | string) => {
+  const valueAxisLabels = axisLabels.value[style][group];
 
   const minValue = valueAxisLabels[valueAxisLabels.length - 1];
   const maxValue = valueAxisLabels[0];
@@ -398,13 +512,27 @@ const getPointTopPosition = (value: number, lineLabel: number | string) => {
       ? 100
       : Math.min(100, Math.max(0, ((maxValue - value) * 100) / (maxValue - minValue)));
 
-  switch (styles.value[lineLabel]) {
+  switch (style) {
     case 'bar':
       return 100 - position;
     case 'line':
     default:
       return position;
   }
+};
+
+const getPointTopPosition = (value: number, valueKey: number | string) => {
+  const style = styles.value[valueKey];
+  const group = groupsByStyleAndKey.value[style][valueKey];
+
+  return getTopPositionByStyleAndGroup(value, style, group);
+};
+
+const getBarSumTopPosition = (value: number) => {
+  // No support for multiple bar groups
+  const group = Object.values(groupsByStyleAndKey.value.bar)[0];
+
+  return getTopPositionByStyleAndGroup(value, 'bar', group);
 };
 
 const setHover = (key: number | string, hover: boolean) => {
@@ -454,12 +582,12 @@ onUnmounted(() => {
     ) {{ yAxisLabels[0] }}
   .y-axis-labels(v-if="leftAxisGroupValue && leftAxisGroupFormatter")
     Info.axis-label(
-      v-for="label in axisLabels[leftAxisGroupValue]",
+      v-for="label in axisLabels[leftAxisStyleValue][leftAxisGroupValue]",
     ) {{ leftAxisGroupFormatter(label) }}
   .chart-contents.no-spacing(ref="chartContents")
     .chart-grid.no-spacing
       .axis-line.no-spacing(
-        v-for="_ in axisLabels[leftAxisGroupValue].slice(1)"
+        v-for="_ in axisLabels[leftAxisStyleValue][leftAxisGroupValue].slice(1)"
       )
     .chart-bars.no-spacing
       .chart-bar-container.no-spacing(
@@ -479,7 +607,7 @@ onUnmounted(() => {
     )
       .chart-bar-sum.no-spacing(
         v-for="(value, lineLabel) in barSumValues",
-        :style="{ left: `${getPointLeftPosition(lineLabel)}%`, bottom: `${getPointTopPosition(value, lineLabel)}%` }",
+        :style="{ left: `${getPointLeftPosition(lineLabel)}%`, bottom: `${getBarSumTopPosition(value)}%` }",
       )
         Info {{ barFormatter(value) }}
     .chart-popovers.no-spacing(:style='linesStyle')
@@ -569,9 +697,9 @@ onUnmounted(() => {
                   :lineIndex="lineIndex - 1",
                   :valueKey="key",
                 )
-  .y-axis-labels(v-if="rightAxisGroup && rightAxisGroupFormatter")
+  .y-axis-labels(v-if="rightAxisGroupValue && rightAxisGroupFormatter")
     Info.axis-label(
-      v-for="label in axisLabels[rightAxisGroup]",
+      v-for="label in axisLabels[rightAxisStyleValue][rightAxisGroupValue]",
     ) {{ rightAxisGroupFormatter(label) }}
   .y-axis-title-container(v-if="yAxisLabels")
     Info.y-axis-title.no-spacing(
