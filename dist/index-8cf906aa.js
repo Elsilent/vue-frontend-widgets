@@ -1,50 +1,50 @@
-import { c as d, e as g } from "./base-d7e543b4.js";
-import { watch as f, unref as c, inject as b, ref as u, computed as m, isRef as w } from "vue";
-import { b as v } from "./popper-6624aaae.js";
-function y(e, o, t) {
-  var a = e == null ? void 0 : v(e, o);
-  return a === void 0 ? t : a;
+import { j as p, e as h, a as y, k as d } from "./base-b0eb9adb.js";
+import { watch as b, unref as m, inject as f, ref as i, computed as u, isRef as C, getCurrentInstance as w } from "vue";
+import { b as T } from "./popper-2d1cdbf9.js";
+function x(e, a, t) {
+  var o = e == null ? void 0 : T(e, a);
+  return o === void 0 ? t : o;
 }
 let s;
-const E = (e) => {
-  var o;
-  if (!d)
+const _ = (e) => {
+  var a;
+  if (!p)
     return 0;
   if (s !== void 0)
     return s;
   const t = document.createElement("div");
   t.className = `${e}-scrollbar__wrap`, t.style.visibility = "hidden", t.style.width = "100px", t.style.position = "absolute", t.style.top = "-9999px", document.body.appendChild(t);
-  const a = t.offsetWidth;
+  const o = t.offsetWidth;
   t.style.overflow = "scroll";
   const r = document.createElement("div");
   r.style.width = "100%", t.appendChild(r);
   const n = r.offsetWidth;
-  return (o = t.parentNode) == null || o.removeChild(t), s = a - n, s;
+  return (a = t.parentNode) == null || a.removeChild(t), s = o - n, s;
 };
-function M(e, o) {
-  if (!d)
+function U(e, a) {
+  if (!p)
     return;
-  if (!o) {
+  if (!a) {
     e.scrollTop = 0;
     return;
   }
   const t = [];
-  let a = o.offsetParent;
-  for (; a !== null && e !== a && e.contains(a); )
-    t.push(a), a = a.offsetParent;
-  const r = o.offsetTop + t.reduce((p, h) => p + h.offsetTop, 0), n = r + o.offsetHeight, l = e.scrollTop, i = l + e.clientHeight;
-  r < l ? e.scrollTop = r : n > i && (e.scrollTop = n - e.clientHeight);
+  let o = a.offsetParent;
+  for (; o !== null && e !== o && e.contains(o); )
+    t.push(o), o = o.offsetParent;
+  const r = a.offsetTop + t.reduce((g, v) => g + v.offsetTop, 0), n = r + a.offsetHeight, l = e.scrollTop, c = l + e.clientHeight;
+  r < l ? e.scrollTop = r : n > c && (e.scrollTop = n - e.clientHeight);
 }
-const F = "update:modelValue", L = "change", A = ({ from: e, replacement: o, scope: t, version: a, ref: r, type: n = "API" }, l) => {
-  f(() => c(l), (i) => {
-    i && g(t, `[${n}] ${e} is about to be deprecated in version ${a}, please use ${o} instead.
+const W = "update:modelValue", B = "change", R = ({ from: e, replacement: a, scope: t, version: o, ref: r, type: n = "API" }, l) => {
+  b(() => m(l), (c) => {
+    c && h(t, `[${n}] ${e} is about to be deprecated in version ${o}, please use ${a} instead.
 For more detail, please visit: ${r}
 `);
   }, {
     immediate: !0
   });
 };
-var T = {
+var E = {
   name: "en",
   el: {
     breadcrumb: {
@@ -219,26 +219,44 @@ var T = {
     }
   }
 };
-const x = (e) => (o, t) => C(o, t, c(e)), C = (e, o, t) => y(t, e, e).replace(/\{(\w+)\}/g, (a, r) => {
+const N = (e) => (a, t) => D(a, t, m(e)), D = (e, a, t) => x(t, e, e).replace(/\{(\w+)\}/g, (o, r) => {
   var n;
-  return `${(n = o == null ? void 0 : o[r]) != null ? n : `{${r}}`}`;
-}), N = (e) => {
-  const o = m(() => c(e).name), t = w(e) ? e : u(e);
+  return `${(n = a == null ? void 0 : a[r]) != null ? n : `{${r}}`}`;
+}), S = (e) => {
+  const a = u(() => m(e).name), t = C(e) ? e : i(e);
   return {
-    lang: o,
+    lang: a,
     locale: t,
-    t: x(e)
+    t: N(e)
   };
-}, D = Symbol("localeContextKey"), W = (e) => {
-  const o = e || b(D, u());
-  return N(m(() => o.value || T));
+}, P = Symbol("localeContextKey"), $ = (e) => {
+  const a = e || f(P, i());
+  return S(u(() => a.value || E));
+}, k = Symbol("emptyValuesContextKey"), O = "use-empty-values", A = ["", void 0, null], F = void 0, K = y({
+  emptyValues: Array,
+  valueOnClear: {
+    type: [String, Number, Boolean, Function],
+    default: void 0,
+    validator: (e) => d(e) ? !e() : !e
+  }
+}), J = (e, a) => {
+  const t = w() ? f(k, i({})) : i({}), o = u(() => e.emptyValues || t.value.emptyValues || A), r = u(() => d(e.valueOnClear) ? e.valueOnClear() : e.valueOnClear !== void 0 ? e.valueOnClear : d(t.value.valueOnClear) ? t.value.valueOnClear() : t.value.valueOnClear !== void 0 ? t.value.valueOnClear : a !== void 0 ? a : F), n = (l) => o.value.includes(l);
+  return o.value.includes(r.value) || h(O, "value-on-clear should be a value of empty-values"), {
+    emptyValues: o,
+    valueOnClear: r,
+    isEmptyValue: n
+  };
 };
 export {
-  L as C,
-  F as U,
-  A as a,
-  y as b,
-  E as g,
-  M as s,
-  W as u
+  B as C,
+  W as U,
+  R as a,
+  x as b,
+  J as c,
+  K as d,
+  k as e,
+  _ as g,
+  P as l,
+  U as s,
+  $ as u
 };

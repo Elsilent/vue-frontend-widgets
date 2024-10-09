@@ -15,6 +15,7 @@ import Option from '../components/interaction/Select/Option.vue';
 import OptionGroup from '../components/interaction/Select/OptionGroup.vue';
 import Checkbox from '../components/interaction/Checkbox.vue';
 import CheckboxGroup from '../components/interaction/CheckboxGroup.vue';
+import MonthPicker from '../components/interaction/MonthPicker.vue';
 
 export {
   Button,
@@ -34,4 +35,5 @@ export {
   OptionGroup,
   Checkbox,
   CheckboxGroup,
+  MonthPicker,
 };
