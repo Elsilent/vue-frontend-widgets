@@ -155,7 +155,9 @@ const rightAxisGroupValue = computed(() => {
 const leftAxisGroupFormatter = computed(() => {
   let valueKey: string | number | undefined = undefined;
 
-  for (const [groupValueKey, group] of Object.entries(groupsByStyleAndKey.value[leftAxisStyleValue.value])) {
+  for (const [groupValueKey, group] of Object.entries(
+    groupsByStyleAndKey.value[leftAxisStyleValue.value],
+  )) {
     if (group === leftAxisGroupValue.value) {
       valueKey = groupValueKey;
 
@@ -177,7 +179,9 @@ const rightAxisGroupFormatter = computed(() => {
 
   let valueKey: string | number | undefined = undefined;
 
-  for (const [groupValueKey, group] of Object.entries(groupsByStyleAndKey.value[rightAxisStyleValue.value])) {
+  for (const [groupValueKey, group] of Object.entries(
+    groupsByStyleAndKey.value[rightAxisStyleValue.value],
+  )) {
     if (group === rightAxisGroupValue.value) {
       valueKey = groupValueKey;
 
@@ -202,7 +206,7 @@ const axisLabels = computed(() => {
         groupKey,
         Array.from({ length: Object.values(Object.values(values.value)[0]).length }, () => 0),
       ]),
-    )
+    ),
   };
 
   for (const [key, lineValues] of Object.entries(values.value)) {
@@ -623,6 +627,7 @@ onUnmounted(() => {
             slot(
               name="popover"
               :index='index',
+              :key='key',
               :values='valueKeys.map((key) => Object.values(values[key])[index])',
             )
               .values
