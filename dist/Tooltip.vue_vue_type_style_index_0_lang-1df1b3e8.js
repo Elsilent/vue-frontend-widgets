@@ -1,6 +1,6 @@
-import { defineComponent as g, renderSlot as m, ref as N, provide as T, inject as k, onMounted as R, unref as l, onBeforeUnmount as U, computed as y, openBlock as I, createBlock as L, mergeProps as j, withCtx as h, createElementBlock as D, normalizeClass as V, toDisplayString as B, createCommentVNode as P, createTextVNode as K } from "vue";
-import { _ as $, b as E, d as c, k as H, u as z, a as F, l as J, w as Y } from "./base-d7e543b4.js";
-import { u as S, a as i, i as q, E as G } from "./popper-6624aaae.js";
+import { defineComponent as g, renderSlot as m, ref as N, provide as T, inject as R, onMounted as k, unref as l, onBeforeUnmount as U, computed as y, openBlock as I, createBlock as L, mergeProps as j, withCtx as h, createElementBlock as D, normalizeClass as V, toDisplayString as B, createCommentVNode as P, createTextVNode as K } from "vue";
+import { _ as $, a as E, d as c, l as H, u as z, c as F, m as J, w as Y } from "./base-b0eb9adb.js";
+import { u as S, a as i, i as q, E as G } from "./popper-2d1cdbf9.js";
 const W = /* @__PURE__ */ g({
   inheritAttrs: !1
 });
@@ -38,10 +38,10 @@ const te = "data-el-collection-item", oe = (o) => {
     ...ee,
     name: n,
     setup(b, { attrs: d }) {
-      const u = N(null), a = k(r, void 0);
+      const u = N(null), a = R(r, void 0);
       T(f, {
         collectionItemRef: u
-      }), R(() => {
+      }), k(() => {
         const s = l(u);
         s && a.itemMap.set(s, {
           ref: s,

@@ -7,7 +7,7 @@ function qe(C, be) {
     (o(), n(c, null, p(5, (ne) => f("div", Te)), 64))
   ]);
 }
-const De = {}, dt = /* @__PURE__ */ Se(De, [["render", qe], ["__scopeId", "data-v-b467514e"]]), Ue = (C) => (Xe("data-v-bc97eb27"), C = C(), Re(), C), Ye = {
+const De = {}, dt = /* @__PURE__ */ Se(De, [["render", qe], ["__scopeId", "data-v-b467514e"]]), Ue = (C) => (Xe("data-v-8c6bf448"), C = C(), Re(), C), Ye = {
   key: 0,
   class: "y-axis-title-container"
 }, Je = {
@@ -94,7 +94,9 @@ const De = {}, dt = /* @__PURE__ */ Se(De, [["render", qe], ["__scopeId", "data-
         return Object.values(_.value[Y.value])[0];
     }), ye = h(() => {
       let t;
-      for (const [s, e] of Object.entries(_.value[P.value]))
+      for (const [s, e] of Object.entries(
+        _.value[P.value]
+      ))
         if (e === J.value) {
           t = s;
           break;
@@ -105,7 +107,9 @@ const De = {}, dt = /* @__PURE__ */ Se(De, [["render", qe], ["__scopeId", "data-
       if (Q.value === void 0)
         return;
       let t;
-      for (const [s, e] of Object.entries(_.value[Y.value]))
+      for (const [s, e] of Object.entries(
+        _.value[Y.value]
+      ))
         if (e === Q.value) {
           t = s;
           break;
@@ -373,6 +377,7 @@ const De = {}, dt = /* @__PURE__ */ Se(De, [["render", qe], ["__scopeId", "data-
               }, [
                 oe(t.$slots, "popover", {
                   index: a,
+                  key: e,
                   values: y.value.map((l) => Object.values(i(d)[l])[a])
                 }, () => [
                   f("div", st, [
@@ -501,7 +506,7 @@ const De = {}, dt = /* @__PURE__ */ Se(De, [["render", qe], ["__scopeId", "data-
     ], 6));
   }
 });
-const pt = /* @__PURE__ */ Se(ct, [["__scopeId", "data-v-bc97eb27"]]);
+const pt = /* @__PURE__ */ Se(ct, [["__scopeId", "data-v-8c6bf448"]]);
 export {
   dt as L,
   pt as a

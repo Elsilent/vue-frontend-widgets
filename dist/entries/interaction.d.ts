@@ -15,4 +15,5 @@ import Option from '../components/interaction/Select/Option.vue';
 import OptionGroup from '../components/interaction/Select/OptionGroup.vue';
 import Checkbox from '../components/interaction/Checkbox.vue';
 import CheckboxGroup from '../components/interaction/CheckboxGroup.vue';
-export { Button, Calendar, DatePicker, DateRangePicker, Dropdown, DropdownButton, Input, Link, MultiSelect, PopoverMenu, Toast, Toggle, Select, Option, OptionGroup, Checkbox, CheckboxGroup, };
+import MonthPicker from '../components/interaction/MonthPicker.vue';
+export { Button, Calendar, DatePicker, DateRangePicker, Dropdown, DropdownButton, Input, Link, MultiSelect, PopoverMenu, Toast, Toggle, Select, Option, OptionGroup, Checkbox, CheckboxGroup, MonthPicker, };
