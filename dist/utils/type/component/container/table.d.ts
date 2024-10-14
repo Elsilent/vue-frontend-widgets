@@ -67,5 +67,9 @@ export interface GlobalResponse {
     rows: Record<string, Record<string, any>> | Record<string, any>[];
     total: Record<string, any>;
 }
+export interface IntersectionResponse {
+    columns: Record<string, Column>;
+    rows: Record<string, Record<string, any>> | Record<string, any>[];
+}
 export declare function mergeComparisonRow(originalRow: Record<string, any>, comparisonRow: Record<string, any> | undefined, columns: Record<string, Column>): Record<string, any>;
 export declare function mergeComparisonData(original: Record<string, Record<string, any>> | Record<string, any>[], comparison: Record<string, Record<string, any>> | Record<string, any>[], columns: Record<string, Column>, primaryColumn: string): Record<string, Record<string, any>>;

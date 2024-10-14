@@ -1,5 +1,6 @@
 import Align from '../components/container/Align.vue';
 import Badge from '../components/container/Badge.vue';
+import ButtonGroup from '../components/container/ButtonGroup.vue';
 import Card from '../components/container/Card.vue';
 import Form from '../components/container/Form.vue';
 import Grid from '../components/container/Grid.vue';
@@ -14,6 +15,7 @@ import Dialog from '../components/container/Dialog/Dialog.vue';
 export {
   Align,
   Badge,
+  ButtonGroup,
   Card,
   Form,
   Grid,

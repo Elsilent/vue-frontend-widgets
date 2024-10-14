@@ -52,8 +52,16 @@ const props = withDefaults(
      * If enabled will emit 'dragged' event when column is moved to a new place
      */
     dragColumns?: boolean;
+    /**
+     * Calculate min and max values globally instead of per each column
+     */
+    globalColoredMetrics?: boolean;
     /** Provides the list of negative KPIs. This list is used for coloring metrics */
     inversedKpis?: string[];
+    /**
+     * Color metrics in neutral color no matter if they are inversed or not
+     */
+    neutralColoredMetrics?: boolean;
     /**
      * No data message that should be displayed.
      */
@@ -69,7 +77,7 @@ const props = withDefaults(
      * This column can be outside of table column list
      * (ex. when we have fixed and scrollable tables)
      */
-    orderColumnType: ColumnType;
+    orderColumnType?: ColumnType;
     /**
      * Primary column which is used for detailed rows
      */
@@ -90,6 +98,10 @@ const props = withDefaults(
      */
     showRowNumber?: boolean;
     /**
+     * Enables the toggle button for colored metrics
+     */
+    showToggleColored?: boolean;
+    /**
      * Enables the display of the total row
      */
     showTotal?: boolean;
@@ -97,6 +109,10 @@ const props = withDefaults(
      * Enables the display of the total row ot top
      */
     showTopTotal?: boolean;
+    /**
+     * Enables ordering functionality
+     */
+    useOrderBy?: boolean;
   }>(),
   {
     additionalHeaders: () => ({}),
@@ -104,12 +120,16 @@ const props = withDefaults(
     colorMetrics: false,
     coloredMetrics: () => [],
     dragColumns: false,
+    globalColoredMetrics: false,
+    neutralColoredMetrics: false,
     noDataMessage: '&nbsp;',
     primaryColumn: 'id',
     showNoDataMessage: false,
     showRowNumber: true,
+    showToggleColored: true,
     showTotal: true,
     showTopTotal: false,
+    useOrderBy: true,
   },
 );
 
@@ -122,7 +142,9 @@ const {
   comparisonColumnKeys,
   detailsRows,
   dragColumns,
+  globalColoredMetrics,
   inversedKpis,
+  neutralColoredMetrics,
   noDataMessage,
   orderBy,
   orderColumnType,
@@ -132,6 +154,7 @@ const {
   showRowNumber,
   showTotal,
   showTopTotal,
+  useOrderBy,
 } = toRefs(props);
 
 const dragColumnFromIndex = ref<number | undefined>();
@@ -261,30 +284,34 @@ const maxRowspan = computed(() => {
 });
 
 const orderedRowValues = computed<Record<string, any>[]>(
-  () =>
-    Object.values(rows.value)
-      .sort((leftRow, rightRow) => {
-        const comparison = (() => {
-          const leftValue = getRawValue(
-            orderBy.value[0].reduce((value, key) => value[key], leftRow) as unknown as string,
-            orderColumnType.value,
-          );
-          const rightValue = getRawValue(
-            orderBy.value[0].reduce((value, key) => value[key], rightRow) as unknown as string,
-            orderColumnType.value,
-          );
+  () => {
+    const orderedRowValues = !useOrderBy.value || orderColumnType?.value === undefined
+      ? Object.values(rows.value)
+      : Object.values(rows.value)
+          .sort((leftRow, rightRow) => {
+            const comparison = (() => {
+              const leftValue = getRawValue(
+                orderBy.value[0].reduce((value, key) => value[key], leftRow) as unknown as string,
+                orderColumnType!.value!,
+              );
+              const rightValue = getRawValue(
+                orderBy.value[0].reduce((value, key) => value[key], rightRow) as unknown as string,
+                orderColumnType!.value!,
+              );
 
-          if (leftValue > rightValue) {
-            return 1;
-          }
-          if (leftValue < rightValue) {
-            return -1;
-          }
-          return 0;
-        })();
+              if (leftValue > rightValue) {
+                return 1;
+              }
+              if (leftValue < rightValue) {
+                return -1;
+              }
+              return 0;
+            })();
 
-        return orderBy.value[1] ? -comparison : comparison;
-      })
+            return orderBy.value[1] ? -comparison : comparison;
+          });
+
+    return orderedRowValues
       .reduce((rows, row, index) => {
         rows.push({
           ...row,
@@ -310,8 +337,8 @@ const orderedRowValues = computed<Record<string, any>[]>(
         }
 
         return rows;
-      }, [] as Record<string, any>[]) as Record<string, any>[],
-);
+      }, [] as Record<string, any>[]) as Record<string, any>[];
+  });
 
 /**
  * Retrieves style of table which allows display: grid to show correct table
@@ -367,6 +394,10 @@ const getCellClasses = (
 
   if (colorMetrics.value) {
     const colorMood = (() => {
+      if (neutralColoredMetrics.value) {
+        return 'important-alt';
+      }
+
       if (!inversedKpis || !inversedKpis.value) {
         return 'positive';
       }
@@ -416,6 +447,11 @@ const getColorIntensity = (value: any, columnKey: string, subcolumnIndex?: numbe
     minValue = minValue[comparisonColumnKeys.value[subcolumnIndex]];
   }
 
+  if (globalColoredMetrics.value) {
+    maxValue = Math.max(...Object.values(maxValues.value));
+    minValue = Math.min(...Object.values(minValues.value));
+  }
+
   if (maxValue === minValue) {
     return 0;
   }
@@ -452,9 +488,11 @@ const getColumnClassList = (columnKey: string, subcolumnIndex?: number) => {
       : false,
     'drag-mode': dragModeEnabled.value,
     orderable:
-      !(comparisonColumnKeys && comparisonColumnKeys.value) ||
-      (column.colspan ?? 1) === 1 ||
-      subcolumnIndex !== undefined,
+      useOrderBy.value && (
+        !(comparisonColumnKeys && comparisonColumnKeys.value) ||
+        (column.colspan ?? 1) === 1 ||
+        subcolumnIndex !== undefined
+      ),
     'ordered-by': ordered,
     [`order-direction-${orderBy.value[1] ? 'desc' : 'asc'}`]: ordered,
   };
@@ -610,6 +648,10 @@ const onColumnClick = (columnKey: string, subcolumnIndex?: number) => {
     dragModeEnabled.value &&
     visibleColumnKeys.value[dragColumnFromIndex.value] === columnKey
   ) {
+    return;
+  }
+
+  if (!useOrderBy.value) {
     return;
   }
 
@@ -858,7 +900,7 @@ defineSlots<
     )
       slot(name="column", :columnKey="columnKey", :isGhost="false")
       .toggle-colored.no-spacing(
-        v-if='isColorable(columnKey)',
+        v-if='showToggleColored && isColorable(columnKey)',
         @click.stop='() => toggleColored(columnKey)',
         :style="{ top: `${getColorizedButtonTopOffset(columnKey)}px` }"
       )
@@ -1193,13 +1235,19 @@ defineSlots<
         &.colored {
           position: relative;
 
+          $-important-alt-base-intensity-color: mix(#118ee2, transparent, 60%);
           $-negative-base-intensity-color: mix(#ff4961, transparent, 60%);
           $-positive-base-intensity-color: mix(#28d094, transparent, 60%);
+
           &.color-intensity-none {
             background-color: white;
             @include apply-color(box-shadow, border-table, $value-prefix: 0 0 0 1px);
           }
           &.color-intensity-0 {
+            &.color-important-alt {
+              background-color: rgba($-important-alt-base-intensity-color, 0.05);
+              @include apply-color(box-shadow, border-table, $value-prefix: 0 0 0 1px);
+            }
             &.color-negative {
               background-color: rgba($-negative-base-intensity-color, 0.05);
               @include apply-color(box-shadow, border-table, $value-prefix: 0 0 0 1px);
@@ -1212,6 +1260,15 @@ defineSlots<
           @for $-index from 1 through 10 {
             &.color-intensity-#{$-index} {
               z-index: $-index + 1;
+
+              &.color-important-alt {
+                $-color: rgba($-important-alt-base-intensity-color, $-index * 10%);
+                $-border-color: darken($-color, 15%);
+                $-border-color: mix($-border-color, #7f999999, $-index * 10%);
+
+                background-color: $-color;
+                box-shadow: 0 0 0 1px $-border-color;
+              }
 
               &.color-negative {
                 $-color: rgba($-negative-base-intensity-color, $-index * 10%);

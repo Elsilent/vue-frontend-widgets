@@ -19,7 +19,9 @@ const props = withDefaults(
     detailsRows: Record<string, Record<string, any>>;
     dragColumns?: boolean;
     fixedColumnNumber?: number;
+    globalColoredMetrics?: boolean;
     inversedKpis?: string[];
+    neutralColoredMetrics?: boolean;
     /**
      * No data message that should be displayed.
      */
@@ -29,8 +31,10 @@ const props = withDefaults(
     rows: Record<string, any>[] | Record<string, Record<string, any>>;
     scrollPosition?: { left: number; top: number };
     showRowNumber?: boolean;
+    showToggleColored?: boolean;
     showTopTotal?: boolean;
     showTotal?: boolean;
+    useOrderBy?: boolean;
   }>(),
   {
     additionalHeaders: () => ({}),
@@ -40,12 +44,16 @@ const props = withDefaults(
     comparisonColumnKeys: undefined,
     dragColumns: false,
     fixedColumnNumber: 1,
+    globalColoredMetrics: false,
     inversedKpis: () => [],
+    neutralColoredMetrics: false,
     primaryColumn: 'id',
     scrollPosition: () => ({ left: 0, top: 0 }),
     showRowNumber: true,
+    showToggleColored: true,
     showTopTotal: false,
     showTotal: true,
+    useOrderBy: true,
   },
 );
 
@@ -59,14 +67,18 @@ const {
   detailsRows,
   dragColumns,
   fixedColumnNumber,
+  globalColoredMetrics,
   inversedKpis,
+  neutralColoredMetrics,
   orderBy,
   primaryColumn,
   rows,
   scrollPosition,
   showRowNumber,
+  showToggleColored,
   showTopTotal,
   showTotal,
+  useOrderBy,
 } = toRefs(props);
 
 const fixedWidth = ref(0);
@@ -304,21 +316,21 @@ watch(columns, () => {
       @update:orderBy="(orderBy) => $emit('update:orderBy', orderBy)",
       :additionalHeaders="additionalHeaders",
       :cellClasses="cellClasses"
-      :colorMetrics="colorMetrics",
-      :coloredMetrics="coloredMetrics",
       :columns="fixedColumns",
       :comparisonColumnKeys="comparisonColumnKeys",
       :detailsRows="detailsRows",
       :dragColumns="false",
       :inversedKpis="inversedKpis",
       :orderBy="orderBy",
-      :orderColumnType="columns[orderBy[0][0]].type",
+      :orderColumnType="useOrderBy ? columns[orderBy[0][0]].type : undefined",
       :primaryColumn="primaryColumn",
       :rows="rows",
       :showNoDataMessage="true"
       :showRowNumber="showRowNumber",
+      :showToggleColored="showToggleColored",
       :showTopTotal="showTopTotal",
       :showTotal="showTotal",
+      :useOrderBy="useOrderBy",
     )
       template(#columnRowNumber)
         slot(name="columnRowNumber") #
@@ -394,18 +406,21 @@ watch(columns, () => {
       :columns="scrollableColumns",
       :comparisonColumnKeys="comparisonColumnKeys",
       :detailsRows="detailsRows",
-      :inversedKpis="inversedKpis",
       :dragColumns="dragColumns",
+      :globalColoredMetrics="globalColoredMetrics",
+      :inversedKpis="inversedKpis",
+      :neutralColoredMetrics="neutralColoredMetrics",
+      :noDataMessage="noDataMessage",
       :orderBy="orderBy",
-      :orderColumnType="columns[orderBy[0][0]].type",
+      :orderColumnType="useOrderBy ? columns[orderBy[0][0]].type : undefined",
       :primaryColumn="primaryColumn",
       :rows="rows",
       :showRowNumber="false",
       :showTopTotal="showTopTotal",
       :showTotal="showTotal",
       :showNoDataMessage="true",
-      :noDataMessage="noDataMessage",
       :style="tableStyle"
+      :useOrderBy="useOrderBy",
     )
       template(#colorizeLabel="{ enabled }")
         slot(name="colorizeLabel", :enabled="enabled")
