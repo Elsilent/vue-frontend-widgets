@@ -92,6 +92,11 @@ export interface GlobalResponse {
   total: Record<string, any>;
 }
 
+export interface IntersectionResponse {
+  columns: Record<string, Column>;
+  rows: Record<string, Record<string, any>> | Record<string, any>[];
+}
+
 export function mergeComparisonRow(
   originalRow: Record<string, any>,
   comparisonRow: Record<string, any> | undefined,
