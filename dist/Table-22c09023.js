@@ -633,7 +633,6 @@ const He = /* @__PURE__ */ Se(tt, [["__scopeId", "data-v-df3f729c"]]), ot = /* @
             rows: a(D),
             showNoDataMessage: !0,
             showRowNumber: a(Z),
-            showToggleColored: a(ge),
             showTopTotal: a(_),
             showTotal: a(le),
             useOrderBy: a(V)
@@ -709,7 +708,7 @@ const He = /* @__PURE__ */ Se(tt, [["__scopeId", "data-v-df3f729c"]]), ot = /* @
                 }, void 0, !0)
               ])
             }))
-          ]), 1032, ["additionalHeaders", "cellClasses", "columns", "comparisonColumnKeys", "detailsRows", "inversedKpis", "orderBy", "orderColumnType", "primaryColumn", "rows", "showRowNumber", "showToggleColored", "showTopTotal", "showTotal", "useOrderBy"]),
+          ]), 1032, ["additionalHeaders", "cellClasses", "columns", "comparisonColumnKeys", "detailsRows", "inversedKpis", "orderBy", "orderColumnType", "primaryColumn", "rows", "showRowNumber", "showTopTotal", "showTotal", "useOrderBy"]),
           ce(He, {
             ref_key: "scrollableTable",
             ref: x,
@@ -734,6 +733,7 @@ const He = /* @__PURE__ */ Se(tt, [["__scopeId", "data-v-df3f729c"]]), ot = /* @
             primaryColumn: a(S),
             rows: a(D),
             showRowNumber: !1,
+            showToggleColored: a(ge),
             showTopTotal: a(_),
             showTotal: a(le),
             showNoDataMessage: !0,
@@ -795,14 +795,14 @@ const He = /* @__PURE__ */ Se(tt, [["__scopeId", "data-v-df3f729c"]]), ot = /* @
                 }, void 0, !0)
               ])
             }))
-          ]), 1032, ["additionalHeaders", "cellClasses", "colorMetrics", "coloredMetrics", "columns", "comparisonColumnKeys", "detailsRows", "dragColumns", "globalColoredMetrics", "inversedKpis", "neutralColoredMetrics", "noDataMessage", "orderBy", "orderColumnType", "primaryColumn", "rows", "showTopTotal", "showTotal", "style", "useOrderBy"])
+          ]), 1032, ["additionalHeaders", "cellClasses", "colorMetrics", "coloredMetrics", "columns", "comparisonColumnKeys", "detailsRows", "dragColumns", "globalColoredMetrics", "inversedKpis", "neutralColoredMetrics", "noDataMessage", "orderBy", "orderColumnType", "primaryColumn", "rows", "showToggleColored", "showTopTotal", "showTotal", "style", "useOrderBy"])
         ]),
         _: 3
       }, 8, ["scrollHeightDelta", "scrollPosition", "scrollWidthDelta", "style", "updateKey"])
     ], 512));
   }
 });
-const nt = /* @__PURE__ */ Se(ot, [["__scopeId", "data-v-4393f0eb"]]);
+const nt = /* @__PURE__ */ Se(ot, [["__scopeId", "data-v-8d869631"]]);
 export {
   He as S,
   nt as T
