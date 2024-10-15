@@ -30,6 +30,9 @@ ElOption(:value="value" :class="size")
   &.is-selected {
     background-color: map.get(map.get($themes, 'light'), 'background-list-accent');
     font-weight: normal;
+    &:after {
+      display: none;
+    }
   }
 }
 </style>
