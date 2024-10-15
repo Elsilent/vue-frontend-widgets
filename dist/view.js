@@ -12,7 +12,7 @@ import "./popper-2d1cdbf9.js";
 import { C as Or, E as Rr, S as xr, O as Er } from "./Option-fea03504.js";
 import { L as Zt } from "./Link-882cf82b.js";
 import { Separator as Tr } from "./marker.js";
-import { T as hn } from "./Table-8df16ca7.js";
+import { T as hn } from "./Table-22c09023.js";
 import { H as We } from "./Header-37ffd1ab.js";
 import "./utils/error.js";
 import "./match-b8889c93.js";
