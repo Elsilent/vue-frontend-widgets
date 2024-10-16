@@ -68,6 +68,12 @@ const {
   columnsWithIntegers,
 } = toRefs(props);
 
+const barsPadding = computed(() => {
+  const barsCount = Object.keys(barValues.value).length;
+  // 12 is just a coefficient here for nice padding with width bars
+  return barsCount === 0 ? 0 : (12 / barsCount).toFixed(2);
+});
+
 const groupsByStyleAndKey = computed(() => {
   const groupsByStyleAndKey: Record<Style, Record<string, number | string>> = {
     bar: {},
@@ -596,7 +602,7 @@ onUnmounted(() => {
     .chart-bars.no-spacing
       .chart-bar-container.no-spacing(
         v-for="(values, index) in barValues",
-        :style="{ left: `${getPointLeftPosition(index)}%`}",
+        :style="{ left: `${getPointLeftPosition(index)}%`, padding: `0 ${barsPadding}%`}",
       )
         .separator
         template(v-for="(value, lineLabel) in values")
@@ -1041,7 +1047,6 @@ $-chart-colors: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 
         flex-direction: column;
         flex: 1;
         height: 100%;
-        padding: 0 1%;
 
         > .separator {
           flex-grow: 1;
