@@ -7,6 +7,7 @@ import KpiDistributionTable from '../components/image/KpiDistributionTable.vue';
 import LineBarChart from '../components/image/LineBarChart.vue';
 import Loader from '../components/image/Loader.vue';
 import ProgressBar from '../components/image/ProgressBar.vue';
+import FunnelGraph from '../components/image/FunnelGraph.vue';
 
 export {
   Avatar,
@@ -18,4 +19,5 @@ export {
   LineBarChart,
   Loader,
   ProgressBar,
+  FunnelGraph,
 };

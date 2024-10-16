@@ -34,7 +34,7 @@ Card.kpi-card(:class='classes')
       Info(v-if="isValueFirst" :mood='mood', size='large-5') {{ value === undefined ? '&nbsp;' : formatter(value) }}
       Info(size='large-2')
         | {{ label }}
-        Tooltip(v-if="tooltip?.length")
+        Tooltip(v-if="tooltip?.length" width="200" :popper-style="{ overflowWrap: 'normal' }")
           | {{ tooltip }}
           template(#reference)
             Icon.kpi-tooltip(value="circle-question" backend="regular")

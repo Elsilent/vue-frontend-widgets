@@ -122,11 +122,14 @@
   "dependencies": {
     "@fontsource/open-sans": "5.0.28",
     "@fortawesome/fontawesome-free": "6.5.2",
+    "@tweenjs/tween.js": "25.0.0",
     "axios": "^1.6.1",
     "element-plus": "2.7.7",
     "flag-icons": "6.7.0",
+    "funnel-graph-js": "1.4.2",
     "luxon": "^3.3.0",
     "numeral": "^2.0.6",
+    "polymorph-js": "1.0.2",
     "vite-plugin-dts": "^3.6.3",
     "vue": "^3.3.4",
     "vue-router": "^4.2.5"

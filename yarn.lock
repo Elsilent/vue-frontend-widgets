@@ -364,6 +364,11 @@
   resolved "https://registry.npmjs.org/@tsconfig/node18/-/node18-2.0.1.tgz"
   integrity sha512-UqdfvuJK0SArA2CxhKWwwAWfnVSXiYe63bVpMutc27vpngCntGUZQETO24pEJ46zU6XM+7SpqYoMgcO3bM11Ew==
 
+"@tweenjs/tween.js@25.0.0":
+  version "25.0.0"
+  resolved "https://registry.yarnpkg.com/@tweenjs/tween.js/-/tween.js-25.0.0.tgz#7266baebcc3affe62a3a54318a3ea82d904cd0b9"
+  integrity sha512-XKLA6syeBUaPzx4j3qwMqzzq+V4uo72BnlbOjmuljLrRqdsd3qnzvZZoxvMHZ23ndsRS4aufU6JOZYpCbU6T1A==
+
 "@types/argparse@1.0.38":
   version "1.0.38"
   resolved "https://registry.npmjs.org/@types/argparse/-/argparse-1.0.38.tgz"
@@ -1784,6 +1789,11 @@ functions-have-names@^1.2.2, functions-have-names@^1.2.3:
   resolved "https://registry.npmjs.org/functions-have-names/-/functions-have-names-1.2.3.tgz"
   integrity sha512-xckBUXyTIqT97tq2x2AMb+g163b5JFysYk0x4qxNFwbfQkmNZoiRHb6sPzI9/QV33WeuvVYBUIiD4NzNIyqaRQ==
 
+funnel-graph-js@1.4.2:
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/funnel-graph-js/-/funnel-graph-js-1.4.2.tgz#b82150189e8afa59104d881d5dcf55a28d715342"
+  integrity sha512-9bnmcBve7RDH9dTF9BLuUpuisKkDka3yrfhs+Z/106ZgJvqIse1RfKQWjW+QdAlTrZqC9oafen7t/KuJKv9ohA==
+
 get-func-name@^2.0.0:
   version "2.0.0"
   resolved "https://registry.npmjs.org/get-func-name/-/get-func-name-2.0.0.tgz"
@@ -2738,6 +2748,11 @@ pkg-types@^1.0.3:
     jsonc-parser "^3.2.0"
     mlly "^1.2.0"
     pathe "^1.1.0"
+
+polymorph-js@1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/polymorph-js/-/polymorph-js-1.0.2.tgz#1e23bc9f6bbdc4738b00d08f01d1e192f34f0570"
+  integrity sha512-moIVGNoyYwhzzl6DWssvJyUxE4y6Coe06JGaQ0tUd+DBzZLC5SD4Vc4fH3Etk9bJ2633AozHF2x00/IqH/iXYg==
 
 postcss-selector-parser@^6.0.9:
   version "6.0.13"
