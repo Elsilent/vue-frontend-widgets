@@ -24,6 +24,10 @@ ElOption(:value="value" :class="size")
 
 .el-select-dropdown__item {
   margin: 0 2px 0 -1px;
+  white-space: wrap;
+  height: auto;
+  line-height: 1.5;
+  padding: 6.5px 20px;
   &.default {
     padding: $padding-size-menu-small-3 $padding-size-small-2;
   }
