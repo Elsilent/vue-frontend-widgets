@@ -1,6 +1,10 @@
 {
-  "name": "vue-frontend-widgets",
+  "name": "@elsilent/vue-frontend-widgets",
   "type": "module",
+  "version": "0.0.0",
+  "files": [
+    "dist"
+  ],
   "exports": {
     "./src/*": "./src/*",
     "./style.css": "./dist/style.css",
@@ -107,8 +111,6 @@
       "require": "./dist/utils/theme.cjs"
     }
   },
-  "version": "0.1.0",
-  "private": true,
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check build-only",
@@ -164,5 +166,8 @@
   },
   "resolutions": {
     "@vue/*/braces": "3.0.3"
+  },
+  "optionalDependencies": {
+    "@rollup/rollup-linux-x64-gnu": "*"
   }
 }
