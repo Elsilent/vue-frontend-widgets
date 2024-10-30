@@ -1,0 +1,69 @@
+name: Build & publish
+run-name: Build & publish
+
+on:
+  pull_request_target:
+    branches: [ "main" ]
+    types:
+      - closed
+
+jobs:
+  if_merged:
+    if: github.event.pull_request.merged == true
+
+    runs-on: ubuntu-latest
+    
+    permissions:
+      contents: write
+      packages: write
+      
+    strategy:
+      matrix:
+        node-version: [18.9]
+        
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+        fetch-tags: true
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+        registry-url: 'https://registry.npmjs.org'
+        cache: 'yarn'
+        
+    - run: yarn --frozen-lockfile
+    - run: yarn build
+    
+    - run: echo "FULL_NPM_VERSION=$(npm pkg get version  | tr -d '"')" >> $GITHUB_ENV
+    - run: echo "NPM_VERSION=$(cut -d '.' -f 1,2 <<< $FULL_NPM_VERSION )" >> $GITHUB_ENV
+    - run: echo "FULL_GIT_VERSION=$(git describe --tags --abbrev=0)" >> $GITHUB_ENV
+    - run: echo "GIT_VERSION=$(cut -d '.' -f 1,2 <<< $FULL_GIT_VERSION )" >> $GITHUB_ENV
+
+    - name: up patch version
+      if: ${{ env.NPM_VERSION == env.GIT_VERSION }}
+      run: |
+        echo "Up patch version"
+        git config --global user.email "$NPM_AUTHOR_EMAIL"
+        git config --global user.name "Pipeline Bot"
+        yarn version --patch
+        git push
+      env:
+        NPM_AUTHOR_EMAIL: ${{ vars.NPM_AUTHOR_EMAIL }}
+
+    - name: up major/minor version
+      if: ${{ env.NPM_VERSION != env.GIT_VERSION }}
+      run: |
+        echo "Up major/minor version"
+        gh release create "$FULL_NPM_VERSION" \
+            --repo="$GITHUB_REPOSITORY" \
+            --title="${FULL_NPM_VERSION#v}" \
+            --generate-notes
+      env:
+        GH_TOKEN: ${{ github.token }}
+
+    - run: echo "Publish package"
+    - run: yarn publish --access public
+      env:
+        NODE_AUTH_TOKEN: ${{ secrets.NPM_ACCESS_TOKEN }}    
