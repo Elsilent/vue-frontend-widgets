@@ -72,7 +72,7 @@ export default defineConfig({
     viteStaticCopy({
       targets: [
         {
-          src: normalizePath('./src/styles/fonts/fonts.css'),
+          src: normalizePath('./src/styles/'),
           dest: normalizePath('./'),
         },
       ],
