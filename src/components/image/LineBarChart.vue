@@ -587,7 +587,6 @@ onUnmounted(() => {
 )
   .y-axis-title-container(v-if="yAxisLabels")
     Info.y-axis-title.no-spacing(
-      important,
       size="small",
     ) {{ yAxisLabels[0] }}
   .y-axis-labels(v-if="leftAxisGroupValue && leftAxisGroupFormatter")
@@ -641,7 +640,6 @@ onUnmounted(() => {
                   Info.no-spacing(
                     v-if="!activeLines || activeLines.includes(valueKeys[lineIndex]) && index <= singleLineLabels.length",
                     :class="getMoodClasses(valueKeys[lineIndex])",
-                    important,
                   ) {{ formatters[valueKeys[lineIndex]](values[valueKeys[lineIndex]][singleLineLabels[index]]) }}
               slot(
                 name="popoverAfterValues",
@@ -699,7 +697,6 @@ onUnmounted(() => {
               Info.x-axis-label.no-spacing(
                 v-if="!activeLines || activeLines.includes(valueKeys[lineIndex - 1])",
                 :class="{ ...getMoodClasses(valueKeys[lineIndex - 1]), 'has-label': index < lineLabels[lineIndex - 1].length }",
-                important,
                 size="small",
               )
                 slot(
@@ -714,7 +711,6 @@ onUnmounted(() => {
     ) {{ rightAxisGroupFormatter(label) }}
   .y-axis-title-container(v-if="yAxisLabels")
     Info.y-axis-title.no-spacing(
-      important,
       size="small",
     ) {{ yAxisLabels[1] }}
 </template>
@@ -775,7 +771,6 @@ $-chart-colors: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 
       display: flex;
       flex: 1;
       font-size: 0.875rem;
-      font-weight: 600;
       justify-content: flex-end;
       position: relative;
       top: 0.65rem;
@@ -802,6 +797,9 @@ $-chart-colors: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 
       transform: rotate(-90.1deg);
       white-space: nowrap;
     }
+    &:last-child > .y-axis-title {
+      transform: rotate(90deg);
+    }
   }
 
   &.noXAxis > .chart-contents {
@@ -818,7 +816,7 @@ $-chart-colors: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 
 
       content: '';
       display: flex;
-      height: 2px;
+      height: 1px;
       opacity: 0.25;
       position: absolute;
       transition-duration: $transition-duration-normal;
@@ -847,7 +845,7 @@ $-chart-colors: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 
 
           content: '';
           display: flex;
-          height: 2px;
+          height: 1px;
           opacity: 0.25;
           transition-duration: $transition-duration-normal;
           transition-property: background-color;
