@@ -595,9 +595,11 @@ onUnmounted(() => {
     ) {{ leftAxisGroupFormatter(label) }}
   .chart-contents.no-spacing(ref="chartContents")
     .chart-grid.no-spacing
-      .axis-line.no-spacing(
-        v-for="_ in axisLabels[leftAxisStyleValue][leftAxisGroupValue].slice(1)"
-      )
+      template(v-if="axisLabels[leftAxisStyleValue][leftAxisGroupValue]?.length > 1")
+        .axis-line.no-spacing(
+          v-for="_ in axisLabels[leftAxisStyleValue][leftAxisGroupValue].slice(1)"
+        )
+      .axis-line.no-spacing(v-else)
     .chart-bars.no-spacing
       .chart-bar-container.no-spacing(
         v-for="(values, index) in barValues",
