@@ -17,6 +17,7 @@ import Checkbox from '../components/interaction/Checkbox.vue';
 import CheckboxGroup from '../components/interaction/CheckboxGroup.vue';
 import MonthPicker from '../components/interaction/MonthPicker.vue';
 import TreeSelect from '../components/interaction/TreeSelect.vue';
+import Tag from '../components/interaction/Tag.vue';
 
 export {
   Button,
@@ -38,4 +39,5 @@ export {
   CheckboxGroup,
   MonthPicker,
   TreeSelect,
+  Tag,
 };
