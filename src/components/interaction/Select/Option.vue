@@ -13,7 +13,7 @@ withDefaults(
 </script>
 
 <template lang="pug">
-ElOption(:value="value" :class="size")
+ElOption(:value="value" :class="size" :data-test-id="value")
   slot
 </template>
 
