@@ -31,7 +31,7 @@ const classes = computed(() => ({
 Card.kpi-card(:class='classes')
   Align(vertical='center')
     Align.flex-max(column)
-      Info(v-if="isValueFirst" :mood='mood', size='large-5') {{ value === undefined ? '&nbsp;' : formatter(value) }}
+      Info(v-if="isValueFirst" :mood='mood', size='large-5', data-test-id="value") {{ value === undefined ? '&nbsp;' : formatter(value) }}
       Info(size='large-2')
         | {{ label }}
         Tooltip(v-if="tooltip?.length" width="200" :popper-style="{ overflowWrap: 'normal' }")
