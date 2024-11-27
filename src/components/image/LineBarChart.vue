@@ -220,7 +220,7 @@ const axisLabels = computed(() => {
     const group = groupsByStyleAndKey.value[style][key];
 
     switch (style) {
-      case 'bar':
+      case 'bar': {
         let valueIndex = 0;
 
         for (const value of Object.values(lineValues)) {
@@ -229,6 +229,7 @@ const axisLabels = computed(() => {
           valueIndex++;
         }
         break;
+      }
       case 'line':
       default:
         axisValues[style][group].push(...Object.values(values.value[key]));

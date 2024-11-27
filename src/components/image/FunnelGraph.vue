@@ -224,7 +224,10 @@ export default {
     :class="{ 'svg-funnel-js--vertical': direction === 'vertical' }"
   >
     <div class="svg-funnel-js__container">
-      <svg :width="width" :height="height">
+      <svg
+        :width="width"
+        :height="height"
+      >
         <defs>
           <linearGradient
             :id="`funnelGradient-${index + 1}`"
@@ -263,31 +266,61 @@ export default {
         :key="labels[index].toLowerCase().split(' ').join('-')"
       >
         <div class="label__value">{{ value }}</div>
-        <div class="label__title" v-if="labels">{{ labels[index] }}</div>
-        <div class="label__percentage" v-if="displayPercentage && percentages()[index] !== 100">
+        <div
+          class="label__title"
+          v-if="labels"
+        >
+          {{ labels[index] }}
+        </div>
+        <div
+          class="label__percentage"
+          v-if="displayPercentage && percentages()[index] !== 100"
+        >
           {{ percentages()[index] }}%
         </div>
-        <div class="label__segment-percentages" v-if="is2d()">
+        <div
+          class="label__segment-percentages"
+          v-if="is2d()"
+        >
           <ul class="segment-percentage__list">
-            <li v-for="(subLabel, j) in subLabels" :key="j">
+            <li
+              v-for="(subLabel, j) in subLabels"
+              :key="j"
+            >
               {{ subLabel }}:
-              <span class="percentage__list-label" v-if="subLabelValue === 'percent'"
+              <span
+                class="percentage__list-label"
+                v-if="subLabelValue === 'percent'"
                 >{{ twoDimPercentages()[index][j] }}%</span
               >
-              <span class="percentage__list-label" v-else>{{ format(values[index][j]) }}</span>
+              <span
+                class="percentage__list-label"
+                v-else
+                >{{ format(values[index][j]) }}</span
+              >
             </li>
           </ul>
         </div>
       </div>
     </transition-group>
-    <transition name="fade" v-on:enter="enterTransition" v-on:leave="leaveTransition">
-      <div class="svg-funnel-js__subLabels" v-if="is2d()">
+    <transition
+      name="fade"
+      v-on:enter="enterTransition"
+      v-on:leave="leaveTransition"
+    >
+      <div
+        class="svg-funnel-js__subLabels"
+        v-if="is2d()"
+      >
         <div
           :class="`svg-funnel-js__subLabel svg-funnel-js__subLabel-${index + 1}`"
           v-for="(subLabel, index) in subLabels"
           :key="index"
         >
-          <div class="svg-funnel-js__subLabel--color" :style="subLabelBackgrounds(index)"></div>
+          <div
+            class="svg-funnel-js__subLabel--color"
+            :style="subLabelBackgrounds(index)"
+          ></div>
           <div class="svg-funnel-js__subLabel--title">{{ subLabel }}</div>
         </div>
       </div>

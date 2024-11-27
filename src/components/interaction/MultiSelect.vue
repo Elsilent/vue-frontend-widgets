@@ -57,11 +57,14 @@ const dropdownItems = computed(() => {
         .map(([itemCode]) => itemCode)
     : Object.keys(items.value);
 
-  return filteredItems.sort(sort).reduce((dropdownItems, itemCode) => {
-    dropdownItems[itemCode] = items.value[itemCode];
+  return filteredItems.sort(sort).reduce(
+    (dropdownItems, itemCode) => {
+      dropdownItems[itemCode] = items.value[itemCode];
 
-    return dropdownItems;
-  }, {} as Record<string | number | symbol, string>);
+      return dropdownItems;
+    },
+    {} as Record<string | number | symbol, string>,
+  );
 });
 
 const { selectedItem, onKeypressDown, onKeypressUp, clearSelectedItem } = useUpDownKeys({

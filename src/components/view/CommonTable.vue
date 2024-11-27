@@ -379,11 +379,14 @@ const comparisonColumnKeys = computed(() =>
  * Retrieves the list of columns in current column (may differ from columns prop in drag mode)
  */
 const currentColumns = computed(() =>
-  currentColumnKeys.value.reduce((currentColumns, columnKey) => {
-    currentColumns[columnKey] = cloneObject(columns.value[columnKey]);
+  currentColumnKeys.value.reduce(
+    (currentColumns, columnKey) => {
+      currentColumns[columnKey] = cloneObject(columns.value[columnKey]);
 
-    return currentColumns;
-  }, {} as Record<string, Column>),
+      return currentColumns;
+    },
+    {} as Record<string, Column>,
+  ),
 );
 
 /**
@@ -394,11 +397,14 @@ const detailsLabels = computed(() => {
     return undefined;
   }
 
-  return Object.entries(detailsRequests.value).reduce((labels, [kind, { label }]) => {
-    labels[kind] = label;
+  return Object.entries(detailsRequests.value).reduce(
+    (labels, [kind, { label }]) => {
+      labels[kind] = label;
 
-    return labels;
-  }, {} as Record<string, string>);
+      return labels;
+    },
+    {} as Record<string, string>,
+  );
 });
 
 /**
@@ -703,11 +709,14 @@ const getInlineFilterOperatorItems = (columnKey: string): Record<string, string>
     return {};
   }
 
-  return Object.entries(operators).reduce((operators, [operatorKey, operator]) => {
-    operators[operatorKey] = operator.label;
+  return Object.entries(operators).reduce(
+    (operators, [operatorKey, operator]) => {
+      operators[operatorKey] = operator.label;
 
-    return operators;
-  }, {} as Record<string, string>);
+      return operators;
+    },
+    {} as Record<string, string>,
+  );
 };
 
 const getInlineFilterValueType = (columnKey: string) => {

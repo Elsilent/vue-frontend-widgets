@@ -111,7 +111,9 @@ component.menu-item(
 
   &.level-1 {
     padding: $padding-size-menu-large 0 $padding-size-menu-large $padding-size-menu-large;
-    transition: background-color 0.2s, box-shadow 0.2s;
+    transition:
+      background-color 0.2s,
+      box-shadow 0.2s;
 
     &.active.with-sublevel {
       @include apply-color(

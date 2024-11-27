@@ -63,13 +63,16 @@ const filteredColumns = computed<Record<string, Column>>(() => {
 });
 
 const columnsByGroups = computed<Record<string, Record<string, Column>>>(() => {
-  return Object.keys(groupNames.value).reduce((columnsByGroups, groupKey) => {
-    columnsByGroups[groupKey] = Object.fromEntries(
-      Object.entries(filteredColumns.value).filter(([_, column]) => column.group === groupKey),
-    );
+  return Object.keys(groupNames.value).reduce(
+    (columnsByGroups, groupKey) => {
+      columnsByGroups[groupKey] = Object.fromEntries(
+        Object.entries(filteredColumns.value).filter(([_, column]) => column.group === groupKey),
+      );
 
-    return columnsByGroups;
-  }, {} as Record<string, Record<string, Column>>);
+      return columnsByGroups;
+    },
+    {} as Record<string, Record<string, Column>>,
+  );
 });
 
 const currentGroupColumns = computed<Record<string, Column> | undefined>(() =>
