@@ -4,8 +4,8 @@ require('@rushstack/eslint-patch/modern-module-resolution');
 module.exports = {
   root: true,
   extends: [
-    'plugin:vue/vue3-essential',
     'eslint:recommended',
+    'plugin:vue/vue3-essential',
     '@vue/eslint-config-typescript',
     '@vue/eslint-config-prettier/skip-formatting',
   ],
@@ -23,17 +23,8 @@ module.exports = {
     'no-empty': ['error', { allowEmptyCatch: true }],
     'no-unused-vars': 'off',
     '@typescript-eslint/no-unused-vars': 'off',
-    'prettier/prettier': [
-      'error',
-      {
-        semi: true,
-        singleQuote: true,
-        trailingComma: 'all',
-      },
-    ],
     'vue/multi-word-component-names': 'off',
     'vue/no-ref-as-operand': 'off',
-    quotes: ['error', 'single', { avoidEscape: true }],
   },
   overrides: [
     {
