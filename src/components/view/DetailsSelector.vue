@@ -57,7 +57,6 @@ const onClickOutside = () => {
   ElPopover(
     :show-arrow="false"
     popper-class="details-selector-popover"
-    :teleported="false"
     :persistent="false"
     :visible="selectorVisible"
     :hide-after="0"
@@ -85,39 +84,38 @@ const onClickOutside = () => {
 </template>
 
 <style lang="scss">
+@use 'sass:map';
 @import '../../styles/colors.scss';
 @import '../../styles/spacing.scss';
 
-.details-selector-container {
-  .details-selector-popover {
-    --el-popover-padding: 0.5rem 0;
-    min-width: 10rem;
-  }
+.details-selector-popover {
+  --el-popover-padding: 0.5rem 0;
+  min-width: 10rem;
 
   .dropdown-item {
     transition: background-color 0.3s;
     cursor: pointer;
     padding: 0.25rem 1.5rem;
     text-align: left;
+
     &:active {
-      @include apply-color(background-color, background-accent);
+      background-color: map.get(map.get($themes, 'light'), 'background-accent');
     }
 
     &:not(:active):hover {
-      @include apply-color(background-color, background-lowered);
+      background-color: map.get(map.get($themes, 'light'), 'background-lowered');
     }
   }
+}
 
-  > .details-selector {
-    @include apply-color(color, text-important-alt);
+.details-selector {
+  color: map.get(map.get($themes, 'light'), 'text-important-alt');
+  cursor: pointer;
+  text-decoration: none;
 
-    cursor: pointer;
-    text-decoration: none;
-
-    > .info-text {
-      margin-right: 0.25rem;
-      user-select: none;
-    }
+  > .info-text {
+    margin-right: 0.25rem;
+    user-select: none;
   }
 }
 </style>
