@@ -6,7 +6,8 @@
     "composite": true,
     "baseUrl": ".",
     "lib": ["DOM", "ESNext"],
-    "noUnusedLocals": true,
+    "noUnusedLocals" : false,
+    "noUnusedParameters": false,
     "module": "ESNext",
     "moduleResolution": "node",
     "paths": {
