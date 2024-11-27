@@ -4,7 +4,12 @@ Frontend widgets which can be used across Vue 3 projects.
 
 ## Recommended IDE Setup
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+[WebStorm](https://www.jetbrains.com/webstorm/) OR [PhpStorm](https://www.jetbrains.com/phpstorm/)
+
+Make next setting before starting work: _Settings/Languages & Frameworks/JavaScript/Prettier_
+- Automatic Prettier configuration: checked
+- Run for files: `{**/*,*}.{js,ts,jsx,tsx,cjs,mjs,cts,mts,css,scss,vue}`
+- Run on save: checked
 
 ## Example of usage
 
@@ -41,7 +46,7 @@ Align(horizontal='center')
 
 ### Preparing for publishing changes
 
-Before creating a pull request please always run `yarn lint --fix`
+Before creating a pull request please always run `yarn format` & `yarn lint --fix`
 to keep the code style consistent and run `yarn build` to check for errors.
 
 > Don't solely rely on the linter built in your IDE. It might mark some of the things
