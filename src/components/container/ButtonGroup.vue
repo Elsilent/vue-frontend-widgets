@@ -2,11 +2,14 @@
 import { toRefs } from 'vue';
 import Align from './Align.vue';
 
-const props = withDefaults(defineProps<{
-    column?: boolean,
-}>(), {
+const props = withDefaults(
+  defineProps<{
+    column?: boolean;
+  }>(),
+  {
     column: false,
-});
+  },
+);
 
 const { column } = toRefs(props);
 </script>

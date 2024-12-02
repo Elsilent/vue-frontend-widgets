@@ -41,7 +41,7 @@ const emit = defineEmits<{
 
 <template lang="pug">
 .scrollable-area(
-  @mousedown.stop="(event) => emit('mousedown', event)",
+  @mousedown.stop="(event: MouseEvent) => emit('mousedown', event)",
   :class="{ active, [mode]: true, [theme]: true}",
   :style="scrollbarStyle",
 )
@@ -181,7 +181,10 @@ const emit = defineEmits<{
     border-radius: 9px;
     opacity: 0;
     position: absolute;
-    transition: background-color 0.3s, box-shadow 0.3s, opacity 0.3s;
+    transition:
+      background-color 0.3s,
+      box-shadow 0.3s,
+      opacity 0.3s;
 
     > .thumb {
       @include apply-color(background-color, background-neutral);
@@ -189,7 +192,10 @@ const emit = defineEmits<{
       border-radius: 4px;
       opacity: 0.35;
       position: absolute;
-      transition: background-color 0.3s, box-shadow 0.3s, opacity 0.3s;
+      transition:
+        background-color 0.3s,
+        box-shadow 0.3s,
+        opacity 0.3s;
     }
   }
   &.dark .thumb {

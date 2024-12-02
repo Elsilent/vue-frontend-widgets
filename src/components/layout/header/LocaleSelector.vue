@@ -17,14 +17,17 @@ const localeSelector = ref<typeof Align | undefined>();
 const menuVisible = ref(false);
 
 const menuItems = computed(() =>
-  locales.value.reduce((menuItems, locale) => {
-    menuItems[locale.code] = {
-      icon: locale.icon,
-      iconBackend: 'flag-icons',
-    };
+  locales.value.reduce(
+    (menuItems, locale) => {
+      menuItems[locale.code] = {
+        icon: locale.icon,
+        iconBackend: 'flag-icons',
+      };
 
-    return menuItems;
-  }, {} as Record<string, MenuItem>),
+      return menuItems;
+    },
+    {} as Record<string, MenuItem>,
+  ),
 );
 
 const localeIcon = computed(

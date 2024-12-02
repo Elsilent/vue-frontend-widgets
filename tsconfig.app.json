@@ -6,7 +6,8 @@
     "composite": true,
     "baseUrl": ".",
     "lib": ["DOM", "ESNext"],
-    "noUnusedLocals": true,
+    "noUnusedLocals" : false,
+    "noUnusedParameters": false,
     "module": "ESNext",
     "moduleResolution": "node",
     "paths": {
@@ -18,7 +19,6 @@
   "vueCompilerOptions": {
     "plugins": [
       "@vue/vue-language-plugin-pug",
-      "@volar/vue-language-plugin-pug"
     ]
   }
 }

@@ -35,11 +35,14 @@ const minPageSize = computed(() => Math.min(...pageSizes.value));
 const pageCount = computed(() => Math.ceil(rowCount.value / currentPageSize.value));
 
 const pageSizeItems = computed(() =>
-  pageSizes.value.reduce((pageSizeLabels, pageSize) => {
-    pageSizeLabels[pageSize] = pageSize.toString();
+  pageSizes.value.reduce(
+    (pageSizeLabels, pageSize) => {
+      pageSizeLabels[pageSize] = pageSize.toString();
 
-    return pageSizeLabels;
-  }, {} as Record<number, string>),
+      return pageSizeLabels;
+    },
+    {} as Record<number, string>,
+  ),
 );
 
 const visiblePageIndexes = computed(() => {

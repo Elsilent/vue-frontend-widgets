@@ -68,11 +68,14 @@ const currentMonthIndex = computed(
 const currentYear = computed(() => DateTime.fromFormat(yearMonth.value, dateFormat.yearMonth).year);
 
 const monthItems = computed(() =>
-  monthLabels.value.reduce((monthItems, month, index) => {
-    monthItems[index] = month;
+  monthLabels.value.reduce(
+    (monthItems, month, index) => {
+      monthItems[index] = month;
 
-    return monthItems;
-  }, {} as Record<number, string>),
+      return monthItems;
+    },
+    {} as Record<number, string>,
+  ),
 );
 
 const rangeEnd = computed(() => DateTime.fromFormat(range.value[1], dateFormat.yearMonthDay));
@@ -88,13 +91,16 @@ const strictWeekLabels = computed(() =>
 const yearItems = computed(() => {
   const minYear = minDateTimestamp.value.year;
 
-  return new Array(maxYear - minYear + 1).fill(0).reduce((yearItems, _, index) => {
-    const year = minYear + index;
+  return new Array(maxYear - minYear + 1).fill(0).reduce(
+    (yearItems, _, index) => {
+      const year = minYear + index;
 
-    yearItems[year] = year.toString();
+      yearItems[year] = year.toString();
 
-    return yearItems;
-  }, {} as Record<number, string>);
+      return yearItems;
+    },
+    {} as Record<number, string>,
+  );
 });
 
 const yearMonthStart = computed(() =>

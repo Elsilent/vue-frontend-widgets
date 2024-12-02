@@ -6,8 +6,7 @@
 
 @forward 'element-plus/theme-chalk/src/common/var.scss' with (
   // Colors
-  $colors:
-    (
+  $colors: (
       'primary': (
         'base': map.get(map.get($themes, 'light'), 'background-active-accent'),
       )
@@ -28,7 +27,6 @@
   ),
   $border-color-hover: map.get(map.get($themes, 'light'), 'input-border-hover'),
   $box-shadow: ('': 'none', 'light': 'none', 'lighter': 'none', 'dark': 'none'),
-
   // Fonts
   $font-family: ('': $font-family-normal),
   $font-size: ('base': $font-size-normal),
@@ -40,14 +38,11 @@
   ),
   $select-group: ('font-size': $font-size-normal),
   $select-wrapper-padding: ('default': $padding-size-menu-small-3 $padding-size-small-2),
-
   // Tooltip
   $popper: ('border-radius': $border-radius-normal),
   $popover: ('border-radius': $border-radius-normal, 'title-font-size': $font-size-normal),
-
   // Dialog
-  $dialog:
-    (
+  $dialog: (
       'title-font-size': $font-size-large-4,
       'content-font-size': $font-size-normal,
       'padding-primary': 0,
@@ -55,13 +50,12 @@
     ),
 
   // Checkbox
-  $checkbox:
-    (
+  $checkbox: (
       'border-radius': $border-radius-normal,
       'input-height': 20px,
       'input-width': 20px,
       'input-border': none,
       'checked-bg-color': map.get(map.get($themes, 'light'), 'background-positive'),
-      'bg-color': map.get(map.get($themes, 'light'), 'background-lowered-3'),
-    ),
+      'bg-color': map.get(map.get($themes, 'light'), 'background-lowered-3')
+    )
 );

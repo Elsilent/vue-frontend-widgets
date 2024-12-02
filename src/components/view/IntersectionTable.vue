@@ -213,11 +213,7 @@ const getRawValue = (value: any, type: ColumnType) => {
   }
 };
 
-const getRowFormattedValue = (
-  value: any,
-  columnKey: string,
-  subcolumnKey?: string,
-) => {
+const getRowFormattedValue = (value: any, columnKey: string, subcolumnKey?: string) => {
   const columnType = currentColumns.value[columnKey].type;
 
   let formattedValue = formatValue(value, columnType);
@@ -375,37 +371,37 @@ Loader(v-else)
 
     &.column {
       > .intersection {
-          display: flex;
-          flex-direction: column;
-          margin: -7px -14px;
-          position: relative;
-          overflow: hidden;
-          width: calc(100% + 28px);
-          height: calc(100% + 14px);
+        display: flex;
+        flex-direction: column;
+        margin: -7px -14px;
+        position: relative;
+        overflow: hidden;
+        width: calc(100% + 28px);
+        height: calc(100% + 14px);
 
-          > .line {
-            @include apply-color(border-bottom-color, border-table);
+        > .line {
+          @include apply-color(border-bottom-color, border-table);
 
-            border-bottom: 1px solid;
-            position: absolute;
-            height: 100%;
-            transform: translate(-25%, -50%) rotate(15deg);
-            width: 200%;
-          }
+          border-bottom: 1px solid;
+          position: absolute;
+          height: 100%;
+          transform: translate(-25%, -50%) rotate(15deg);
+          width: 200%;
+        }
 
-          > .info-text:first-child {
-            flex: 1;
-            text-align: right;
-            padding: 7px 14px 0;
-          }
+        > .info-text:first-child {
+          flex: 1;
+          text-align: right;
+          padding: 7px 14px 0;
+        }
 
-          > .info-text:last-child {
-            text-align: left;
-            padding: 0 14px 7px;
-          }
+        > .info-text:last-child {
+          text-align: left;
+          padding: 0 14px 7px;
         }
       }
     }
+  }
 }
 
 .table {

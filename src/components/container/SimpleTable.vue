@@ -211,11 +211,14 @@ const minValues = computed(() =>
 
       if (comparisonColumnKeys?.value && (column.colspan ?? 0) > 1) {
         if (!(columnKey in minValues)) {
-          minValues[columnKey] = Object.entries(row[columnKey]).reduce((values, [key, value]) => {
-            values[key] = parseFloat(value as string);
+          minValues[columnKey] = Object.entries(row[columnKey]).reduce(
+            (values, [key, value]) => {
+              values[key] = parseFloat(value as string);
 
-            return values;
-          }, {} as Record<string, number>);
+              return values;
+            },
+            {} as Record<string, number>,
+          );
         }
 
         for (const subcolumnKey in minValues[columnKey]) {
@@ -246,11 +249,14 @@ const maxValues = computed(() =>
 
       if (comparisonColumnKeys?.value && (column.colspan ?? 0) > 1) {
         if (!(columnKey in maxValues)) {
-          maxValues[columnKey] = Object.entries(row[columnKey]).reduce((values, [key, value]) => {
-            values[key] = parseFloat(value as string);
+          maxValues[columnKey] = Object.entries(row[columnKey]).reduce(
+            (values, [key, value]) => {
+              values[key] = parseFloat(value as string);
 
-            return values;
-          }, {} as Record<string, number>);
+              return values;
+            },
+            {} as Record<string, number>,
+          );
         }
 
         for (const subcolumnKey in maxValues[columnKey]) {
@@ -283,62 +289,63 @@ const maxRowspan = computed(() => {
   }
 });
 
-const orderedRowValues = computed<Record<string, any>[]>(
-  () => {
-    const orderedRowValues = !useOrderBy.value || orderColumnType?.value === undefined
+const orderedRowValues = computed<Record<string, any>[]>(() => {
+  const orderedRowValues =
+    !useOrderBy.value || orderColumnType?.value === undefined
       ? Object.values(rows.value)
-      : Object.values(rows.value)
-          .sort((leftRow, rightRow) => {
-            const comparison = (() => {
-              const leftValue = getRawValue(
-                orderBy.value[0].reduce((value, key) => value[key], leftRow) as unknown as string,
-                orderColumnType!.value!,
-              );
-              const rightValue = getRawValue(
-                orderBy.value[0].reduce((value, key) => value[key], rightRow) as unknown as string,
-                orderColumnType!.value!,
-              );
+      : Object.values(rows.value).sort((leftRow, rightRow) => {
+          const comparison = (() => {
+            const leftValue = getRawValue(
+              orderBy.value[0].reduce((value, key) => value[key], leftRow) as unknown as string,
+              orderColumnType!.value!,
+            );
+            const rightValue = getRawValue(
+              orderBy.value[0].reduce((value, key) => value[key], rightRow) as unknown as string,
+              orderColumnType!.value!,
+            );
 
-              if (leftValue > rightValue) {
-                return 1;
-              }
-              if (leftValue < rightValue) {
-                return -1;
-              }
-              return 0;
-            })();
+            if (leftValue > rightValue) {
+              return 1;
+            }
+            if (leftValue < rightValue) {
+              return -1;
+            }
+            return 0;
+          })();
 
-            return orderBy.value[1] ? -comparison : comparison;
-          });
-
-    return orderedRowValues
-      .reduce((rows, row, index) => {
-        rows.push({
-          ...row,
-          rowInfo: {
-            index,
-            detailable: true,
-          },
+          return orderBy.value[1] ? -comparison : comparison;
         });
 
-        if (detailsRows.value[row[primaryColumn.value]]) {
-          rows.push(
-            ...Object.entries(detailsRows.value[row[primaryColumn.value]]).map(
-              ([subindex, detailRow]) => ({
-                ...detailRow,
-                rowInfo: {
-                  index,
-                  subindex: +subindex,
-                  detailable: false,
-                },
-              }),
-            ),
-          );
-        }
+  return orderedRowValues.reduce(
+    (rows, row, index) => {
+      rows.push({
+        ...row,
+        rowInfo: {
+          index,
+          detailable: true,
+        },
+      });
 
-        return rows;
-      }, [] as Record<string, any>[]) as Record<string, any>[];
-  });
+      if (detailsRows.value[row[primaryColumn.value]]) {
+        rows.push(
+          ...Object.entries(detailsRows.value[row[primaryColumn.value]]).map(
+            ([subindex, detailRow]) => ({
+              ...detailRow,
+              rowInfo: {
+                index,
+                subindex: +subindex,
+                detailable: false,
+              },
+            }),
+          ),
+        );
+      }
+
+      return rows;
+    },
+    [] as Record<string, any>[],
+  ) as Record<string, any>[];
+});
 
 /**
  * Retrieves style of table which allows display: grid to show correct table
@@ -488,11 +495,10 @@ const getColumnClassList = (columnKey: string, subcolumnIndex?: number) => {
       : false,
     'drag-mode': dragModeEnabled.value,
     orderable:
-      useOrderBy.value && (
-        !(comparisonColumnKeys && comparisonColumnKeys.value) ||
+      useOrderBy.value &&
+      (!(comparisonColumnKeys && comparisonColumnKeys.value) ||
         (column.colspan ?? 1) === 1 ||
-        subcolumnIndex !== undefined
-      ),
+        subcolumnIndex !== undefined),
     'ordered-by': ordered,
     [`order-direction-${orderBy.value[1] ? 'desc' : 'asc'}`]: ordered,
   };
@@ -1082,7 +1088,11 @@ defineSlots<
 
       position: sticky;
       top: 0;
-      transition: background-color 0.3s, box-shadow 0.3s, color 0.3s, opacity 0.3s;
+      transition:
+        background-color 0.3s,
+        box-shadow 0.3s,
+        color 0.3s,
+        opacity 0.3s;
       user-select: none;
 
       &:hover {
@@ -1113,12 +1123,17 @@ defineSlots<
                 $value-postfix: 0 0.25 0.5rem rgba(black, 0.25)
               );
 
-              transition: background-color 0.3s, box-shadow 0.3s;
+              transition:
+                background-color 0.3s,
+                box-shadow 0.3s;
               z-index: 23;
             }
 
             &:not(.dragged) {
-              transition: background-color 0.3s, box-shadow 0.3s, left 0.3s;
+              transition:
+                background-color 0.3s,
+                box-shadow 0.3s,
+                left 0.3s;
             }
           }
         }
@@ -1213,7 +1228,9 @@ defineSlots<
       bottom: 0;
       padding: 1rem;
       position: sticky;
-      transition: background-color 0.3s, box-shadow 0.3s;
+      transition:
+        background-color 0.3s,
+        box-shadow 0.3s;
       z-index: 20;
       &:first-child {
         grid-column-start: 1;
@@ -1226,11 +1243,15 @@ defineSlots<
       &:not(.colored) {
         @include apply-color(box-shadow, border-table, $value-prefix: 0 0 0 1px);
 
-        transition: background-color 0.3s, box-shadow 0.3s;
+        transition:
+          background-color 0.3s,
+          box-shadow 0.3s;
       }
 
       &:not(.total) {
-        transition: background-color 0.3s, box-shadow 0.3s;
+        transition:
+          background-color 0.3s,
+          box-shadow 0.3s;
 
         &.colored {
           position: relative;

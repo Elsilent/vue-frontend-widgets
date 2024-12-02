@@ -18,13 +18,16 @@ const menuVisible = ref(false);
 
 const menuItems = computed(
   () =>
-    currencies.value.reduce((menuItems, currency) => {
-      menuItems[currency.code] = {
-        label: currency.label,
-      };
+    currencies.value.reduce(
+      (menuItems, currency) => {
+        menuItems[currency.code] = {
+          label: currency.label,
+        };
 
-      return menuItems;
-    }, {} as Record<string, MenuItem>) ?? {},
+        return menuItems;
+      },
+      {} as Record<string, MenuItem>,
+    ) ?? {},
 );
 
 const currentCurrency = computed(() =>
