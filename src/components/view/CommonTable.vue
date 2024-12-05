@@ -1472,7 +1472,7 @@ if (request) {
               :mood="differenceMood(value, columnKey, subcolumnKey)",
               contrast,
               size="small",
-            ) {{ getRowFormattedValue(value, columnKey, subcolumnKey) }}
+            ) {{ getRowFormattedValue(value, columnKey, subcolumnKey, true) }}
           Link(
             v-else-if="isColumnLinkable(row, columnKey) && row.rowInfo.detailable",
             :to="getColumnLinkUrl(columnLinks[columnKey], row).toString()",
