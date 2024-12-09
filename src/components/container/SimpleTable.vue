@@ -496,6 +496,7 @@ const getColumnClassList = (columnKey: string, subcolumnIndex?: number) => {
     'drag-mode': dragModeEnabled.value,
     orderable:
       useOrderBy.value &&
+      column.orderable !== false &&
       (!(comparisonColumnKeys && comparisonColumnKeys.value) ||
         (column.colspan ?? 1) === 1 ||
         subcolumnIndex !== undefined),
@@ -657,7 +658,7 @@ const onColumnClick = (columnKey: string, subcolumnIndex?: number) => {
     return;
   }
 
-  if (!useOrderBy.value) {
+  if (!useOrderBy.value || columns.value[columnKey].orderable === false) {
     return;
   }
 
