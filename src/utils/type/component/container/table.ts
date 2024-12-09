@@ -16,6 +16,7 @@ export interface Column {
   fixed?: boolean;
   group?: string;
   label: string;
+  orderable?: boolean;
   rowspan?: number;
   tooltipTitle?: string;
   tooltipContent?: string;
