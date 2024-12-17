@@ -5,6 +5,7 @@ All important changes in vue-frontend-widgets
 Intersection table:
 - Emitting events with the columns updates
 - Emitting events with the rows updates
+- Fixed problem with the loader position
 
 ## [0.1.1] - 2024-11-20
 - Added data-test-id attribute to select options and KPI card values to ease acceptance testing

@@ -361,7 +361,11 @@ Table.intersection-table(
         contrast,
         size="small",
       ) {{ getRowFormattedValue(value, columnKey, subcolumnKey) }}
-Loader(v-else)
+.loading-overlay(
+  v-else
+  :class="{ visible: loading }"
+)
+  Loader
 </template>
 
 <style lang="scss" scoped>
