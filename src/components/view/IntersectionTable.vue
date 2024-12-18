@@ -128,6 +128,8 @@ const table = ref<typeof Table | undefined>();
 const emit = defineEmits<{
   (e: 'move:column', _: { from: number; to: number }): void;
   (e: 'update:loading', value: boolean): void;
+  (e: 'update:currentColumns', value: Record<string, Column>): void;
+  (e: 'update:allRows', value: Record<string, any>[]): void;
 }>();
 
 /**
@@ -287,6 +289,17 @@ watch(loading, () => {
   emit('update:loading', loading.value);
 });
 
+//> Rows + columns
+// Emit the event whenever currentColumns and allRows are updated
+watch(currentColumns, (newColumns) => {
+  emit('update:currentColumns', newColumns);
+});
+
+watch(allRows, (newRows) => {
+  emit('update:allRows', newRows);
+});
+//< Rows + columns
+
 if (request) {
   watch(
     request,
@@ -348,7 +361,11 @@ Table.intersection-table(
         contrast,
         size="small",
       ) {{ getRowFormattedValue(value, columnKey, subcolumnKey) }}
-Loader(v-else)
+.loading-overlay(
+  v-else
+  :class="{ visible: loading }"
+)
+  Loader
 </template>
 
 <style lang="scss" scoped>
