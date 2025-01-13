@@ -11,19 +11,8 @@
     "./style.css": "./dist/style.css",
     "./styles/fonts/fonts.css": "./dist/styles/fonts/fonts.css",
     "./styles/*.scss": "./dist/styles/*.scss",
-    "./utils/clone": { "types": "./dist/utils/clone.d.ts", "import": "./dist/utils/clone.js" },
-    "./utils/currency": { "types": "./dist/utils/currency.d.ts", "import": "./dist/utils/currency.js" },
-    "./utils/date": { "types": "./dist/utils/date.d.ts", "import": "./dist/utils/date.js" },
-    "./utils/error": { "types": "./dist/utils/error.d.ts", "import": "./dist/utils/error.js" },
-    "./utils/format": { "types": "./dist/utils/format.d.ts", "import": "./dist/utils/format.js" },
-    "./utils/layout_header": { "types": "./dist/utils/layout_header.d.ts", "import": "./dist/utils/layout_header.js" },
-    "./utils/line_bar_chart": { "types": "./dist/utils/line_bar_chart.d.ts", "import": "./dist/utils/line_bar_chart.js" },
-    "./utils/match": { "types": "./dist/utils/match.d.ts", "import": "./dist/utils/match.js" },
-    "./utils/menu": { "types": "./dist/utils/menu.d.ts", "import": "./dist/utils/menu.js" },
-    "./utils/mood": { "types": "./dist/utils/mood.d.ts", "import": "./dist/utils/mood.js" },
-    "./utils/sort": { "types": "./dist/utils/sort.d.ts", "import": "./dist/utils/sort.js" },
-    "./utils/table": { "types": "./dist/utils/table.d.ts", "import": "./dist/utils/table.js" },
-    "./utils/theme": { "types": "./dist/utils/theme.d.ts", "import": "./dist/utils/theme.js" }
+    "./utils": { "types": "./dist/utils.d.ts", "import": "./dist/utils.js" },
+    "./types": { "types": "./dist/types.d.ts" }
   },
   "scripts": {
     "dev": "vite",

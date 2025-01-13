@@ -10,23 +10,7 @@ import { normalizePath } from 'vite';
 
 const srcDir = resolve(__dirname, 'src');
 
-const entries = [
-  'components',
-  'utils/clone',
-  'utils/currency',
-  'utils/date',
-  'utils/error',
-  'utils/format',
-  'utils/layout_header',
-  'utils/line_bar_chart',
-  'utils/match',
-  'utils/menu',
-  'utils/mood',
-  'utils/sort',
-  'utils/table',
-  'utils/theme',
-  'utils/kpi_distribution_table',
-];
+const entries = ['components', 'utils', 'types'];
 
 // https://vitejs.dev/config/
 export default defineConfig({
