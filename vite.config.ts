@@ -11,13 +11,7 @@ import { normalizePath } from 'vite';
 const srcDir = resolve(__dirname, 'src');
 
 const entries = [
-  'container',
-  'image',
-  'interaction',
-  'label',
-  'layout',
-  'marker',
-  'view',
+  'components',
   'utils/clone',
   'utils/currency',
   'utils/date',
@@ -38,11 +32,14 @@ const entries = [
 export default defineConfig({
   build: {
     lib: {
-      entry: entries.reduce((entryMap, entry) => {
-        entryMap[entry] = resolve(srcDir, 'entries', `${entry}.ts`);
+      entry: entries.reduce(
+        (entryMap, entry) => {
+          entryMap[entry] = resolve(srcDir, 'entries', `${entry}.ts`);
 
-        return entryMap;
-      }, {} as Record<string, string>),
+          return entryMap;
+        },
+        {} as Record<string, string>,
+      ),
       formats: ['es'],
     },
     rollupOptions: {
