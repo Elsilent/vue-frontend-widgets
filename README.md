@@ -15,8 +15,9 @@ Make next setting before starting work: _Settings/Languages & Frameworks/JavaScr
 
 ```vue
 <script lang="ts" setup>
-import { Align } from 'vue-frontend-widgets/container';
-import { Header, Info } from 'vue-frontend-widgets/label';
+import { Align, Header, Info } from 'vue-frontend-widgets';
+import { Mood } from 'vue-frontend-widgets/types';
+import { BaseError } from 'vue-frontend-widgets/utils';
 </script>
 
 <template lang="pug">
