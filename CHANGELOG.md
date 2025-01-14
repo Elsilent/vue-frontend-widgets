@@ -2,6 +2,7 @@
 All important changes in vue-frontend-widgets
 
 ## [1.0.0] - 2025-01-14 🎄
+### [BREAKING CHANGE]
 - Totally changed structure of components & entry points (calls examples in README)
 
 ## [0.1.6] - 2024-12-17

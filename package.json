@@ -1,18 +1,26 @@
 {
   "name": "@elsilent/vue-frontend-widgets",
   "type": "module",
-  "version": "0.1.6",
+  "version": "1.0.0",
   "files": [
     "dist"
   ],
   "exports": {
-    ".": { "types": "./dist/components.d.ts", "import": "./dist/components.js" },
+    ".": {
+      "types": "./dist/components.d.ts",
+      "import": "./dist/components.js"
+    },
     "./src/*": "./src/*",
     "./style.css": "./dist/style.css",
     "./styles/fonts/fonts.css": "./dist/styles/fonts/fonts.css",
     "./styles/*.scss": "./dist/styles/*.scss",
-    "./utils": { "types": "./dist/utils.d.ts", "import": "./dist/utils.js" },
-    "./types": { "types": "./dist/types.d.ts" }
+    "./utils": {
+      "types": "./dist/utils.d.ts",
+      "import": "./dist/utils.js"
+    },
+    "./types": {
+      "types": "./dist/types.d.ts"
+    }
   },
   "scripts": {
     "dev": "vite",
