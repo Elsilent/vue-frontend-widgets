@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { computed, ref, toRefs, watch } from 'vue';
 import type { Router } from 'vue-router';
-import MenuSubsection from './MenuSubsection.vue';
+import SideMenuSubsection from './SideMenuSubsection.vue';
 import type { Menu } from '../utils/menu';
 import Scrollable from './Scrollable.vue';
 
@@ -50,7 +50,7 @@ watch(
   )
     .items
       template(v-for="(section, code) in menu")
-        MenuSubsection(
+        SideMenuSubsection(
           v-model:expandedPrefix='expandedPrefix',
           :fullWidth='isFullWidth',
           :icon='section.icon',

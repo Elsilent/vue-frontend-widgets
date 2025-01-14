@@ -6,7 +6,7 @@ import Info from './Info.vue';
 import Icon from './Icon.vue';
 import type { IconBackend } from '../utils/enum/icon_backend';
 import type { MenuItem as MenuItemType, MenuSection } from '../utils/menu';
-import MenuItem from './MenuItem.vue';
+import SideMenuItem from './SideMenuItem.vue';
 
 type SectionLevel = 0 | 1 | 2;
 
@@ -68,7 +68,7 @@ template(v-if='label')
       size='large-3',
       value='ellipsis',
     )
-  MenuItem(
+  SideMenuItem(
     v-else,
     @click="() => emit('update:expandedPrefix', prefix)",
     :active='expandedPrefix.startsWith(prefix)',
@@ -81,7 +81,7 @@ template(v-if='label')
   )
 Collapse(:expanded='level === 0 || expandedPrefix.startsWith(prefix)')
   template(v-for='(item, code) in items')
-    MenuSubsection(
+    SideMenuSubsection(
       v-if="'items' in item",
       @update:expandedPrefix="(prefix) => emit('update:expandedPrefix', prefix)",
       :expandedPrefix='expandedPrefix',
@@ -95,7 +95,7 @@ Collapse(:expanded='level === 0 || expandedPrefix.startsWith(prefix)')
       :router='router',
       :translator='translator',
     )
-    MenuItem(
+    SideMenuItem(
       v-else-if='fullWidth || level === 0',
       @click.prevent='() => whenItemClicked(code)',
       :active='`${prefix}${code}` === activeMenuItemCode',
