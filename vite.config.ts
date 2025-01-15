@@ -10,39 +10,20 @@ import { normalizePath } from 'vite';
 
 const srcDir = resolve(__dirname, 'src');
 
-const entries = [
-  'container',
-  'image',
-  'interaction',
-  'label',
-  'layout',
-  'marker',
-  'view',
-  'utils/clone',
-  'utils/currency',
-  'utils/date',
-  'utils/error',
-  'utils/format',
-  'utils/layout_header',
-  'utils/line_bar_chart',
-  'utils/match',
-  'utils/menu',
-  'utils/mood',
-  'utils/sort',
-  'utils/table',
-  'utils/theme',
-  'utils/kpi_distribution_table',
-];
+const entries = ['components', 'utils', 'types'];
 
 // https://vitejs.dev/config/
 export default defineConfig({
   build: {
     lib: {
-      entry: entries.reduce((entryMap, entry) => {
-        entryMap[entry] = resolve(srcDir, 'entries', `${entry}.ts`);
+      entry: entries.reduce(
+        (entryMap, entry) => {
+          entryMap[entry] = resolve(srcDir, 'entries', `${entry}.ts`);
 
-        return entryMap;
-      }, {} as Record<string, string>),
+          return entryMap;
+        },
+        {} as Record<string, string>,
+      ),
       formats: ['es'],
     },
     rollupOptions: {

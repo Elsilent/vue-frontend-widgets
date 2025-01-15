@@ -1,114 +1,25 @@
 {
   "name": "@elsilent/vue-frontend-widgets",
   "type": "module",
-  "version": "0.1.6",
+  "version": "1.0.0",
   "files": [
     "dist"
   ],
   "exports": {
+    ".": {
+      "types": "./dist/components.d.ts",
+      "import": "./dist/components.js"
+    },
     "./src/*": "./src/*",
     "./style.css": "./dist/style.css",
     "./styles/fonts/fonts.css": "./dist/styles/fonts/fonts.css",
     "./styles/*.scss": "./dist/styles/*.scss",
-    "./container": {
-      "types": "./dist/container.d.ts",
-      "import": "./dist/container.js",
-      "require": "./dist/container.cjs"
+    "./utils": {
+      "types": "./dist/utils.d.ts",
+      "import": "./dist/utils.js"
     },
-    "./image": {
-      "types": "./dist/image.d.ts",
-      "import": "./dist/image.js",
-      "require": "./dist/image.cjs"
-    },
-    "./interaction": {
-      "types": "./dist/interaction.d.ts",
-      "import": "./dist/interaction.js",
-      "require": "./dist/interaction.cjs"
-    },
-    "./label": {
-      "types": "./dist/label.d.ts",
-      "import": "./dist/label.js",
-      "require": "./dist/label.cjs"
-    },
-    "./layout": {
-      "types": "./dist/layout.d.ts",
-      "import": "./dist/layout.js",
-      "require": "./dist/layout.cjs"
-    },
-    "./marker": {
-      "types": "./dist/marker.d.ts",
-      "import": "./dist/marker.js",
-      "require": "./dist/marker.cjs"
-    },
-    "./view": {
-      "types": "./dist/view.d.ts",
-      "import": "./dist/view.js",
-      "require": "./dist/view.cjs"
-    },
-    "./utils/clone": {
-      "types": "./dist/utils/clone.d.ts",
-      "import": "./dist/utils/clone.js",
-      "require": "./dist/utils/clone.cjs"
-    },
-    "./utils/currency": {
-      "types": "./dist/utils/currency.d.ts",
-      "import": "./dist/utils/currency.js",
-      "require": "./dist/utils/currency.cjs"
-    },
-    "./utils/date": {
-      "types": "./dist/utils/date.d.ts",
-      "import": "./dist/utils/date.js",
-      "require": "./dist/utils/date.cjs"
-    },
-    "./utils/error": {
-      "types": "./dist/utils/error.d.ts",
-      "import": "./dist/utils/error.js",
-      "require": "./dist/utils/error.cjs"
-    },
-    "./utils/format": {
-      "types": "./dist/utils/format.d.ts",
-      "import": "./dist/utils/format.js",
-      "require": "./dist/utils/format.cjs"
-    },
-    "./utils/layout_header": {
-      "types": "./dist/utils/layout_header.d.ts",
-      "import": "./dist/utils/layout_header.js",
-      "require": "./dist/utils/layout_header.cjs"
-    },
-    "./utils/line_bar_chart": {
-      "types": "./dist/utils/line_bar_chart.d.ts",
-      "import": "./dist/utils/line_bar_chart.js",
-      "require": "./dist/utils/line_bar_chart.cjs"
-    },
-    "./utils/match": {
-      "types": "./dist/utils/match.d.ts",
-      "import": "./dist/utils/match.js",
-      "require": "./dist/utils/match.cjs"
-    },
-    "./utils/menu": {
-      "types": "./dist/utils/menu.d.ts",
-      "import": "./dist/utils/menu.js",
-      "require": "./dist/utils/menu.cjs"
-    },
-    "./utils/mood": {
-      "types": "./dist/utils/mood.d.ts",
-      "import": "./dist/utils/mood.js",
-      "require": "./dist/utils/mood.cjs"
-    },
-    "./utils/sort": {
-      "types": "./dist/utils/sort.d.ts",
-      "import": "./dist/utils/sort.js",
-      "require": "./dist/utils/sort.cjs"
-    },
-    "./utils/table": {
-      "types": "./dist/utils/table.d.ts",
-      "import": "./dist/utils/table.js",
-      "require": "./dist/utils/table.cjs"
-    },
-    "./utils/theme": {
-      "types": "./dist/utils/theme.d.ts",
-      "import": "./dist/utils/theme.js",
-      "require": "./dist/utils/theme.cjs"
+    "./types": {
+      "types": "./dist/types.d.ts"
     }
   },
   "scripts": {
