@@ -29,11 +29,13 @@ const props = withDefaults(
     groups?: Record<number | string, number | string>;
     leftAxisGroup?: number | string;
     leftAxisStyle?: Style;
+    leftAxisFormatter?: (value: number) => string;
     minHeight?: boolean;
     moods: Record<number | string, { chart: number } | { mood: Mood }>;
     noXAxisLabels?: boolean;
     rightAxisGroup?: number | string;
     rightAxisStyle?: Style;
+    rightAxisFormatter?: (value: number) => string;
     smoothing?: number;
     styles: Record<number | string, Style>;
     values: Record<number | string, Record<number | string, number>>;
@@ -56,11 +58,13 @@ const {
   formatters,
   leftAxisGroup,
   leftAxisStyle,
+  leftAxisFormatter,
   minHeight,
   moods,
   noXAxisLabels,
   rightAxisGroup,
   rightAxisStyle,
+  rightAxisFormatter,
   smoothing,
   styles,
   values,
@@ -159,6 +163,10 @@ const rightAxisGroupValue = computed(() => {
 });
 
 const leftAxisGroupFormatter = computed(() => {
+  if (leftAxisFormatter?.value) {
+    return leftAxisFormatter.value;
+  }
+
   let valueKey: string | number | undefined = undefined;
 
   for (const [groupValueKey, group] of Object.entries(
@@ -179,6 +187,10 @@ const leftAxisGroupFormatter = computed(() => {
 });
 
 const rightAxisGroupFormatter = computed(() => {
+  if (rightAxisFormatter?.value) {
+    return rightAxisFormatter.value;
+  }
+
   if (rightAxisGroupValue.value === undefined) {
     return undefined;
   }
@@ -752,6 +764,7 @@ $-chart-colors: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 
     display: flex;
     flex-direction: column;
     position: relative;
+    align-items: start;
 
     &:nth-child(2) {
       margin-right: 1rem;
