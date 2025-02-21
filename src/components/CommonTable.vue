@@ -1392,8 +1392,8 @@ if (request) {
       :primaryColumn="primaryColumn",
       :rows="visibleRows",
       :showRowNumber="showRowNumber",
-      :showTotal="!!totalRow",
-      :showTopTotal="showTopTotal",
+      :showTotal="!!totalRow && !displayInlineFilters",
+      :showTopTotal="showTopTotal && !displayInlineFilters",
       :noDataMessage="noDataMessage"
     )
       template(#colorizeLabel="{ enabled }")
