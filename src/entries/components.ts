@@ -35,6 +35,7 @@ import Loader from '../components/Loader.vue';
 import LocaleSelector from '../components/LocaleSelector.vue';
 import MonthPicker from '../components/MonthPicker.vue';
 import MultiSelect from '../components/MultiSelect.vue';
+import NoData from '../components/NoData.vue';
 import Option from '@/components/SelectOption.vue';
 import OptionGroup from '@/components/SelectOptionGroup.vue';
 import Popover from '../components/Popover.vue';
@@ -95,6 +96,7 @@ export {
   LocaleSelector,
   MonthPicker,
   MultiSelect,
+  NoData,
   Option,
   OptionGroup,
   Popover,
