@@ -584,7 +584,24 @@ watch(chartContents, () => {
   }
 });
 
+const popovers = ref([]);
+const popoversContainers = ref([]);
+
+const recalcPopoversPosition = () => {
+  const maxRight = window.innerWidth;
+  popovers.value.forEach((popover: HTMLElement, index) => {
+    const popoversContainer: HTMLElement = popoversContainers.value?.[index];
+    if (popover.getBoundingClientRect().right > maxRight) {
+      popover.style.right = `-${maxRight - popoversContainer.getBoundingClientRect().right}px`;
+    }
+    if (popover.getBoundingClientRect().left < 0) {
+      popover.style.left = `-${popoversContainer.getBoundingClientRect().left}px`;
+    }
+  });
+};
+
 onMounted(() => {
+  recalcPopoversPosition();
   updateXAxisLabelsStyle();
 });
 
@@ -640,10 +657,10 @@ onUnmounted(() => {
           v-if="index > 0",
         )
         .chart-popover-container.no-spacing(
+          ref="popoversContainers"
           :class="{ visible: hovers.includes(key) }",
         )
-          .chart-popover-line.no-spacing(:style="{ height: `${100 - valueHeight(index)}%` }")
-          .chart-popover.no-spacing(:style="{ bottom: `${100 - valueHeight(index)}%` }")
+          .chart-popover.no-spacing( ref="popovers" :style="{ bottom: `${100 - valueHeight(index)}%` }")
             slot(
               name="popover"
               :index='index',
@@ -661,6 +678,7 @@ onUnmounted(() => {
                 :index='index',
                 :values='valueKeys.map((key) => Object.values(values[key])[index])',
               )
+          .chart-popover-line.no-spacing(:style="{ height: `${100 - valueHeight(index)}%` }")
     .chart-lines.no-spacing(:style='linesStyle')
       template(v-for="(line, lineLabel) in values")
         svg(
@@ -925,17 +943,18 @@ $-chart-colors: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 
 
         &.visible {
           > .chart-popover-line {
-            opacity: 0.25;
+            opacity: 1;
           }
 
           > .chart-popover {
             opacity: 1;
             transform: none;
+            max-height: 150%;
           }
         }
 
         > .chart-popover-line {
-          @include apply-color(border-right-color, background-neutral);
+          @include apply-color(border-right-color, background-neutral, null, null, '', 0.25);
 
           position: absolute;
           border-right-style: dashed;
@@ -945,6 +964,21 @@ $-chart-colors: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 
           opacity: 0;
           transition-duration: $transition-duration-normal;
           transition-property: border-right-color, opacity;
+
+          &::after {
+            @include apply-color(border-top-color, background-normal);
+
+            border: 0.5rem solid transparent;
+            content: '';
+            position: absolute;
+            transition-duration: $transition-duration-normal;
+            transition-property: border-top-color;
+            width: 14px;
+            height: 14px;
+            top: -16px;
+            left: -7px;
+            z-index: 1001;
+          }
         }
 
         > .chart-popover {
@@ -964,17 +998,6 @@ $-chart-colors: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 
           transition-duration: $transition-duration-fast;
           transition-property: opacity, transform;
           z-index: 1000;
-
-          &::before {
-            @include apply-color(border-top-color, background-normal);
-
-            border: 0.5rem solid transparent;
-            content: '';
-            position: absolute;
-            transition-duration: $transition-duration-normal;
-            transition-property: border-top-color;
-            top: 100%;
-          }
 
           > .values {
             display: flex;
