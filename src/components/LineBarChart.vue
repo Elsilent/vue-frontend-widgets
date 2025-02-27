@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import {
   computed,
+  onUpdated,
   onMounted,
   onUnmounted,
   ref,
@@ -605,6 +606,10 @@ onMounted(() => {
   updateXAxisLabelsStyle();
 });
 
+onUpdated(() => {
+  recalcPopoversPosition();
+});
+
 onUnmounted(() => {
   resizeObserver.disconnect();
 });
@@ -971,11 +976,9 @@ $-chart-colors: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 
             border: 0.5rem solid transparent;
             content: '';
             position: absolute;
-            transition-duration: $transition-duration-normal;
-            transition-property: border-top-color;
             width: 14px;
             height: 14px;
-            top: -16px;
+            top: -17px;
             left: -7px;
             z-index: 1001;
           }
