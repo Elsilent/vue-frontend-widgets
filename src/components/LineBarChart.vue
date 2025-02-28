@@ -8,6 +8,7 @@ import {
   toRefs,
   watch,
   type ComponentPublicInstance,
+  type Ref,
 } from 'vue';
 import type { Mood } from '../utils/enum/mood';
 import type { Style } from '../utils/type/component/image/line_bar_chart';
@@ -587,16 +588,24 @@ watch(chartContents, () => {
 
 const popovers = ref([]);
 const popoversContainers = ref([]);
+const parentContainer = ref<Ref<HTMLElement> | null>(null);
 
 const recalcPopoversPosition = () => {
-  const maxRight = window.innerWidth;
+  if (!parentContainer.value) {
+    return;
+  }
+  const maxRight = document.body.clientWidth;
+  const maxLeft = parentContainer.value.getBoundingClientRect().left;
+
   popovers.value.forEach((popover: HTMLElement, index) => {
+    popover.style.right = 'auto';
+    popover.style.left = 'auto';
     const popoversContainer: HTMLElement = popoversContainers.value?.[index];
     if (popover.getBoundingClientRect().right > maxRight) {
       popover.style.right = `-${maxRight - popoversContainer.getBoundingClientRect().right}px`;
     }
-    if (popover.getBoundingClientRect().left < 0) {
-      popover.style.left = `-${popoversContainer.getBoundingClientRect().left}px`;
+    if (popover.getBoundingClientRect().left < maxLeft) {
+      popover.style.left = `-${popoversContainer.getBoundingClientRect().left - maxLeft}px`;
     }
   });
 };
@@ -619,6 +628,7 @@ onUnmounted(() => {
 .line-chart.no-spacing(
   :class="{ 'min-height': minHeight, 'noXAxis': noXAxisLabels}",
   :style="lineChartStyle",
+  ref="parentContainer"
 )
   .y-axis-title-container(v-if="yAxisLabels")
     Info.y-axis-title.no-spacing(
@@ -823,7 +833,7 @@ $-chart-colors: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 
   }
 
   > .y-axis-title-container {
-    align-items: center;
+    align-items: start;
     display: flex;
     justify-content: center;
     padding: 0 2rem;
@@ -955,6 +965,7 @@ $-chart-colors: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 
             opacity: 1;
             transform: none;
             max-height: 135%;
+            overflow: hidden;
           }
         }
 
@@ -981,6 +992,7 @@ $-chart-colors: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 
             top: -17px;
             left: -7px;
             z-index: 1001;
+            box-sizing: border-box;
           }
         }
 
