@@ -655,7 +655,7 @@ onUnmounted(() => {
     Info.y-axis-title.no-spacing(
       size="small",
     ) {{ yAxisLabels[0] }}
-  .y-axis-labels(v-if="leftAxisGroupValue && leftAxisGroupFormatter")
+  .y-axis-labels(v-if="leftAxisGroupValue !== undefined && leftAxisGroupFormatter")
     Info.axis-label(
       v-for="label in axisLabels[leftAxisStyleValue][leftAxisGroupValue]",
     ) {{ leftAxisGroupFormatter(label) }}
@@ -774,7 +774,7 @@ onUnmounted(() => {
                   :lineIndex="lineIndex - 1",
                   :valueKey="key",
                 )
-  .y-axis-labels(v-if="rightAxisGroupValue && rightAxisGroupFormatter")
+  .y-axis-labels(v-if="rightAxisGroupValue !== undefined && rightAxisGroupFormatter")
     Info.axis-label(
       v-for="label in axisLabels[rightAxisStyleValue][rightAxisGroupValue]",
     ) {{ rightAxisGroupFormatter(label) }}
@@ -854,7 +854,7 @@ $-chart-colors: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 
   }
 
   > .y-axis-title-container {
-    align-items: start;
+    align-items: center;
     display: flex;
     justify-content: center;
     padding: 0 2rem;
@@ -971,7 +971,6 @@ $-chart-colors: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 
       }
 
       > .chart-popover-container {
-        align-items: center;
         display: flex;
         flex-direction: column;
         height: 100%;
@@ -1021,7 +1020,7 @@ $-chart-colors: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 
           @include apply-color(background-color, background-normal);
           @include apply-shadow(card);
 
-          align-items: center;
+          align-items: start;
           border-radius: 0.5rem;
           display: flex;
           flex-direction: column;
