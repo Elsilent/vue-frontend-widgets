@@ -420,19 +420,40 @@ const updateXAxisLabelsStyle = () => {
     return;
   }
 
+  const chartContentsWidth = chartContents.value.clientWidth;
   const maxWidth = Math.max(...xAxisLabelGroup.value.map((el) => el.clientWidth));
   const maxHeight = Math.max(...xAxisLabelGroup.value.map((el) => el.clientHeight));
 
-  if (chartContents.value.clientWidth > totalValueCount.value * maxWidth) {
+  if (chartContentsWidth > totalValueCount.value * maxWidth) {
     xAxisLabelRotate.value = 0;
-  } else if (chartContents.value.clientWidth < totalValueCount.value * maxHeight) {
+  } else if (chartContentsWidth < totalValueCount.value * maxHeight) {
     xAxisLabelRotate.value = 90;
   } else {
     // Treat full label width as a hypot, chart width as one of the sides
     const hypot = totalValueCount.value * maxWidth;
-    xAxisLabelRotate.value = Math.min(Math.acos(chartContents.value.clientWidth / hypot) * 100, 90);
+    xAxisLabelRotate.value = Math.min(Math.acos(chartContentsWidth / hypot) * 100, 90);
+  }
+  if (xAxisLabelRotate.value === 90) {
+    setXAxisClasses(chartContentsWidth, totalValueCount.value * maxHeight);
   }
   xAxisLabelsHeight.value = maxWidth * Math.cos((90 - xAxisLabelRotate.value) / 100);
+};
+
+// Calculate classes for hiding some of x axis labels, if it's not possible to show all of them
+const xAxisClasses = ref<string>('');
+
+const setXAxisClasses = (containerWidth: number, labelsWidth: number) => {
+  xAxisClasses.value = '';
+
+  if (labelsWidth > containerWidth && labelsWidth * 0.5 <= containerWidth) {
+    xAxisClasses.value += 'partialHidden halfHidden';
+  } else if (labelsWidth * 0.5 > containerWidth && labelsWidth * 0.3 <= containerWidth) {
+    xAxisClasses.value += 'partialHidden thirdHidden';
+  } else if (labelsWidth * 0.3 > containerWidth && labelsWidth * 0.25 <= containerWidth) {
+    xAxisClasses.value += 'partialHidden quarterHidden';
+  } else if (labelsWidth * 0.25 > containerWidth) {
+    xAxisClasses.value += 'partialHidden fifthHidden';
+  }
 };
 
 const lineChartStyle = computed(() => ({
@@ -732,7 +753,7 @@ onUnmounted(() => {
     )
       .x-axis-label-group-container.no-spacing(
         v-for="(key, index) in maxLineLabels",
-        :class="{ active: hovers.includes(key) }",
+        :class="[{ active: hovers.includes(key)}, xAxisClasses]",
         :style="{ left: `${getPointLeftPosition(key)}%` }",
       )
         //- translateX is calculated by special formula, depending on angle, to place whole labels, but only under the x-axis
@@ -1249,6 +1270,16 @@ $-chart-colors: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 
         transition-duration: $transition-duration-fast;
         z-index: 1000;
 
+        &.partialHidden {
+          visibility: hidden;
+          &.halfHidden:nth-child(2n + 1),
+          &.thirdHidden:nth-child(3n + 1),
+          &.quarterHidden:nth-child(4n + 1),
+          &.fifthHidden:nth-child(5n + 1) {
+            visibility: visible;
+          }
+        }
+
         &:first-child(:not(:last-child)),
         &:last-child(:not(:first-child)) {
           flex: 0.5;
@@ -1256,6 +1287,7 @@ $-chart-colors: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 
 
         &.active {
           z-index: 1001;
+          visibility: visible;
           > .x-axis-label-group {
             @include apply-color(background-color, background-lowered);
             @include apply-shadow(card);
