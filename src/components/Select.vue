@@ -23,6 +23,8 @@ ElSelect(
   :fit-input-width="true"
   :popper-class="`selectPopover ${attrs.teleported !== false ? 'teleported' : ''}`"
 )
+  template(#label)
+    slot(name="label")
   template(#tag)
     slot(name="tag")
   slot
