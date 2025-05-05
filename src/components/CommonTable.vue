@@ -265,6 +265,7 @@ const props = withDefaults(
     trendUrl?: string | Record<string, string>;
     uncolorizeLabel: string;
     noDataMessage?: string;
+    dynamicRowsHeight?: boolean;
   }>(),
   {
     cellClasses: () => ({}),
@@ -282,6 +283,7 @@ const props = withDefaults(
     showRowNumber: true,
     showPagination: true,
     showTopTotal: false,
+    dynamicRowsHeight: false,
   },
 );
 
@@ -1395,6 +1397,7 @@ if (request) {
       :showTotal="!!totalRow && !displayInlineFilters",
       :showTopTotal="showTopTotal && !displayInlineFilters",
       :noDataMessage="noDataMessage"
+      :dynamicRowsHeight="dynamicRowsHeight"
     )
       template(#colorizeLabel="{ enabled }")
         Info(mood="white", size="small")
