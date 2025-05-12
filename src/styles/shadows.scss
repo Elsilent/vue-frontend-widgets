@@ -1,5 +1,5 @@
 @use 'sass:map';
-@import './colors.scss';
+@use './colors.scss' as colors;
 
 $-shadow-base-size: 14px;
 
@@ -21,5 +21,5 @@ $-shadows: (
     @error "Shadow `#{$shadow-size}` not found.";
   }
 
-  @include apply-color(box-shadow, shadow-normal, $value-prefix: $-prefix);
+  @include colors.apply-color(box-shadow, shadow-normal, $value-prefix: $-prefix);
 }

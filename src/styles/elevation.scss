@@ -1,21 +1,21 @@
-@import './colors.scss';
+@use './colors.scss' as colors;
 
 &.elevation-elevated {
-  @include apply-color(color, text-elevated);
+  @include colors.apply-color(color, text-elevated);
 }
 
 &.elevation-elevated-2 {
-  @include apply-color(color, text-elevated-2);
+  @include colors.apply-color(color, text-elevated-2);
 }
 
 &.elevation-elevated-3 {
-  @include apply-color(color, text-elevated-3);
+  @include colors.apply-color(color, text-elevated-3);
 }
 
 &.elevation-lowered {
-  @include apply-color(color, text-lowered-3);
+  @include colors.apply-color(color, text-lowered-3);
 }
 
 &.elevation-normal {
-  @include apply-color(color, text-normal);
+  @include colors.apply-color(color, text-normal);
 }
