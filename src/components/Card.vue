@@ -10,26 +10,26 @@ defineProps<{
 </template>
 
 <style lang="scss" scoped>
-@import '../styles/colors';
-@import '../styles/radius';
-@import '../styles/spacing';
-@import '../styles/shadows';
-@import '../styles/transition';
+@use '../styles/colors' as colors;
+@use '../styles/radius' as radius;
+@use '../styles/spacing' as spacing;
+@use '../styles/shadows' as shadows;
+@use '../styles/transition' as transition;
 
 .card {
-  @include apply-color(background-color, background-elevated-3);
-  @include apply-shadow(card);
+  @include colors.apply-color(background-color, background-elevated-3);
+  @include shadows.apply-shadow(card);
 
-  border-radius: $border-radius-normal;
-  padding: $padding-size-large;
-  transition-duration: $transition-duration-normal;
+  border-radius: radius.$border-radius-normal;
+  padding: spacing.$padding-size-large;
+  transition-duration: transition.$transition-duration-normal;
   transition-property: background-color;
   &.super {
-    @include apply-color(background-color, white, $opacity: 0.4);
+    @include colors.apply-color(background-color, white, $opacity: 0.4);
   }
 
   &.widget {
-    @include apply-color(background-color, background-neutral, $opacity: 0.05);
+    @include colors.apply-color(background-color, background-neutral, $opacity: 0.05);
   }
 }
 </style>

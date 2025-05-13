@@ -31,25 +31,26 @@ const classes = computed(() => {
 </template>
 
 <style lang="scss">
-@import '../styles/mood';
-@import '../styles/spacing';
+@use '../styles/mood' as mood;
+@use '../styles/spacing' as spacing;
+@use '../styles/colors' as colors;
 
 $-chart-colors: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21);
 
 .dot {
-  @include apply-mood;
+  @include mood.apply-mood;
 
-  border-radius: $padding-size-small;
+  border-radius: spacing.$padding-size-small;
   content: '';
   display: inline-block;
-  margin-right: $padding-size-small;
-  height: $padding-size-small;
-  width: $padding-size-small;
-  min-width: $padding-size-small;
+  margin-right: spacing.$padding-size-small;
+  height: spacing.$padding-size-small;
+  width: spacing.$padding-size-small;
+  min-width: spacing.$padding-size-small;
 
   @each $chart in $-chart-colors {
     &.chart-#{$chart} {
-      @include apply-color(background-color, chart-#{$chart});
+      @include colors.apply-color(background-color, chart-#{$chart});
     }
   }
 }

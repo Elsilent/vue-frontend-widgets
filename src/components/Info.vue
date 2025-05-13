@@ -36,22 +36,24 @@ const classes = computed(() => ({
 </template>
 
 <style lang="scss" scoped>
-@import '../styles/fonts/base';
-@import '../styles/mood';
-@import '../styles/transition';
+@use '../styles/fonts/base' as base;
+@use '../styles/mood' as mood;
+@use '../styles/transition' as transition;
+@use '../styles/elevation' as elevation;
+@use '../styles/fonts/size' as size;
+@use '../styles/colors' as colors;
 
 .info-text {
-  @import '../styles/elevation';
-  @import '../styles/fonts/size';
+  @include mood.apply-mood;
+  @include elevation.apply-elevation;
+  @include size.apply-size;
 
-  @include apply-mood;
-
-  font-family: $font-family-normal;
-  transition-duration: $transition-duration-normal;
+  font-family: base.$font-family-normal;
+  transition-duration: transition.$transition-duration-normal;
   transition-property: color;
 
   &.contrast {
-    @include apply-color(color, text-contrast);
+    @include colors.apply-color(color, text-contrast);
   }
 
   &.important {
@@ -59,7 +61,7 @@ const classes = computed(() => ({
   }
 
   &.mood-text-white {
-    @include apply-color(color, white);
+    @include colors.apply-color(color, white);
   }
 }
 </style>

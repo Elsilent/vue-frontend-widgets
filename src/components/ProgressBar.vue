@@ -27,21 +27,21 @@ const style = computed(() => ({
 </template>
 
 <style lang="scss" scoped>
-@import '../styles/colors';
-@import '../styles/mood';
-@import '../styles/radius';
-@import '../styles/spacing';
-@import '../styles/transition';
+@use '../styles/colors' as colors;
+@use '../styles/mood' as mood;
+@use '../styles/radius' as radius;
+@use '../styles/spacing' as spacing;
+@use '../styles/transition' as transition;
 
 .progress-bar {
-  @include apply-color(background-color, background-lowered-2, null, null, '', 0.3);
-  @include apply-mood($rule-postfix: '::after');
+  @include colors.apply-color(background-color, background-lowered-2, null, null, '', 0.3);
+  @include mood.apply-mood($rule-postfix: '::after');
 
-  border-radius: $border-radius-normal;
+  border-radius: radius.$border-radius-normal;
   overflow: hidden;
-  padding: $padding-size-small-2 0 0;
+  padding: spacing.$padding-size-small-2 0 0;
   position: relative;
-  transition-duration: $transition-duration-normal;
+  transition-duration: transition.$transition-duration-normal;
   transition-property: background-color;
   box-sizing: border-box;
   height: var(--height);
@@ -55,11 +55,11 @@ const style = computed(() => ({
     left: 0;
     position: absolute;
     top: 0;
-    transition-duration: $transition-duration-normal;
+    transition-duration: transition.$transition-duration-normal;
     transition-timing-function: ease;
     transition-property: background-color, width;
     width: var(--width);
-    border-radius: $border-radius-normal;
+    border-radius: radius.$border-radius-normal;
   }
 }
 </style>

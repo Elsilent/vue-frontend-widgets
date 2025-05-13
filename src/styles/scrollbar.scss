@@ -1,5 +1,5 @@
-@import './colors.scss';
-@import './radius.scss';
+@use './colors.scss' as colors;
+@use './radius.scss' as radius;
 
 @mixin scrollbar {
   overflow-y: hidden;

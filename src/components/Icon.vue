@@ -50,16 +50,18 @@ i.icon(:class='classes')
 </template>
 
 <style lang="scss" scoped>
-@import '../styles/mood';
+@use '../styles/mood' as mood;
+@use '../styles/elevation' as elevation;
+@use '../styles/fonts/size' as size;
+@use '../styles/colors' as colors;
 
 .icon {
-  @import '../styles/elevation';
-  @import '../styles/fonts/size';
-
-  @include apply-mood;
+  @include mood.apply-mood;
+  @include elevation.apply-elevation;
+  @include size.apply-size;
 
   &.mood-text-white {
-    @include apply-color(color, white);
+    @include colors.apply-color(color, white);
   }
 }
 </style>

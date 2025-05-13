@@ -78,23 +78,23 @@ Popover(
 </template>
 
 <style lang="scss" scoped>
-@import '../styles/colors';
-@import '../styles/spacing';
-@import '../styles/transition';
+@use '../styles/colors' as colors;
+@use '../styles/spacing' as spacing;
+@use '../styles/transition' as transition;
 
 .card.popover {
-  padding: $padding-size-small-2 0;
+  padding: spacing.$padding-size-small-2 0;
   overflow: hidden;
   transition-property: background-color, opacity;
 
   > .popover-item {
     cursor: pointer;
-    padding: $padding-size-small-2 $padding-size-normal;
-    transition-duration: $transition-duration-fast-2;
+    padding: spacing.$padding-size-small-2 spacing.$padding-size-normal;
+    transition-duration: transition.$transition-duration-fast-2;
     transition-property: background-color;
 
     &.selected {
-      @include apply-color(background-color, background-normal);
+      @include colors.apply-color(background-color, background-normal);
     }
   }
 }

@@ -39,25 +39,25 @@ const { icon, iconBackend, label, source } = toRefs(props);
 </template>
 
 <style lang="scss" scoped>
-@import '../styles/colors';
-@import '../styles/fonts/base';
-@import '../styles/spacing';
-@import '../styles/transition';
+@use '../styles/colors' as colors;
+@use '../styles/fonts/base' as fonts;
+@use '../styles/spacing' as spacing;
+@use '../styles/transition' as transition;
 
 .avatar {
-  @include apply-color(background-color, background-lowered-2);
+  @include colors.apply-color(background-color, background-lowered-2);
 
   background-size: cover;
   border-radius: 100%;
   align-items: center;
   display: flex;
-  font-size: $font-size-normal;
-  height: $padding-size-normal * 2.5;
+  font-size: fonts.$font-size-normal;
+  height: spacing.$padding-size-normal * 2.5;
   justify-content: center;
-  transition-duration: $transition-duration-normal;
+  transition-duration: transition.$transition-duration-normal;
   transition-property: background-color;
   user-select: none;
-  width: $padding-size-normal * 2.5;
+  width: spacing.$padding-size-normal * 2.5;
 
   &:focus {
     outline: none;

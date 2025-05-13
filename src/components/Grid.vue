@@ -30,19 +30,19 @@ const style = computed(() => ({
 </template>
 
 <style lang="scss" scoped>
-@import '../styles/screen';
-@import '../styles/spacing';
+@use '../styles/screen' as screen;
+@use '../styles/spacing' as spacing;
 
 .grid {
   display: grid;
-  gap: $padding-size-large $padding-size-large-2;
+  gap: spacing.$padding-size-large spacing.$padding-size-large-2;
   grid-template-columns: repeat(var(--columns), 1fr);
 
-  @media screen and (max-width: $screen-tablet-max-width) {
+  @media screen and (max-width: screen.$screen-tablet-max-width) {
     grid-template-columns: repeat(var(--tablet-columns), 1fr);
   }
 
-  @media screen and (max-width: $screen-mobile-max-width) {
+  @media screen and (max-width: screen.$screen-mobile-max-width) {
     grid-template-columns: repeat(var(--mobile-columns), 1fr);
   }
 }

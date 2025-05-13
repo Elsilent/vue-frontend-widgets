@@ -109,19 +109,19 @@ Collapse(:expanded='level === 0 || expandedPrefix.startsWith(prefix)')
 </template>
 
 <style lang="scss" scoped>
-@import '../styles/spacing';
+@use '../styles/spacing' as spacing;
 
 .info-text {
   &.section {
-    padding: $padding-size-menu-large-2 $padding-size-menu-large-2 $padding-size-menu-small
-      $padding-size-menu-large;
+    padding: spacing.$padding-size-menu-large-2 spacing.$padding-size-menu-large-2 spacing.$padding-size-menu-small
+      spacing.$padding-size-menu-large;
   }
 }
 
 .icon {
   &.section-collapsed {
-    padding: $padding-size-menu-large 0 0 $padding-size-menu-large;
-    transform: translateX($padding-size-menu-small-2);
+    padding: spacing.$padding-size-menu-large 0 0 spacing.$padding-size-menu-large;
+    transform: translateX(spacing.$padding-size-menu-small-2);
   }
 }
 </style>

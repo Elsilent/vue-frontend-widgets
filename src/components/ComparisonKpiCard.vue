@@ -129,19 +129,19 @@ Card.kpi-card(:class='classes')
 </template>
 
 <style lang="scss" scoped>
-@import '../styles/colors';
-@import '../styles/radius';
-@import '../styles/spacing';
-@import '../styles/transition';
+@use '../styles/colors' as colors;
+@use '../styles/radius' as radius;
+@use '../styles/spacing' as spacing;
+@use '../styles/transition' as transition;
 
-@include default-spacing;
+@include spacing.default-spacing;
 
 .kpi-card {
   position: relative;
 
   &::after {
     background-color: transparent;
-    border-radius: $border-radius-normal;
+    border-radius: radius.$border-radius-normal;
     bottom: 0;
     content: '';
     left: 0;
@@ -149,14 +149,14 @@ Card.kpi-card(:class='classes')
     position: absolute;
     right: 0;
     top: 0;
-    transition-duration: $transition-duration-normal;
+    transition-duration: transition.$transition-duration-normal;
     transition-property: background-color;
     z-index: 1;
   }
 
   &.loading {
     &::after {
-      @include apply-color(background-color, background-elevated-3);
+      @include colors.apply-color(background-color, background-elevated-3);
 
       pointer-events: all;
     }

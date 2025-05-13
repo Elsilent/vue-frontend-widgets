@@ -55,22 +55,22 @@ ElTreeSelect(
 
 <style lang="scss" scoped>
 @use 'sass:map';
-@import '../styles/radius';
-@import '../styles/colors';
+@use '../styles/radius' as radius;
+@use '../styles/colors' as colors;
 
 .el-select {
-  --el-color-primary: #{map.get(map.get($themes, 'light'), 'input-border-active')};
+  --el-color-primary: #{map.get(map.get(colors.$themes, 'light'), 'input-border-active')};
 
   &.opened {
     &:has([data-popper-placement='bottom-start']) {
       :deep(.el-select__wrapper) {
-        --el-border-radius-base: #{$border-radius-normal} #{$border-radius-normal} 0 0;
+        --el-border-radius-base: #{radius.$border-radius-normal} #{radius.$border-radius-normal} 0 0;
       }
     }
 
     &:has([data-popper-placement='top-start']) {
       :deep(.el-select__wrapper) {
-        --el-border-radius-base: 0 0 #{$border-radius-normal} #{$border-radius-normal};
+        --el-border-radius-base: 0 0 #{radius.$border-radius-normal} #{radius.$border-radius-normal};
       }
     }
 
@@ -79,11 +79,11 @@ ElTreeSelect(
     }
 
     :deep(.el-select__popper[data-popper-placement='bottom-start']) {
-      --el-popper-border-radius: 0 0 #{$border-radius-normal} #{$border-radius-normal};
+      --el-popper-border-radius: 0 0 #{radius.$border-radius-normal} #{radius.$border-radius-normal};
     }
 
     :deep(.el-select__popper[data-popper-placement='top-start']) {
-      --el-popper-border-radius: #{$border-radius-normal} #{$border-radius-normal} 0 0;
+      --el-popper-border-radius: #{radius.$border-radius-normal} #{radius.$border-radius-normal} 0 0;
     }
 
     :deep(.el-select__popper .el-popper__arrow::before) {
@@ -92,32 +92,32 @@ ElTreeSelect(
   }
 
   :deep(.el-tag--dark.el-tag--primary) {
-    --el-tag-bg-color: #{map.get(map.get($themes, 'light'), 'background-accent')};
-    --el-tag-border-color: #{map.get(map.get($themes, 'light'), 'border-accent')};
+    --el-tag-bg-color: #{map.get(map.get(colors.$themes, 'light'), 'background-accent')};
+    --el-tag-border-color: #{map.get(map.get(colors.$themes, 'light'), 'border-accent')};
   }
 }
 </style>
 
 <style lang="scss">
 @use 'sass:map';
-@import '../styles/radius';
-@import '../styles/colors';
-@import '../styles/spacing';
+@use '../styles/radius' as radius;
+@use '../styles/colors' as colors;
+@use '../styles/spacing' as spacing;
 
 .selectPopover.teleported.el-popper {
-  --el-color-primary: #{map.get(map.get($themes, 'light'), 'input-border-active')};
+  --el-color-primary: #{map.get(map.get(colors.$themes, 'light'), 'input-border-active')};
   border: none;
   box-shadow: 0 0 0 1px var(--el-border-color) inset;
 
   &[data-popper-placement='bottom-start'] {
     border-top: 1px solid var(--el-color-primary);
     margin-top: -3px;
-    --el-popper-border-radius: 0 0 #{$border-radius-normal} #{$border-radius-normal};
+    --el-popper-border-radius: 0 0 #{radius.$border-radius-normal} #{radius.$border-radius-normal};
   }
   &[data-popper-placement='top-start'] {
     border-bottom: 1px solid var(--el-color-primary);
     margin-bottom: -3px;
-    --el-popper-border-radius: #{$border-radius-normal} #{$border-radius-normal} 0 0;
+    --el-popper-border-radius: #{radius.$border-radius-normal} #{radius.$border-radius-normal} 0 0;
   }
   .el-popper__arrow {
     display: none;
@@ -134,7 +134,7 @@ ElTreeSelect(
   }
   .el-checkbox:not(.is-checked) :not(.is-indeterminate) .el-checkbox__inner:hover {
     transition: background-color 0.3s;
-    background-color: map.get(map.get($themes, 'light'), 'background-hover-neutral');
+    background-color: map.get(map.get(colors.$themes, 'light'), 'background-hover-neutral');
   }
   .el-checkbox .el-checkbox__inner:after {
     border-width: 2px;
@@ -156,11 +156,11 @@ ElTreeSelect(
     line-height: 1.5;
     padding: 6.5px 20px 6.5px 0;
     &.default {
-      padding: $padding-size-menu-small-3 $padding-size-small-2;
+      padding: spacing.$padding-size-menu-small-3 spacing.$padding-size-small-2;
     }
     &.is-selected {
       color: inherit;
-      background-color: map.get(map.get($themes, 'light'), 'background-list-accent');
+      background-color: map.get(map.get(colors.$themes, 'light'), 'background-list-accent');
       font-weight: normal;
       &:after {
         display: none;

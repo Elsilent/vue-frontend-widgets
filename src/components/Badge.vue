@@ -33,45 +33,47 @@ const classes = computed(() => ({
 </template>
 
 <style lang="scss" scoped>
-@import '../styles/mood';
-@import '../styles/radius';
-@import '../styles/spacing';
-@import '../styles/transition';
+@use '../styles/mood' as mood;
+@use '../styles/radius' as radius;
+@use '../styles/spacing' as spacing;
+@use '../styles/transition' as transition;
+@use '../styles/fonts/size' as size;
+@use '../styles/colors' as colors;
 
 .badge {
-  @import '../styles/fonts/size';
-
-  border-radius: $border-radius-round;
+  @include size.apply-size;
+  
+  border-radius: radius.$border-radius-round;
   border-style: solid;
   border-width: 1px;
   display: inline-block;
-  padding: $padding-size-small-3 $padding-size-normal;
-  transition-duration: $transition-duration-normal;
+  padding: spacing.$padding-size-small-3 spacing.$padding-size-normal;
+  transition-duration: transition.$transition-duration-normal;
   transition-property: background-color, border-color;
 
   &.mood-border-accent {
-    @include apply-color(border-color, background-accent);
+    @include colors.apply-color(border-color, background-accent);
   }
   &.mood-border-important {
-    @include apply-color(border-color, background-important);
+    @include colors.apply-color(border-color, background-important);
   }
   &.mood-border-important-alt {
-    @include apply-color(border-color, background-important-alt);
+    @include colors.apply-color(border-color, background-important-alt);
   }
   &.mood-border-inactive {
-    @include apply-color(border-color, background-inactive);
+    @include colors.apply-color(border-color, background-inactive);
   }
   &.mood-border-negative {
-    @include apply-color(border-color, background-negative);
+    @include colors.apply-color(border-color, background-negative);
   }
   &.mood-border-neutral {
-    @include apply-color(border-color, background-neutral);
+    @include colors.apply-color(border-color, background-neutral);
   }
   &.mood-border-neutral-alt {
-    @include apply-color(border-color, background-neutral-alt);
+    @include colors.apply-color(border-color, background-neutral-alt);
   }
   &.mood-border-positive {
-    @include apply-color(border-color, background-positive);
+    @include colors.apply-color(border-color, background-positive);
   }
 }
 </style>

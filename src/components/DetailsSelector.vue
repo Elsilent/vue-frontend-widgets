@@ -85,8 +85,8 @@ const onClickOutside = () => {
 
 <style lang="scss">
 @use 'sass:map';
-@import '../styles/colors';
-@import '../styles/spacing';
+@use '../styles/colors' as colors;
+@use '../styles/spacing' as spacing;
 
 .details-selector-popover {
   --el-popover-padding: 0.5rem 0;
@@ -99,17 +99,17 @@ const onClickOutside = () => {
     text-align: left;
 
     &:active {
-      background-color: map.get(map.get($themes, 'light'), 'background-accent');
+      background-color: map.get(map.get(colors.$themes, 'light'), 'background-accent');
     }
 
     &:not(:active):hover {
-      background-color: map.get(map.get($themes, 'light'), 'background-lowered');
+      background-color: map.get(map.get(colors.$themes, 'light'), 'background-lowered');
     }
   }
 }
 
 .details-selector {
-  color: map.get(map.get($themes, 'light'), 'text-important-alt');
+  color: map.get(map.get(colors.$themes, 'light'), 'text-important-alt');
   cursor: pointer;
   text-decoration: none;
 

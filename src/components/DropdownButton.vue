@@ -115,71 +115,71 @@ const windowClickHandler = (e: Event) => {
 </template>
 
 <style scoped lang="scss">
-@import '../styles/colors';
-@import '../styles/radius';
-@import '../styles/fonts/base';
-@import '../styles/spacing';
-@import '../styles/transition';
+@use '../styles/colors' as colors;
+@use '../styles/radius' as radius;
+@use '../styles/fonts/base' as fonts;
+@use '../styles/spacing' as spacing;
+@use '../styles/transition' as transition;
 
 .exportBtn {
   position: relative;
 
   &:deep(.button) {
-    padding-left: $padding-size-large;
-    padding-right: $padding-size-menu-normal;
+    padding-left: spacing.$padding-size-large;
+    padding-right: spacing.$padding-size-menu-normal;
     min-width: 100px;
     display: flex;
     justify-content: space-between;
     .info-text {
-      margin-right: $padding-size-small-2;
+      margin-right: spacing.$padding-size-small-2;
     }
   }
 
   .loader,
   .chevron {
-    transition-duration: $transition-duration-normal;
+    transition-duration: transition.$transition-duration-normal;
     transition-property: background-color, border-color, opacity;
   }
   .itemIcon {
-    margin-right: $padding-size-small-2;
+    margin-right: spacing.$padding-size-small-2;
   }
   &:hover,
   &:active {
     .button .chevron {
-      @include apply-color(color, white);
+      @include colors.apply-color(color, white);
     }
   }
 
   &-menu {
-    @include apply-color(background-color, background-elevated-3);
-    @include apply-color(border-color, border-inactive);
-    border-radius: $border-radius-normal;
+    @include colors.apply-color(background-color, background-elevated-3);
+    @include colors.apply-color(border-color, border-inactive);
+    border-radius: radius.$border-radius-normal;
     border-style: solid;
     border-width: 1px;
     cursor: pointer;
-    font-family: $font-family-normal;
-    font-size: $font-size-normal;
+    font-family: fonts.$font-family-normal;
+    font-size: fonts.$font-size-normal;
     position: absolute;
     z-index: 5;
     width: 100%;
 
     &_item {
       cursor: pointer;
-      padding: $padding-size-small-2 $padding-size-normal $padding-size-small-2
-        $padding-size-menu-small-2;
+      padding: spacing.$padding-size-small-2 spacing.$padding-size-normal spacing.$padding-size-small-2
+        spacing.$padding-size-menu-small-2;
       display: flex;
       align-items: center;
 
       & .chevron {
         visibility: hidden;
-        margin-right: $padding-size-small-2;
-        min-width: $padding-size-menu-small-2;
+        margin-right: spacing.$padding-size-small-2;
+        min-width: spacing.$padding-size-menu-small-2;
       }
 
       & .exportBtn-subMenu {
-        @include apply-color(background-color, background-elevated-3);
-        @include apply-color(border-color, border-inactive);
-        border-radius: $border-radius-normal;
+        @include colors.apply-color(background-color, background-elevated-3);
+        @include colors.apply-color(border-color, border-inactive);
+        border-radius: radius.$border-radius-normal;
         border-style: solid;
         border-width: 1px;
         display: none;
@@ -190,16 +190,16 @@ const windowClickHandler = (e: Event) => {
         width: max-content;
 
         &_item {
-          padding: $padding-size-small-2 $padding-size-normal;
+          padding: spacing.$padding-size-small-2 spacing.$padding-size-normal;
 
           &:hover {
-            @include apply-color(background-color, background-normal);
+            @include colors.apply-color(background-color, background-normal);
           }
         }
       }
 
       &:hover {
-        @include apply-color(background-color, background-normal);
+        @include colors.apply-color(background-color, background-normal);
 
         .exportBtn-subMenu {
           display: flex;

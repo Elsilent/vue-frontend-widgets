@@ -199,10 +199,10 @@ Align.date-range-picker(
 </template>
 
 <style lang="scss" scoped>
-@import '../styles/colors';
-@import '../styles/radius';
-@import '../styles/spacing';
-@import '../styles/transition';
+@use '../styles/colors' as colors;
+@use '../styles/radius' as radius;
+@use '../styles/spacing' as spacing;
+@use '../styles/transition' as transition;
 
 .date-range-picker {
   outline: none;
@@ -221,15 +221,15 @@ Align.date-range-picker(
   }
 
   > .date-range-picker-body.popover {
-    @include apply-color(border-color, border-inactive);
-    @include apply-color(box-shadow, white, $value-prefix: 0 0 0);
+    @include colors.apply-color(border-color, border-inactive);
+    @include colors.apply-color(box-shadow, white, $value-prefix: 0 0 0);
 
-    border-radius: $border-radius-normal;
+    border-radius: radius.$border-radius-normal;
     border-style: solid;
     border-width: 1px;
     left: 0;
     padding: 0;
-    top: calc(100% + $padding-size-small-2);
+    top: calc(100% + spacing.$padding-size-small-2);
     max-width: none;
 
     > .sections {
@@ -238,30 +238,30 @@ Align.date-range-picker(
 
         > .preset {
           cursor: pointer;
-          padding: $padding-size-normal;
+          padding: spacing.$padding-size-normal;
           transition-property: background-color, color;
 
           &.active {
-            @include apply-color(background-color, background-list-accent);
-            @include apply-color(color, white);
+            @include colors.apply-color(background-color, background-list-accent);
+            @include colors.apply-color(color, white);
           }
 
           &:hover:not(.active) {
-            @include apply-color(background-color, background-normal);
+            @include colors.apply-color(background-color, background-normal);
 
-            transition-duration: $transition-duration-fast;
+            transition-duration: transition.$transition-duration-fast;
           }
         }
       }
 
       > .calendars {
-        @include apply-color(border-color, border-inactive);
+        @include colors.apply-color(border-color, border-inactive);
 
         border-left-style: solid;
         border-left-width: 1px;
 
         > .calendar {
-          margin: $padding-size-small;
+          margin: spacing.$padding-size-small;
         }
       }
     }

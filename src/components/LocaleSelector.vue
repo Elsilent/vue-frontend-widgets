@@ -90,14 +90,14 @@ Align.locale-selector(
 </template>
 
 <style lang="scss" scoped>
-@import '../styles/radius';
-@import '../styles/spacing';
+@use '../styles/radius' as radius;
+@use '../styles/spacing' as spacing;
 
-@include default-spacing;
+@include spacing.default-spacing;
 
 .locale-button {
   &:deep(.icon) {
-    border-radius: $border-radius-round;
+    border-radius: radius.$border-radius-round;
   }
 }
 </style>

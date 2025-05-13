@@ -243,30 +243,30 @@ Align.multiselect-container(
 <style lang="scss" scoped>
 @use 'sass:math';
 
-@import '../styles/colors';
-@import '../styles/fonts/base';
-@import '../styles/radius';
-@import '../styles/spacing';
-@import '../styles/transition';
+@use '../styles/colors' as colors;
+@use '../styles/fonts/base' as fonts;
+@use '../styles/radius' as radius;
+@use '../styles/spacing' as spacing;
+@use '../styles/transition' as transition;
 
-@include default-spacing;
+@include spacing.default-spacing;
 
-$-item-height: $font-size-normal * 1.5 + $padding-size-small-2 * 2 - 2;
+$-item-height: fonts.$font-size-normal * 1.5 + spacing.$padding-size-small-2 * 2 - 2;
 
 .multiselect {
-  @include apply-color(background-color, background-elevated-3);
-  @include apply-color(border-color, border-inactive);
+  @include colors.apply-color(background-color, background-elevated-3);
+  @include colors.apply-color(border-color, border-inactive);
 
-  border-radius: $border-radius-normal;
+  border-radius: radius.$border-radius-normal;
   border-style: solid;
   border-width: 1px;
   cursor: text;
   display: inline-block;
-  font-family: $font-family-normal;
-  font-size: $font-size-normal;
+  font-family: fonts.$font-family-normal;
+  font-size: fonts.$font-size-normal;
   outline: none;
   position: relative;
-  transition-duration: $transition-duration-normal;
+  transition-duration: transition.$transition-duration-normal;
   transition-property: background-color, border-color, opacity;
   user-select: none;
 
@@ -276,24 +276,24 @@ $-item-height: $font-size-normal * 1.5 + $padding-size-small-2 * 2 - 2;
   }
 
   > .current-item {
-    margin-right: $padding-size-normal;
+    margin-right: spacing.$padding-size-normal;
 
     > .current-values {
-      gap: $padding-size-small-2;
-      padding: ($padding-size-small-2 - $padding-size-small-3 - 1px)
-        ($padding-size-normal - $padding-size-small-2);
+      gap: spacing.$padding-size-small-2;
+      padding: (spacing.$padding-size-small-2 - spacing.$padding-size-small-3 - 1px)
+        (spacing.$padding-size-normal - spacing.$padding-size-small-2);
       max-width: 90%;
 
       > .current-value {
-        @include apply-color(background-color, background-accent);
-        @include apply-color(border-color, border-accent);
-        @include apply-color(color, white);
+        @include colors.apply-color(background-color, background-accent);
+        @include colors.apply-color(border-color, border-accent);
+        @include colors.apply-color(color, white);
 
-        border-radius: $border-radius-normal;
+        border-radius: radius.$border-radius-normal;
         border-style: solid;
         border-width: 1px;
-        padding: $padding-size-small-3 $padding-size-small-2;
-        transition-duration: $transition-duration-normal;
+        padding: spacing.$padding-size-small-3 spacing.$padding-size-small-2;
+        transition-duration: transition.$transition-duration-normal;
         transition-property: background-color, border-color;
 
         &.all-items {
@@ -313,34 +313,34 @@ $-item-height: $font-size-normal * 1.5 + $padding-size-small-2 * 2 - 2;
     }
 
     > .default-value {
-      padding: $padding-size-small-2 0;
+      padding: spacing.$padding-size-small-2 0;
     }
 
     > .new-value-input {
-      @include apply-color(color, text-normal);
+      @include colors.apply-color(color, text-normal);
 
       background-color: transparent;
       border: none;
       display: flex;
-      font-family: $font-family-normal;
-      font-size: $font-size-normal;
+      font-family: fonts.$font-family-normal;
+      font-size: fonts.$font-size-normal;
       outline: none;
       width: 100%;
     }
 
     > .icon {
       padding-top: 1px;
-      transition-duration: $transition-duration-fast;
+      transition-duration: transition.$transition-duration-fast;
       transition-property: transform;
     }
   }
 
   > .dropdown-menu {
-    @include apply-color(background-color, background-elevated-3);
-    @include apply-color(border-color, border-inactive);
+    @include colors.apply-color(background-color, background-elevated-3);
+    @include colors.apply-color(border-color, border-inactive);
 
-    border-bottom-left-radius: $border-radius-normal;
-    border-bottom-right-radius: $border-radius-normal;
+    border-bottom-left-radius: radius.$border-radius-normal;
+    border-bottom-right-radius: radius.$border-radius-normal;
     border-style: solid;
     border-top-style: none;
     border-width: 1px;
@@ -354,35 +354,35 @@ $-item-height: $font-size-normal * 1.5 + $padding-size-small-2 * 2 - 2;
     pointer-events: none;
     position: absolute;
     top: $-item-height;
-    transition-duration: $transition-duration-fast;
+    transition-duration: transition.$transition-duration-fast;
     transition-property: height, top, opacity;
     width: 100%;
     z-index: 1001;
 
     > .item {
-      transition-duration: $transition-duration-fast-2;
+      transition-duration: transition.$transition-duration-fast-2;
 
       &.selected {
-        @include apply-color(background-color, background-lowered);
+        @include colors.apply-color(background-color, background-lowered);
       }
 
       &.current {
         &:not(.selected) {
-          @include apply-color(background-color, background-accent);
-          @include apply-color(color, white);
+          @include colors.apply-color(background-color, background-accent);
+          @include colors.apply-color(color, white);
         }
       }
     }
   }
 
   .item {
-    padding: $padding-size-small-2 $padding-size-normal;
+    padding: spacing.$padding-size-small-2 spacing.$padding-size-normal;
     transition-property: background-color, color;
   }
 
   &.active,
   &:focus {
-    @include apply-color(border-color, background-important-alt);
+    @include colors.apply-color(border-color, background-important-alt);
 
     > .dropdown-menu {
       height: calc(var(--item-count) * $-item-height);
@@ -401,10 +401,11 @@ $-item-height: $font-size-normal * 1.5 + $padding-size-small-2 * 2 - 2;
 </style>
 
 <style lang="scss">
-@import '../styles/colors';
-@import '../styles/spacing';
+@use '../styles/colors' as colors;
+@use '../styles/spacing' as spacing;
+
 .collapse-tooltip.popover {
-  @include apply-color(border-color, border-inactive);
+  @include colors.apply-color(border-color, border-inactive);
 
   border: 1px solid;
   bottom: 100%;
@@ -413,7 +414,7 @@ $-item-height: $font-size-normal * 1.5 + $padding-size-small-2 * 2 - 2;
   padding: 0;
   transform: translateY(-10px);
   .info-text {
-    margin: $padding-size-small-2;
+    margin: spacing.$padding-size-small-2;
   }
 }
 </style>

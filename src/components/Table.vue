@@ -517,16 +517,16 @@ const getDynamicRowsHeights = () => {
 </template>
 
 <style lang="scss" scoped>
-@import '../styles/colors';
-@import '../styles/transition';
+@use '../styles/colors' as colors;
+@use '../styles/transition' as transition;
 
 .table-container {
-  @include apply-color(box-shadow, border-table, $value-prefix: 0 0 0 1px);
+  @include colors.apply-color(box-shadow, border-table, $value-prefix: 0 0 0 1px);
 
   display: flex;
   max-height: 80vh;
   position: relative;
-  transition-duration: $transition-duration-normal;
+  transition-duration: transition.$transition-duration-normal;
   transition-property: box-shadow;
 
   > .scrollable {
@@ -557,7 +557,7 @@ const getDynamicRowsHeights = () => {
     height: fit-content;
 
     &.fixed {
-      @include apply-color(box-shadow, border-table, $value-prefix: 1px 0 0);
+      @include colors.apply-color(box-shadow, border-table, $value-prefix: 1px 0 0);
 
       flex: 0;
       left: 0;
