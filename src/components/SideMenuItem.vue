@@ -84,8 +84,8 @@ component.menu-item(
 </template>
 
 <style lang="scss" scoped>
-@import '../styles/colors';
-@import '../styles/spacing';
+@use '../styles/colors' as colors;
+@use '../styles/spacing' as spacing;
 
 .menu-item {
   align-items: center;
@@ -95,12 +95,12 @@ component.menu-item(
   text-decoration: none;
 
   &.active {
-    @include apply-color(background-color, background-menu-lowered);
+    @include colors.apply-color(background-color, background-menu-lowered);
 
     &.full-width {
       > .item-icon,
       > .info-text {
-        transform: translateX($padding-size-menu-small-2 * 2);
+        transform: translateX(spacing.$padding-size-menu-small-2 * 2);
       }
 
       > .chevron {
@@ -110,48 +110,48 @@ component.menu-item(
   }
 
   &.level-1 {
-    padding: $padding-size-menu-large 0 $padding-size-menu-large $padding-size-menu-large;
+    padding: spacing.$padding-size-menu-large 0 spacing.$padding-size-menu-large spacing.$padding-size-menu-large;
     transition:
       background-color 0.2s,
       box-shadow 0.2s;
 
     &.active.with-sublevel {
-      @include apply-color(
+      @include colors.apply-color(
         box-shadow,
         background-important-alt,
-        $value-prefix: inset (-$padding-size-menu-small-3) 0 0
+        $value-prefix: inset (-spacing.$padding-size-menu-small-3) 0 0
       );
     }
   }
 
   &.level-2 {
-    padding: $padding-size-menu-normal 0 $padding-size-menu-normal $padding-size-menu-large * 3.5;
+    padding: spacing.$padding-size-menu-normal 0 spacing.$padding-size-menu-normal spacing.$padding-size-menu-large * 3.5;
   }
 
   &.level-3 {
-    padding: $padding-size-menu-normal 0 $padding-size-menu-normal $padding-size-menu-large * 4.5;
+    padding: spacing.$padding-size-menu-normal 0 spacing.$padding-size-menu-normal spacing.$padding-size-menu-large * 4.5;
   }
 
   &:hover {
     &.full-width {
       > .item-icon,
       > .info-text {
-        transform: translateX($padding-size-menu-small-2 * 2);
+        transform: translateX(spacing.$padding-size-menu-small-2 * 2);
       }
     }
   }
 
   > .chevron {
-    margin-right: $padding-size-menu-large;
+    margin-right: spacing.$padding-size-menu-large;
   }
 
   > .item-icon + .info-text {
-    margin-left: $padding-size-menu-large;
+    margin-left: spacing.$padding-size-menu-large;
   }
 
   > .info-text {
     flex: 1;
-    margin-right: $padding-size-menu-large;
+    margin-right: spacing.$padding-size-menu-large;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -159,7 +159,7 @@ component.menu-item(
 
   > .icon,
   > .info-text {
-    transform: translateX($padding-size-menu-small-2);
+    transform: translateX(spacing.$padding-size-menu-small-2);
     transition: transform 0.2s;
   }
 }

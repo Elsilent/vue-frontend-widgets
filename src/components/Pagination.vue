@@ -112,14 +112,14 @@ const updatePageSize = (newPageSize: number) => {
 </template>
 
 <style lang="scss" scoped>
-@import '../styles/colors';
+@use '../styles/colors' as colors;
 
 .pagination {
   align-items: center;
   display: flex;
 
   > .page {
-    @include apply-color(color, text-important-alt);
+    @include colors.apply-color(color, text-important-alt);
     align-items: center;
     border: 1px solid transparent;
     border-radius: 3px;
@@ -130,7 +130,7 @@ const updatePageSize = (newPageSize: number) => {
     box-sizing: border-box;
 
     &.current {
-      @include apply-color(border-color, text-important-alt);
+      @include colors.apply-color(border-color, text-important-alt);
 
       cursor: default;
     }

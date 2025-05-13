@@ -33,37 +33,37 @@ Align.header(vertical='center')
 </template>
 
 <style lang="scss" scoped>
-@import '../styles/colors';
-@import '../styles/fonts/base';
-@import '../styles/shadows';
-@import '../styles/spacing';
-@import '../styles/transition';
+@use '../styles/colors' as colors;
+@use '../styles/fonts/base' as fonts;
+@use '../styles/shadows' as shadows;
+@use '../styles/spacing' as spacing;
+@use '../styles/transition' as transition;
 
 .header {
-  @include apply-color(background-color, background-elevated-3);
-  @include apply-shadow(large-header);
+  @include colors.apply-color(background-color, background-elevated-3);
+  @include shadows.apply-shadow(large-header);
 
   align-items: center;
   display: flex;
-  height: $padding-size-large-2 * 2 + $font-size-normal;
-  transition-duration: $transition-duration-normal;
+  height: spacing.$padding-size-large-2 * 2 + fonts.$font-size-normal;
+  transition-duration: transition.$transition-duration-normal;
   transition-property: background-color;
 
   > .menu-button {
     cursor: pointer;
     height: 100%;
-    margin-left: $padding-size-large;
+    margin-left: spacing.$padding-size-large;
 
     > .menu-button-lines {
-      @include apply-color(background-color, text-normal);
+      @include colors.apply-color(background-color, text-normal);
 
       height: 2px;
-      margin: 0 $padding-size-normal;
+      margin: 0 spacing.$padding-size-normal;
       position: relative;
       width: 18px;
 
       &::after {
-        @include apply-color(background-color, text-normal);
+        @include colors.apply-color(background-color, text-normal);
 
         content: '';
         height: 2px;
@@ -73,7 +73,7 @@ Align.header(vertical='center')
       }
 
       &::before {
-        @include apply-color(background-color, text-normal);
+        @include colors.apply-color(background-color, text-normal);
 
         content: '';
         height: 2px;
@@ -85,12 +85,12 @@ Align.header(vertical='center')
   }
 
   > .title {
-    @include apply-color(background-color, background-elevated-2);
+    @include colors.apply-color(background-color, background-elevated-2);
 
     cursor: pointer;
     height: 100%;
-    padding: 0 $padding-size-normal;
-    transition-duration: $transition-duration-normal;
+    padding: 0 spacing.$padding-size-normal;
+    transition-duration: transition.$transition-duration-normal;
     transition-property: background-color;
     width: min-content;
     white-space: nowrap;

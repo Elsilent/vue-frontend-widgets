@@ -144,25 +144,25 @@ const style = computed(() => ({
 </template>
 
 <style lang="scss" scoped>
-@import '../styles/colors';
-@import '../styles/spacing';
-@import '../styles/transition';
+@use '../styles/colors' as colors;
+@use '../styles/spacing' as spacing;
+@use '../styles/transition' as transition;
 
 .kpi-distribution-table {
   display: grid;
   grid-template-columns: var(--alignment);
 
   > .cell {
-    padding: $padding-size-small-2;
+    padding: spacing.$padding-size-small-2;
     white-space: nowrap;
     box-sizing: border-box;
 
     &.row-first {
-      padding-left: $padding-size-large;
+      padding-left: spacing.$padding-size-large;
     }
 
     &.row-last {
-      padding-right: $padding-size-large;
+      padding-right: spacing.$padding-size-large;
     }
 
     &.metric {
@@ -171,11 +171,11 @@ const style = computed(() => ({
     }
 
     &:not(.header-cell) {
-      @include apply-color(border-top-color, border-inactive);
+      @include colors.apply-color(border-top-color, border-inactive);
 
       border-top-style: solid;
       border-top-width: 1px;
-      transition-duration: $transition-duration-normal;
+      transition-duration: transition.$transition-duration-normal;
       transition-property: border-top-color;
     }
 
@@ -185,9 +185,9 @@ const style = computed(() => ({
     }
 
     > .badge {
-      @include apply-color(background-color, background-elevated-2);
+      @include colors.apply-color(background-color, background-elevated-2);
 
-      padding: $padding-size-small-4 $padding-size-normal;
+      padding: spacing.$padding-size-small-4 spacing.$padding-size-normal;
       margin-top: -27.5px;
       isolation: isolate;
     }

@@ -76,9 +76,9 @@ Align.account-menu(ref='accountMenu')
 </template>
 
 <style lang="scss" scoped>
-@import '../styles/spacing';
+@use '../styles/spacing' as spacing;
 
-@include default-spacing;
+@include spacing.default-spacing;
 
 .account-menu {
   > .avatar {

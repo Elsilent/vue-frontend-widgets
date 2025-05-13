@@ -338,11 +338,11 @@ Align.calendar(column)
 </template>
 
 <style lang="scss" scoped>
-@import '../styles/colors';
-@import '../styles/spacing';
-@import '../styles/radius';
+@use '../styles/colors' as colors;
+@use '../styles/spacing' as spacing;
+@use '../styles/radius' as radius;
 
-@include default-spacing;
+@include colors.default-spacing;
 
 .calendar {
   width: 20rem;
@@ -357,11 +357,11 @@ Align.calendar(column)
 
       &:hover:not(:active):not(.disabled) {
         &.mood-border-neutral {
-          @include apply-color(background-color, background-lowered);
+          @include colors.apply-color(background-color, background-lowered);
         }
       }
       &.month-picker {
-        padding: $padding-size-menu-small-2;
+        padding: spacing.$padding-size-menu-small-2;
       }
     }
   }
@@ -369,19 +369,19 @@ Align.calendar(column)
   > .calendar-grid-container {
     > .calendar-grid {
       gap: 0;
-      margin-bottom: $padding-size-small;
+      margin-bottom: spacing.$padding-size-small;
 
       > .week-label {
-        padding: $padding-size-small-2;
+        padding: spacing.$padding-size-small-2;
         text-align: center;
       }
 
       > .day {
         border-width: 0;
         border-radius: 0;
-        padding: $padding-size-small-2;
+        padding: spacing.$padding-size-small-2;
         &:deep(.info-text) {
-          @include apply-color(color, text-normal);
+          @include colors.apply-color(color, text-normal);
         }
 
         &:not(.now):not(.disabled) {
@@ -389,51 +389,51 @@ Align.calendar(column)
           &.single-selected-day,
           &.hovered,
           &.hovered:hover {
-            @include apply-color(background-color, background-normal);
+            @include colors.apply-color(background-color, background-normal);
             &.this-month {
-              @include apply-color(background-color, background-accent-lowered);
+              @include colors.apply-color(background-color, background-accent-lowered);
               &:deep(.info-text) {
-                @include apply-color(color, white);
+                @include colors.apply-color(color, white);
               }
             }
           }
 
           &:not(.hovered):hover {
-            @include apply-color(background-color, background-normal);
+            @include colors.apply-color(background-color, background-normal);
             &.this-month:deep(.info-text) {
-              @include apply-color(color, text-normal);
+              @include colors.apply-color(color, text-normal);
             }
           }
           &:not(.hovered):not(.in-range):hover {
-            border-radius: $border-radius-normal;
+            border-radius: radius.$border-radius-normal;
           }
         }
 
         &.first-day,
         &.first-selected-day,
         &.single-selected-day {
-          border-bottom-left-radius: $border-radius-normal;
-          border-top-left-radius: $border-radius-normal;
+          border-bottom-left-radius: radius.$border-radius-normal;
+          border-top-left-radius: radius.$border-radius-normal;
         }
         &.last-day,
         &.last-selected-day,
         &.single-selected-day {
-          border-bottom-right-radius: $border-radius-normal;
-          border-top-right-radius: $border-radius-normal;
+          border-bottom-right-radius: radius.$border-radius-normal;
+          border-top-right-radius: radius.$border-radius-normal;
         }
 
         &.now {
           &:deep(.info-text) {
-            @include apply-color(color, white);
+            @include colors.apply-color(color, white);
           }
         }
         &.now:not(.in-range):not(.hovered) {
-          border-radius: $border-radius-normal;
+          border-radius: radius.$border-radius-normal;
         }
 
         &:not(.this-month) {
           &:deep(.info-text) {
-            @include apply-color(color, background-hover-inactive);
+            @include colors.apply-color(color, background-hover-inactive);
           }
         }
       }

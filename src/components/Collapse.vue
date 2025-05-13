@@ -69,12 +69,12 @@ transition(
 </template>
 
 <style lang="scss" scoped>
-@import '../styles/transition';
+@use '../styles/transition' as transition;
 
 .collapse-enter-active,
 .collapse-leave-active {
   overflow: hidden;
-  transition-duration: $transition-duration-normal;
+  transition-duration: transition.$transition-duration-normal;
   transition-property: height, opacity;
 }
 

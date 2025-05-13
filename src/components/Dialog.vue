@@ -13,22 +13,22 @@ ElDialog(class="defaultModal" align-center)
 
 <style lang="scss">
 @use 'sass:map';
-@import '../styles/spacing';
-@import '../styles/colors';
+@use '../styles/spacing' as spacing;
+@use '../styles/colors' as colors;
 
 .defaultModal {
-  border: 1px solid map.get(map.get($themes, 'light'), 'border-neutral');
+  border: 1px solid map.get(map.get(colors.$themes, 'light'), 'border-neutral');
   .el-dialog__header {
-    padding: $padding-size-normal;
-    border-color: map.get(map.get($themes, 'light'), 'border-neutral');
+    padding: spacing.$padding-size-normal;
+    border-color: map.get(map.get(colors.$themes, 'light'), 'border-neutral');
     border-bottom: 1px solid;
   }
   .el-dialog__body {
-    padding: $padding-size-normal;
+    padding: spacing.$padding-size-normal;
   }
   .el-dialog__footer {
-    padding: $padding-size-normal;
-    border-color: map.get(map.get($themes, 'light'), 'border-neutral');
+    padding: spacing.$padding-size-normal;
+    border-color: map.get(map.get(colors.$themes, 'light'), 'border-neutral');
     border-top: 1px solid;
     text-align: center;
   }

@@ -1059,10 +1059,10 @@ defineSlots<
 </template>
 
 <style lang="scss" scoped>
-@import '../styles/colors';
+@use '../styles/colors' as colors;
 
 .table {
-  @include apply-color(background-color, background-elevated-3);
+  @include colors.apply-color(background-color, background-elevated-3);
 
   display: grid;
   gap: 1px;
@@ -1085,7 +1085,7 @@ defineSlots<
       z-index: 21;
     }
     &.column {
-      @include apply-color(box-shadow, border-table, $value-prefix: 0 0 0 1px);
+      @include colors.apply-color(box-shadow, border-table, $value-prefix: 0 0 0 1px);
 
       position: sticky;
       top: 0;
@@ -1117,7 +1117,7 @@ defineSlots<
             opacity: 1;
 
             &.dragged {
-              @include apply-color(
+              @include colors.apply-color(
                 box-shadow,
                 border-table,
                 $value-prefix: 0 0 0 1px,
@@ -1180,7 +1180,7 @@ defineSlots<
         }
 
         &::before {
-          @include apply-color(color, text-contrast);
+          @include colors.apply-color(color, text-contrast);
 
           content: '\2191';
           position: absolute;
@@ -1191,7 +1191,7 @@ defineSlots<
         }
 
         &::after {
-          @include apply-color(color, text-contrast);
+          @include colors.apply-color(color, text-contrast);
 
           content: '\2193';
           position: absolute;
@@ -1203,7 +1203,7 @@ defineSlots<
       }
 
       > .toggle-colored {
-        @include apply-color(background-color, background-important-alt);
+        @include colors.apply-color(background-color, background-important-alt);
 
         border-bottom-left-radius: 3px;
         border-bottom-right-radius: 3px;
@@ -1224,7 +1224,7 @@ defineSlots<
     }
 
     &.total {
-      @include apply-color(box-shadow, border-table, $value-prefix: 0 0 0 1px);
+      @include colors.apply-color(box-shadow, border-table, $value-prefix: 0 0 0 1px);
 
       bottom: 0;
       padding: 1rem;
@@ -1242,7 +1242,7 @@ defineSlots<
       white-space: nowrap;
 
       &:not(.colored) {
-        @include apply-color(box-shadow, border-table, $value-prefix: 0 0 0 1px);
+        @include colors.apply-color(box-shadow, border-table, $value-prefix: 0 0 0 1px);
 
         transition:
           background-color 0.3s,
@@ -1263,20 +1263,20 @@ defineSlots<
 
           &.color-intensity-none {
             background-color: white;
-            @include apply-color(box-shadow, border-table, $value-prefix: 0 0 0 1px);
+            @include colors.apply-color(box-shadow, border-table, $value-prefix: 0 0 0 1px);
           }
           &.color-intensity-0 {
             &.color-important-alt {
               background-color: rgba($-important-alt-base-intensity-color, 0.05);
-              @include apply-color(box-shadow, border-table, $value-prefix: 0 0 0 1px);
+              @include colors.apply-color(box-shadow, border-table, $value-prefix: 0 0 0 1px);
             }
             &.color-negative {
               background-color: rgba($-negative-base-intensity-color, 0.05);
-              @include apply-color(box-shadow, border-table, $value-prefix: 0 0 0 1px);
+              @include colors.apply-color(box-shadow, border-table, $value-prefix: 0 0 0 1px);
             }
             &.color-positive {
               background-color: rgba($-positive-base-intensity-color, 0.05);
-              @include apply-color(box-shadow, border-table, $value-prefix: 0 0 0 1px);
+              @include colors.apply-color(box-shadow, border-table, $value-prefix: 0 0 0 1px);
             }
           }
           @for $-index from 1 through 10 {
@@ -1315,18 +1315,18 @@ defineSlots<
 
         &:not(.colored) {
           &.even {
-            @include apply-color(background-color, background-row-even);
+            @include colors.apply-color(background-color, background-row-even);
           }
 
           &:not(.even) {
-            @include apply-color(background-color, background-row-odd);
+            @include colors.apply-color(background-color, background-row-odd);
           }
         }
       }
     }
 
     &:not(.colored) {
-      @include apply-color(background-color, background-elevated-3);
+      @include colors.apply-color(background-color, background-elevated-3);
     }
   }
 }

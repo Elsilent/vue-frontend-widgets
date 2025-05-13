@@ -50,7 +50,7 @@ const emit = defineEmits<{
 </template>
 
 <style lang="scss" scoped>
-@import '../styles/colors';
+@use '../styles/colors' as colors;
 
 .scrollable-area {
   pointer-events: none;
@@ -58,7 +58,7 @@ const emit = defineEmits<{
 
   &:hover {
     &.light > .scrollbar {
-      @include apply-color(background-color, background-elevated-3, $opacity: 0.25);
+      @include colors.apply-color(background-color, background-elevated-3, $opacity: 0.25);
     }
     > .scrollbar {
       box-shadow: 0 0 1px rgba(black, 0.25);
@@ -71,7 +71,7 @@ const emit = defineEmits<{
 
   &:active {
     &.light > .scrollbar {
-      @include apply-color(background-color, background-elevated-3, $opacity: 0.75);
+      @include colors.apply-color(background-color, background-elevated-3, $opacity: 0.75);
     }
     > .scrollbar {
       box-shadow: 0 0 1px rgba(black, 0.25);
@@ -187,7 +187,7 @@ const emit = defineEmits<{
       opacity 0.3s;
 
     > .thumb {
-      @include apply-color(background-color, background-neutral);
+      @include colors.apply-color(background-color, background-neutral);
       cursor: pointer;
       border-radius: 4px;
       opacity: 0.35;

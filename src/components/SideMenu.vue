@@ -65,25 +65,25 @@ watch(
 </template>
 
 <style lang="scss" scoped>
-@import '../styles/colors';
-@import '../styles/fonts/base';
-@import '../styles/shadows';
-@import '../styles/spacing';
-@import '../styles/transition';
+@use '../styles/colors' as colors;
+@use '../styles/fonts/base' as fonts;
+@use '../styles/shadows' as shadows;
+@use '../styles/spacing' as spacing;
+@use '../styles/transition' as transition;
 
 .side-menu {
-  @include apply-color(background-color, background-menu);
-  @include apply-shadow(large-header);
+  @include colors.apply-color(background-color, background-menu);
+  @include shadows.apply-shadow(large-header);
 
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
-  transition-duration: $transition-duration-normal;
+  transition-duration: transition.$transition-duration-normal;
   transition-property: background-color, width;
-  width: $side-menu-width-collapsed;
+  width: fonts.$side-menu-width-collapsed;
 
   &.full-width {
-    width: $side-menu-width;
+    width: fonts.$side-menu-width;
 
     > .brand-container {
       > .brand {
@@ -95,13 +95,13 @@ watch(
   }
 
   > .brand-container {
-    @include apply-shadow(large-header);
+    @include shadows.apply-shadow(large-header);
 
     align-items: center;
     cursor: pointer;
     display: flex;
-    height: $padding-size-large-2 * 2 + $font-size-normal;
-    padding: 0 $padding-size-large;
+    height: spacing.$padding-size-large-2 * 2 + fonts.$font-size-normal;
+    padding: 0 spacing.$padding-size-large;
     overflow: hidden;
     user-select: none;
 
@@ -109,12 +109,12 @@ watch(
       display: flex;
       flex: 1;
       align-items: flex-end;
-      margin-bottom: $padding-size-small-3 * 2;
+      margin-bottom: spacing.$padding-size-small-3 * 2;
 
       &:deep(> .brand-text) {
         flex: 1;
         opacity: 0;
-        transition-duration: $transition-duration-normal;
+        transition-duration: transition.$transition-duration-normal;
         transition-property: color, opacity;
         white-space: nowrap;
       }
@@ -130,7 +130,7 @@ watch(
     overflow-x: hidden;
 
     > .pixel {
-      font-size: $font-size-large;
+      font-size: fonts.$font-size-large;
     }
   }
 }

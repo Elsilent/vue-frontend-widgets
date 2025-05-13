@@ -785,9 +785,9 @@ onUnmounted(() => {
 </template>
 
 <style lang="scss" scoped>
-@import '../styles/colors';
-@import '../styles/shadows';
-@import '../styles/transition';
+@use '../styles/colors' as colors;
+@use '../styles/shadows' as shadows;
+@use '../styles/transition' as transition;
 
 $-mood-colors: (accent, important, important-alt, negative, neutral, neutral-alt, positive);
 
@@ -882,14 +882,14 @@ $-chart-colors: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 
     box-sizing: content-box;
 
     &::before {
-      @include apply-color(background-color, background-neutral);
+      @include colors.apply-color(background-color, background-neutral);
 
       content: '';
       display: flex;
       height: 1px;
       opacity: 0.25;
       position: absolute;
-      transition-duration: $transition-duration-normal;
+      transition-duration: transition.$transition-duration-normal;
       transition-property: background-color;
       width: 100%;
       top: -2px;
@@ -911,13 +911,13 @@ $-chart-colors: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 
         flex: 1;
 
         &::after {
-          @include apply-color(background-color, background-neutral);
+          @include colors.apply-color(background-color, background-neutral);
 
           content: '';
           display: flex;
           height: 1px;
           opacity: 0.25;
-          transition-duration: $transition-duration-normal;
+          transition-duration: transition.$transition-duration-normal;
           transition-property: background-color;
           width: 100%;
         }
@@ -942,18 +942,18 @@ $-chart-colors: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 
 
       @each $-chart in $-chart-colors {
         > .chart-#{$-chart} {
-          @include apply-color(color, chart-#{$-chart});
+          @include colors.apply-color(color, chart-#{$-chart});
         }
       }
 
       @each $-mood in $-mood-colors {
         > .mood-#{$-mood} {
           &.opaque {
-            @include apply-color(color, background-hover-#{$-mood});
+            @include colors.apply-color(color, background-hover-#{$-mood});
           }
 
           &:not(.opaque) {
-            @include apply-color(color, line-chart-#{$-mood});
+            @include colors.apply-color(color, line-chart-#{$-mood});
           }
         }
       }
@@ -990,7 +990,7 @@ $-chart-colors: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 
         }
 
         > .chart-popover-line {
-          @include apply-color(border-right-color, background-neutral, null, null, '', 0.25);
+          @include colors.apply-color(border-right-color, background-neutral, null, null, '', 0.25);
 
           position: absolute;
           border-right-style: dashed;
@@ -998,11 +998,11 @@ $-chart-colors: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 
           bottom: 0;
           margin-left: -2px;
           opacity: 0;
-          transition-duration: $transition-duration-normal;
+          transition-duration: transition.$transition-duration-normal;
           transition-property: border-right-color, opacity;
 
           &::after {
-            @include apply-color(border-top-color, background-normal);
+            @include colors.apply-color(border-top-color, background-normal);
 
             border: 0.5rem solid transparent;
             content: '';
@@ -1017,8 +1017,8 @@ $-chart-colors: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 
         }
 
         > .chart-popover {
-          @include apply-color(background-color, background-normal);
-          @include apply-shadow(card);
+          @include colors.apply-color(background-color, background-normal);
+          @include shadows.apply-shadow(card);
 
           align-items: start;
           border-radius: 0.5rem;
@@ -1030,7 +1030,7 @@ $-chart-colors: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 
           padding: 1rem;
           position: absolute;
           transform: translateY(5px);
-          transition-duration: $transition-duration-fast;
+          transition-duration: transition.$transition-duration-fast;
           transition-property: opacity, transform;
           z-index: 1000;
 

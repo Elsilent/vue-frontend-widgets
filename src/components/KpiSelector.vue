@@ -367,15 +367,15 @@ Teleport(to="#app > .app-container")
 <style lang="scss" scoped>
 @use 'sass:math';
 
-@import '../styles/colors';
-@import '../styles/fonts/base';
-@import '../styles/radius';
-@import '../styles/shadows';
-@import '../styles/spacing';
-@import '../styles/transition';
-@import '../styles/scrollbar';
+@use '../styles/colors' as colors;
+@use '../styles/fonts/base' as fonts;
+@use '../styles/radius' as radius;
+@use '../styles/shadows' as shadows;
+@use '../styles/spacing' as spacing;
+@use '../styles/transition' as transition;
+@use '../styles/scrollbar' as scrollbar;
 
-@include default-spacing;
+@include colors.default-spacing;
 
 .body > *,
 .title > * {
@@ -387,7 +387,7 @@ Teleport(to="#app > .app-container")
 
   > .align {
     &:not(:last-child) {
-      @include apply-color(border-right-color, background-lowered);
+      @include colors.apply-color(border-right-color, background-lowered);
 
       border-right-style: solid;
       border-right-width: 1px;
@@ -396,33 +396,33 @@ Teleport(to="#app > .app-container")
     &.groups,
     &.group-columns {
       > .header {
-        margin-bottom: $padding-size-small-2;
+        margin-bottom: spacing.$padding-size-small-2;
       }
     }
 
     > .header {
-      @include apply-color(border-bottom-color, background-lowered);
+      @include colors.apply-color(border-bottom-color, background-lowered);
 
       border-bottom-style: solid;
       border-bottom-width: 1px;
-      padding-bottom: $padding-size-normal;
-      padding-left: $padding-size-normal;
-      padding-right: $padding-size-normal;
-      padding-top: $padding-size-normal;
+      padding-bottom: spacing.$padding-size-normal;
+      padding-left: spacing.$padding-size-normal;
+      padding-right: spacing.$padding-size-normal;
+      padding-top: spacing.$padding-size-normal;
     }
 
     .scrollable {
-      @include scrollbar();
+      @include scrollbar.scrollbar();
       scrollbar-gutter: stable both-edges;
       overflow-x: hidden;
-      padding-bottom: math.div($padding-size-small-2, 2);
-      transition-duration: $transition-duration-normal;
+      padding-bottom: math.div(spacing.$padding-size-small-2, 2);
+      transition-duration: transition.$transition-duration-normal;
       transition-property: background-color;
 
       &.dragged {
-        @include apply-color(background-color, background-normal);
+        @include colors.apply-color(background-color, background-normal);
 
-        transition-duration: $transition-duration-fast;
+        transition-duration: transition.$transition-duration-fast;
       }
 
       > .items {
@@ -430,21 +430,21 @@ Teleport(to="#app > .app-container")
 
         > .item-container {
           > .item {
-            padding-bottom: $padding-size-small-2;
-            padding-left: $padding-size-large + $padding-size-small-2;
-            padding-right: $padding-size-large + $padding-size-small-2;
-            padding-top: $padding-size-small-2;
+            padding-bottom: spacing.$padding-size-small-2;
+            padding-left: spacing.$padding-size-large + spacing.$padding-size-small-2;
+            padding-right: spacing.$padding-size-large + spacing.$padding-size-small-2;
+            padding-top: spacing.$padding-size-small-2;
             position: relative;
-            transition-duration: $transition-duration-normal;
+            transition-duration: transition.$transition-duration-normal;
             transition-property: background-color, box-shadow;
             z-index: 1;
 
             &.dragged {
-              @include apply-color(background-color, background-elevated-3);
-              @include apply-shadow(dragged);
+              @include colors.apply-color(background-color, background-elevated-3);
+              @include shadows.apply-shadow(dragged);
 
               position: absolute;
-              transition-duration: $transition-duration-fast;
+              transition-duration: transition.$transition-duration-fast;
               width: 100%;
               z-index: 2;
             }
@@ -456,26 +456,26 @@ Teleport(to="#app > .app-container")
             > .move {
               cursor: grab;
               position: absolute;
-              left: $padding-size-small-2;
+              left: spacing.$padding-size-small-2;
             }
 
             > .remove {
               cursor: pointer;
               position: absolute;
-              right: $padding-size-small-2 * 2;
+              right: spacing.$padding-size-small-2 * 2;
             }
           }
 
           > .separator-bottom {
             height: 1px;
-            padding-top: math.div($padding-size-small-2, 2);
+            padding-top: math.div(spacing.$padding-size-small-2, 2);
 
             &.place-after {
-              margin-bottom: $padding-size-small-2 * 2 + $font-size-small + 5px;
+              margin-bottom: spacing.$padding-size-small-2 * 2 + fonts.$font-size-small + 5px;
             }
 
             &::before {
-              @include apply-color(border-bottom-color, background-lowered);
+              @include colors.apply-color(border-bottom-color, background-lowered);
 
               border-bottom-style: solid;
               border-bottom-width: 1px;
@@ -485,20 +485,20 @@ Teleport(to="#app > .app-container")
           }
 
           > .separator-top {
-            padding-bottom: math.div($padding-size-small-2, 2);
+            padding-bottom: math.div(spacing.$padding-size-small-2, 2);
 
             &.place-after {
-              margin-top: $padding-size-small-2 * 2 + $font-size-small + 5px;
+              margin-top: spacing.$padding-size-small-2 * 2 + fonts.$font-size-small + 5px;
             }
           }
         }
       }
 
       > .item {
-        border-radius: $border-radius-normal;
+        border-radius: radius.$border-radius-normal;
         cursor: pointer;
-        margin: $padding-size-small-2;
-        padding: $padding-size-small-2 $padding-size-large;
+        margin: spacing.$padding-size-small-2;
+        padding: spacing.$padding-size-small-2 spacing.$padding-size-large;
         position: relative;
 
         &::before {
@@ -511,28 +511,28 @@ Teleport(to="#app > .app-container")
           position: absolute;
           right: 0;
           top: 0;
-          transition-duration: $transition-duration-normal;
+          transition-duration: transition.$transition-duration-normal;
           transition-property: opacity;
         }
 
         &.selected {
           &::before {
-            @include apply-color(background-color, background-hover-important-alt);
+            @include colors.apply-color(background-color, background-hover-important-alt);
 
             opacity: 0.25;
 
-            transition-duration: $transition-duration-fast;
+            transition-duration: transition.$transition-duration-fast;
           }
         }
 
         &:not(.selected) {
           &:hover {
             &::before {
-              @include apply-color(background-color, background-hover-important-alt);
+              @include colors.apply-color(background-color, background-hover-important-alt);
 
               opacity: 0.125;
 
-              transition-duration: $transition-duration-fast;
+              transition-duration: transition.$transition-duration-fast;
             }
           }
         }
@@ -542,27 +542,27 @@ Teleport(to="#app > .app-container")
 }
 
 .controls {
-  @include apply-color(border-top-color, background-lowered);
+  @include colors.apply-color(border-top-color, background-lowered);
 
   border-top-style: solid;
   border-top-width: 1px;
-  padding: $padding-size-small $padding-size-normal;
+  padding: spacing.$padding-size-small spacing.$padding-size-normal;
 }
 
 .title {
-  @include apply-color(border-bottom-color, background-lowered);
+  @include colors.apply-color(border-bottom-color, background-lowered);
 
   border-bottom-style: solid;
   border-bottom-width: 1px;
-  padding: $padding-size-small 0;
+  padding: spacing.$padding-size-small 0;
 
   > .header {
-    left: $padding-size-normal;
+    left: spacing.$padding-size-normal;
     position: relative;
   }
 
   > .close-container {
-    left: -$padding-size-normal;
+    left: -spacing.$padding-size-normal;
     position: relative;
 
     > .close {
@@ -601,7 +601,7 @@ Teleport(to="#app > .app-container")
       }
     }
 
-    animation: visible $transition-duration-normal forwards;
+    animation: visible transition.$transition-duration-normal forwards;
     pointer-events: all;
   }
 
@@ -616,7 +616,7 @@ Teleport(to="#app > .app-container")
       }
     }
 
-    animation: hidden $transition-duration-normal forwards;
+    animation: hidden transition.$transition-duration-normal forwards;
   }
 }
 
@@ -628,15 +628,15 @@ Teleport(to="#app > .app-container")
   position: relative;
 
   > .icon {
-    padding-right: $padding-size-small-3;
+    padding-right: spacing.$padding-size-small-3;
     pointer-events: none;
-    right: $padding-size-small-2;
+    right: spacing.$padding-size-small-2;
     position: absolute;
   }
 
   > .search {
-    font-size: $font-size-small;
-    padding-right: $padding-size-large-3;
+    font-size: fonts.$font-size-small;
+    padding-right: spacing.$padding-size-large-3;
   }
 }
 </style>

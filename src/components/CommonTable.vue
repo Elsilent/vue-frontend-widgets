@@ -1557,8 +1557,8 @@ if (request) {
 </template>
 
 <style lang="scss" scoped>
-@import '../styles/colors';
-@import '../styles/spacing';
+@use '../styles/colors' as colors;
+@use '../styles/spacing' as spacing;
 
 .table-container {
   position: relative;
@@ -1595,7 +1595,7 @@ if (request) {
   position: relative;
   .controls {
     display: flex;
-    margin-bottom: $padding-size-normal;
+    margin-bottom: spacing.$padding-size-normal;
     justify-content: flex-end;
   }
 }
@@ -1609,22 +1609,22 @@ if (request) {
 }
 
 .difference-negative {
-  @include apply-color(color, text-negative);
+  @include colors.apply-color(color, text-negative);
 }
 
 .difference-positive {
-  @include apply-color(color, text-positive);
+  @include colors.apply-color(color, text-positive);
 }
 
 .expand-column {
-  @include apply-color(color, text-important-alt);
+  @include colors.apply-color(color, text-important-alt);
 
   cursor: pointer;
   margin-left: 0.5rem;
 }
 
 .loading-overlay {
-  @include apply-color(background-color, background-elevated-3, $opacity: 0.5);
+  @include colors.apply-color(background-color, background-elevated-3, $opacity: 0.5);
 
   align-items: center;
   bottom: 0;

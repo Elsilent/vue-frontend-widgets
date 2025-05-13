@@ -137,7 +137,7 @@ Align.date-picker(
 </template>
 
 <style lang="scss" scoped>
-@import '../styles/transition';
+@use '../styles/transition' as transition;
 
 .date-picker {
   outline: none;
@@ -158,19 +158,19 @@ Align.date-picker(
 </style>
 
 <style lang="scss">
-@import '../styles/colors';
-@import '../styles/spacing';
-@import '../styles/radius';
+@use '../styles/colors' as colors;
+@use '../styles/spacing' as spacing;
+@use '../styles/radius' as radius;
 
 .date-range-picker-body {
-  @include apply-color(border-color, border-inactive);
-  @include apply-color(box-shadow, white, $value-prefix: 0 0 0);
+  @include colors.apply-color(border-color, border-inactive);
+  @include colors.apply-color(box-shadow, white, $value-prefix: 0 0 0);
 
   box-sizing: content-box;
-  border-radius: $border-radius-normal;
+  border-radius: radius.$border-radius-normal;
   border-style: solid;
   border-width: 1px;
   left: 0;
-  top: calc(100% + $padding-size-small-2);
+  top: calc(100% + spacing.$padding-size-small-2);
 }
 </style>
