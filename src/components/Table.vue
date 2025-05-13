@@ -35,6 +35,7 @@ const props = withDefaults(
     showTopTotal?: boolean;
     showTotal?: boolean;
     useOrderBy?: boolean;
+    dynamicRowsHeight?: boolean;
   }>(),
   {
     additionalHeaders: () => ({}),
@@ -54,6 +55,7 @@ const props = withDefaults(
     showTopTotal: false,
     showTotal: true,
     useOrderBy: true,
+    dynamicRowsHeight: false,
   },
 );
 
@@ -79,6 +81,7 @@ const {
   showTopTotal,
   showTotal,
   useOrderBy,
+  dynamicRowsHeight,
 } = toRefs(props);
 
 const fixedWidth = ref(0);
@@ -301,6 +304,33 @@ watch(columns, () => {
   updateKey.value = Math.random();
   updateTableSize();
 });
+
+const dynamicRowsHeights = ref<string | undefined>(undefined);
+
+const getDynamicRowsHeights = () => {
+  if (!dynamicRowsHeight.value) {
+    return;
+  }
+
+  let resultRowsHeights = '';
+  // We will detect rows heights of second table only by first visible column
+  const firstColumnId = Object.keys(scrollableColumns.value)[0];
+  const firstColumnRows = scrollableTable.value?.$el.querySelectorAll(
+    `:not(.column)[data-column="${firstColumnId}"]`,
+  );
+  firstColumnRows.forEach(
+    (node: HTMLElement) =>
+      (resultRowsHeights = resultRowsHeights.concat(
+        node.getBoundingClientRect().height.toFixed(1),
+        '|',
+      )),
+  );
+
+  if (dynamicRowsHeights.value !== resultRowsHeights) {
+    dynamicRowsHeights.value = resultRowsHeights;
+    updateKey.value += 1;
+  }
+};
 </script>
 
 <template lang="pug">
@@ -336,6 +366,7 @@ watch(columns, () => {
       :showTopTotal="showTopTotal",
       :showTotal="showTotal",
       :useOrderBy="useOrderBy",
+      :dynamicRowsHeights="dynamicRowsHeights ? dynamicRowsHeights.split('|') : undefined"
     )
       template(#columnRowNumber)
         slot(name="columnRowNumber") #
@@ -404,6 +435,7 @@ watch(columns, () => {
       @move:column="({ from, to }) => $emit('move:column', { from: from + fixedColumnNumber, to: to + fixedColumnNumber })",
       @removeColoredMetric="(columnKey) => $emit('removeColoredMetric', columnKey)",
       @update:orderBy="(orderBy) => $emit('update:orderBy', orderBy)",
+      @mounted="getDynamicRowsHeights"
       :additionalHeaders="additionalHeaders",
       :cellClasses="cellClasses",
       :colorMetrics="colorMetrics",
