@@ -80,10 +80,10 @@ watch(
   overflow-x: hidden;
   transition-duration: transition.$transition-duration-normal;
   transition-property: background-color, width;
-  width: fonts.$side-menu-width-collapsed;
+  width: spacing.$side-menu-width-collapsed;
 
   &.full-width {
-    width: fonts.$side-menu-width;
+    width: spacing.$side-menu-width;
 
     > .brand-container {
       > .brand {
