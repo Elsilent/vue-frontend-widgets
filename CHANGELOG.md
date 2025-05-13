@@ -1,6 +1,9 @@
 # Changelog
 All important changes in vue-frontend-widgets
 
+## [1.1.9] - 2025-05-13
+- Replaced deprecated Sass @import with @use.
+
 ## [1.0.0] - 2025-01-14 🎄
 ### [BREAKING CHANGE]
 - Totally changed structure of components & entry points (calls examples in README)
