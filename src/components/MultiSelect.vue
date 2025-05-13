@@ -401,10 +401,11 @@ $-item-height: $font-size-normal * 1.5 + $padding-size-small-2 * 2 - 2;
 </style>
 
 <style lang="scss">
-@import '../styles/colors';
-@import '../styles/spacing';
+@use '../styles/colors' as colors;
+@use '../styles/spacing' as spacing;
+
 .collapse-tooltip.popover {
-  @include apply-color(border-color, border-inactive);
+  @include colors.apply-color(border-color, border-inactive);
 
   border: 1px solid;
   bottom: 100%;
@@ -413,7 +414,7 @@ $-item-height: $font-size-normal * 1.5 + $padding-size-small-2 * 2 - 2;
   padding: 0;
   transform: translateY(-10px);
   .info-text {
-    margin: $padding-size-small-2;
+    margin: spacing.$padding-size-small-2;
   }
 }
 </style>

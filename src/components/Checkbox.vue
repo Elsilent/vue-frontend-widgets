@@ -10,11 +10,11 @@ ElCheckbox
 
 <style lang="scss" scoped>
 @use 'sass:map';
-@import '../styles/colors';
+@use '../styles/colors' as colors;
 
 :not(.is-checked):deep(:not(.is-indeterminate) .el-checkbox__inner:hover) {
   transition: background-color 0.3s;
-  background-color: map.get(map.get($themes, 'light'), 'background-hover-neutral');
+  background-color: map.get(map.get(colors.$themes, 'light'), 'background-hover-neutral');
 }
 :deep(.el-checkbox__inner:after) {
   border-width: 2px;

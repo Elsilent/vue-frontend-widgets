@@ -1,41 +1,43 @@
 @use './base.scss' as base;
 
-&.size-large {
-  font-size: base.$font-size-large;
-}
+@mixin apply-size {
+  &.size-large {
+    font-size: base.$font-size-large;
+  }
 
-&.size-large-2 {
-  font-size: base.$font-size-large-2;
-}
+  &.size-large-2 {
+    font-size: base.$font-size-large-2;
+  }
 
-&.size-large-3 {
-  font-size: base.$font-size-large-3;
-}
+  &.size-large-3 {
+    font-size: base.$font-size-large-3;
+  }
 
-&.size-large-4 {
-  font-size: base.$font-size-large-4;
-}
+  &.size-large-4 {
+    font-size: base.$font-size-large-4;
+  }
 
-&.size-large-5 {
-  font-size: base.$font-size-large-5;
-}
+  &.size-large-5 {
+    font-size: base.$font-size-large-5;
+  }
 
-&.size-large-6 {
-  font-size: base.$font-size-large-6;
-}
+  &.size-large-6 {
+    font-size: base.$font-size-large-6;
+  }
 
-&.size-normal {
-  font-size: base.$font-size-normal;
-}
+  &.size-normal {
+    font-size: base.$font-size-normal;
+  }
 
-&.size-small {
-  font-size: base.$font-size-small;
-}
+  &.size-small {
+    font-size: base.$font-size-small;
+  }
 
-&.size-small-2 {
-  font-size: base.$font-size-small-2;
-}
+  &.size-small-2 {
+    font-size: base.$font-size-small-2;
+  }
 
-&.size-small-3 {
-  font-size: base.$font-size-small-3;
+  &.size-small-3 {
+    font-size: base.$font-size-small-3;
+  }
 }

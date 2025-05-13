@@ -31,14 +31,15 @@ const classes = computed(() => ({
 </template>
 
 <style lang="scss" scoped>
-@import '../styles/colors';
-@import '../styles/fonts/base';
+@use '../styles/colors' as colors;
+@use '../styles/fonts/base' as base;
+@use '../styles/elevation' as elevation;
+@use '../styles/fonts/size' as size;
 
 .header {
-  font-family: $font-family-normal;
-
-  @import '../styles/elevation';
-  @import '../styles/fonts/size';
+  font-family: base.$font-family-normal;
+  @include elevation.apply-elevation;
+  @include size.apply-size;
 
   &.important {
     font-weight: 700;
