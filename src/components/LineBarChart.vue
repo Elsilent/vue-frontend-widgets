@@ -1054,7 +1054,7 @@ $-chart-colors: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 
 
               @each $-chart in $-chart-colors {
                 &.chart-#{$-chart} {
-                  @include apply-color(background-color, chart-#{$-chart});
+                  @include colors.apply-color(background-color, chart-#{$-chart});
                 }
               }
 
@@ -1062,32 +1062,32 @@ $-chart-colors: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 
                 &.mood-#{$-mood} {
                   &.dashed {
                     &::before {
-                      @include apply-color(background-color, background-elevated-3);
-                      @include apply-color(
+                      @include colors.apply-color(background-color, background-elevated-3);
+                      @include colors.apply-color(
                         box-shadow,
                         border-#{$-mood},
                         $value-prefix: inset 0 0 0 0.075rem
                       );
 
-                      transition-duration: $transition-duration-normal;
+                      transition-duration: transition.$transition-duration-normal;
                       transition-property: background-color, box-shadow;
                     }
                   }
 
                   &:not(.dashed) {
                     &::before {
-                      @include apply-color(background-color, line-chart-#{$-mood});
+                      @include colors.apply-color(background-color, line-chart-#{$-mood});
 
-                      transition-duration: $transition-duration-normal;
+                      transition-duration: transition.$transition-duration-normal;
                       transition-property: background-color;
                     }
                   }
 
                   &.opaque {
                     &::before {
-                      @include apply-color(background-color, background-hover-#{$-mood});
+                      @include colors.apply-color(background-color, background-hover-#{$-mood});
 
-                      transition-duration: $transition-duration-normal;
+                      transition-duration: transition.$transition-duration-normal;
                       transition-property: background-color;
                     }
                   }
@@ -1125,7 +1125,7 @@ $-chart-colors: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 
         }
 
         > .chart-bar {
-          transition-duration: $transition-duration-normal;
+          transition-duration: transition.$transition-duration-normal;
           transition-property: background-color;
           width: 100%;
 
@@ -1136,13 +1136,13 @@ $-chart-colors: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 
 
           @each $-chart in $-chart-colors {
             &.chart-#{$-chart} {
-              @include apply-color(background-color, chart-#{$-chart});
+              @include colors.apply-color(background-color, chart-#{$-chart});
             }
           }
 
           @each $-mood in $-mood-colors {
             &.mood-#{$-mood} {
-              @include apply-color(background-color, line-chart-#{$-mood});
+              @include colors.apply-color(background-color, line-chart-#{$-mood});
             }
           }
         }
@@ -1181,7 +1181,7 @@ $-chart-colors: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 
       top: 0;
 
       > .chart-point {
-        @include apply-color(background-color, white);
+        @include colors.apply-color(background-color, white);
 
         box-sizing: content-box;
         border: 2px solid;
@@ -1192,27 +1192,27 @@ $-chart-colors: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 
         position: absolute;
         width: 8px;
         transform: scale(60%);
-        transition-duration: $transition-duration-normal;
+        transition-duration: transition.$transition-duration-normal;
         transition-property: background-color, border-color, box-shadow, height, margin-left,
           margin-top, transform, width;
 
         @each $-chart in $-chart-colors {
           &.chart-#{$-chart} {
-            @include apply-color(background-color, chart-#{$-chart});
-            @include apply-color(border-color, chart-#{$-chart});
+            @include colors.apply-color(background-color, chart-#{$-chart});
+            @include colors.apply-color(border-color, chart-#{$-chart});
           }
         }
 
         @each $-mood in $-mood-colors {
           &.mood-#{$-mood} {
-            @include apply-color(border-color, line-chart-#{$-mood});
+            @include colors.apply-color(border-color, line-chart-#{$-mood});
 
             &:not(.dashed) {
-              @include apply-color(background-color, line-chart-#{$-mood});
+              @include colors.apply-color(background-color, line-chart-#{$-mood});
             }
 
             &.opaque {
-              @include apply-color(border-color, background-hover-#{$-mood});
+              @include colors.apply-color(border-color, background-hover-#{$-mood});
             }
           }
         }
@@ -1222,18 +1222,18 @@ $-chart-colors: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 
 
           @each $-chart in $-chart-colors {
             &.chart-#{$-chart} {
-              @include apply-color(box-shadow-color, chart-#{$-chart}, $value-prefix: 0 0 2px);
+              @include colors.apply-color(box-shadow-color, chart-#{$-chart}, $value-prefix: 0 0 2px);
             }
           }
 
           @each $-mood in $-mood-colors {
             &.mood-#{$-mood} {
               &.opaque {
-                @include apply-color(box-shadow, line-chart-#{$-mood}, $value-prefix: 0 0 2px);
+                @include colors.apply-color(box-shadow, line-chart-#{$-mood}, $value-prefix: 0 0 2px);
               }
 
               &:not(.opaque) {
-                @include apply-color(
+                @include colors.apply-color(
                   box-shadow,
                   background-hover-#{$-mood},
                   $value-prefix: 0 0 2px
@@ -1266,7 +1266,7 @@ $-chart-colors: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 
         flex: 1;
         margin-top: 0.125rem;
         position: absolute;
-        transition-duration: $transition-duration-fast;
+        transition-duration: transition.$transition-duration-fast;
         z-index: 1000;
 
         &.partialHidden {
@@ -1288,8 +1288,8 @@ $-chart-colors: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 
           z-index: 1001;
           visibility: visible;
           > .x-axis-label-group {
-            @include apply-color(background-color, background-lowered);
-            @include apply-shadow(card);
+            @include colors.apply-color(background-color, background-lowered);
+            @include shadows.apply-shadow(card);
           }
         }
 
@@ -1302,12 +1302,12 @@ $-chart-colors: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 
           margin-left: -2px;
           padding: 0.25rem 0.5rem;
           position: relative;
-          transition-duration: $transition-duration-normal;
+          transition-duration: transition.$transition-duration-normal;
           transition-property: background-color, box-shadow;
           transform-origin: center top;
 
           > .x-axis-label {
-            @include apply-color(color, background-neutral);
+            @include colors.apply-color(color, background-neutral);
 
             align-items: center;
             display: flex;
@@ -1325,7 +1325,7 @@ $-chart-colors: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 
 
             @each $-chart in $-chart-colors {
               &.chart-#{$-chart} {
-                @include apply-color(background-color, chart-#{$-chart});
+                @include colors.apply-color(background-color, chart-#{$-chart});
               }
             }
 
@@ -1333,8 +1333,8 @@ $-chart-colors: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 
               &.mood-#{$-mood} {
                 &.dashed {
                   &::before {
-                    @include apply-color(background-color, background-elevated-3);
-                    @include apply-color(
+                    @include colors.apply-color(background-color, background-elevated-3);
+                    @include colors.apply-color(
                       box-shadow,
                       border-#{$-mood},
                       $value-prefix: inset 0 0 0 0.075rem
@@ -1344,13 +1344,13 @@ $-chart-colors: (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 
 
                 &:not(.dashed) {
                   &::before {
-                    @include apply-color(background-color, line-chart-#{$-mood});
+                    @include colors.apply-color(background-color, line-chart-#{$-mood});
                   }
                 }
 
                 &.opaque {
                   &::before {
-                    @include apply-color(background-color, background-hover-#{$-mood});
+                    @include colors.apply-color(background-color, background-hover-#{$-mood});
                   }
                 }
               }
