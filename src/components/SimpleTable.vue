@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { DateTime } from 'luxon';
-import { computed, ref, toRefs, watch, type ComponentPublicInstance } from 'vue';
+import { computed, ref, toRefs, watch, type ComponentPublicInstance, onMounted } from 'vue';
 import { type Column, type ColumnType } from '../utils/type/component/container/table';
 import Icon from './Icon.vue';
 
@@ -113,6 +113,10 @@ const props = withDefaults(
      * Enables ordering functionality
      */
     useOrderBy?: boolean;
+    /**
+     * Array of dynamic rows heights
+     */
+    dynamicRowsHeights?: number[] | undefined;
   }>(),
   {
     additionalHeaders: () => ({}),
@@ -130,6 +134,7 @@ const props = withDefaults(
     showTotal: true,
     showTopTotal: false,
     useOrderBy: true,
+    dynamicRowsHeights: undefined,
   },
 );
 
@@ -155,6 +160,7 @@ const {
   showTotal,
   showTopTotal,
   useOrderBy,
+  dynamicRowsHeights,
 } = toRefs(props);
 
 const dragColumnFromIndex = ref<number | undefined>();
@@ -635,6 +641,7 @@ const emit = defineEmits<{
   (e: 'addColoredMetric', columnKey: string): void;
   (e: 'removeColoredMetric', columnKey: string): void;
   (e: 'move:column', args: { from: number; to: number }): void;
+  (e: 'mounted'): void;
 }>();
 
 /**
@@ -879,6 +886,12 @@ defineSlots<
     total: (props: { columnKey: string; subcolumnKey?: string; values: any[] }) => any;
   }
 >();
+
+onMounted(() => {
+  if (table.value) {
+    emit('mounted');
+  }
+});
 </script>
 
 <template lang="pug">
@@ -996,6 +1009,7 @@ defineSlots<
           :class="getCellClasses(row, rowIndex, columnKey)",
           :data-column="columnKey",
           :data-primary-key="row[primaryColumn]",
+          :style="dynamicRowsHeights ? `height: ${dynamicRowsHeights[rowIndex]}px` : ''"
         )
           slot(
             :name="`row-${columnKey}`",
