@@ -562,7 +562,7 @@ Teleport(to="#app > .app-container")
   }
 
   > .close-container {
-    left: -spacing.$padding-size-normal;
+    left: calc(-1 * spacing.$padding-size-normal);
     position: relative;
 
     > .close {

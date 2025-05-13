@@ -119,7 +119,7 @@ component.menu-item(
       @include colors.apply-color(
         box-shadow,
         background-important-alt,
-        $value-prefix: inset (-spacing.$padding-size-menu-small-3) 0 0
+        $value-prefix: inset calc(-1 * spacing.$padding-size-menu-small-3) 0 0
       );
     }
   }
