@@ -112,7 +112,7 @@ Align(
 @use '../styles/spacing' as spacing;
 @use '../styles/transition' as transition;
 
-@include colors.default-spacing;
+@include spacing.default-spacing;
 
 .dropdown {
   @include colors.apply-color(background-color, background-elevated-3);

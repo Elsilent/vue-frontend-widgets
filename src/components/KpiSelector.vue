@@ -375,7 +375,7 @@ Teleport(to="#app > .app-container")
 @use '../styles/transition' as transition;
 @use '../styles/scrollbar' as scrollbar;
 
-@include colors.default-spacing;
+@include spacing.default-spacing;
 
 .body > *,
 .title > * {

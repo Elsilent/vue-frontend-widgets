@@ -342,7 +342,7 @@ Align.calendar(column)
 @use '../styles/spacing' as spacing;
 @use '../styles/radius' as radius;
 
-@include colors.default-spacing;
+@include spacing.default-spacing;
 
 .calendar {
   width: 20rem;

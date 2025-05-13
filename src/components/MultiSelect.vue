@@ -249,7 +249,7 @@ Align.multiselect-container(
 @use '../styles/spacing' as spacing;
 @use '../styles/transition' as transition;
 
-@include colors.default-spacing;
+@include spacing.default-spacing;
 
 $-item-height: fonts.$font-size-normal * 1.5 + spacing.$padding-size-small-2 * 2 - 2;
 

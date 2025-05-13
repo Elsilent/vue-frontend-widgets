@@ -60,7 +60,7 @@ Card.kpi-card(:class='classes')
 @use '../styles/spacing' as spacing;
 @use '../styles/transition' as transition;
 
-@include colors.default-spacing;
+@include spacing.default-spacing;
 
 .kpi-card {
   position: relative;
