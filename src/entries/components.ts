@@ -57,6 +57,7 @@ import Toasts from '../components/Toasts.vue';
 import Toggle from '../components/Toggle.vue';
 import Tooltip from '../components/Tooltip.vue';
 import TreeSelect from '../components/TreeSelect.vue';
+import VirtualizedSelect from '../components/VirtualizedSelect.vue';
 
 export {
   AccountMenu,
@@ -118,4 +119,5 @@ export {
   Toggle,
   Tooltip,
   TreeSelect,
+  VirtualizedSelect,
 };
