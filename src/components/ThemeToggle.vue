@@ -63,7 +63,7 @@ Align.theme-toggle
 </template>
 
 <style lang="scss" scoped>
-@import '../styles/spacing';
+@use '../styles/spacing' as spacing;
 
-@include default-spacing;
+@include spacing.default-spacing;
 </style>

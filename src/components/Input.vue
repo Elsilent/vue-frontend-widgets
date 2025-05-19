@@ -63,36 +63,36 @@ input.input(
 </template>
 
 <style lang="scss" scoped>
-@import '../styles/colors';
-@import '../styles/fonts/base';
-@import '../styles/radius';
-@import '../styles/spacing';
-@import '../styles/transition';
+@use '../styles/colors' as colors;
+@use '../styles/fonts/base' as fonts;
+@use '../styles/radius' as radius;
+@use '../styles/spacing' as spacing;
+@use '../styles/transition' as transition;
 
-@include default-spacing;
+@include spacing.default-spacing;
 
 .input {
-  @include apply-color(background-color, background-elevated-3);
-  @include apply-color(border-color, border-inactive);
-  @include apply-color(color, text-normal);
+  @include colors.apply-color(background-color, background-elevated-3);
+  @include colors.apply-color(border-color, border-inactive);
+  @include colors.apply-color(color, text-normal);
 
-  border-radius: $border-radius-normal;
+  border-radius: radius.$border-radius-normal;
   border-style: solid;
   border-width: 1px;
   box-sizing: border-box;
   display: inline-block;
-  font-family: $font-family-normal;
-  font-size: $font-size-normal;
+  font-family: fonts.$font-family-normal;
+  font-size: fonts.$font-size-normal;
   outline: none;
-  transition-duration: $transition-duration-normal;
+  transition-duration: transition.$transition-duration-normal;
   transition-property: background-color, border-color, color, opacity;
 
   &.size-normal {
-    padding: $padding-size-small-2 $padding-size-normal;
+    padding: spacing.$padding-size-small-2 spacing.$padding-size-normal;
   }
 
   &.size-small {
-    padding: $padding-size-small-3;
+    padding: spacing.$padding-size-small-3;
   }
 
   &:disabled {
@@ -102,12 +102,12 @@ input.input(
 
   &:not(:disabled) {
     &:focus {
-      @include apply-color(border-color, background-important-alt);
+      @include colors.apply-color(border-color, background-important-alt);
     }
   }
 
   &::placeholder {
-    @include apply-color(color, placeholder);
+    @include colors.apply-color(color, placeholder);
   }
 }
 </style>

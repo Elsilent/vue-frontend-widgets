@@ -36,12 +36,12 @@ Card.toast(:class="{ [`mood-background-${mood}`]: mood }")
 </template>
 
 <style lang="scss" scoped>
-@import '../styles/mood';
-@import '../styles/spacing';
+@use '../styles/mood' as mood;
+@use '../styles/spacing' as spacing;
 
-@include default-spacing;
+@include spacing.default-spacing;
 
 .card {
-  @include apply-mood;
+  @include mood.apply-mood;
 }
 </style>

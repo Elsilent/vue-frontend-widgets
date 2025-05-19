@@ -59,34 +59,35 @@ label.toggle(
 </template>
 
 <style lang="scss" scoped>
-@import '../styles/fonts/base';
-@import '../styles/mood';
-@import '../styles/radius';
-@import '../styles/spacing';
-@import '../styles/transition';
+@use '../styles/fonts/base' as base;
+@use '../styles/mood' as mood;
+@use '../styles/radius' as radius;
+@use '../styles/spacing' as spacing;
+@use '../styles/transition' as transition;
+@use '../styles/colors' as colors;
 
-@include default-spacing;
+@include spacing.default-spacing;
 
 .toggle {
-  @include apply-mood;
+  @include mood.apply-mood;
 
   align-items: center;
-  border-radius: $border-radius-normal;
+  border-radius: radius.$border-radius-normal;
   border-style: solid;
   border-width: 1px;
   display: inline-flex;
   justify-content: center;
-  height: $font-size-normal + 2px;
-  padding: $padding-size-small-2 $padding-size-large-2;
+  height: base.$font-size-normal + 2px;
+  padding: spacing.$padding-size-small-2 spacing.$padding-size-large-2;
   position: relative;
-  transition-duration: $transition-duration-normal;
+  transition-duration: transition.$transition-duration-normal;
   transition-property: background-color, border-color, opacity;
   user-select: none;
 
   &.active {
     &::after {
       transform: translateX(
-        calc($padding-size-large-2 * 2 - $padding-size-small-4 * 2 - $padding-size-normal - 2px)
+        calc(spacing.$padding-size-large-2 * 2 - spacing.$padding-size-small-4 * 2 - spacing.$padding-size-normal - 2px)
       );
     }
   }
@@ -102,43 +103,43 @@ label.toggle(
     &:active {
       &.mood-border {
         &-accent {
-          @include apply-color(background-color, background-active-accent);
-          @include apply-color(border-color, border-active-accent);
+          @include colors.apply-color(background-color, background-active-accent);
+          @include colors.apply-color(border-color, border-active-accent);
         }
 
         &-important {
-          @include apply-color(background-color, background-active-important);
-          @include apply-color(border-color, border-active-important);
+          @include colors.apply-color(background-color, background-active-important);
+          @include colors.apply-color(border-color, border-active-important);
         }
 
         &-important-alt {
-          @include apply-color(background-color, background-active-important-alt);
-          @include apply-color(border-color, border-active-important-alt);
+          @include colors.apply-color(background-color, background-active-important-alt);
+          @include colors.apply-color(border-color, border-active-important-alt);
         }
 
         &-inactive {
-          @include apply-color(background-color, background-active-inactive);
-          @include apply-color(border-color, border-active-inactive);
+          @include colors.apply-color(background-color, background-active-inactive);
+          @include colors.apply-color(border-color, border-active-inactive);
         }
 
         &-negative {
-          @include apply-color(background-color, background-active-negative);
-          @include apply-color(border-color, border-active-negative);
+          @include colors.apply-color(background-color, background-active-negative);
+          @include colors.apply-color(border-color, border-active-negative);
         }
 
         &-neutral {
-          @include apply-color(background-color, background-active-neutral);
-          @include apply-color(border-color, border-active-neutral);
+          @include colors.apply-color(background-color, background-active-neutral);
+          @include colors.apply-color(border-color, border-active-neutral);
         }
 
         &-neutral-alt {
-          @include apply-color(background-color, background-active-neutral-alt);
-          @include apply-color(border-color, border-active-neutral-alt);
+          @include colors.apply-color(background-color, background-active-neutral-alt);
+          @include colors.apply-color(border-color, border-active-neutral-alt);
         }
 
         &-positive {
-          @include apply-color(background-color, background-active-positive);
-          @include apply-color(border-color, border-active-positive);
+          @include colors.apply-color(background-color, background-active-positive);
+          @include colors.apply-color(border-color, border-active-positive);
         }
       }
     }
@@ -148,62 +149,62 @@ label.toggle(
   &-input:focus + .toggle {
     &.mood-border {
       &-accent {
-        @include apply-color(background-color, background-hover-accent);
-        @include apply-color(border-color, border-hover-accent);
+        @include colors.apply-color(background-color, background-hover-accent);
+        @include colors.apply-color(border-color, border-hover-accent);
       }
 
       &-important {
-        @include apply-color(background-color, background-hover-important);
-        @include apply-color(border-color, border-hover-important);
+        @include colors.apply-color(background-color, background-hover-important);
+        @include colors.apply-color(border-color, border-hover-important);
       }
 
       &-important-alt {
-        @include apply-color(background-color, background-hover-important-alt);
-        @include apply-color(border-color, border-hover-important-alt);
+        @include colors.apply-color(background-color, background-hover-important-alt);
+        @include colors.apply-color(border-color, border-hover-important-alt);
       }
 
       &-inactive {
-        @include apply-color(background-color, background-hover-inactive);
-        @include apply-color(border-color, border-hover-inactive);
+        @include colors.apply-color(background-color, background-hover-inactive);
+        @include colors.apply-color(border-color, border-hover-inactive);
       }
 
       &-negative {
-        @include apply-color(background-color, background-hover-negative);
-        @include apply-color(border-color, border-hover-negative);
+        @include colors.apply-color(background-color, background-hover-negative);
+        @include colors.apply-color(border-color, border-hover-negative);
       }
 
       &-neutral {
-        @include apply-color(background-color, background-hover-neutral);
-        @include apply-color(border-color, border-hover-neutral);
+        @include colors.apply-color(background-color, background-hover-neutral);
+        @include colors.apply-color(border-color, border-hover-neutral);
       }
 
       &-neutral-alt {
-        @include apply-color(background-color, background-hover-neutral-alt);
-        @include apply-color(border-color, border-hover-neutral-alt);
+        @include colors.apply-color(background-color, background-hover-neutral-alt);
+        @include colors.apply-color(border-color, border-hover-neutral-alt);
       }
 
       &-positive {
-        @include apply-color(background-color, background-hover-positive);
-        @include apply-color(border-color, border-hover-positive);
+        @include colors.apply-color(background-color, background-hover-positive);
+        @include colors.apply-color(border-color, border-hover-positive);
       }
     }
   }
 
   &::after {
-    @include apply-color(background-color, background-elevated-3);
-    @include apply-color(border-color, background-normal);
+    @include colors.apply-color(background-color, background-elevated-3);
+    @include colors.apply-color(border-color, background-normal);
 
-    border-radius: $border-radius-normal;
+    border-radius: radius.$border-radius-normal;
     border-style: solid;
     border-width: 1px;
-    bottom: $padding-size-small-4;
+    bottom: spacing.$padding-size-small-4;
     content: '';
-    left: $padding-size-small-4;
+    left: spacing.$padding-size-small-4;
     position: absolute;
-    top: $padding-size-small-4;
-    transition-duration: $transition-duration-normal;
+    top: spacing.$padding-size-small-4;
+    transition-duration: transition.$transition-duration-normal;
     transition-property: background-color, border-color, transform;
-    width: $padding-size-normal;
+    width: spacing.$padding-size-normal;
   }
   &-input {
     appearance: none;

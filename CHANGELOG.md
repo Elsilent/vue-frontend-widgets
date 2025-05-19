@@ -1,6 +1,9 @@
 # Changelog
 All important changes in vue-frontend-widgets
 
+## [1.1.9] - 2025-05-13
+- Replaced deprecated Sass @import with @use.
+
 ## [1.1.8] - 2025-05-05
 - Added dynamic rows heights for Common table (
   - use with slots in second scrollable table, to keep left fixed table rows heights the same

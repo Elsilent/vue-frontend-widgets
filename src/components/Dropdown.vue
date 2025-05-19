@@ -106,28 +106,28 @@ Align(
 <style lang="scss" scoped>
 @use 'sass:math';
 
-@import '../styles/colors';
-@import '../styles/fonts/base';
-@import '../styles/radius';
-@import '../styles/spacing';
-@import '../styles/transition';
+@use '../styles/colors' as colors;
+@use '../styles/fonts/base' as fonts;
+@use '../styles/radius' as radius;
+@use '../styles/spacing' as spacing;
+@use '../styles/transition' as transition;
 
-@include default-spacing;
+@include spacing.default-spacing;
 
 .dropdown {
-  @include apply-color(background-color, background-elevated-3);
-  @include apply-color(border-color, border-inactive);
+  @include colors.apply-color(background-color, background-elevated-3);
+  @include colors.apply-color(border-color, border-inactive);
 
-  border-radius: $border-radius-normal;
+  border-radius: radius.$border-radius-normal;
   border-style: solid;
   border-width: 1px;
   cursor: pointer;
   display: inline-block;
-  font-family: $font-family-normal;
-  font-size: $font-size-normal;
+  font-family: fonts.$font-family-normal;
+  font-size: fonts.$font-size-normal;
   outline: none;
   position: relative;
-  transition-duration: $transition-duration-normal;
+  transition-duration: transition.$transition-duration-normal;
   transition-property: background-color, border-color;
   user-select: none;
 
@@ -148,7 +148,7 @@ Align(
   }
 
   &.size-normal {
-    $-item-height: $font-size-normal * 1.5 + $padding-size-small-2 * 2 - 2;
+    $-item-height: fonts.$font-size-normal * 1.5 + spacing.$padding-size-small-2 * 2 - 2;
 
     &.active {
       > .dropdown-menu {
@@ -162,12 +162,12 @@ Align(
     }
 
     .item {
-      padding: $padding-size-small-2 $padding-size-normal;
+      padding: spacing.$padding-size-small-2 spacing.$padding-size-normal;
     }
   }
 
   &.size-small {
-    $-item-height: $font-size-normal * 1.5 + $padding-size-small-3 * 2 - 2;
+    $-item-height: fonts.$font-size-normal * 1.5 + spacing.$padding-size-small-3 * 2 - 2;
 
     &.active {
       > .dropdown-menu {
@@ -181,20 +181,20 @@ Align(
     }
 
     .item {
-      padding: $padding-size-small-3 $padding-size-small-2;
+      padding: spacing.$padding-size-small-3 spacing.$padding-size-small-2;
     }
   }
 
   &:focus {
-    @include apply-color(border-color, background-important-alt);
+    @include colors.apply-color(border-color, background-important-alt);
   }
 
   > .dropdown-menu {
-    @include apply-color(background-color, background-elevated-3);
-    @include apply-color(border-color, border-inactive);
+    @include colors.apply-color(background-color, background-elevated-3);
+    @include colors.apply-color(border-color, border-inactive);
 
-    border-bottom-left-radius: $border-radius-normal;
-    border-bottom-right-radius: $border-radius-normal;
+    border-bottom-left-radius: radius.$border-radius-normal;
+    border-bottom-right-radius: radius.$border-radius-normal;
     border-style: solid;
     border-top-style: none;
     border-width: 1px;
@@ -205,23 +205,23 @@ Align(
     padding-top: 1px;
     pointer-events: none;
     position: absolute;
-    transition-duration: $transition-duration-fast;
+    transition-duration: transition.$transition-duration-fast;
     transition-property: height, top, opacity;
     width: 100%;
     z-index: 100;
 
     > .item {
-      transition-duration: $transition-duration-fast-2;
+      transition-duration: transition.$transition-duration-fast-2;
 
       &:hover,
       &.selected {
-        @include apply-color(background-color, background-lowered);
+        @include colors.apply-color(background-color, background-lowered);
       }
 
       &.current {
         &:not(:hover, .selected) {
-          @include apply-color(background-color, background-accent);
-          @include apply-color(color, white);
+          @include colors.apply-color(background-color, background-accent);
+          @include colors.apply-color(color, white);
         }
       }
     }
@@ -233,7 +233,7 @@ Align(
     &.current {
       > .icon {
         padding-top: 1px;
-        transition-duration: $transition-duration-fast;
+        transition-duration: transition.$transition-duration-fast;
         transition-property: transform;
       }
     }

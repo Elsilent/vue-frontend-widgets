@@ -369,8 +369,8 @@ Table.intersection-table(
 </template>
 
 <style lang="scss" scoped>
-@import '../styles/colors';
-@import '../styles/spacing';
+@use '../styles/colors' as colors;
+@use '../styles/spacing' as spacing;
 
 .column-label {
   font-weight: 700;
@@ -381,7 +381,7 @@ Table.intersection-table(
 
   &:deep(.table.fixed .cell) {
     &:not(.column):not(.total):not(.colored) {
-      @include apply-color(background-color, background-elevated-3);
+      @include colors.apply-color(background-color, background-elevated-3);
 
       font-weight: 700;
     }
@@ -397,7 +397,7 @@ Table.intersection-table(
         height: calc(100% + 14px);
 
         > .line {
-          @include apply-color(border-bottom-color, border-table);
+          @include colors.apply-color(border-bottom-color, border-table);
 
           border-bottom: 1px solid;
           position: absolute;
@@ -426,7 +426,7 @@ Table.intersection-table(
 }
 
 .loading-overlay {
-  @include apply-color(background-color, background-elevated-3, $opacity: 0.5);
+  @include colors.apply-color(background-color, background-elevated-3, $opacity: 0.5);
 
   align-items: center;
   display: flex;

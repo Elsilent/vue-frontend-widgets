@@ -44,13 +44,13 @@ const iconRef = ref<typeof Icon>();
 </template>
 
 <style lang="scss" scoped>
-@import '../styles/spacing';
+@use '../styles/spacing' as spacing;
 .column-hint {
   cursor: pointer;
   display: flex;
   max-width: 30rem;
   padding: 0;
   text-decoration: none;
-  margin-left: $padding-size-small-4;
+  margin-left: spacing.$padding-size-small-4;
 }
 </style>

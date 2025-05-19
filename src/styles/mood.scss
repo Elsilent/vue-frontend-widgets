@@ -1,99 +1,99 @@
-@import './colors.scss';
+@use './colors.scss' as colors;
 
 @mixin apply-mood($rule-postfix: '') {
   &.mood-background-accent {
-    @include apply-color(background-color, background-accent, $rule-postfix: $rule-postfix);
+    @include colors.apply-color(background-color, background-accent, $rule-postfix: $rule-postfix);
   }
 
   &.mood-background-important {
-    @include apply-color(background-color, background-important, $rule-postfix: $rule-postfix);
+    @include colors.apply-color(background-color, background-important, $rule-postfix: $rule-postfix);
   }
 
   &.mood-background-important-alt {
-    @include apply-color(background-color, background-important-alt, $rule-postfix: $rule-postfix);
+    @include colors.apply-color(background-color, background-important-alt, $rule-postfix: $rule-postfix);
   }
 
   &.mood-background-inactive {
-    @include apply-color(background-color, background-inactive, $rule-postfix: $rule-postfix);
+    @include colors.apply-color(background-color, background-inactive, $rule-postfix: $rule-postfix);
   }
 
   &.mood-background-negative {
-    @include apply-color(background-color, background-negative, $rule-postfix: $rule-postfix);
+    @include colors.apply-color(background-color, background-negative, $rule-postfix: $rule-postfix);
   }
 
   &.mood-background-neutral {
-    @include apply-color(background-color, background-neutral, $rule-postfix: $rule-postfix);
+    @include colors.apply-color(background-color, background-neutral, $rule-postfix: $rule-postfix);
   }
 
   &.mood-background-neutral-alt {
-    @include apply-color(background-color, background-neutral-alt, $rule-postfix: $rule-postfix);
+    @include colors.apply-color(background-color, background-neutral-alt, $rule-postfix: $rule-postfix);
   }
 
   &.mood-background-positive {
-    @include apply-color(background-color, background-positive, $rule-postfix: $rule-postfix);
+    @include colors.apply-color(background-color, background-positive, $rule-postfix: $rule-postfix);
   }
 
   &.mood-border-accent {
-    @include apply-color(border-color, border-accent, $rule-postfix: $rule-postfix);
+    @include colors.apply-color(border-color, border-accent, $rule-postfix: $rule-postfix);
   }
 
   &.mood-border-important {
-    @include apply-color(border-color, border-important, $rule-postfix: $rule-postfix);
+    @include colors.apply-color(border-color, border-important, $rule-postfix: $rule-postfix);
   }
 
   &.mood-border-important-alt {
-    @include apply-color(border-color, border-important-alt, $rule-postfix: $rule-postfix);
+    @include colors.apply-color(border-color, border-important-alt, $rule-postfix: $rule-postfix);
   }
 
   &.mood-border-inactive {
-    @include apply-color(border-color, border-inactive, $rule-postfix: $rule-postfix);
+    @include colors.apply-color(border-color, border-inactive, $rule-postfix: $rule-postfix);
   }
 
   &.mood-border-negative {
-    @include apply-color(border-color, border-negative, $rule-postfix: $rule-postfix);
+    @include colors.apply-color(border-color, border-negative, $rule-postfix: $rule-postfix);
   }
 
   &.mood-border-neutral {
-    @include apply-color(border-color, border-neutral, $rule-postfix: $rule-postfix);
+    @include colors.apply-color(border-color, border-neutral, $rule-postfix: $rule-postfix);
   }
 
   &.mood-border-neutral-alt {
-    @include apply-color(border-color, border-neutral-alt, $rule-postfix: $rule-postfix);
+    @include colors.apply-color(border-color, border-neutral-alt, $rule-postfix: $rule-postfix);
   }
 
   &.mood-border-positive {
-    @include apply-color(border-color, border-positive, $rule-postfix: $rule-postfix);
+    @include colors.apply-color(border-color, border-positive, $rule-postfix: $rule-postfix);
   }
 
   &.mood-text-accent {
-    @include apply-color(color, text-accent, $rule-postfix: $rule-postfix);
+    @include colors.apply-color(color, text-accent, $rule-postfix: $rule-postfix);
   }
 
   &.mood-text-important {
-    @include apply-color(color, text-important, $rule-postfix: $rule-postfix);
+    @include colors.apply-color(color, text-important, $rule-postfix: $rule-postfix);
   }
 
   &.mood-text-important-alt {
-    @include apply-color(color, text-important-alt, $rule-postfix: $rule-postfix);
+    @include colors.apply-color(color, text-important-alt, $rule-postfix: $rule-postfix);
   }
 
   &.mood-text-inactive {
-    @include apply-color(color, text-normal, $rule-postfix: $rule-postfix);
+    @include colors.apply-color(color, text-normal, $rule-postfix: $rule-postfix);
   }
 
   &.mood-text-negative {
-    @include apply-color(color, text-negative, $rule-postfix: $rule-postfix);
+    @include colors.apply-color(color, text-negative, $rule-postfix: $rule-postfix);
   }
 
   &.mood-text-neutral {
-    @include apply-color(color, text-neutral, $rule-postfix: $rule-postfix);
+    @include colors.apply-color(color, text-neutral, $rule-postfix: $rule-postfix);
   }
 
   &.mood-text-neutral-alt {
-    @include apply-color(color, text-neutral-alt, $rule-postfix: $rule-postfix);
+    @include colors.apply-color(color, text-neutral-alt, $rule-postfix: $rule-postfix);
   }
 
   &.mood-text-positive {
-    @include apply-color(color, text-positive, $rule-postfix: $rule-postfix);
+    @include colors.apply-color(color, text-positive, $rule-postfix: $rule-postfix);
   }
 }

@@ -64,40 +64,41 @@ button.button(
 </template>
 
 <style lang="scss" scoped>
-@import '../styles/mood';
-@import '../styles/radius';
-@import '../styles/spacing';
-@import '../styles/transition';
+@use '../styles/mood' as mood;
+@use '../styles/radius' as radius;
+@use '../styles/spacing' as spacing;
+@use '../styles/transition' as transition;
+@use '../styles/colors' as colors;
 
-@include default-spacing;
+@include spacing.default-spacing;
 
 .button {
-  @include apply-mood;
+  @include mood.apply-mood;
 
   align-items: center;
   border-style: solid;
   border-width: 1px;
   display: inline-flex;
   justify-content: center;
-  transition-duration: $transition-duration-normal;
+  transition-duration: transition.$transition-duration-normal;
   transition-property: background-color, border-color, opacity;
   background-color: transparent;
 
   &.mood-background-inactive {
     > .icon,
     > .info-text {
-      @include apply-color(color, text-normal);
+      @include colors.apply-color(color, text-normal);
     }
   }
 
   &.shape-normal {
-    border-radius: $border-radius-normal;
-    padding: $padding-size-small-2 $padding-size-normal;
+    border-radius: radius.$border-radius-normal;
+    padding: spacing.$padding-size-small-2 spacing.$padding-size-normal;
   }
 
   &.shape-round {
-    border-radius: $border-radius-round;
-    padding: $padding-size-normal;
+    border-radius: radius.$border-radius-round;
+    padding: spacing.$padding-size-normal;
     position: relative;
 
     > .icon,
@@ -122,38 +123,38 @@ button.button(
     &:not(.outline):focus {
       &.mood-border {
         &-accent {
-          @include apply-color(background-color, background-active-accent);
-          @include apply-color(border-color, border-active-accent);
+          @include colors.apply-color(background-color, background-active-accent);
+          @include colors.apply-color(border-color, border-active-accent);
         }
 
         &-important {
-          @include apply-color(background-color, background-active-important);
-          @include apply-color(border-color, border-active-important);
+          @include colors.apply-color(background-color, background-active-important);
+          @include colors.apply-color(border-color, border-active-important);
         }
 
         &-important-alt {
-          @include apply-color(background-color, background-active-important-alt);
-          @include apply-color(border-color, border-active-important-alt);
+          @include colors.apply-color(background-color, background-active-important-alt);
+          @include colors.apply-color(border-color, border-active-important-alt);
         }
 
         &-negative {
-          @include apply-color(background-color, background-active-negative);
-          @include apply-color(border-color, border-active-negative);
+          @include colors.apply-color(background-color, background-active-negative);
+          @include colors.apply-color(border-color, border-active-negative);
         }
 
         &-neutral {
-          @include apply-color(background-color, background-active-neutral);
-          @include apply-color(border-color, border-active-neutral);
+          @include colors.apply-color(background-color, background-active-neutral);
+          @include colors.apply-color(border-color, border-active-neutral);
         }
 
         &-neutral-alt {
-          @include apply-color(background-color, background-active-neutral-alt);
-          @include apply-color(border-color, border-active-neutral-alt);
+          @include colors.apply-color(background-color, background-active-neutral-alt);
+          @include colors.apply-color(border-color, border-active-neutral-alt);
         }
 
         &-positive {
-          @include apply-color(background-color, background-active-positive);
-          @include apply-color(border-color, border-active-positive);
+          @include colors.apply-color(background-color, background-active-positive);
+          @include colors.apply-color(border-color, border-active-positive);
         }
       }
     }
@@ -164,49 +165,49 @@ button.button(
     &.outline:active {
       &.mood-border {
         &-accent {
-          @include apply-color(background-color, background-hover-accent);
-          @include apply-color(border-color, border-hover-accent);
+          @include colors.apply-color(background-color, background-hover-accent);
+          @include colors.apply-color(border-color, border-hover-accent);
         }
 
         &-important {
-          @include apply-color(background-color, background-hover-important);
-          @include apply-color(border-color, border-hover-important);
+          @include colors.apply-color(background-color, background-hover-important);
+          @include colors.apply-color(border-color, border-hover-important);
         }
 
         &-important-alt {
-          @include apply-color(background-color, background-hover-important-alt);
-          @include apply-color(border-color, border-hover-important-alt);
+          @include colors.apply-color(background-color, background-hover-important-alt);
+          @include colors.apply-color(border-color, border-hover-important-alt);
         }
 
         &-negative {
-          @include apply-color(background-color, background-hover-negative);
-          @include apply-color(border-color, border-hover-negative);
+          @include colors.apply-color(background-color, background-hover-negative);
+          @include colors.apply-color(border-color, border-hover-negative);
         }
 
         &-neutral {
-          @include apply-color(background-color, background-hover-neutral);
-          @include apply-color(border-color, border-hover-neutral);
+          @include colors.apply-color(background-color, background-hover-neutral);
+          @include colors.apply-color(border-color, border-hover-neutral);
         }
 
         &-neutral-alt {
-          @include apply-color(background-color, background-hover-neutral-alt);
-          @include apply-color(border-color, border-hover-neutral-alt);
+          @include colors.apply-color(background-color, background-hover-neutral-alt);
+          @include colors.apply-color(border-color, border-hover-neutral-alt);
         }
 
         &-positive {
-          @include apply-color(background-color, background-hover-positive);
-          @include apply-color(border-color, border-hover-positive);
+          @include colors.apply-color(background-color, background-hover-positive);
+          @include colors.apply-color(border-color, border-hover-positive);
         }
       }
 
       > .icon {
         &::not(.mood-background-inactive) {
-          @include apply-color(color, white);
+          @include colors.apply-color(color, white);
         }
       }
 
       > .info-text {
-        @include apply-color(color, white);
+        @include colors.apply-color(color, white);
       }
     }
   }

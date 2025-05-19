@@ -19,8 +19,8 @@ ElOption(:value="value" :class="size" :data-test-id="value")
 
 <style lang="scss" scoped>
 @use 'sass:map';
-@import '../styles/colors';
-@import '../styles/spacing';
+@use '../styles/colors' as colors;
+@use '../styles/spacing' as spacing;
 
 .el-select-dropdown__item {
   margin: 0 2px 0 -1px;
@@ -30,10 +30,10 @@ ElOption(:value="value" :class="size" :data-test-id="value")
   line-height: 1.5;
   padding: 6.5px 20px;
   &.default {
-    padding: $padding-size-menu-small-3 $padding-size-small-2;
+    padding: spacing.$padding-size-menu-small-3 spacing.$padding-size-small-2;
   }
   &.is-selected {
-    background-color: map.get(map.get($themes, 'light'), 'background-list-accent');
+    background-color: map.get(map.get(colors.$themes, 'light'), 'background-list-accent');
     font-weight: normal;
     &:after {
       display: none;
