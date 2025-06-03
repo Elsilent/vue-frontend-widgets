@@ -19,16 +19,19 @@ const props = withDefaults(
 
 const { mood, outline, size } = toRefs(props);
 
-const classes = computed(() => ({
+const badgeElementClasses = computed(() => ({
   [`mood-background-${mood.value}`]: !outline.value,
   [`mood-border-${mood.value}`]: true,
+}));
+
+const infoElementClasses = computed(() => ({
   [`size-${size.value}`]: true,
 }));
 </script>
 
 <template lang="pug">
-.badge(:class='classes')
-  Info(:mood="outline ? mood : 'white'")
+.badge(:class='badgeElementClasses')
+  Info(:mood="outline ? mood : 'white'" :class="infoElementClasses")
     slot(default)
 </template>
 
