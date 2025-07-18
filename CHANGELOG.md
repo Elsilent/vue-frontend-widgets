@@ -1,6 +1,10 @@
 # Changelog
 All important changes in vue-frontend-widgets
 
+## [1.3.0] - 2025-07-18
+- Added a new component multiselect with a virtualized tree. 
+Fast render & filtering with large trees (~10k)
+
 ## [1.2.0] - 2025-05-19
 - Added a new component virtualized select. Fast render with a lot of options.
 
