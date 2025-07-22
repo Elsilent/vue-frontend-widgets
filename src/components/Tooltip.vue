@@ -4,7 +4,7 @@ import 'element-plus/es/components/popover/style/index';
 </script>
 
 <template lang="pug">
-ElPopover
+ElPopover(popper-class="small")
   template(#reference)
     slot(name="reference")
   slot
@@ -22,5 +22,8 @@ ElPopover
   padding: var(--el-popover-padding);
   border-radius: #{radius.$border-radius-normal} #{radius.$border-radius-normal} 0 0;
   border-bottom: 1px solid var(--el-border-color-light);
+}
+.el-popover.el-popper.small {
+  min-width: 10px;
 }
 </style>
