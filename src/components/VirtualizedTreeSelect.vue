@@ -338,5 +338,9 @@ ElPopover(
     left: 6px;
     top: 2px;
   }
+  .el-checkbox .el-checkbox__inner::before {
+    height: 4px;
+    top: 8px;
+  }
 }
 </style>
