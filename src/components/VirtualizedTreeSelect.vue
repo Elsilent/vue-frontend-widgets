@@ -34,9 +34,10 @@ const values = computed(() => {
   return rawValues.value.map((treeNode: TreeNodeData_2) => treeNode.value);
 });
 
-const filterMethod = (query: string, node: { label: string }) => node.label.includes(query);
+const filterMethod = (query: string, node: { label: string }) =>
+  node.label.toLowerCase().includes(query.toLowerCase());
 
-const handleInput = () => {
+const onInput = () => {
   treeRef.value?.filter(filterValue.value);
   if (!filterValue.value) {
     treeRef.value?.setExpandedKeys([]);
@@ -45,7 +46,7 @@ const handleInput = () => {
   }
 };
 
-const handleClickOutside = ({ target }: MouseEvent) => {
+const onClickOutside = ({ target }: MouseEvent) => {
   const inputEl = inputRef.value?.$el;
   const triggerEl = triggerRef.value;
   const popoverEl = popoverRef.value?.popperRef?.contentRef;
@@ -92,9 +93,9 @@ const onChecked = (_: undefined, { checkedNodes }: TreeNodeData_2) => {
   rawValues.value = resultNodes;
 };
 
-const onCloseTag = (tag: TreeNodeData_2) => {
+const onCloseTag = (tagValue: string) => {
   focusInput();
-  treeRef.value?.setChecked(tag.value, false);
+  treeRef.value?.setChecked(tagValue, false);
   const checkedValues = treeRef.value?.getCheckedNodes();
   onChecked(undefined, { checkedNodes: checkedValues });
 };
@@ -144,7 +145,7 @@ const resizeObserver = new ResizeObserver((entries, observer) => {
 });
 
 onMounted(() => {
-  document.addEventListener('mousedown', handleClickOutside);
+  document.addEventListener('mousedown', onClickOutside);
 
   if (triggerRef.value) {
     width.value = triggerRef.value?.offsetWidth;
@@ -161,8 +162,19 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   resizeObserver.disconnect();
-  document.removeEventListener('mousedown', handleClickOutside);
+  document.removeEventListener('mousedown', onClickOutside);
 });
+
+const onDelete = () => {
+  if (filterValue.value.length) {
+    return;
+  }
+
+  if (values.value.length) {
+    const lastTagValue = values.value[values.value.length - 1];
+    onCloseTag(lastTagValue);
+  }
+};
 </script>
 
 <template lang="pug">
@@ -192,14 +204,15 @@ ElPopover(
           ElTag(
             effect="dark"
             closable
-            @close="onCloseTag(rawValue)"
+            @close="onCloseTag(rawValue.value)"
           ) {{rawValue.label}}
         div.vtree-filter
           ElInput(
             ref="inputRef"
             v-model="filterValue"
             @focus="onFocus"
-            @input="handleInput"
+            @input="onInput"
+            @keydown.delete="onDelete"
             :placeholder="values.length ? '' : props.placeholder"
           )
       div.vtree-suffix
