@@ -1283,8 +1283,11 @@ const toggleExpandColumn = (columnKey: string) => {
 const toggleInlineFilters = () => {
   displayInlineFilters.value = !displayInlineFilters.value;
 
-  if (displayInlineFilters.value) {
-    inlineFilters.value = makeInlineFilters();
+  inlineFilters.value = makeInlineFilters();
+  if (!displayInlineFilters.value) {
+    // Reset table data to default state when hiding filters
+    fetchedAllRows.value = false;
+    setPageNumber(0);
   }
 };
 

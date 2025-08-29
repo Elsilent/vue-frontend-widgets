@@ -1,6 +1,9 @@
 # Changelog
 All important changes in vue-frontend-widgets
 
+## [1.3.1] - 2025-08-29
+- Fixed problem with inline tables filter reset.
+
 ## [1.3.0] - 2025-07-18
 - Added a new component multiselect with a virtualized tree. 
 Fast render & filtering with large trees (~10k)
