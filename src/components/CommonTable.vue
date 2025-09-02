@@ -1283,8 +1283,14 @@ const toggleExpandColumn = (columnKey: string) => {
 const toggleInlineFilters = () => {
   displayInlineFilters.value = !displayInlineFilters.value;
 
-  if (displayInlineFilters.value) {
-    inlineFilters.value = makeInlineFilters();
+  inlineFilters.value = makeInlineFilters();
+  if (!displayInlineFilters.value) {
+    // Reset table data to default state when hiding filters
+    
+    // This line should trigger re-fetch data from the backend in case the filters will filter data in request
+    // Can be removed if not needed
+    fetchedAllRows.value = false;
+    setPageNumber(0);
   }
 };
 
