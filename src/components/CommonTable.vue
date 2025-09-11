@@ -1318,8 +1318,6 @@ const updateOrderBy = async (
 onMounted(() => {
   currentColumnKeys.value = Object.keys(columns.value);
 
-  totalRow.value = total?.value;
-
   Promise.all([setOrderByFromDefault(false), setPageSize()]).then(() => setOrderBy(true));
 });
 
@@ -1353,6 +1351,19 @@ if (request) {
       setPageNumber(0);
     },
     { deep: true },
+  );
+}
+
+if (total) {
+  watch(
+    total,
+    () => {
+      totalRow.value = total?.value;
+    },
+    {
+      deep: true,
+      immediate: true,
+    },
   );
 }
 </script>
