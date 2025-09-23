@@ -61,7 +61,7 @@ const props = withDefaults(
     /**
      * Color metrics in neutral color no matter if they are inversed or not
      */
-    neutralColoredMetrics?: boolean;
+    neutralColoredMetrics?: boolean | string[];
     /**
      * No data message that should be displayed.
      */
@@ -407,7 +407,11 @@ const getCellClasses = (
 
   if (colorMetrics.value) {
     const colorMood = (() => {
-      if (neutralColoredMetrics.value) {
+      if (
+        neutralColoredMetrics.value &&
+        (typeof neutralColoredMetrics.value === 'boolean' ||
+          neutralColoredMetrics.value.includes(columnKey))
+      ) {
         return 'important-alt';
       }
 

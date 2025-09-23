@@ -132,7 +132,7 @@ const props = withDefaults(
     /**
      * Enables possibility to color metrics
      */
-    colorMetrics?: boolean;
+    colorMetrics?: boolean | string[];
     colorizeLabel: string;
     /**
      * Provides the list of columns to display on the table.
@@ -195,6 +195,10 @@ const props = withDefaults(
      * Provides the list of negative KPIs. This list is used for coloring metrics
      */
     inversedKpis?: string[];
+    /**
+     * Provides the list of neutral KPIs. This list is used for coloring metrics
+     */
+    neutralColoredMetrics?: string[];
     /**
      * Label to display in the pagination
      */
@@ -305,6 +309,7 @@ const {
   fixedColumnNumber,
   inlineFilterOperators,
   inversedKpis,
+  neutralColoredMetrics,
   primaryColumn,
   primaryColumnAlias,
   request,
@@ -462,6 +467,7 @@ const addColoredMetric = (columnKey: string) => {
   }
 
   coloredMetrics.value.push(columnKey);
+  localStorage.setItem(getColoredMetricsKey(), JSON.stringify(coloredMetrics.value));
 };
 
 /**
@@ -736,6 +742,11 @@ const getOrderByKey = () => `Table_OrderBy_${location.pathname}`;
  */
 const getPageSizeKey = () => `Table_PageSize_${location.pathname}`;
 
+/**
+ * Retrieves local storage item key to store colored metrics info
+ */
+const getColoredMetricsKey = () => `Table_ColoredMetrics_${location.pathname}`;
+
 const getRawValue = (value: any, type: ColumnType) => {
   switch (type) {
     case 'float':
@@ -876,6 +887,7 @@ const removeColoredMetric = (columnKey: string) => {
   }
 
   coloredMetrics.value.splice(index, 1);
+  localStorage.setItem(getColoredMetricsKey(), JSON.stringify(coloredMetrics.value));
 };
 
 const setColumnHintVisible = (columnKey: string, visible: boolean) => {
@@ -1286,7 +1298,7 @@ const toggleInlineFilters = () => {
   inlineFilters.value = makeInlineFilters();
   if (!displayInlineFilters.value) {
     // Reset table data to default state when hiding filters
-    
+
     // This line should trigger re-fetch data from the backend in case the filters will filter data in request
     // Can be removed if not needed
     fetchedAllRows.value = false;
@@ -1315,8 +1327,22 @@ const updateOrderBy = async (
   emit('update:orderBy', newOrderBy);
 };
 
+/**
+ * try to get colored metrics saved in localstorage
+ */
+const getColoredMetrics = () => {
+  const savedColoredMetrics = localStorage.getItem(getColoredMetricsKey());
+
+  if (colorMetrics?.value && typeof colorMetrics.value === 'object' && !savedColoredMetrics) {
+    coloredMetrics.value = colorMetrics.value;
+  } else if (savedColoredMetrics) {
+    coloredMetrics.value = JSON.parse(savedColoredMetrics);
+  }
+};
+
 onMounted(() => {
   currentColumnKeys.value = Object.keys(columns.value);
+  getColoredMetrics();
 
   Promise.all([setOrderByFromDefault(false), setPageSize()]).then(() => setOrderBy(true));
 });
@@ -1399,7 +1425,7 @@ if (total) {
       @update:orderBy="(newOrderBy) => updateOrderBy(newOrderBy)",
       :additionalHeaders="additionalHeaders",
       :cellClasses="cellClasses"
-      :colorMetrics="colorMetrics",
+      :colorMetrics="!!colorMetrics",
       :coloredMetrics="coloredMetrics",
       :columns="currentColumns",
       :comparisonColumnKeys="comparisonColumnKeys",
@@ -1407,6 +1433,7 @@ if (total) {
       :dragColumns="dragColumns",
       :fixedColumnNumber="fixedColumnNumber",
       :inversedKpis="inversedKpis",
+      :neutralColoredMetrics="neutralColoredMetrics",
       :orderBy="orderBy",
       :primaryColumn="primaryColumn",
       :rows="visibleRows",

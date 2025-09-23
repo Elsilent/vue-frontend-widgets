@@ -21,7 +21,7 @@ const props = withDefaults(
     fixedColumnNumber?: number;
     globalColoredMetrics?: boolean;
     inversedKpis?: string[];
-    neutralColoredMetrics?: boolean;
+    neutralColoredMetrics?: boolean | string[];
     /**
      * No data message that should be displayed.
      */
