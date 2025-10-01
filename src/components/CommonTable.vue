@@ -204,6 +204,10 @@ const props = withDefaults(
      */
     pageSizeLabel: string;
     /**
+     * Initial page size for pagination
+     */
+    initialPageSize?: number;
+    /**
      * Primary column which is used for detailed rows
      */
     primaryColumn?: string;
@@ -282,6 +286,7 @@ const props = withDefaults(
     dragColumns: false,
     fixedColumnNumber: 1,
     inlineFilterOperators: () => ({}),
+    initialPageSize: 20,
     primaryColumn: 'id',
     showInlineFilters: false,
     showRowNumber: true,
@@ -308,6 +313,7 @@ const {
   dragColumns,
   fixedColumnNumber,
   inlineFilterOperators,
+  initialPageSize,
   inversedKpis,
   neutralColoredMetrics,
   primaryColumn,
@@ -357,7 +363,7 @@ const inlineFilters = ref(makeInlineFilters());
 const loading = ref(true);
 const orderBy = ref<[string[], boolean] | undefined>();
 const pageNumber = ref(0);
-const pageSize = ref(20);
+const pageSize = ref(initialPageSize.value);
 const rowCount = ref(0);
 const totalRow = ref<Record<string, any> | undefined>();
 
