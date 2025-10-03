@@ -907,31 +907,32 @@ onMounted(() => {
   }`,
   :style="tableStyle",
 )
-  .cell.column.column-main.row-number(
-    v-if="showRowNumber",
-    :style="maxRowspan > 1 ? { 'grid-row-end': `span ${maxRowspan}` } : undefined",
-  )
-    slot(name="columnRowNumber") #
-  template(v-for="columnKey in visibleColumnKeys")
-    .cell.column.column-main(
-      :ref="(el) => setColumnRef(columnKey, el)",
-      v-if="columns[columnKey].visible",
-      @click.stop="() => onColumnClick(columnKey)",
-      @mousedown="(event) => onColumnDragStart(columnKey, event)",
-      :class="getColumnClassList(columnKey)",
-      :style="getColumnStyle(columnKey)",
-      :data-column="columnKey",
+  slot(name="columnsRow", :columns="visibleColumnKeys")
+    .cell.column.column-main.row-number(
+      v-if="showRowNumber",
+      :style="maxRowspan > 1 ? { 'grid-row-end': `span ${maxRowspan}` } : undefined",
     )
-      slot(name="column", :columnKey="columnKey", :isGhost="false")
-      .toggle-colored.no-spacing(
-        v-if='showToggleColored && isColorable(columnKey)',
-        @click.stop='() => toggleColored(columnKey)',
-        :style="{ top: `${getColorizedButtonTopOffset(columnKey)}px` }"
+      slot(name="columnRowNumber") #
+    template(v-for="columnKey in visibleColumnKeys")
+      .cell.column.column-main(
+        :ref="(el) => setColumnRef(columnKey, el)",
+        v-if="columns[columnKey].visible",
+        @click.stop="() => onColumnClick(columnKey)",
+        @mousedown="(event) => onColumnDragStart(columnKey, event)",
+        :class="getColumnClassList(columnKey)",
+        :style="getColumnStyle(columnKey)",
+        :data-column="columnKey",
       )
-        slot(
-          name="colorizeLabel",
-          :enabled="indexOfColored(columnKey) >= 0",
+        slot(name="column", :columnKey="columnKey", :isGhost="false")
+        .toggle-colored.no-spacing(
+          v-if='showToggleColored && isColorable(columnKey)',
+          @click.stop='() => toggleColored(columnKey)',
+          :style="{ top: `${getColorizedButtonTopOffset(columnKey)}px` }"
         )
+          slot(
+            name="colorizeLabel",
+            :enabled="indexOfColored(columnKey) >= 0",
+          )
   //- Renders "ghost" cells
   //- These cells are visually moved while the originals are visible in background
   template(v-if="dragColumns")
