@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import axios from 'axios';
-import { computed, nextTick, onMounted, ref, toRefs, watch } from 'vue';
+import { computed, nextTick, onMounted, ref, toRefs, watch, defineExpose } from 'vue';
 import numeral from '../utils/numeral';
 import { cloneObject } from '../utils/clone';
 import type { Mood } from '../utils/enum/mood';
@@ -368,6 +368,7 @@ const rowCount = ref(0);
 const totalRow = ref<Record<string, any> | undefined>();
 
 const table = ref<typeof Table | undefined>();
+defineExpose({ table });
 
 const additionalHeaders = computed(() => {
   const additionalHeaders: Record<string, { icon: string }> = {};
@@ -1449,6 +1450,8 @@ if (total) {
       :noDataMessage="noDataMessage"
       :dynamicRowsHeight="dynamicRowsHeight"
     )
+      template(#columnsRow="{ columns }")
+        slot(name="columnsRow", :columns="columns")
       template(#colorizeLabel="{ enabled }")
         Info(mood="white", size="small")
           template(v-if="enabled") {{ uncolorizeLabel }}

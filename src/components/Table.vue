@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { computed, nextTick, onUnmounted, ref, toRefs, watch } from 'vue';
+import { computed, nextTick, onUnmounted, ref, toRefs, watch, defineExpose } from 'vue';
 import { type Column } from '../utils/type/component/container/table';
 import Scrollable from './Scrollable.vue';
 import SimpleTable from './SimpleTable.vue';
@@ -171,6 +171,7 @@ const tableStyle = computed(() => {
 
 const fixedTable = ref<typeof SimpleTable | undefined>();
 const scrollableTable = ref<typeof SimpleTable | undefined>();
+defineExpose({ scrollableTable });
 
 const resizing = ref(false);
 
@@ -368,6 +369,8 @@ const getDynamicRowsHeights = () => {
       :useOrderBy="useOrderBy",
       :dynamicRowsHeights="dynamicRowsHeights ? dynamicRowsHeights.split('|') : undefined"
     )
+      template(#columnsRow="{ columns }")
+        slot(name="columnsRow", :columns="columns")
       template(#columnRowNumber)
         slot(name="columnRowNumber") #
       template(#colorizeLabel="{ enabled }")
@@ -460,6 +463,8 @@ const getDynamicRowsHeights = () => {
       :style="tableStyle"
       :useOrderBy="useOrderBy",
     )
+      template(#columnsRow="{ columns }")
+        slot(name="columnsRow", :columns="columns")
       template(#colorizeLabel="{ enabled }")
         slot(name="colorizeLabel", :enabled="enabled")
       template(#column="{ columnKey, isGhost }")
