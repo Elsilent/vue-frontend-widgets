@@ -45,6 +45,7 @@ const infoElementClasses = computed(() => ({
 
 .badge {
   @include size.apply-size;
+  @include mood.apply-mood;
   
   border-radius: radius.$border-radius-round;
   border-style: solid;
