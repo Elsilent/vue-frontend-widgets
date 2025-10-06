@@ -54,30 +54,5 @@ const infoElementClasses = computed(() => ({
   padding: spacing.$padding-size-small-3 spacing.$padding-size-normal;
   transition-duration: transition.$transition-duration-normal;
   transition-property: background-color, border-color;
-
-  &.mood-border-accent {
-    @include colors.apply-color(border-color, background-accent);
-  }
-  &.mood-border-important {
-    @include colors.apply-color(border-color, background-important);
-  }
-  &.mood-border-important-alt {
-    @include colors.apply-color(border-color, background-important-alt);
-  }
-  &.mood-border-inactive {
-    @include colors.apply-color(border-color, background-inactive);
-  }
-  &.mood-border-negative {
-    @include colors.apply-color(border-color, background-negative);
-  }
-  &.mood-border-neutral {
-    @include colors.apply-color(border-color, background-neutral);
-  }
-  &.mood-border-neutral-alt {
-    @include colors.apply-color(border-color, background-neutral-alt);
-  }
-  &.mood-border-positive {
-    @include colors.apply-color(border-color, background-positive);
-  }
 }
 </style>
