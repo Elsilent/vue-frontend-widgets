@@ -1361,6 +1361,9 @@ watch(columns, () => {
   if (allComparisonRowsSrc) {
     updateComparisonRows();
   }
+
+  // Reload the table on the columns change
+  setPageNumber(0);
 });
 
 watch(loading, () => {
