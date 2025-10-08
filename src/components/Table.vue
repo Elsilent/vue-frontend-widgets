@@ -171,7 +171,6 @@ const tableStyle = computed(() => {
 
 const fixedTable = ref<typeof SimpleTable | undefined>();
 const scrollableTable = ref<typeof SimpleTable | undefined>();
-defineExpose({ scrollableTable });
 
 const resizing = ref(false);
 
@@ -280,6 +279,15 @@ const updateTableSize = () => {
   });
 };
 
+function reload() {
+  updateKey.value = Math.random();
+}
+
+defineExpose({
+  reload,
+  scrollableTable,
+});
+
 const resizeObserver = new ResizeObserver(() => updateTableSize());
 
 const tableContainer = ref<HTMLElement | undefined>();
@@ -293,16 +301,16 @@ nextTick(() => {
 });
 
 watch(rows, (_newRows, oldRows) => {
-  updateKey.value = Math.random();
+  reload();
   if (!oldRows.length) {
     updateTableSize();
   }
 });
 watch(additionalHeaders, () => {
-  updateKey.value = Math.random();
+  reload();
 });
 watch(columns, () => {
-  updateKey.value = Math.random();
+  reload();
   updateTableSize();
 });
 

@@ -1183,6 +1183,9 @@ const setRowsFromRequest = async (
   fetchedAllRows.value = response.paginated === false;
   rowCount.value = response.row_count;
 
+  // Clear cached details to prevent showing outdated data
+  cachedDetailsRows.value = {};
+
   if (response.detailedRows) {
     detailsRows.value = response.detailedRows;
   } else {
