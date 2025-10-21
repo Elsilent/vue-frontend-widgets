@@ -180,11 +180,7 @@ const columnSizingInfo = ref<
   >
 >({});
 
-const visibleColumnKeys = computed(() =>
-  Object.entries(columns.value)
-    .filter(([_, { visible }]) => visible)
-    .map(([key, _]) => key),
-);
+const visibleColumnKeys = computed(() => Object.keys(columns.value));
 
 const columnCountDisplayed = computed(() => {
   let result = showRowNumber.value ? 1 : 0;

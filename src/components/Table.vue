@@ -98,30 +98,32 @@ const updateKey = ref(0);
 
 onUnmounted(() => resizeObserver.disconnect());
 
-const fixedColumns = computed(() =>
-  Object.keys(columns.value)
-    .slice(0, fixedColumnNumber.value)
-    .reduce(
-      (fixedColumns, key) => {
-        fixedColumns[key] = columns.value[key];
+const visibleColumnKeys = computed(() =>
+  Object.entries(columns.value)
+    .filter(([_, { visible }]) => visible)
+    .map(([key, _]) => key),
+);
 
-        return fixedColumns;
-      },
-      {} as Record<string, Column>,
-    ),
+const fixedColumns = computed(() =>
+  visibleColumnKeys.value.slice(0, fixedColumnNumber.value).reduce(
+    (fixedColumns, key) => {
+      fixedColumns[key] = columns.value[key];
+
+      return fixedColumns;
+    },
+    {} as Record<string, Column>,
+  ),
 );
 
 const scrollableColumns = computed(() =>
-  Object.keys(columns.value)
-    .slice(fixedColumnNumber.value)
-    .reduce(
-      (scrollableColumns, key) => {
-        scrollableColumns[key] = columns.value[key];
+  visibleColumnKeys.value.slice(fixedColumnNumber.value).reduce(
+    (scrollableColumns, key) => {
+      scrollableColumns[key] = columns.value[key];
 
-        return scrollableColumns;
-      },
-      {} as Record<string, Column>,
-    ),
+      return scrollableColumns;
+    },
+    {} as Record<string, Column>,
+  ),
 );
 
 const totalRowCount = computed(() =>
