@@ -466,6 +466,7 @@ const emit = defineEmits<{
   (e: 'move:column', _: { from: number; to: number }): void;
   (e: 'update:loading', value: boolean): void;
   (e: 'update:orderBy', value: [string[], boolean]): void;
+  (e: 'update:pagination'): void;
 }>();
 
 const addColoredMetric = (columnKey: string) => {
@@ -978,6 +979,7 @@ const setPageNumber = async (newPageNumber: number) => {
   await setRows(newPageNumber);
 
   pageNumber.value = newPageNumber;
+  emit('update:pagination');
 };
 
 const setPageSize = async (newPageSize?: number) => {
@@ -997,6 +999,7 @@ const setPageSize = async (newPageSize?: number) => {
     pageNumber.value = 0;
     pageSize.value = newPageSize;
   }
+  emit('update:pagination');
 };
 
 const setInlineFilter = (
@@ -1459,7 +1462,8 @@ if (total) {
       template(#columnRowNumber)
         Info.column-label(contrast, size="small") #
       template(#rowNumber="{ value }")
-        Info(contrast, size="small") {{ value }}
+        slot(name="rowNumber", :value="value")
+          Info(contrast, size="small") {{ value }}
       template(#totalRowNumber)
         Info.total-label(contrast, size="small") #
       template(#column="{ columnKey, isGhost }")
