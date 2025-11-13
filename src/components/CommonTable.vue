@@ -274,6 +274,14 @@ const props = withDefaults(
     uncolorizeLabel: string;
     noDataMessage?: string;
     dynamicRowsHeight?: boolean;
+    /**
+     * Enables functionality for control  & show ordering
+     */
+    useOrderBy?: boolean;
+    /**
+     * If ordering needed. Set false if you do it on backend
+     */
+    orderRows?: boolean;
   }>(),
   {
     cellClasses: () => ({}),
@@ -293,6 +301,8 @@ const props = withDefaults(
     showPagination: true,
     showTopTotal: false,
     dynamicRowsHeight: false,
+    useOrderBy: true,
+    orderRows: true,
   },
 );
 
@@ -329,6 +339,8 @@ const {
   totalColumnKey,
   trendUrl,
   noDataMessage,
+  useOrderBy,
+  orderRows,
 } = toRefs(props);
 
 const makeInlineFilters = () => {
@@ -422,30 +434,32 @@ const detailsLabels = computed(() => {
  * Orders rows
  */
 const orderedRows = computed(() => {
-  return [...allRows.value].sort((leftRow, rightRow) => {
-    const comparison = (() => {
-      const leftValue = getRawValue(
-        orderBy.value![0].reduce((value, key) => value[key], leftRow),
-        columns.value[orderBy.value![0][0]].type,
-      );
-      const rightValue = getRawValue(
-        orderBy.value![0].reduce((value, key) => value[key], rightRow),
-        columns.value[orderBy.value![0][0]].type,
-      );
+  return !orderRows.value
+    ? [...allRows.value]
+    : [...allRows.value].sort((leftRow, rightRow) => {
+        const comparison = (() => {
+          const leftValue = getRawValue(
+            orderBy.value![0].reduce((value, key) => value[key], leftRow),
+            columns.value[orderBy.value![0][0]].type,
+          );
+          const rightValue = getRawValue(
+            orderBy.value![0].reduce((value, key) => value[key], rightRow),
+            columns.value[orderBy.value![0][0]].type,
+          );
 
-      if (leftValue > rightValue) {
-        return 1;
-      }
+          if (leftValue > rightValue) {
+            return 1;
+          }
 
-      if (leftValue < rightValue) {
-        return -1;
-      }
+          if (leftValue < rightValue) {
+            return -1;
+          }
 
-      return 0;
-    })();
+          return 0;
+        })();
 
-    return orderBy.value![1] ? -comparison : comparison;
-  });
+        return orderBy.value![1] ? -comparison : comparison;
+      });
 });
 
 /**
@@ -1458,6 +1472,8 @@ if (total) {
       :showTopTotal="showTopTotal && !displayInlineFilters",
       :noDataMessage="noDataMessage"
       :dynamicRowsHeight="dynamicRowsHeight"
+      :useOrderBy="useOrderBy"
+      :orderRows="orderRows"
     )
       template(#columnsRow="{ columns }")
         slot(name="columnsRow", :columns="columns")

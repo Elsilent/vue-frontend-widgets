@@ -35,6 +35,7 @@ const props = withDefaults(
     showTopTotal?: boolean;
     showTotal?: boolean;
     useOrderBy?: boolean;
+    orderRows?: boolean;
     dynamicRowsHeight?: boolean;
   }>(),
   {
@@ -55,6 +56,7 @@ const props = withDefaults(
     showTopTotal: false,
     showTotal: true,
     useOrderBy: true,
+    orderRows: true,
     dynamicRowsHeight: false,
   },
 );
@@ -81,6 +83,7 @@ const {
   showTopTotal,
   showTotal,
   useOrderBy,
+  orderRows,
   dynamicRowsHeight,
 } = toRefs(props);
 
@@ -377,6 +380,7 @@ const getDynamicRowsHeights = () => {
       :showTopTotal="showTopTotal",
       :showTotal="showTotal",
       :useOrderBy="useOrderBy",
+      :orderRows="orderRows",
       :dynamicRowsHeights="dynamicRowsHeights ? dynamicRowsHeights.split('|') : undefined"
     )
       template(#columnsRow="{ columns }")
@@ -472,6 +476,7 @@ const getDynamicRowsHeights = () => {
       :showNoDataMessage="true",
       :style="tableStyle"
       :useOrderBy="useOrderBy",
+      :orderRows="orderRows"
     )
       template(#columnsRow="{ columns }")
         slot(name="columnsRow", :columns="columns")

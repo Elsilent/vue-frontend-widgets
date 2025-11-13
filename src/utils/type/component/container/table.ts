@@ -8,7 +8,8 @@ export type ColumnType =
   | 'money'
   | 'money_capped'
   | 'percent'
-  | 'time';
+  | 'time'
+  | 'datetime';
 
 export interface Column {
   baseUrl?: string;
