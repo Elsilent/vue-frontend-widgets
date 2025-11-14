@@ -331,6 +331,7 @@ Table.intersection-table(
   :showToggleColored="false",
   :showTotal="false",
   :useOrderBy="false",
+  :orderRows="false",
   globalColoredMetrics,
 )
   template(#column="{ columnKey }")

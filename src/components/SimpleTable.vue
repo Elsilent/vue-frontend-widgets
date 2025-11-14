@@ -110,9 +110,13 @@ const props = withDefaults(
      */
     showTopTotal?: boolean;
     /**
-     * Enables ordering functionality
+     * Enables functionality for control & show ordering
      */
     useOrderBy?: boolean;
+    /**
+     * If ordering needed. Set false if you do it on backend
+     */
+    orderRows?: boolean;
     /**
      * Array of dynamic rows heights
      */
@@ -134,6 +138,7 @@ const props = withDefaults(
     showTotal: true,
     showTopTotal: false,
     useOrderBy: true,
+    orderRows: true,
     dynamicRowsHeights: undefined,
   },
 );
@@ -160,6 +165,7 @@ const {
   showTotal,
   showTopTotal,
   useOrderBy,
+  orderRows,
   dynamicRowsHeights,
 } = toRefs(props);
 
@@ -293,7 +299,7 @@ const maxRowspan = computed(() => {
 
 const orderedRowValues = computed<Record<string, any>[]>(() => {
   const orderedRowValues =
-    !useOrderBy.value || orderColumnType?.value === undefined
+    !orderRows.value || orderColumnType?.value === undefined
       ? Object.values(rows.value)
       : Object.values(rows.value).sort((leftRow, rightRow) => {
           const comparison = (() => {
@@ -611,6 +617,10 @@ const getRawValue = (value: string, type: ColumnType) => {
     case 'date':
       // Converts value from YYYY-MM-DD to timestamp
       return DateTime.fromISO(value).toUnixInteger();
+    case 'datetime':
+      // todo: fix it
+      // we don't sort by datetime right now, do it on backend
+      return NaN;
     default:
       return value;
   }
