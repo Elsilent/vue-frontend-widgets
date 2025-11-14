@@ -619,7 +619,7 @@ const getRawValue = (value: string, type: ColumnType) => {
       return DateTime.fromISO(value).toUnixInteger();
     case 'datetime':
       // todo: fix it
-      // we doesn't sort by datetime right now, do it on backend
+      // we don't sort by datetime right now, do it on backend
       return NaN;
     default:
       return value;
