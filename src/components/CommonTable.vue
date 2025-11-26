@@ -481,6 +481,7 @@ const emit = defineEmits<{
   (e: 'update:loading', value: boolean): void;
   (e: 'update:orderBy', value: [string[], boolean]): void;
   (e: 'update:pagination'): void;
+  (e: 'update:rowsCount', value: number): void;
 }>();
 
 const addColoredMetric = (columnKey: string) => {
@@ -1199,6 +1200,7 @@ const setRowsFromRequest = async (
 
   fetchedAllRows.value = response.paginated === false;
   rowCount.value = response.row_count;
+  emit('update:rowsCount', rowCount.value);
 
   // Clear cached details to prevent showing outdated data
   cachedDetailsRows.value = {};
@@ -1256,6 +1258,7 @@ const setRowsFromStatic = () => {
 
   allRows.value = staticRows;
   rowCount.value = staticRows.length;
+  emit('update:rowsCount', rowCount.value);
 
   return true;
 };
