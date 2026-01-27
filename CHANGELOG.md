@@ -1,6 +1,9 @@
 # Changelog
 All important changes in vue-frontend-widgets
 
+## [1.4.0] - 2026-01-27
+- Added new input component
+
 ## [1.3.1] - 2025-08-29
 - Fixed problem with inline tables filter reset.
 
