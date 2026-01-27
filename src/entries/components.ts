@@ -24,6 +24,7 @@ import Header from '../components/Header.vue';
 import Icon from '../components/Icon.vue';
 import Info from '../components/Info.vue';
 import Input from '../components/Input.vue';
+import InputV2 from '../components/InputV2.vue';
 import IntersectionTable from '../components/IntersectionTable.vue';
 import KpiCard from '../components/KpiCard.vue';
 import KpiDistributionTable from '../components/KpiDistributionTable.vue';
@@ -87,6 +88,7 @@ export {
   Icon,
   Info,
   Input,
+  InputV2,
   IntersectionTable,
   KpiCard,
   KpiDistributionTable,
