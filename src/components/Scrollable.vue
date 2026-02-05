@@ -269,6 +269,21 @@ watch(
 );
 
 watch(isHovered, () => whenResized());
+
+const getScrollPosition = () => ({
+  left: scrollLeft.value,
+  top: scrollTop.value,
+});
+
+const restoreScroll = () => {
+  scrollTo({ left: scrollLeft.value, top: scrollTop.value });
+};
+
+defineExpose({
+  getScrollPosition,
+  restoreScroll,
+  scrollTo,
+});
 </script>
 
 <template lang="pug">

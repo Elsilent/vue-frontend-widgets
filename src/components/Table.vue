@@ -175,6 +175,7 @@ const tableStyle = computed(() => {
 });
 
 const fixedTable = ref<typeof SimpleTable | undefined>();
+const scrollable = ref<InstanceType<typeof Scrollable> | undefined>();
 const scrollableTable = ref<typeof SimpleTable | undefined>();
 
 const resizing = ref(false);
@@ -288,9 +289,16 @@ function reload() {
   updateKey.value = Math.random();
 }
 
+const getScrollPosition = () => scrollable.value?.getScrollPosition() ?? { left: 0, top: 0 };
+const restoreScroll = () => scrollable.value?.restoreScroll();
+const scrollTo = (position: { left?: number; top?: number }) => scrollable.value?.scrollTo(position);
+
 defineExpose({
+  getScrollPosition,
   reload,
+  restoreScroll,
   scrollableTable,
+  scrollTo,
 });
 
 const resizeObserver = new ResizeObserver(() => updateTableSize());
@@ -350,6 +358,7 @@ const getDynamicRowsHeights = () => {
 <template lang="pug">
 .table-container(ref='tableContainer')
   Scrollable(
+    ref="scrollable",
     @update:scrollPosition="(scrollPosition) => $emit('update:scrollPosition', scrollPosition)",
     :scrollHeightDelta="(headerHeights ? headerHeights.total : 0) + totalHeight - 40",
     :scrollPosition="scrollPosition",
