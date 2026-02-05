@@ -899,6 +899,11 @@ const onColumnMove = (from: number, to: number) => {
 
   currentColumnKeys.value.splice(to, 0, column);
 
+  // Restore scroll position after table re-renders
+  nextTick(() => {
+    table.value?.restoreScroll();
+  });
+
   emit('move:column', { from, to });
 };
 
@@ -1017,7 +1022,7 @@ const setPageSize = async (newPageSize?: number) => {
   emit('update:pagination');
 };
 
-const setInlineFilter = (
+const setInlineFilter = async (
   columnKey: string,
   { operator, value }: { operator: string; value: string },
 ) => {
@@ -1029,7 +1034,12 @@ const setInlineFilter = (
 
   if (needUpdate) {
     fetchedAllRows.value = false;
-    setPageNumber(0);
+    await setPageNumber(0);
+
+    // Restore scroll position after table re-renders
+    nextTick(() => {
+      table.value?.restoreScroll();
+    });
   }
 };
 
@@ -1353,6 +1363,11 @@ const updateOrderBy = async (
   if (save) {
     localStorage.setItem(getOrderByKey(), JSON.stringify(newOrderBy));
   }
+
+  // Restore scroll position after table re-renders
+  nextTick(() => {
+    table.value?.restoreScroll();
+  });
 
   emit('update:orderBy', newOrderBy);
 };

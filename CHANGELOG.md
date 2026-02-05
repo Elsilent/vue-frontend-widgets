@@ -1,6 +1,9 @@
 # Changelog
 All important changes in vue-frontend-widgets
 
+## [1.4.2] - 2026-02-05
+- Fixed table scroll position reset when sorting, using inline filters, or dragging columns
+
 ## [1.4.0] - 2026-01-27
 - Added new input component
 
