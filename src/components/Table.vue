@@ -290,12 +290,14 @@ function reload() {
 }
 
 const getScrollPosition = () => scrollable.value?.getScrollPosition() ?? { left: 0, top: 0 };
+const saveScroll = () => scrollable.value?.saveScroll();
 const restoreScroll = () => scrollable.value?.restoreScroll();
 const scrollTo = (position: { left?: number; top?: number }) => scrollable.value?.scrollTo(position);
 
 defineExpose({
   getScrollPosition,
   reload,
+  saveScroll,
   restoreScroll,
   scrollableTable,
   scrollTo,
