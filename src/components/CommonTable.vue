@@ -895,6 +895,9 @@ const isColumnLinkable = (row: Record<string, any>, columnKey: string) => {
 };
 
 const onColumnMove = (from: number, to: number) => {
+  // Save scroll position before data changes cause DOM recreation
+  table.value?.saveScroll();
+
   const [column] = currentColumnKeys.value.splice(from, 1);
 
   currentColumnKeys.value.splice(to, 0, column);
@@ -953,15 +956,12 @@ const onHideDetails = (row: Record<string, any>) => {
     return;
   }
 
-  const scroll = {
-    left: table.value!.$el.scrollLeft,
-    top: table.value!.$el.scrollTop,
-  };
+  table.value.saveScroll();
 
   delete detailsRows.value[row[primaryColumn.value]];
 
   nextTick(() => {
-    table.value!.$el.scrollTo(scroll);
+    table.value!.restoreScroll();
   });
 };
 
@@ -970,17 +970,14 @@ const onShowDetails = async (kind: string, row: Record<string, any>) => {
     return;
   }
 
-  const scroll = {
-    left: table.value.$el.scrollLeft,
-    top: table.value.$el.scrollTop,
-  };
+  table.value.saveScroll();
 
   loading.value = true;
 
   detailsRows.value[row[primaryColumn.value]] = await getCachedDetails(kind, row);
 
   nextTick(() => {
-    table.value!.$el.scrollTo(scroll);
+    table.value!.restoreScroll();
 
     loading.value = false;
   });
@@ -1033,6 +1030,9 @@ const setInlineFilter = async (
   inlineFilters.value[columnKey] = { operator, value };
 
   if (needUpdate) {
+    // Save scroll position before data changes cause DOM recreation
+    table.value?.saveScroll();
+
     fetchedAllRows.value = false;
     await setPageNumber(0);
 
@@ -1333,6 +1333,9 @@ const toggleExpandColumn = (columnKey: string) => {
 };
 
 const toggleInlineFilters = () => {
+  // Save scroll position before toggling causes DOM recreation via additionalHeaders change
+  table.value?.saveScroll();
+
   displayInlineFilters.value = !displayInlineFilters.value;
 
   inlineFilters.value = makeInlineFilters();
@@ -1344,6 +1347,18 @@ const toggleInlineFilters = () => {
     fetchedAllRows.value = false;
     setPageNumber(0);
   }
+
+  // Restore scroll position after table re-renders
+  nextTick(() => {
+    table.value?.restoreScroll();
+  });
+};
+
+const onToggleInlineFilters = (event: MouseEvent) => {
+  toggleInlineFilters();
+  // Remove focus from the button so the browser doesn't scroll to keep
+  // the focused element visible, which would override the restored scroll position.
+  (event.target as HTMLElement)?.blur();
 };
 
 const updateOrderBy = async (
@@ -1351,6 +1366,9 @@ const updateOrderBy = async (
   save: boolean = true,
   fetchRows: boolean = true,
 ) => {
+  // Save scroll position before data changes cause DOM recreation
+  table.value?.saveScroll();
+
   // Always set to first page when changing ordering
   pageNumber.value = 0;
 
@@ -1460,7 +1478,7 @@ if (total) {
     .action-buttons(:class="{ active: displayActionButtons }")
       Button(
         v-if="showInlineFilters",
-        @click="() => toggleInlineFilters()",
+        @click="onToggleInlineFilters",
         :icon="displayInlineFilters ? 'trash-can' : 'filter'",
         mood='positive',
       )

@@ -225,6 +225,9 @@ const mutationObserver = new MutationObserver(() => whenResized());
 const resizeObserver = new ResizeObserver(() => whenResized());
 
 const whenScrolled = (event: Event) => {
+  if (restoring) {
+    return;
+  }
   setScrollLeftWith(event.target! as HTMLElement);
   setScrollTopWith(event.target! as HTMLElement);
 };
@@ -270,17 +273,61 @@ watch(
 
 watch(isHovered, () => whenResized());
 
+let savedScrollRatioX = 0;
+let savedScrollRatioY = 0;
+let restoring = false;
+
 const getScrollPosition = () => ({
   left: scrollLeft.value,
   top: scrollTop.value,
 });
 
+const saveScroll = () => {
+  const el = getRelativeElement();
+  // Read scroll position directly from the DOM element, not the Vue ref,
+  // because the ref may be stale if whenScrolled was blocked during a previous restore.
+  const currentScrollLeft = el?.scrollLeft ?? 0;
+  const currentScrollTop = el?.scrollTop ?? 0;
+  const maxScrollLeft = (el?.scrollWidth ?? 0) - (el?.clientWidth ?? 0);
+  const maxScrollTop = (el?.scrollHeight ?? 0) - (el?.clientHeight ?? 0);
+  savedScrollRatioX = maxScrollLeft > 0 ? currentScrollLeft / maxScrollLeft : 0;
+  savedScrollRatioY = maxScrollTop > 0 ? currentScrollTop / maxScrollTop : 0;
+};
+
 const restoreScroll = () => {
-  scrollTo({ left: scrollLeft.value, top: scrollTop.value });
+  restoring = true;
+  const applyScroll = () => {
+    const el = getRelativeElement();
+    if (!el) return;
+    const maxScrollLeft = el.scrollWidth - el.clientWidth;
+    const maxScrollTop = el.scrollHeight - el.clientHeight;
+    const targetLeft = Math.round(savedScrollRatioX * maxScrollLeft);
+    const targetTop = Math.round(savedScrollRatioY * maxScrollTop);
+    scrollTo({ left: targetLeft, top: targetTop });
+  };
+  applyScroll();
+  // Use double requestAnimationFrame to ensure scroll restoration happens
+  // after all pending layout recalculations (ResizeObserver callbacks,
+  // CSS variable updates, etc.). The first frame waits for the browser to
+  // finish layout; the second ensures any observer-triggered reflows settle.
+  requestAnimationFrame(() => {
+    applyScroll();
+    requestAnimationFrame(() => {
+      applyScroll();
+      // Sync Vue refs with the actual DOM scroll position so they're not stale
+      const el = getRelativeElement();
+      if (el) {
+        scrollLeft.value = el.scrollLeft;
+        scrollTop.value = el.scrollTop;
+      }
+      restoring = false;
+    });
+  });
 };
 
 defineExpose({
   getScrollPosition,
+  saveScroll,
   restoreScroll,
   scrollTo,
 });
