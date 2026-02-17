@@ -1332,7 +1332,11 @@ const toggleExpandColumn = (columnKey: string) => {
   }
 };
 
-const toggleInlineFilters = () => {
+const toggleInlineFilters = (event?: MouseEvent) => {
+  // Remove focus from the button so the browser doesn't scroll to keep
+  // the focused element visible, which would override the restored scroll position.
+  (event?.target as HTMLElement)?.blur();
+
   // Save scroll position before toggling causes DOM recreation via additionalHeaders change
   table.value?.saveScroll();
 
@@ -1352,13 +1356,6 @@ const toggleInlineFilters = () => {
   nextTick(() => {
     table.value?.restoreScroll();
   });
-};
-
-const onToggleInlineFilters = (event: MouseEvent) => {
-  toggleInlineFilters();
-  // Remove focus from the button so the browser doesn't scroll to keep
-  // the focused element visible, which would override the restored scroll position.
-  (event.target as HTMLElement)?.blur();
 };
 
 const updateOrderBy = async (
@@ -1478,7 +1475,7 @@ if (total) {
     .action-buttons(:class="{ active: displayActionButtons }")
       Button(
         v-if="showInlineFilters",
-        @click="onToggleInlineFilters",
+        @click="toggleInlineFilters",
         :icon="displayInlineFilters ? 'trash-can' : 'filter'",
         mood='positive',
       )
