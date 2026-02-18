@@ -225,6 +225,9 @@ const mutationObserver = new MutationObserver(() => whenResized());
 const resizeObserver = new ResizeObserver(() => whenResized());
 
 const whenScrolled = (event: Event) => {
+  if (restoring) {
+    return;
+  }
   setScrollLeftWith(event.target! as HTMLElement);
   setScrollTopWith(event.target! as HTMLElement);
 };
@@ -270,17 +273,67 @@ watch(
 
 watch(isHovered, () => whenResized());
 
+let savedScrollLeft = 0;
+let savedScrollTop = 0;
+let savedScrollRatioY = 0;
+let restoring = false;
+
 const getScrollPosition = () => ({
   left: scrollLeft.value,
   top: scrollTop.value,
 });
 
-const restoreScroll = () => {
-  scrollTo({ left: scrollLeft.value, top: scrollTop.value });
+/**
+ * Saves the current scroll position for later restoration.
+ * Reads directly from the DOM element (not Vue refs) because refs
+ * may be stale if whenScrolled was blocked during a previous restore.
+ */
+const saveScroll = () => {
+  const el = getRelativeElement();
+  savedScrollLeft = el?.scrollLeft ?? 0;
+  savedScrollTop = el?.scrollTop ?? 0;
+  const maxScrollTop = (el?.scrollHeight ?? 0) - (el?.clientHeight ?? 0);
+  savedScrollRatioY = maxScrollTop > 0 ? savedScrollTop / maxScrollTop : 0;
+};
+
+/**
+ * Restores the previously saved scroll position.
+ *
+ * @param targetLeft - Optional horizontal position computed by the caller
+ *   (e.g., Table uses column anchoring to handle column width changes).
+ *   Falls back to the saved absolute position if not provided.
+ */
+const restoreScroll = (targetLeft?: number) => {
+  restoring = true;
+  const left = targetLeft ?? savedScrollLeft;
+
+  // Immediate restore prevents visible flash to (0, 0) after DOM changes.
+  scrollTo({ left, top: savedScrollTop });
+
+  // Correct vertical position after layout settles — content height may have
+  // changed (e.g., rows added/removed), so we use the saved ratio.
+  requestAnimationFrame(() => {
+    const el = getRelativeElement();
+    if (!el) {
+      restoring = false;
+      return;
+    }
+    const maxScrollTop = el.scrollHeight - el.clientHeight;
+    scrollTo({
+      left,
+      top: Math.round(savedScrollRatioY * maxScrollTop),
+    });
+    // Sync Vue refs with the actual DOM scroll position
+    scrollLeft.value = el.scrollLeft;
+    scrollTop.value = el.scrollTop;
+    restoring = false;
+  });
 };
 
 defineExpose({
+  getRelativeElement,
   getScrollPosition,
+  saveScroll,
   restoreScroll,
   scrollTo,
 });

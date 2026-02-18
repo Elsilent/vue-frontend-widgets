@@ -290,12 +290,62 @@ function reload() {
 }
 
 const getScrollPosition = () => scrollable.value?.getScrollPosition() ?? { left: 0, top: 0 };
-const restoreScroll = () => scrollable.value?.restoreScroll();
+
+// Column anchoring state: saves which column is at the left edge of the visible
+// area so the scroll position can be restored accurately even when column widths
+// change (e.g., inline filters toggling causes header text to wrap differently).
+let anchorColumnKey: string | undefined;
+let anchorOffset = 0;
+
+const saveScroll = () => {
+  scrollable.value?.saveScroll();
+
+  anchorColumnKey = undefined;
+  anchorOffset = 0;
+
+  const el = scrollable.value?.getRelativeElement?.();
+  const tableEl = scrollableTable.value?.$el as HTMLElement | undefined;
+  if (!el || !tableEl) return;
+
+  // Find the first column header whose right edge is past the scroll offset —
+  // that's the column currently visible at the left edge of the viewport.
+  const currentScrollLeft = el.scrollLeft;
+  const columnHeaderList = tableEl.querySelectorAll<HTMLElement>(
+    '.cell.column-main[data-column]',
+  );
+
+  for (const header of columnHeaderList) {
+    if (header.offsetLeft + header.offsetWidth > currentScrollLeft) {
+      anchorColumnKey = header.dataset.column;
+      anchorOffset = currentScrollLeft - header.offsetLeft;
+      break;
+    }
+  }
+};
+
+const restoreScroll = () => {
+  // Compute the target horizontal position from the anchored column's new offset.
+  let targetLeft: number | undefined;
+
+  if (anchorColumnKey) {
+    const tableEl = scrollableTable.value?.$el as HTMLElement | undefined;
+    const header = tableEl?.querySelector<HTMLElement>(
+      `.cell.column-main[data-column="${anchorColumnKey}"]`,
+    );
+    if (header) {
+      targetLeft = header.offsetLeft + anchorOffset;
+    }
+  }
+
+  scrollable.value?.restoreScroll(targetLeft);
+};
+
 const scrollTo = (position: { left?: number; top?: number }) => scrollable.value?.scrollTo(position);
 
 defineExpose({
   getScrollPosition,
   reload,
+  saveScroll,
   restoreScroll,
   scrollableTable,
   scrollTo,

@@ -1,6 +1,9 @@
 # Changelog
 All important changes in vue-frontend-widgets
 
+## [1.4.3] - 2026-02-11
+- Fixed table scroll position preservation when toggling inline filters, sorting, or dragging columns. Uses ratio-based scroll restoration to maintain the same visible columns even when content width changes (e.g., filter inputs widening columns).
+
 ## [1.4.2] - 2026-02-05
 - Fixed table scroll position reset when sorting, using inline filters, or dragging columns
 
