@@ -8,6 +8,7 @@ import Calendar from '../components/Calendar.vue';
 import Card from '../components/Card.vue';
 import Checkbox from '../components/Checkbox.vue';
 import CheckboxGroup from '../components/CheckboxGroup.vue';
+import Collapse from '../components/Collapse.vue';
 import ColumnHint from '../components/ColumnHint.vue';
 import CommonTable from '../components/CommonTable.vue';
 import ComparisonKpiCard from '../components/ComparisonKpiCard.vue';
@@ -72,6 +73,7 @@ export {
   Card,
   Checkbox,
   CheckboxGroup,
+  Collapse,
   ColumnHint,
   CommonTable,
   ComparisonKpiCard,
