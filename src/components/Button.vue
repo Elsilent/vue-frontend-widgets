@@ -200,8 +200,8 @@ button.button(
         }
       }
 
-      > .icon {
-        &::not(.mood-background-inactive) {
+      &:not(.mood-background-inactive) {
+        > .icon {
           @include colors.apply-color(color, white);
         }
       }
