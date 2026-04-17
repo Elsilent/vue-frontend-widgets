@@ -380,7 +380,6 @@ const rowCount = ref(0);
 const totalRow = ref<Record<string, any> | undefined>();
 
 const table = ref<typeof Table | undefined>();
-defineExpose({ table });
 
 const additionalHeaders = computed(() => {
   const additionalHeaders: Record<string, { icon: string }> = {};
@@ -1425,7 +1424,7 @@ watch(loading, () => {
 
 if (defaultOrderBy) {
   watch(defaultOrderBy, (newOrder, oldOrder) => {
-    if (newOrder?.[0][0] !== oldOrder?.[0][0]) {
+    if (newOrder?.[0][0] !== oldOrder?.[0][0] || newOrder?.[1] !== oldOrder?.[1]) {
       setOrderByFromDefault(true);
     }
   });
@@ -1455,6 +1454,34 @@ if (total) {
     },
   );
 }
+
+if (rows) {
+  watch(
+    rows,
+    () => {
+      setPageNumber(0);
+    },
+    { deep: true },
+  );
+}
+
+const setDetailsRows = (newDetailsRows: Record<string, Record<string, any>>) => {
+  detailsRows.value = newDetailsRows;
+};
+
+const clearCachedDetailsRows = () => {
+  cachedDetailsRows.value = {};
+};
+
+defineExpose({
+  table,
+  detailsRows,
+  setDetailsRows,
+  coloredMetrics,
+  addColoredMetric,
+  removeColoredMetric,
+  clearCachedDetailsRows,
+});
 </script>
 
 <template lang="pug">
