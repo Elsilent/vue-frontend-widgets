@@ -25,6 +25,7 @@ export default defineConfig({
         {} as Record<string, string>,
       ),
       formats: ['es'],
+      cssFileName: 'style',
     },
     rollupOptions: {
       external: ['numeral', 'vue', 'vue-router'],
