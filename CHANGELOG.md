@@ -1,6 +1,11 @@
 # Changelog
 All important changes in vue-frontend-widgets
 
+## [1.4.7] - 2026-05-29
+- Upgraded build-tooling dependencies (vite 5 → 6, vue-tsc 1 → 2, vite-plugin-dts 3 → 4, @vitejs/plugin-vue 4 → 5, axios 1.6 → 1.15, typescript 5.0 → 5.4, plus transitive re-resolution) to address moderate and high security advisories. No public API change.
+- Fixed `@vue/language-plugin-pug` reference in `tsconfig.app.json` (was the old name `@vue/vue-language-plugin-pug`), restoring pug template type-checking. This also enabled stronger tree-shaking, reducing `dist/components.js` by ~25 KB.
+- Set `build.lib.cssFileName: 'style'` in `vite.config.ts` to preserve the `dist/style.css` output filename across the vite 6 default change.
+
 ## [1.4.3] - 2026-02-11
 - Fixed table scroll position preservation when toggling inline filters, sorting, or dragging columns. Uses ratio-based scroll restoration to maintain the same visible columns even when content width changes (e.g., filter inputs widening columns).
 
