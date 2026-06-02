@@ -34,7 +34,7 @@ const values = computed(() => {
   return rawValues.value.map((treeNode: TreeNodeData_2) => treeNode.value);
 });
 
-const filterMethod = (query: string, node: { label: string }) =>
+const filterMethod = (query: string, node: TreeNodeData_2) =>
   node.label.toLowerCase().includes(query.toLowerCase());
 
 const onInput = () => {
@@ -76,7 +76,7 @@ const onClickOutside = ({ target }: MouseEvent) => {
   }
 };
 
-const onChecked = (_: undefined, { checkedNodes }: TreeNodeData_2) => {
+const onChecked = (_: unknown, { checkedNodes }: TreeNodeData_2) => {
   const resultNodes: TreeNodeData_2[] = [];
   const childNodes = checkedNodes
     .map((item: TreeNodeData_2) => item.children?.flat(Infinity))

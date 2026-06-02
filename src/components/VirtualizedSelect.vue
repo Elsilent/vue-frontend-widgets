@@ -5,6 +5,15 @@ import 'element-plus/es/components/select/style/index';
 import SelectSuffixIcon from './SelectSuffixIcon.vue';
 import { useAttrs } from 'vue';
 
+const props = withDefaults(
+  defineProps<{
+    options?: Record<string, unknown>[];
+  }>(),
+  {
+    options: () => [],
+  },
+);
+
 const attrs = useAttrs();
 const isOpened = ref(false);
 </script>
@@ -12,6 +21,7 @@ const isOpened = ref(false);
 <template lang="pug">
 ElSelectV2(
   size="large"
+  :options="props.options"
   :class="{opened: isOpened}"
   :teleported="true"
   :suffix-icon="SelectSuffixIcon"
