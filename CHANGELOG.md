@@ -1,8 +1,9 @@
 # Changelog
 All important changes in vue-frontend-widgets
 
-## [1.4.7] - 2026-05-29
-- Upgraded build-tooling dependencies (vite 5 → 6, vue-tsc 1 → 2, vite-plugin-dts 3 → 4, @vitejs/plugin-vue 4 → 5, vitest 3 → 4, axios 1.6 → 1.15, typescript 5.0 → 5.4, plus transitive re-resolution) to address critical, high, and moderate security advisories. No public API change.
+## [2.0.0] - 2026-06-03
+- **BREAKING**: minimum supported Node version is now **20**. CI workflows (`.github/workflows/build.yml`, `.github/workflows/merge.yml`) bumped from Node 18.9 to Node 20. The strictest dep floor is `vitest@^4.1.0` which no longer supports Node 18.x; the rest of the upgraded toolchain (vite 6, @vue/eslint-config-typescript 13) also requires Node 18.18+ or 20+.
+- Upgraded build-tooling dependencies (vite 5 → 6, vue-tsc 1 → 2, vite-plugin-dts 3 → 4, @vitejs/plugin-vue 4 → 5, vitest 3 → 4, axios 1.6 → 1.15, typescript 5.0 → 5.4, plus transitive re-resolution) to address critical, high, and moderate security advisories. No public component API change.
 - Removed deprecated `transformMode.web` block from `vitest.config.ts` (removed entirely in vitest 4).
 - Added `vite` to the `resolutions` block to work around a yarn-classic linking error caused by vitest 4 declaring `vite` in both `dependencies` and `peerDependencies`.
 - Fixed `@vue/language-plugin-pug` reference in `tsconfig.app.json` (was the old name `@vue/vue-language-plugin-pug`), restoring pug template type-checking that had been silently broken.
