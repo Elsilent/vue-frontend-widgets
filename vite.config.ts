@@ -46,6 +46,7 @@ export default defineConfig({
   plugins: [
     dts({
       insertTypesEntry: true,
+      tsconfigPath: './tsconfig.app.json',
     }),
     vue(),
     ElementPlus({

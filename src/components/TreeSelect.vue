@@ -125,6 +125,12 @@ ElTreeSelect(
   .el-select-dropdown__item {
     margin: 0 1px;
   }
+  // element-plus 2.10+ added translate(-45%, -60%) to the checked-state transform,
+  // which conflicts with the absolute left/top positioning used in .multiSelectTree below.
+  // Cancel the translate so the checkmark sits where left/top says it should.
+  .el-checkbox__input.is-checked .el-checkbox__inner::after {
+    transform: rotate(45deg) scaleY(1);
+  }
 }
 
 .multiSelectTree {

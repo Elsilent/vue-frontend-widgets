@@ -63,8 +63,8 @@ const activate = () => {
 const whenBlurred = (event?: FocusEvent) => {
   if (
     !event ||
-    (!datePicker.value?.$el.contains(event.relatedTarget) &&
-      !calendarRef.value?.$el.contains(event.relatedTarget))
+    (!datePicker.value?.$el.contains(event.relatedTarget as Node | null) &&
+      !calendarRef.value?.$el.contains(event.relatedTarget as Node | null))
   ) {
     active.value = false;
     datePickerInput.value?.$el.blur();

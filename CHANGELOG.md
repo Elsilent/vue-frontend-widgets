@@ -1,17 +1,33 @@
 # Changelog
 All important changes in vue-frontend-widgets
 
-## [2.0.0] - 2026-06-03
-- **BREAKING**: minimum supported Node version is now **20**. CI workflows (`.github/workflows/build.yml`, `.github/workflows/merge.yml`) bumped from Node 18.9 to Node 20. The strictest dep floor is `vitest@^4.1.0` which no longer supports Node 18.x; the rest of the upgraded toolchain (vite 6, @vue/eslint-config-typescript 13) also requires Node 18.18+ or 20+.
-- Upgraded build-tooling dependencies (vite 5 → 6, vue-tsc 1 → 2, vite-plugin-dts 3 → 4, @vitejs/plugin-vue 4 → 5, vitest 3 → 4, axios 1.6 → 1.15, typescript 5.0 → 5.4, plus transitive re-resolution) to address critical, high, and moderate security advisories. No public component API change.
-- Removed deprecated `transformMode.web` block from `vitest.config.ts` (removed entirely in vitest 4).
-- Added `vite` to the `resolutions` block to work around a yarn-classic linking error caused by vitest 4 declaring `vite` in both `dependencies` and `peerDependencies`.
-- Fixed `@vue/language-plugin-pug` reference in `tsconfig.app.json` (was the old name `@vue/vue-language-plugin-pug`), restoring pug template type-checking that had been silently broken.
-- Set `build.lib.cssFileName: 'style'` in `vite.config.ts` to preserve the `dist/style.css` output filename across the vite 6 default change.
-- Fixed pre-existing TypeScript errors surfaced by the vue-tsc 2 upgrade once template type-checking actually ran:
-  - `SimpleTable`: added missing `columnsRow` slot to `defineSlots` declaration; aligned `dynamicRowsHeights` prop type with the `string[]` value `Table` produces from `String.split('|')`.
-  - `VirtualizedTreeSelect`: widened `onChecked` first parameter to `unknown` (was `undefined`, incompatible with `el-tree-v2`'s `check` event signature); widened `filterMethod` node parameter from `{ label: string }` to the file's `TreeNodeData_2` alias (matches `el-tree-v2`'s `FilterMethod` contract).
-  - `VirtualizedSelect`: declared an explicit `options` prop with a default of `[]` so `el-select-v2`'s required `options` prop is statically satisfied (was relying on attribute fallthrough, which vue-tsc cannot model).
+## [2.0.0] - 2026-06-08
+- **BREAKING**: minimum Node version raised to **20**. CI workflows bumped from Node 18.9 to Node 20. Strictest dep floor is `vitest@^4` (no Node 18.x support); vite 6 and @vue/eslint-config-typescript 13 also require Node 18.18+/20+.
+- Dependency upgrades clearing critical, high, and moderate security advisories:
+  - `vite` 5 → 6, `vitest` 3 → 4, `vite-plugin-dts` 3 → 4, `vue-tsc` 1 → 2
+  - `@vitejs/plugin-vue` 4 → 5, `@vue/eslint-config-typescript` 11 → 13
+  - `axios` 1.6 → 1.15, `typescript` 5.0 → 5.4
+  - `element-plus` 2.9.10 → 2.14.1 (clears CVE-2025-57665 el-link advisory; eliminates internal `_2` type disambiguation that broke per-file declaration emit)
+- No public component API change.
+- TypeScript fixes surfaced by vue-tsc 2's stricter template inference:
+  - Extracted `AdditionalHeader` interface from `Table.vue` to `src/utils/type/component/container/table.ts` (per CLAUDE.md convention: exported types must not live in component files).
+  - `DatePicker.vue`: `as Node | null` cast on `event.relatedTarget` for strict `Node.contains()` signature.
+  - `SimpleTable.vue`: added missing `columnsRow` slot to `defineSlots`; `dynamicRowsHeights` type aligned with the `string[]` value `Table.vue` produces from `String.split('|')`.
+  - `VirtualizedSelect.vue`: declared explicit `options` prop with default `[]` (was relying on attribute fallthrough, which vue-tsc cannot model).
+  - `VirtualizedTreeSelect.vue`: widened handler parameter types (`onChecked` first arg to `unknown`, `filterMethod` second arg to `TreeNodeData_2`).
+- Tsconfig cleanup — removed unused `composite: true` from `tsconfig.app.json`/`vitest.json`/`node.json` (the project is a flat single source tree, never invoked `tsc --build`). Inherits `moduleResolution: "bundler"` from `@vue/tsconfig` base (Vue 3.4+ `package.json#exports` requires it). Added `"DOM.Iterable"` to `lib` (fixes `NodeListOf` iteration in `Table.vue`).
+- Vite config:
+  - Added `tsconfigPath: './tsconfig.app.json'` to vite-plugin-dts so it reads the app config directly.
+  - Set `build.lib.cssFileName: 'style'` to preserve `dist/style.css` filename across vite 6's default rename.
+- Other config:
+  - Removed deprecated `transformMode.web` block from `vitest.config.ts` (removed in vitest 4).
+  - Added `vite` to `resolutions` (yarn-classic workaround for vitest 4 declaring `vite` in both `dependencies` and `peerDependencies`).
+  - Fixed `@vue/language-plugin-pug` reference in `tsconfig.app.json` (was the old name `@vue/vue-language-plugin-pug`), restoring pug template type-checking.
+  - `TreeSelect.vue`: restored checked-state checkmark alignment after element-plus's update changed its default transform.
+
+## [1.4.7] - 2026-06-08
+- Fixed formatter for long float percent values.
+- Removed sorting after columns drag-and-drop.
 
 ## [1.4.3] - 2026-02-11
 - Fixed table scroll position preservation when toggling inline filters, sorting, or dragging columns. Uses ratio-based scroll restoration to maintain the same visible columns even when content width changes (e.g., filter inputs widening columns).
