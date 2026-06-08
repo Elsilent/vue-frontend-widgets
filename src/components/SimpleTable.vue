@@ -787,11 +787,14 @@ const onColumnDragStop = (event: MouseEvent) => {
   }
 
   dragColumnToIndex.value = undefined;
-  dragMoves.value = 0;
-  dragColumnFromIndex.value = undefined;
 
   window.removeEventListener('mousemove', onColumnDragMove);
   window.removeEventListener('mouseup', onColumnDragStop);
+
+  setTimeout(() => {
+    dragMoves.value = 0;
+    dragColumnFromIndex.value = undefined;
+  }, 0);
 };
 
 /**

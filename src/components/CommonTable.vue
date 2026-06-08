@@ -583,7 +583,8 @@ const formatValue = (value: any, type: ColumnType, format?: 'difference'): strin
       }
     }
     case 'percent': {
-      let percent = numeral(parseFloat(rawValue)).format('0,0.00') + '%';
+      const roundedValue = parseFloat(rawValue.toFixed(10));
+      let percent = numeral(roundedValue).format('0,0.00') + '%';
 
       if (format === 'difference') {
         if (rawValue > 0) {
