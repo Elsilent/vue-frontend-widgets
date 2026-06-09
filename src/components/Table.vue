@@ -1,12 +1,8 @@
 <script lang="ts" setup>
 import { computed, nextTick, onUnmounted, ref, toRefs, watch, defineExpose } from 'vue';
-import { type Column } from '../utils/type/component/container/table';
+import { type AdditionalHeader, type Column } from '../utils/type/component/container/table';
 import Scrollable from './Scrollable.vue';
 import SimpleTable from './SimpleTable.vue';
-
-interface AdditionalHeader {
-  icon: string;
-}
 
 const props = withDefaults(
   defineProps<{

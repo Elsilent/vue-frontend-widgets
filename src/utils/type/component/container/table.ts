@@ -60,6 +60,10 @@ export interface InlineFilter {
   value: string;
 }
 
+export interface AdditionalHeader {
+  icon: string;
+}
+
 export type DetailsRequestInfo =
   | AxiosRequestConfig
   | ((options: DetailsRequestOptions) => Promise<DetailsResponse>);

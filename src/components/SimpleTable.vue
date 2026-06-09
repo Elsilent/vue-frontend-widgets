@@ -120,7 +120,7 @@ const props = withDefaults(
     /**
      * Array of dynamic rows heights
      */
-    dynamicRowsHeights?: number[] | undefined;
+    dynamicRowsHeights?: string[] | undefined;
   }>(),
   {
     additionalHeaders: () => ({}),
@@ -887,6 +887,7 @@ defineSlots<
       value: any;
     }) => any;
   } & {
+    columnsRow: (props: { columns: string[] }) => any;
     columnRowNumber: (props: any) => any;
     colorizeLabel: (props: { enabled: boolean }) => any;
     column: (props: { columnKey: string; isGhost: boolean }) => any;

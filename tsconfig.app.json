@@ -3,13 +3,11 @@
   "include": ["env.d.ts", "src/**/*", "src/**/*.vue"],
   "exclude": ["src/**/__tests__/*"],
   "compilerOptions": {
-    "composite": true,
     "baseUrl": ".",
-    "lib": ["DOM", "ESNext"],
+    "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "noUnusedLocals" : false,
     "noUnusedParameters": false,
     "module": "ESNext",
-    "moduleResolution": "node",
     "paths": {
       "@/*": ["./src/*"]
     },
@@ -18,7 +16,7 @@
   },
   "vueCompilerOptions": {
     "plugins": [
-      "@vue/vue-language-plugin-pug",
+      "@vue/language-plugin-pug",
     ]
   }
 }
