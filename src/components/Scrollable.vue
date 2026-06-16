@@ -344,17 +344,11 @@ defineExpose({
   :class="{ [`mode-${mode}`]: true, static: staticPosition }"
   ref="area"
 )
-  //- `v-bind="{ key: ... }"` instead of `:key="..."`: Vue compiler >= 3.5.13 skips
-  //- identifier prefixing for a `:key` expression on an element that also has `v-memo`
-  //- (assumes transformFor processed it, which only happens with v-for), emitting a bare
-  //- `key: updateKey` reference -> ReferenceError at runtime. The object-bind form is
-  //- processed normally and produces the same vnode key.
-  // See: https://github.com/vuejs/core/issues/14920
   .scrollable-content(
     v-if="optimized",
     v-memo="[updateKey]",
     ref="content",
-    v-bind="{ key: updateKey }",
+    :key="updateKey",
     @scroll="whenScrolled",
     :class="contentClass",
   )
