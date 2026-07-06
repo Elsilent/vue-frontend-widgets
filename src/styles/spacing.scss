@@ -71,22 +71,52 @@ $side-menu-width-collapsed: 60px;
 }
 
 @mixin default-spacing {
-  @include reasonable-spacing('*', ':not(.no-spacing):not(.spacing-small)', $padding-size-normal);
-  @include reasonable-spacing('*', ':not(.no-spacing).spacing-small', $padding-size-small);
+  // ':where(*)' instead of bare '*': vue compiler >= 3.4.22 drops a leading '*'
+  // before a combinator in scoped styles, emitting invalid CSS that browsers ignore.
+  // Same matching, same (zero) specificity. See https://github.com/vuejs/core/pull/10551
+
+  // Written out by hand (not via reasonable-spacing): with a ':not(...)' target the
+  // compiler would host [data-v] on '.align' / '.grid', so the rules would never match.
+  :where(*) + *:not(.no-spacing):not(.spacing-small) {
+    margin-top: $padding-size-normal;
+  }
+  :where(*):where(.align:not(.column) > *) + *:not(.no-spacing):not(.spacing-small) {
+    margin-top: 0;
+    margin-left: $padding-size-normal;
+  }
+  :where(*):where(.grid > *) + *:not(.no-spacing):not(.spacing-small) {
+    margin-top: 0;
+  }
+
+  :where(*) + *:not(.no-spacing).spacing-small {
+    margin-top: $padding-size-small;
+  }
+  :where(*):where(.align:not(.column) > *) + *:not(.no-spacing).spacing-small {
+    margin-top: 0;
+    margin-left: $padding-size-small;
+  }
+  :where(*):where(.grid > *) + *:not(.no-spacing).spacing-small {
+    margin-top: 0;
+  }
+
   @include reasonable-spacing(
-    '*',
+    ':where(*)',
     '.align:not(.no-spacing):not(.spacing-small)',
     $padding-size-large-2
   );
-  @include reasonable-spacing('*', '.align:not(.no-spacing).spacing-small', $padding-size-large);
   @include reasonable-spacing(
-    '*',
+    ':where(*)',
+    '.align:not(.no-spacing).spacing-small',
+    $padding-size-large
+  );
+  @include reasonable-spacing(
+    ':where(*)',
     '.grid:not(.no-spacing):not(.spacing-small)',
     $padding-size-large-2
   );
-  @include reasonable-spacing('*', '.card:not(.no-spacing)', $padding-size-large-2);
-  @include reasonable-spacing('*', '.header:not(.no-spacing)', $padding-size-large-3);
-  @include reasonable-spacing('*', '.info-text:not(.no-spacing)', $padding-size-large);
+  @include reasonable-spacing(':where(*)', '.card:not(.no-spacing)', $padding-size-large-2);
+  @include reasonable-spacing(':where(*)', '.header:not(.no-spacing)', $padding-size-large-3);
+  @include reasonable-spacing(':where(*)', '.info-text:not(.no-spacing)', $padding-size-large);
   @include reasonable-spacing('.dot', '.info-text:not(.no-spacing)', $padding-size-small-3);
   @include reasonable-spacing('.icon', '.info-text:not(.no-spacing)', $padding-size-small-3);
   @include reasonable-spacing(
@@ -99,8 +129,12 @@ $side-menu-width-collapsed: 60px;
     '.align:not(.no-spacing)',
     $padding-size-small-2
   );
-  @include reasonable-spacing('*', '.kpi-distrubution-table:not(.no-spacing)', $padding-size-large);
-  @include reasonable-spacing('*', '.no-spacing', 0);
+  @include reasonable-spacing(
+    ':where(*)',
+    '.kpi-distrubution-table:not(.no-spacing)',
+    $padding-size-large
+  );
+  @include reasonable-spacing(':where(*)', '.no-spacing', 0);
   @include reasonable-spacing('.grid > *', '.no-spacing', 0);
 
   .flex-max {

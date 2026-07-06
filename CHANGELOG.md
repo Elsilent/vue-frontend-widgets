@@ -1,6 +1,9 @@
 # Changelog
 All important changes in vue-frontend-widgets
 
+## [2.0.3] - 2026-07-06
+- Fixed default spacing being broken in all 2.0.x builds. Vue compiler >= 3.4.22 ([vuejs/core#10551](https://github.com/vuejs/core/pull/10551)) mangles scoped `* + X` selectors: it drops the leading `*` (browsers then discard the invalid rule — all inter-component margins disappeared) and mis-hosts `[data-v]` on `.align`/`.grid` in the row/grid overrides (elements following a Button/KpiCard/etc. in an `Align` row or `Grid` gained a phantom top margin). Selector heads in `default-spacing` now use `:where(*)`, and the two generic sibling families are written out explicitly so the scope attribute lands on the previous-sibling side, restoring pre-2.0.0 behavior.
+
 ## [2.0.0] - 2026-06-08
 - **BREAKING**: minimum Node version raised to **20**. CI workflows bumped from Node 18.9 to Node 20. Strictest dep floor is `vitest@^4` (no Node 18.x support); vite 6 and @vue/eslint-config-typescript 13 also require Node 18.18+/20+.
 - Dependency upgrades clearing critical, high, and moderate security advisories:
