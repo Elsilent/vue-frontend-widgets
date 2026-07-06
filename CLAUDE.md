@@ -43,7 +43,15 @@ This prevents build errors when consuming the library.
 ### External Dependencies
 `vue`, `vue-router`, and `numeral` are externalized - not bundled, expected from consuming project.
 
-## Versioning
-- `yarn up-major` / `yarn up-minor` - Bump major/minor version manually before PR
-- Patch versions auto-increment on merge to main via CI
+## Versioning & releases
+
+Releases are fully automated by `.github/workflows/merge.yml` ("Pipeline Bot"), which runs on every **merged PR** to main. It compares `major.minor` of package.json against the latest git tag:
+- equal → `yarn version --patch` + publish to npm
+- different → publishes the version from package.json as-is + creates the GitHub Release/tag
+
+Rules:
+- **Patch release (fixes): NEVER touch `version` in package.json — merging the PR IS the release.** A manual patch bump is invisible to the pipeline's check, so it bumps again on top and your number becomes a phantom that never reaches npm (this happened: a PR set 2.0.3, the bot published 2.0.4).
+- **Minor/major release**: set the new `X.Y.0` via `yarn up-minor` / `yarn up-major` in the PR — the pipeline publishes exactly that version.
+- **CHANGELOG.md entry in a patch PR**: number it as *latest published version + 1* (what the bot will mint), not what package.json says.
+- Direct pushes to main do NOT trigger the pipeline (it listens to merged PRs only) — safe for docs/changelog-only commits.
 - CHANGELOG.md entries must NOT contain any external task or issue tracker references
