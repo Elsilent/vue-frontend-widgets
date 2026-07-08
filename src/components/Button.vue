@@ -26,7 +26,7 @@ const props = withDefaults(
   },
 );
 
-const { disabled, mood, outline, shape } = toRefs(props);
+const { disabled, mood, outline, shape, size } = toRefs(props);
 
 const classes = computed(() => ({
   disabled: disabled.value,
@@ -34,6 +34,7 @@ const classes = computed(() => ({
   [`mood-background-${mood.value}`]: !outline.value,
   [`mood-border-${mood.value}`]: true,
   [`shape-${shape.value}`]: true,
+  [`size-${size.value}`]: true,
 }));
 
 const whenClicked = (event: Event) => {
@@ -69,6 +70,7 @@ button.button(
 @use '../styles/spacing' as spacing;
 @use '../styles/transition' as transition;
 @use '../styles/colors' as colors;
+@use '../styles/fonts/size' as size;
 
 @include spacing.default-spacing;
 
@@ -107,6 +109,11 @@ button.button(
     }
   }
 
+  &.size-small-2 {
+    @include size.apply-size;
+    line-height: 1.45;
+    padding: spacing.$padding-size-menu-small spacing.$padding-size-menu-normal;
+  }
   &.disabled {
     cursor: default;
     opacity: 0.5;
