@@ -226,7 +226,7 @@ const props = withDefaults(
      *
      * Don't use with request URL being provided
      */
-    rows?: Record<string, Record<string, any>>;
+    rows?: Record<string, Record<string, any>> | Record<string, any>[];
     /**
      * Provides the list of columns which contents can be shortened
      */
