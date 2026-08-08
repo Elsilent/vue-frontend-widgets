@@ -342,5 +342,11 @@ ElPopover(
     height: 4px;
     top: 8px;
   }
+  // element-plus 2.10+ added translate(-45%, -60%) to the checked-state transform,
+  // which conflicts with the absolute left/top positioning used just above.
+  // Cancel the translate so the checkmark sits where left/top says it should.
+  .el-checkbox__input.is-checked .el-checkbox__inner::after {
+    transform: rotate(45deg) scaleY(1);
+  }
 }
 </style>
