@@ -10,6 +10,9 @@ const props = defineProps(['monthsShort', 'months']);
 const monthsLabels = {
   ...dayjsLocale,
   months: props.months,
+  // Without this dayjs derives the short names by slicing `months` to 3 chars,
+  // which collides in French ("Juin" and "Juillet" both give "jui").
+  monthsShort: props.monthsShort,
 };
 dayjs.locale(monthsLabels);
 
@@ -17,7 +20,7 @@ dayjs.locale(monthsLabels);
 const monthsShortLabels: Record<string, string> = {};
 
 props.monthsShort.forEach((monthLabel: string) => {
-  const key = monthLabel.substring(0, 3).toLowerCase();
+  const key = monthLabel.toLowerCase();
   monthsShortLabels[key] = monthLabel;
 });
 
