@@ -55,3 +55,4 @@ Rules:
 - **CHANGELOG.md entry in a patch PR**: number it as *latest published version + 1* (what the bot will mint), not what package.json says.
 - Direct pushes to main do NOT trigger the pipeline (it listens to merged PRs only) — safe for docs/changelog-only commits.
 - CHANGELOG.md entries must NOT contain any external task or issue tracker references
+- **Match the entry's length to the change.** A small fix gets one short sentence; save the paragraph for a change that needs it (breaking, subtle, or wide-reaching).
